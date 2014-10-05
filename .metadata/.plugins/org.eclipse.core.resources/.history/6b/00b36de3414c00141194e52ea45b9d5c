@@ -1,0 +1,21 @@
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
+
+public class RequestHandler implements Runnable {
+	
+	Socket clientSocket;
+	
+	public RequestHandler(Socket clientSocket) {
+		this.clientSocket = clientSocket;
+	}
+
+	@Override
+	public void run() {
+		
+		System.out.println("hello there from server land!");
+		
+		ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
+	}
+
+}

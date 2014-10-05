@@ -1,0 +1,11 @@
+
+public class ServerTest {
+
+	public static final String host = "data.cs.purdue.edu";
+	public static final int port = 4000;
+	
+	
+	public static void main(String[] args) {
+		
+	}
+}

@@ -1,0 +1,23 @@
+
+public class Server {
+	public static final String USAGE = "Usage: java Server portNumber";
+
+	/* To run server: java Server portNumber */
+	public static void main(String[] args) {
+		
+		if (args.length != 1) { /* Check cmd line inputs */
+			System.err.printf("%s\n", USAGE);
+			System.exit(1);
+		}
+		
+		int port = 0;
+		try {
+			port = Integer.parseInt(args[0]);
+		} catch (Exception e) {
+			System.err.printf("\n%s\n", USAGE);
+			System.exit(1);
+		}
+		
+		System.out.println(port);
+	}
+}
