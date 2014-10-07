@@ -1,0 +1,133 @@
+package javagame;
+
+import org.lwjgl.input.*;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.*;
+import org.newdawn.slick.gui.*;
+
+public class CreateAccount extends BasicGameState {
+	
+	private String mouse = "No Input Yet";
+	private Image background;
+	private Image logo;
+	private TextField usernameField;
+	private TextField password1Field;
+	private TextField password2Field;
+	private TextField emailField;
+	private boolean usernameFieldSelected = true;
+	private boolean password1FieldSelected = false;
+	private boolean password2FieldSelected = false;
+	private boolean emailFieldSelected = false;
+	
+	public CreateAccount(int state) {
+	}
+	
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
+		//initialize and scale background image
+		background = new Image("res/Green Background.jpg");
+		background = background.getScaledCopy(1280, 720);
+		
+		//initialize and scale logo image
+		logo = new Image("res/Cardglomerate 2.png");
+		logo = logo.getScaledCopy(491, 369);
+		
+		//initialize textfields
+		usernameField = new TextField(gc, gc.getDefaultFont(), 535, 425, 200, 30);
+		password1Field = new TextField(gc, gc.getDefaultFont(), 535, 490, 200, 30);
+		password2Field = new TextField(gc, gc.getDefaultFont(), 535, 555, 200, 30);
+		emailField = new TextField(gc, gc.getDefaultFont(), 535, 620, 200, 30);
+	}
+	
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
+		//render background
+		background.draw(0,0);
+		
+		//mouse coordinates for testing / building
+		g.drawString(mouse, 10, 25);
+		
+		//render logo
+		logo.draw(394,0);
+		
+		//render text
+		g.drawString("Username", 600, 400);
+		g.drawString("Password", 600, 465);
+		g.drawString("Reenter Password", 565, 530);
+		g.drawString("Email Address", 580, 595);
+		
+		//render textfields
+		usernameField.render(gc, g);
+		password1Field.render(gc, g);
+		password2Field.render(gc, g);
+		emailField.render(gc, g);
+		
+		//button
+		g.drawRect(600, 685, 200, 30);
+		
+	}
+	
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
+		//mouse coordinates for testing / building
+		int xpos = Mouse.getX();
+		int ypos = Mouse.getY();
+		mouse = "Mouse position x: " + xpos + " y: " + ypos;
+		
+		//controls which textfield is currently selected
+		//janky solution because textfields not working properly
+		if (usernameFieldSelected) {
+			usernameField.setFocus(true);
+		}
+		if(password1FieldSelected){
+			password1Field.setFocus(true);
+		}
+		if(password2FieldSelected){
+			password2Field.setFocus(true);
+		}
+		if(emailFieldSelected) {
+			emailField.setFocus(true);
+		}
+		
+		//username textbox clicked
+		if((xpos>535 && xpos<735) && (ypos>265 && ypos<295)) {
+			if(Mouse.isButtonDown(0)) { //button 0 = left click
+				password1FieldSelected = false;
+				password2FieldSelected = false;
+				emailFieldSelected = false;
+				usernameFieldSelected = true;
+			}
+		}
+		//password1 textbox clicked
+		if((xpos>535 && xpos<735) && (ypos>200 && ypos<230)) {
+			if(Mouse.isButtonDown(0)) {
+				usernameFieldSelected = false;
+				password2FieldSelected = false;
+				emailFieldSelected = false;
+				password1FieldSelected = true;
+			}
+		}
+		
+		//password2 textbox clicked
+		if((xpos>535 && xpos<735) && (ypos>135 && ypos<165)) {
+			if(Mouse.isButtonDown(0)) {
+				usernameFieldSelected = false;
+				emailFieldSelected = false;
+				password1FieldSelected = false;
+				password2FieldSelected = true;
+			}
+		}
+		
+		//email textbox clicked
+		if((xpos>535 && xpos<735) && (ypos>70 && ypos<100)) {
+			if(Mouse.isButtonDown(0)) {
+				usernameFieldSelected = false;
+				password1FieldSelected = false;
+				password2FieldSelected = false;
+				emailFieldSelected = true;
+			}
+		}
+		
+	}
+	
+	public int getID() {
+		return 2;
+	}
+}

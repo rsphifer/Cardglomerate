@@ -1,0 +1,31 @@
+package javagame;
+
+import org.lwjgl.input.*;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.*;
+
+public class GameMenu extends BasicGameState {
+	
+	Image background;
+	
+	public GameMenu(int state) {
+	}
+	
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
+		background = new Image("res/Many Cards.jpg");
+		
+	}
+	
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
+		g.drawString("Please Select a game", 50, 50);
+		background.draw(0,0);
+	}
+	
+	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
+		
+	}
+	
+	public int getID() {
+		return 1;
+	}
+}

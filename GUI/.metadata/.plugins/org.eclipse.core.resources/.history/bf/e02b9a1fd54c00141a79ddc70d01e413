@@ -1,0 +1,45 @@
+package javagame;
+
+import org.lwjgl.input.*;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.*;
+
+public class Master extends StateBasedGame {
+
+	public static final String gameName = "Cardglomerate";
+	
+	//state numbers for each screen
+	public static final int logIn = 0;
+	public static final int gameMenu = 1;
+	public static final int createAccount = 2;
+	
+	public Master(String gamename){
+		super(gamename);
+		
+		//list of all states
+		this.addState(new LogIn(logIn));
+		this.addState(new GameMenu(gameMenu));
+	}
+	
+	public void initStatesList(GameContainer gc) throws SlickException {
+		//list of all states
+		this.getState(logIn).init(gc, this);
+		this.getState(gameMenu).init(gc, this);
+		
+		//show log in screen first
+		this.enterState(logIn);
+	}
+	
+	public static void main(String[] args) {
+		AppGameContainer appgc;
+		try {
+			appgc = new AppGameContainer(new Master(gameName));
+			appgc.setDisplayMode(1280,720,false);  //window size, false means no fullscreen
+			appgc.start();
+		}catch(SlickException e){
+			e.printStackTrace();
+		}
+
+	}
+
+}
