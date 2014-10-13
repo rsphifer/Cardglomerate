@@ -1,0 +1,5 @@
+package servercomm;
+
+public class ServerAccess {
+
+}
