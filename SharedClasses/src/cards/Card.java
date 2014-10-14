@@ -1,5 +1,8 @@
 package cards;
 
-public class Card {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Card implements Serializable{
 
 }
