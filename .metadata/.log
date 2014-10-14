@@ -181,3 +181,7 @@ Java Model Exception: Java Model Status [Game(String[]) [in Game [in [Working co
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1414)
 !SUBENTRY 1 org.eclipse.jdt.core 4 969 2014-10-13 18:50:47.462
 !MESSAGE Game(String[]) [in Game [in [Working copy] Game.java [in <default> [in src [in ClientApplication]]]]] does not exist
+
+!ENTRY org.eclipse.core.net 4 0 2014-10-13 19:57:54.260
+!MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'The URL does not use a recognized protocol
+' #12006.

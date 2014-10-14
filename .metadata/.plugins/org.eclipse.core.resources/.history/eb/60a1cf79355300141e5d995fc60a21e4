@@ -30,14 +30,10 @@ public class ServerAccess {
 			oos.flush();
 			oos.close();
 			
-			/* Open input stream and read server response*/
 			ObjectInputStream ois = new ObjectInputStream(serverSocket.getInputStream());
 			Object response = ois.readObject();
 			ois.close();
-			
 			serverSocket.close();
-			return response;
-			
 		} catch (Exception e) {
 			System.err.println("In send request");
 			e.printStackTrace();
@@ -48,6 +44,6 @@ public class ServerAccess {
 	
 	public static boolean createNewAccount(Player player) {
 		Request request = new Request("createAccount", player);
-		return sendRequest(request) != null;
+		return false;
 	}
 }

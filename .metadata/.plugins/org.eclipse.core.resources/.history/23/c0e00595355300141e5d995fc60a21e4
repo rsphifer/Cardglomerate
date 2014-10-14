@@ -37,7 +37,6 @@ public class ServerAccess {
 			
 			serverSocket.close();
 			return response;
-			
 		} catch (Exception e) {
 			System.err.println("In send request");
 			e.printStackTrace();
@@ -48,6 +47,6 @@ public class ServerAccess {
 	
 	public static boolean createNewAccount(Player player) {
 		Request request = new Request("createAccount", player);
-		return sendRequest(request) != null;
+		return false;
 	}
 }

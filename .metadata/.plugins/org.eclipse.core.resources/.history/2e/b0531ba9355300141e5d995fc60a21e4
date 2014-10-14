@@ -48,6 +48,6 @@ public class ServerAccess {
 	
 	public static boolean createNewAccount(Player player) {
 		Request request = new Request("createAccount", player);
-		return sendRequest(request) != null;
+		return sendRequest(request) == null;
 	}
 }

@@ -1,9 +1,5 @@
 package servercomm;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-
 import player.Player;
 
 
@@ -21,23 +17,7 @@ public class ServerAccess {
 	
 	private static Object sendRequest(Request request) {
 		try {
-			/* Try to connect to server */
 			Socket serverSocket = new Socket(HOST_NAME, PORT_NUMBER);
-			
-			/* Open output stream and write request to server */
-			ObjectOutputStream oos = new ObjectOutputStream(serverSocket.getOutputStream());
-			oos.writeObject(request);
-			oos.flush();
-			oos.close();
-			
-			/* Open input stream and read server response*/
-			ObjectInputStream ois = new ObjectInputStream(serverSocket.getInputStream());
-			Object response = ois.readObject();
-			ois.close();
-			
-			serverSocket.close();
-			return response;
-			
 		} catch (Exception e) {
 			System.err.println("In send request");
 			e.printStackTrace();
@@ -48,6 +28,6 @@ public class ServerAccess {
 	
 	public static boolean createNewAccount(Player player) {
 		Request request = new Request("createAccount", player);
-		return sendRequest(request) != null;
+		return false;
 	}
 }
