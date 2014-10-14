@@ -23,9 +23,6 @@ public class CreateAccount extends BasicGameState {
 	private boolean password2FieldSelected = false;
 	private boolean emailFieldSelected = false;
 	private boolean passwordMisMatch = false;
-	private boolean passwordLengthError = false;
-	private boolean emailError = false;
-	private boolean usernameError = false;
 	
 	public CreateAccount(int state) {
 	}
@@ -75,35 +72,7 @@ public class CreateAccount extends BasicGameState {
 		//password mismatch
 		if (passwordMisMatch) {
 			g.drawString("Password Mismatch", 750,560);
-			if (!passwordMisMatch) {
-				g.clear();
-			}
 		}
-		
-		//password length error
-		if(passwordLengthError) {
-			g.drawString("Password must be at least 5 characters", 750, 495);
-			if (!passwordLengthError) {
-				g.clear();
-			}
-		}
-		
-		//email error
-		if(emailError) {
-			g.drawString("Invalid Email", 750, 625);
-			if (!emailError) {
-				g.clear();
-			}
-		}
-		
-		//username error
-		if(usernameError) {
-			g.drawString("Invalid Username", 750, 430);
-			if (!usernameError) {
-				g.clear();
-			}
-		}
-		
 		
 	}
 	
@@ -174,47 +143,10 @@ public class CreateAccount extends BasicGameState {
 				password1 = password1Field.getText();
 				password2 = password2Field.getText();
 				email = emailField.getText();
-				
-				//password check
 				if (!(password1.equals(password2))) {
 					passwordMisMatch = true;
 				}
-				else {
-					passwordMisMatch = false;
-					if (password1.length() < 5) {
-						passwordLengthError = true;
-					}
-					else {
-						passwordLengthError = false;
-					}
-				}
-				
-				//in client username check
-				if (username.length() < 2) {
-					usernameError = true;
-				}
-				else {
-					usernameError = false;
-				}
-				
-				
-				//in client email check
-				if (email.length() < 7) {
-					emailError = true;
-				}
-				else {
-					emailError = false;
-				}
-				
-				//send to server for verification
-				if ((!passwordMisMatch) && (!passwordLengthError) && (!usernameError) && (!emailError)) {
-					//send info to server here
-					//have server verify information
-					//if username already taken set usernameError to true and have user try again
-					//else create account and change to log in screen
-					sbg.enterState(0);
-				}
-				
+				sbg.enterState(0);				
 			}
 		}
 		
