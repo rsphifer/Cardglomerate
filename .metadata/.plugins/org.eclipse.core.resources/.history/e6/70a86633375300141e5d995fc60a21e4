@@ -1,7 +1,5 @@
 package misc;
 
-import java.io.Serializable;
-
 
 /**
  * @author 	Richard Phifer<rsphifer@purdue.edu>
@@ -10,8 +8,7 @@ import java.io.Serializable;
  * All communication between client applications and the server will be in the form of a Request
  * 
  */
-@SuppressWarnings("serial")
-public class Request implements Serializable{
+public class Request {
 
 	private String action;
 	private Object object;
