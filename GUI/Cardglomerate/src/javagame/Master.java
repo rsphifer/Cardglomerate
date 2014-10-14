@@ -46,7 +46,7 @@ public class Master extends StateBasedGame {
 	}
 	
 	public static void main(String[] args) {
-		ServerAccess.createNewAccount(new Player());
+		//ServerAccess.createNewAccount(new Player());
 		
 		AppGameContainer appgc;
 		try {

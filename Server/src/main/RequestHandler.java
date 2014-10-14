@@ -17,7 +17,6 @@ public class RequestHandler implements Runnable {
 	@Override
 	public void run() {
 		
-		String message = null;
 		Object obj = null;
 		try {
 			ObjectInputStream ois = new ObjectInputStream(
@@ -29,23 +28,34 @@ public class RequestHandler implements Runnable {
 				
 				if (action.equals("updateCardGameState")) {
 					System.out.println("update card game state request");
+					
+				} else if (action.equals("createGame")) {
+					System.out.println("create new game request");
+					
 				} else if (action.equals("login")) {
 					System.out.println("login request");
+					
 				} else if (action.equals("logout")) {
 					System.out.println("logout request");
+					
 				} else if (action.equals("createAccount")) {
 					System.out.println("create account request");
+					
 				} 
 				
 				
 				
 				
+				boolean PLACE_HOLDER = true;
 				
 				ObjectOutputStream oos = new ObjectOutputStream(
 						clientSocket.getOutputStream());
+				oos.writeObject(PLACE_HOLDER);
 				oos.flush();
 				oos.close();
+				ois.close();
 			}
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -56,6 +66,7 @@ public class RequestHandler implements Runnable {
 		}
 
 		try {
+			
 			clientSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
