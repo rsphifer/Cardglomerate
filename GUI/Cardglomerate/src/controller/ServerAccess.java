@@ -6,6 +6,7 @@ import java.net.Socket;
 
 import misc.GameCreationRequest;
 import misc.Request;
+import player.NewPlayerRequest;
 import player.Player;
 import cardgames.CardGame;
 
@@ -19,7 +20,7 @@ import cardgames.CardGame;
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME 	= "sac12.cs.purdue.edu";
+	private static final String HOST_NAME 	= "sslab19.cs.purdue.edu";
 	private static final int	PORT_NUMBER = 4000;
 	
 	private static Object sendRequestWithResponse(Request request) {
@@ -60,18 +61,23 @@ public class ServerAccess {
 		return sendRequestWithResponse(request) != null;
 	}
 	
-	public static boolean createNewAccount(Player player) {
+	public static boolean createNewAccount(NewPlayerRequest player) {
 		Request request = new Request("createAccount", player);
 		return sendRequestWithResponse(request) != null;
 	}
 	
-	public static boolean loginRequest(Player player) {
+	public static boolean loginRequest(NewPlayerRequest player) {
 		Request request = new Request("login", player);
 		return sendRequestWithResponse(request) != null;
 	}
 	
 	public static boolean logoutRequest(Player player) {
 		Request request = new Request("logout", player);
+		return sendRequestWithResponse(request) != null;
+	}
+	
+	public static boolean retrievePassword(String emailAddress) {
+		Request request = new Request("retrievePassword", emailAddress);
 		return sendRequestWithResponse(request) != null;
 	}
 }
