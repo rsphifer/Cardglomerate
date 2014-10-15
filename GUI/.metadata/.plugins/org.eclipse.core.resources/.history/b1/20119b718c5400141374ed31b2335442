@@ -69,10 +69,6 @@ public class GameMenu extends BasicGameState {
 		g.drawString("Egyptian Ratscrew", 400, 350);
 		g.drawString("Go Fish", 700, 350);
 		
-		//Account Options Button
-		g.drawRect(1070, 670, 200, 40);
-		g.drawString("Account Options", 1100, 680);
-		
 	}
 	
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
@@ -120,13 +116,6 @@ public class GameMenu extends BasicGameState {
 		if((xpos>660 && xpos<910) && (ypos>95 && ypos<345)) {
 			if(Mouse.isButtonDown(0)) {
 				sbg.enterState(3); //display coming soon screen
-			}
-		}
-		
-		//Account options clicked
-		if((xpos>1070 && xpos<1270) && (ypos>10 && ypos<50)) {
-			if(Mouse.isButtonDown(0)) {
-				sbg.enterState(6);
 			}
 		}
 		

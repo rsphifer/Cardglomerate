@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import player.Player;
-import servercomm.ServerAccess;
+//import servercomm.ServerAccess;
 
 public class Master extends StateBasedGame {
 

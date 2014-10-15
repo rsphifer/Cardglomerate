@@ -123,13 +123,6 @@ public class GameMenu extends BasicGameState {
 			}
 		}
 		
-		//Account options clicked
-		if((xpos>1070 && xpos<1270) && (ypos>10 && ypos<50)) {
-			if(Mouse.isButtonDown(0)) {
-				sbg.enterState(6);
-			}
-		}
-		
 	}
 	
 	public int getID() {
