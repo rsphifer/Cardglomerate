@@ -13,6 +13,7 @@ public class CardGame implements Serializable{
 	private ArrayList<Player> players;
 	private Queue<Card> deck;
 	private int test(){
+		
 		return 0;
 	}
 

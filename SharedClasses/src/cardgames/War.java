@@ -27,6 +27,8 @@ public class War extends CardGame implements Serializable{
 	}
 
 	private void roundTie(){
+		model.war();
+		
 		Card p1Down = this.players.get(0).playTopCard();
 		this.winnings.push(p1Down);
 		Card p1Up = this.players.get(0).playTopCard();
@@ -36,11 +38,15 @@ public class War extends CardGame implements Serializable{
 		this.winnings.push(p2Down);
 		Card p2Up = this.players.get(1).playTopCard();
 		this.winnings.push(p2Up);
+		
+		Thread.sleep(3000);
 
 		this.score(p1Up,p2Up);
 	}
 
 	private void score(Card c1, Card c2){
+		model.displayThese2Cards(c1,c2);
+		
 		if(c1.getPower() > c2.getPower()){
 			roundWin(this.players.get(0));
 		} else if(c1.getPower() < c2.getPower()){
@@ -51,7 +57,8 @@ public class War extends CardGame implements Serializable{
 	}
 
 	private void win(Player winner){
-		// tell server who won
+		model.win(winner.userName);
+		System.out.println(winner.userName+" won!");
 	}
 
 	public void play(){
@@ -61,7 +68,9 @@ public class War extends CardGame implements Serializable{
 			this.winnings.push(p1Card);
 			Card p2Card = this.players.get(0).playTopCard();
 			this.winnings.push(p2Card);
-
+			while(model.isWaiting()){
+				Thread.sleep(1000);
+			}
 			this.score(p1Card, p2Card);
 		}
 		if(this.players.get(0).getHandSize() == 0){

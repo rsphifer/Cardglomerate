@@ -5,6 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import cardgames.CardGame;
 import controller.ServerAccess;
 import player.Player;
 
@@ -50,6 +51,8 @@ public class Master extends StateBasedGame {
 	
 	public static void main(String[] args) {
 		//ServerAccess.createNewAccount(new Player());
+		//ServerAccess.createNewGame(new Player(), new CardGame());
+		//ServerAccess.retrievePassword("blah");
 		
 		AppGameContainer appgc;
 		try {

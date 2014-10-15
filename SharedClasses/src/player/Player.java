@@ -14,7 +14,7 @@ public class Player implements Serializable{
 	private Queue<Card> hand;
 	private Queue<Card> discard;
 	private int money;
-	private String userName;
+	public String userName;
 	private String password;
 	
 	public Player(String playerName, String password){

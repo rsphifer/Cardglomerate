@@ -41,7 +41,10 @@ public class RequestHandler implements Runnable {
 				} else if (action.equals("createAccount")) {
 					System.out.println("create account request");
 					
-				} 
+				} else if (action.equals("retrievePassword")) {
+					System.out.println("retrieve password request");
+
+				}
 				
 				
 				
