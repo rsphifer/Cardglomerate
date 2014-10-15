@@ -1,0 +1,29 @@
+package player;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import ClientApplication.src.Card;
+import ClientApplication.src.Queue;
+
+
+@SuppressWarnings("serial")
+public class Player implements Serializable{
+
+	private ArrayList<Player> friends;
+	private Queue discard;
+	public Player(Queue startingHand, int cash, String playerName){
+		private Queue hand = startingHand;
+		//private Queue deck;
+		private int money = cash;
+		private String name = playerName;
+	}
+
+	public int addCardToHand(Card newCard){
+		this.hand.add(newCard);
+	}
+
+	public int playTopCard(Card newCard){
+		this.hand.remove();
+	}
+}
