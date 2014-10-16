@@ -20,7 +20,9 @@ public class War extends CardGame implements Serializable{
 	public War(ArrayList<Player> playerNames){
 		this.players = playerNames;
 		winnings = new LinkedList<Card>();
+		cardsToDisplay = new LinkedList<Card>();
 		this.cardGame = new CardGame();
+		cardGame.fillDeck();
 		cardGame.connect();
 		play();
 	}
@@ -35,7 +37,7 @@ public class War extends CardGame implements Serializable{
 
 	private void roundWin(Player winner){
 		while(!this.winnings.isEmpty()){
-			winner.addCardToHand((Card)this.winnings.remove(0));
+			winner.addCardToDiscard((Card)this.winnings.remove(0));
 		}
 	}
 
@@ -56,19 +58,17 @@ public class War extends CardGame implements Serializable{
 	}
 
 	private void score(Card c1, Card c2){
-		if(c1==null) {
+		if(c1==null || c2==null) {
 			this.gameOver = true;
 			return;
 		}
-		if(c2==null) {
-			this.gameOver = true;
-			return;
+		while(!cardsToDisplay.isEmpty()){
+			cardsToDisplay.remove();
 		}
-
-		cardsToDisplay.remove();
-		cardsToDisplay.remove();
 		cardsToDisplay.add(c1);
 		cardsToDisplay.add(c2);
+		
+		//System.out.println(c1.getPower()+" of "+c1.getSuit()+" vs "+c2.getPower()+" of "+c2.getSuit());
 		
 		if(c1.getPower() > c2.getPower()){
 			roundWin(this.players.get(0));
@@ -101,29 +101,34 @@ public class War extends CardGame implements Serializable{
 		
 		for(int i=0;i<52;i++){
 			if(i%2 == 0){
-				this.players.get(1).addCardToHand(this.cardGame.getTopOfDeck());
-			} else {
 				this.players.get(0).addCardToHand(this.cardGame.getTopOfDeck());
+			} else {
+				this.players.get(1).addCardToHand(this.cardGame.getTopOfDeck());
 			}
 		}
 		int j=0;
+		Card p1Card;
+		Card p2Card;
 		while(!gameOver){
-			System.out.println("Turn: "+(j++));
-			Card p1Card = this.players.get(0).playTopCard();
-			this.winnings.push(p1Card);
-			Card p2Card = this.players.get(0).playTopCard();
-			this.winnings.push(p2Card);
-			/*while(model.isWaiting()){
-				Thread.sleep(1000);
-			}*/
-			//while(model.isWaiting()){
-			//	Thread.sleep(1000);
-			//}
-			this.score(p1Card, p2Card);
-			if(this.players.get(0).getHandSize() == 0 || this.players.get(1).getHandSize() == 0){
+			for(Player p : this.players){
+				System.out.print(p.getHandSize()+"   ");
+			}
+			System.out.println();
+			j++;
+			if((p1Card = this.players.get(0).playTopCard())!=null){
+				this.winnings.push(p1Card);
+			} else {
 				this.gameOver = true;
 			}
+			if((p2Card = this.players.get(1).playTopCard())!=null){
+				this.winnings.push(p2Card);
+			} else {
+				this.gameOver = true;
+			}
+			
+			this.score(p1Card, p2Card);
 		}
+		System.out.println("Turns: "+j);
 		if(this.players.get(0).getHandSize() == 0){
 			this.win(this.players.get(1));
 		} else {
