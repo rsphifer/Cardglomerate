@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="C:\Users\Moosington\Google Drive\Classes\CS 250 + 251" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="/homes/rsphifer/cs307/Cardglomerate" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="FatJarPackageWizard">
 		<item value="C:\Users\Moosington\Google Drive\Classes\CS 307\GUI" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="E:\Libraries\Downloads\Temp\Test.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>

@@ -59,7 +59,7 @@ public class Master extends StateBasedGame {
 	public static void main(String[] args) {
 		//ServerAccess.createNewAccount(new Player());
 		//ServerAccess.createNewGame(new Player(), new CardGame());
-		ServerAccess.retrievePassword("blah");
+		//ServerAccess.retrievePassword("blah");
 		
 		AppGameContainer appgc;
 		try {

@@ -6,6 +6,7 @@ import java.net.Socket;
 
 import player.NewPlayerRequest;
 import player.Player;
+import mail.EmailPassword;
 import misc.Request;
 
 public class RequestHandler implements Runnable {
@@ -63,6 +64,10 @@ public class RequestHandler implements Runnable {
 					
 					/* Check db for email..if found send password */
 					
+					EmailPassword ep = new EmailPassword(emailAddress, "HiImATempPassword!");
+					Thread t = new Thread(ep);
+					t.start();
+					
 					obj = true;
 				}
 				
@@ -95,6 +100,7 @@ public class RequestHandler implements Runnable {
 			e.printStackTrace();
 		}
 
+		return;
 	}
 
 }

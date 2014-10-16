@@ -1,0 +1,24 @@
+package mail;
+
+import java.util.*;
+
+import com.sun.xml.internal.fastinfoset.sax.Properties;
+
+public class EmailPassword implements Runnable {
+
+	private final String FROM_ADDRESS = "Cardglomerate@yahoo.com";
+	
+	private String message, toAddress;
+	
+	public EmailPassword(String toAddress, String message) {
+		this.message = message;
+		this.toAddress = toAddress;
+	}
+	
+	@Override
+	public void run() {
+		java.util.Properties props = System.getProperties();
+		
+	}
+
+}
