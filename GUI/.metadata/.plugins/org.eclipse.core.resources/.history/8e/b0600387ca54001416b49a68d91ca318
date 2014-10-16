@@ -6,7 +6,6 @@ import org.newdawn.slick.state.*;
 
 //this GUI needs to have 6 variables updated by the model and that is all
 //curCard1, curCard2, playerSize, opponentSize, winner, and gameOver
-//gets these when deck is clicked
 
 public class WarGame extends BasicGameState {
 	
