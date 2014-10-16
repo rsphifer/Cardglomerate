@@ -132,14 +132,13 @@ public class DatabaseAccess {
 			}
 			else{
 
-			System.out.println("Username or password incorrect.");
+				System.out.println("Username or password incorrect.");
 
-			verify.close();
-			checkfunc.close();
-			conn.close();
+				verify.close();
+				checkfunc.close();
+				conn.close();
 
-			return false;
-
+				return false;
 			}
 		}
 		catch(SQLException se){
@@ -153,5 +152,67 @@ public class DatabaseAccess {
 		System.out.println("A problem occurred, please try again");
 
 		return false;
+	}
+
+	public static String retrievePassword(String username, String email){
+
+		Connection conn = null;
+		Statement existfunc = null;
+		Statement resetfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		existfunc = conn.createStatement();
+			resetfunc = conn.createStatement();
+      		
+
+			String check_exists;
+				check_exists = "SELECT COUNT(id) from users WHERE email=\"" + email + "\" AND username=\"" + username + "\"";
+
+			ResultSet existing = existfunc.executeQuery(check_exists);
+			existing.next();
+			if(existing.getInt("COUNT(id)") == 1){ /*Username/email combination valid, create and send the new password*/
+
+				String randpass = Long.toHexString(Double.doubleToLongBits(Math.random()));
+
+				String new_pw;
+      			new_pw = "UPDATE users SET password=\"" + randpass + "\" WHERE username=\"" + username + "\"";
+
+				resetfunc.executeUpdate(new_pw);
+
+				existing.close();
+				existfunc.close();
+				resetfunc.close();
+				conn.close();
+
+				System.out.println("A new password will be sent to your email address.");
+				return randpass;
+			}
+			else{
+
+				System.out.println("There is no account with those credentials, please try again.");
+
+				existing.close();
+				existfunc.close();
+				resetfunc.close();
+				conn.close();
+
+				return "";
+			}
+
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+		return "";
 	}
 }
