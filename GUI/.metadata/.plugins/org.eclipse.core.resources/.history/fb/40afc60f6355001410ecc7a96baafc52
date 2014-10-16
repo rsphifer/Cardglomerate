@@ -34,12 +34,12 @@ public class Master extends StateBasedGame {
 		
 		//list of all states
 		this.addState(new LogIn(logIn, model));
-		this.addState(new GameMenu(gameMenu, model));
+		this.addState(new GameMenu(gameMenu));
 		this.addState(new CreateAccount(createAccount, model));
-		this.addState(new ComingSoon(comingSoon, model));
-		this.addState(new WarOptions(warOptions, model));
-		this.addState(new WarGame(warGame, model));
-		this.addState(new AccountOptions(accountOptions, model));
+		this.addState(new ComingSoon(comingSoon));
+		this.addState(new WarOptions(warOptions));
+		this.addState(new WarGame(warGame));
+		this.addState(new AccountOptions(accountOptions));
 	}
 	
 	public void initStatesList(GameContainer gc) throws SlickException {

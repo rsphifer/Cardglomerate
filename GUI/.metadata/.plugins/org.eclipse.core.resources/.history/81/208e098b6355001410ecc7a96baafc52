@@ -1,18 +1,10 @@
 package view;
 
-import model.Model;
+import org.lwjgl.input.*;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.*;
 
-import org.lwjgl.input.Mouse;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-
-public class ComingSoon extends BasicGameState {
-	
-	private Model model;
+public class WarOptions extends BasicGameState {
 	
 	private String mouse = "No input yet";
 	private Image background;
@@ -20,8 +12,7 @@ public class ComingSoon extends BasicGameState {
 	private Image arrow;
 
 	
-	public ComingSoon(int state, Model model) {
-		this.model = model;
+	public WarOptions(int state) {
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
@@ -30,11 +21,11 @@ public class ComingSoon extends BasicGameState {
 		background = background.getScaledCopy(1280, 720);
 		
 		//initialize and scale images
-		image = new Image("res/construction.jpg");
+		image = new Image("res/Many Cards.jpg");
+		image = image.getScaledCopy(386, 258);
 		
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
-		
 
 	}
 	
@@ -45,11 +36,13 @@ public class ComingSoon extends BasicGameState {
 		//mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
 		
-		//render message
-		g.drawString("Coming Soon!", 600, 10);
+		//render message and image
+		g.drawString("WAR!", 600, 10);
+		g.drawImage(image, 447,50);
 		
-		//render image
-		g.drawImage(image, 320, 75);
+		//render play button
+		g.drawRect(535, 350, 200, 100);
+		g.drawString("Play Against Ai!", 570, 380);
 		
 		//render arrow
 		g.drawImage(arrow, 0, 570);
@@ -69,9 +62,18 @@ public class ComingSoon extends BasicGameState {
 			}
 		}
 		
+		//Play AI
+		if((xpos>535 && xpos<735) && (ypos>270 && ypos<370)) {
+			if(Mouse.isButtonDown(0)) {
+				sbg.enterState(5);
+			}
+		}
+		
+		
+		
 	}
 	
 	public int getID() {
-		return 3;
+		return 4;
 	}
 }

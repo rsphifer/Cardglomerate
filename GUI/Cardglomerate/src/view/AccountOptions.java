@@ -1,10 +1,17 @@
 package view;
 
-import org.lwjgl.input.*;
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.*;
+import model.Model;
+
+import org.lwjgl.input.Mouse;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class AccountOptions extends BasicGameState {
+	private Model model;
 	
 	private String mouse = "No input yet";
 	private Image background;
@@ -12,7 +19,8 @@ public class AccountOptions extends BasicGameState {
 	private Image arrow;
 
 	
-	public AccountOptions(int state) {
+	public AccountOptions(int state, Model model) {
+		this.model = model;
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
