@@ -71,6 +71,7 @@ public class DatabaseAccess {
 
 
 			ResultSet existing = existfunc.executeQuery(check_exists);
+			existing.next();
 			if(existing.getInt("COUNT(id)") != 0){ /*Username or email already used*/
 
 				System.out.println("Username or email address already used.");
