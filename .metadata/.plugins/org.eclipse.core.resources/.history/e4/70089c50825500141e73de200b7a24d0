@@ -63,7 +63,7 @@ public class ServerAccess {
 	
 	public static boolean createNewAccount(NewPlayerRequest player) {
 		Request request = new Request("createAccount", player);
-		return (boolean)sendRequestWithResponse(request);
+		return sendRequestWithResponse(request) != null;
 	}
 	
 	public static Player loginRequest(NewPlayerRequest player) {
@@ -77,8 +77,8 @@ public class ServerAccess {
 		return sendRequestWithResponse(request) != null;
 	}
 	
-	public static boolean retrievePassword(NewPlayerRequest player) {
-		Request request = new Request("retrievePassword", player);
+	public static boolean retrievePassword(String emailAddress) {
+		Request request = new Request("retrievePassword", emailAddress);
 		return sendRequestWithResponse(request) != null;
 	}
 }

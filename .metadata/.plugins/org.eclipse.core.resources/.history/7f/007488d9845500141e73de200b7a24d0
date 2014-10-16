@@ -46,13 +46,6 @@ public class RequestHandler implements Runnable {
 					boolean isSuccessful = DatabaseAccess.logIn(npr.getUserName(), npr.getPassword());
 					obj = isSuccessful;
 					
-					if (isSuccessful) {
-						System.out.println("success!");
-					} else {
-						System.out.println("fail!");
-
-					}
-					
 //					if (true) { /* Valid login */
 //						Player tmp = new Player(npr.getUserName(), npr.getPassword());
 //						obj = tmp;
@@ -72,12 +65,12 @@ public class RequestHandler implements Runnable {
 					
 					
 				} else if (action.equals("retrievePassword")) {
-					NewPlayerRequest npr= (NewPlayerRequest)request.getObject();
-					System.out.printf("retrieve password request, email: %s\n", npr.getEmailAddress());
+					String emailAddress = (String)request.getObject();
+					System.out.printf("retrieve password request, email: %s\n", emailAddress);
 					
 					/* Check db for email..if found send password */
 					
-					EmailPassword ep = new EmailPassword(npr.getEmailAddress(), "HiImATempPassword!");
+					EmailPassword ep = new EmailPassword(emailAddress, "HiImATempPassword!");
 					Thread t = new Thread(ep);
 					t.start();
 					

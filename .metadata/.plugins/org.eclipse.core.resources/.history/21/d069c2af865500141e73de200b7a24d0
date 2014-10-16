@@ -77,8 +77,8 @@ public class ServerAccess {
 		return sendRequestWithResponse(request) != null;
 	}
 	
-	public static boolean retrievePassword(NewPlayerRequest player) {
-		Request request = new Request("retrievePassword", player);
+	public static boolean retrievePassword(String emailAddress) {
+		Request request = new Request("retrievePassword", emailAddress);
 		return sendRequestWithResponse(request) != null;
 	}
 }

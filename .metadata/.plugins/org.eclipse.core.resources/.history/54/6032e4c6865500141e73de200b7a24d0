@@ -73,11 +73,11 @@ public class RequestHandler implements Runnable {
 					
 				} else if (action.equals("retrievePassword")) {
 					NewPlayerRequest npr= (NewPlayerRequest)request.getObject();
-					System.out.printf("retrieve password request, email: %s\n", npr.getEmailAddress());
+					System.out.printf("retrieve password request, email: %s\n", emailAddress);
 					
 					/* Check db for email..if found send password */
 					
-					EmailPassword ep = new EmailPassword(npr.getEmailAddress(), "HiImATempPassword!");
+					EmailPassword ep = new EmailPassword(emailAddress, "HiImATempPassword!");
 					Thread t = new Thread(ep);
 					t.start();
 					

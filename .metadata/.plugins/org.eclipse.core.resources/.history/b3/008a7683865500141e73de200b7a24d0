@@ -185,13 +185,12 @@ public class LogIn extends BasicGameState{
 		if((xpos>750 && xpos<950) && (ypos>40 && ypos<70) && (forgotClicked)) {
 			if(Mouse.isButtonDown(0) && !passwordRequestSubmitted) {
 				passwordRequestSubmitted = true;
-				String uname = usernameField.getText();
 				email = emailField.getText();
-				if (email.length() > 1 && uname.length() > 1) {
+				if (email.length() > 1) {
 					//code to send email address to server goes here
 					//if valid and email sent do following
 					//else set email error to true
-					model.requestPassword(uname, email);
+					model.requestPassword(email);
 					
 					emailError = false;
 					forgotClicked = false;
