@@ -66,10 +66,9 @@ public class ServerAccess {
 		return sendRequestWithResponse(request) != null;
 	}
 	
-	public static Player loginRequest(NewPlayerRequest player) {
+	public static boolean loginRequest(NewPlayerRequest player) {
 		Request request = new Request("login", player);
-		Player tmp = (Player)sendRequestWithResponse(request);
-		return tmp;
+		return sendRequestWithResponse(request) != null;
 	}
 	
 	public static boolean logoutRequest(Player player) {

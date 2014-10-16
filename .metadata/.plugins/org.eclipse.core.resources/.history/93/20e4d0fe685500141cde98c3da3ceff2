@@ -69,7 +69,7 @@ public class RequestHandler implements Runnable {
 				
 				ObjectOutputStream oos = new ObjectOutputStream(
 						clientSocket.getOutputStream());
-				oos.writeObject(obj);
+				oos.writeObject(PLACE_HOLDER);
 				oos.flush();
 				oos.close();
 				ois.close();

@@ -247,6 +247,8 @@ public class CreateAccount extends BasicGameState {
 						password2Field.setText("");
 					}
 					
+				} else {
+					password2Field.setText("");
 				}
 				hasSubmittedRequest = false;
 				

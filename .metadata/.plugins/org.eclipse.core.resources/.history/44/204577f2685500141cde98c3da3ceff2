@@ -45,10 +45,6 @@ public class RequestHandler implements Runnable {
 					
 					if (true) { /* Valid login */
 						Player tmp = new Player(npr.getUserName(), npr.getPassword());
-						obj = tmp;
-					} else {
-						/* Invalid login */
-						obj = null;
 					}
 					
 				} else if (action.equals("logout")) {
@@ -69,7 +65,7 @@ public class RequestHandler implements Runnable {
 				
 				ObjectOutputStream oos = new ObjectOutputStream(
 						clientSocket.getOutputStream());
-				oos.writeObject(obj);
+				oos.writeObject(PLACE_HOLDER);
 				oos.flush();
 				oos.close();
 				ois.close();

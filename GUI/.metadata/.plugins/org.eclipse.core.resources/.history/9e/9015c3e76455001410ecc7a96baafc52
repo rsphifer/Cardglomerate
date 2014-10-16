@@ -7,7 +7,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.gui.*;
+import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -35,7 +35,6 @@ public class CreateAccount extends BasicGameState {
 	private boolean emailError = false;
 	private boolean usernameError = false;
 	
-	
 	private boolean hasSubmittedRequest = false;
 	
 	public CreateAccount(int state, Model model) {
@@ -51,15 +50,11 @@ public class CreateAccount extends BasicGameState {
 		logo = new Image("res/Cardglomerate 2.png");
 		logo = logo.getScaledCopy(491, 369);
 		
-		
-		
 		//initialize textfields
 		usernameField = new TextField(gc, gc.getDefaultFont(), 535, 425, 200, 30);
 		password1Field = new TextField(gc, gc.getDefaultFont(), 535, 490, 200, 30);
 		password2Field = new TextField(gc, gc.getDefaultFont(), 535, 555, 200, 30);
 		emailField = new TextField(gc, gc.getDefaultFont(), 535, 620, 200, 30);
-		
-		
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
@@ -233,18 +228,15 @@ public class CreateAccount extends BasicGameState {
 					if (model.createAccountRequest(username, password1, email)) {
 						/* Account creation success */
 						
-						/* Reset fields to prevent spam */
-						usernameField.setText("");
-						password1Field.setText("");
-						password2Field.setText("");
-						emailField.setText("");
-						
+						usernameField.setText(null);
+						password1Field.setText(null);
+						password2Field.setText(null);
+						emailField.setText(null);
 						System.out.println("account creation success");
 						sbg.enterState(0);
 					} else {
 						/* Account creation failed */
 						System.out.println("account creation failure");
-						password2Field.setText("");
 					}
 					
 				}

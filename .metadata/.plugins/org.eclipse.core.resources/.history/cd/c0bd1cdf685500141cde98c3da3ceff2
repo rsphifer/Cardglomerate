@@ -5,7 +5,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import player.NewPlayerRequest;
-import player.Player;
 import misc.Request;
 
 public class RequestHandler implements Runnable {
@@ -29,8 +28,6 @@ public class RequestHandler implements Runnable {
 				
 				boolean PLACE_HOLDER = true;
 				obj = PLACE_HOLDER;
-				
-				
 				if (action.equals("updateCardGameState")) {
 					System.out.println("update card game state request");
 					
@@ -44,11 +41,7 @@ public class RequestHandler implements Runnable {
 					/* Check credentials in db */
 					
 					if (true) { /* Valid login */
-						Player tmp = new Player(npr.getUserName(), npr.getPassword());
-						obj = tmp;
-					} else {
-						/* Invalid login */
-						obj = null;
+						
 					}
 					
 				} else if (action.equals("logout")) {
@@ -69,7 +62,7 @@ public class RequestHandler implements Runnable {
 				
 				ObjectOutputStream oos = new ObjectOutputStream(
 						clientSocket.getOutputStream());
-				oos.writeObject(obj);
+				oos.writeObject(PLACE_HOLDER);
 				oos.flush();
 				oos.close();
 				ois.close();

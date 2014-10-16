@@ -233,12 +233,10 @@ public class CreateAccount extends BasicGameState {
 					if (model.createAccountRequest(username, password1, email)) {
 						/* Account creation success */
 						
-						/* Reset fields to prevent spam */
 						usernameField.setText("");
 						password1Field.setText("");
 						password2Field.setText("");
 						emailField.setText("");
-						
 						System.out.println("account creation success");
 						sbg.enterState(0);
 					} else {
