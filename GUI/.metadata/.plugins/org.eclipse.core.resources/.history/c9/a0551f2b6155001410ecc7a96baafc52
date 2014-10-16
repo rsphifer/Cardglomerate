@@ -35,8 +35,6 @@ public class CreateAccount extends BasicGameState {
 	private boolean emailError = false;
 	private boolean usernameError = false;
 	
-	private boolean hasSubmittedRequest = false;
-	
 	public CreateAccount(int state, Model model) {
 		this.model = model;
 	}
@@ -180,8 +178,7 @@ public class CreateAccount extends BasicGameState {
 		
 		//Create Account button clicked
 		if((xpos>535 && xpos<735) && (ypos>20 && ypos<50)) {
-			if(Mouse.isButtonDown(0) && !hasSubmittedRequest) {
-				hasSubmittedRequest = true;
+			if(Mouse.isButtonDown(0)) {
 				username = usernameField.getText();
 				password1 = password1Field.getText();
 				password2 = password2Field.getText();
@@ -224,18 +221,8 @@ public class CreateAccount extends BasicGameState {
 					//have server verify information
 					//if username already taken set usernameError to true and have user try again
 					//else create account and change to log in screen
-					
-					if (model.createAccountRequest(username, password1, email)) {
-						/* Account creation success */
-						System.out.println("account creation success");
-						sbg.enterState(0);
-					} else {
-						/* Account creation failed */
-						System.out.println("account creation failure");
-					}
-					
+					sbg.enterState(0);
 				}
-				hasSubmittedRequest = false;
 				
 			}
 		}

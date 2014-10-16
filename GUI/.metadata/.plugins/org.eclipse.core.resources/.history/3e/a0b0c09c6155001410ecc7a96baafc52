@@ -181,7 +181,6 @@ public class CreateAccount extends BasicGameState {
 		//Create Account button clicked
 		if((xpos>535 && xpos<735) && (ypos>20 && ypos<50)) {
 			if(Mouse.isButtonDown(0) && !hasSubmittedRequest) {
-				hasSubmittedRequest = true;
 				username = usernameField.getText();
 				password1 = password1Field.getText();
 				password2 = password2Field.getText();
@@ -235,7 +234,6 @@ public class CreateAccount extends BasicGameState {
 					}
 					
 				}
-				hasSubmittedRequest = false;
 				
 			}
 		}
