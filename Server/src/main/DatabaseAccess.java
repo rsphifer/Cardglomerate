@@ -84,7 +84,7 @@ public class DatabaseAccess {
 				return false;
 			}
 
-			addfunc.executeQuery(add_new);
+			addfunc.updateQuery(add_new);
 
 			existing.close();
 			existfunc.close();
