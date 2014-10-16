@@ -30,8 +30,6 @@ public class LogIn extends BasicGameState{
 	private boolean emailFieldSelected = false;
 	private boolean forgotClicked = false;
 	
-	private boolean passwordRequestSubmitted = false;
-	
 	public LogIn(int state, Model model) {
 		this.model = model;
 	}
@@ -183,15 +181,12 @@ public class LogIn extends BasicGameState{
 		
 		//send email button clicked
 		if((xpos>750 && xpos<950) && (ypos>40 && ypos<70) && (forgotClicked)) {
-			if(Mouse.isButtonDown(0) && !passwordRequestSubmitted) {
-				passwordRequestSubmitted = true;
+			if(Mouse.isButtonDown(0)) {
 				email = emailField.getText();
 				if (email.length() > 1) {
 					//code to send email address to server goes here
 					//if valid and email sent do following
 					//else set email error to true
-					model.requestPassword(email);
-					
 					emailError = false;
 					forgotClicked = false;
 					emailField.setText("");
@@ -199,7 +194,6 @@ public class LogIn extends BasicGameState{
 				else {
 					emailError = true;
 				}
-				passwordRequestSubmitted = false;
 			}
 			
 		}

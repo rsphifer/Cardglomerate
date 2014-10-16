@@ -58,12 +58,9 @@ public class RequestHandler implements Runnable {
 					System.out.println("create account request");
 					
 				} else if (action.equals("retrievePassword")) {
+					System.out.println("retrieve password request");
 					String emailAddress = (String)request.getObject();
-					System.out.printf("retrieve password request, email: %s\n", emailAddress);
-					
-					/* Check db for email..if found send password */
-					
-					obj = true;
+
 				}
 				
 				

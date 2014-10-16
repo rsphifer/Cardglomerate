@@ -40,10 +40,6 @@ public class Model {
 		}
 		return false;
 	}
-	
-	public boolean requestPassword(String emailAddress) {
-		return ServerAccess.retrievePassword(emailAddress);
-	}
 
 	public CardGame getCurrentGame() {
 		return currentGame;
