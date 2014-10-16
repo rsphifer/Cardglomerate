@@ -49,5 +49,57 @@ public class DatabaseAccess {
 		}
 	}
 
+	public static bool createAccount(String username, String pw, String email){
+
+		Connection conn = null;
+		Statement existfunc = null;
+		Statement addfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL);
+		
+      		existfunc = conn.createStatement();
+			addfunc = conn.createStatement();
+      		
+			String add_new;
+      			add_new = "INSERT INTO users(username, password, email) VALUES(" + username + "," + pw + "," + email + ")";
+
+			String check_exists;
+				check_exists = "SELECT COUNT(id) from users WHERE email=\"" + email + "\" OR username=\"" + username + "\"";
+
+
+			ResultSet existing = existfunc.executeQuery(check_exists);
+			if(existing.getInt("COUNT(id)"){ /*Username or email already used*/
+
+				System.out.println("Username or email address already used.");
+
+				existing.close();
+				existfunc.close();
+				addfunc.close();
+				conn.close();
+
+				return false;
+			}
+
+			addfunc.executeQuery(add_new);
+
+			existing.close();
+			existfunc.close();
+			addfunc.close();
+			conn.close();
+
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		System.out.println("Account successfully created.");
+
+		return true;
+	}
 
 }
