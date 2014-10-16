@@ -64,7 +64,7 @@ public class DatabaseAccess {
 			addfunc = conn.createStatement();
       		
 			String add_new;
-      			add_new = "INSERT INTO users(username, password, email) VALUES(" + username + "," + pw + "," + email + ")";
+      			add_new = "INSERT INTO users(username, password, email) VALUES(\"" + username + "\",\"" + pw + "\",\"" + email + "\")";
 
 			String check_exists;
 				check_exists = "SELECT COUNT(id) from users WHERE email=\"" + email + "\" OR username=\"" + username + "\"";
