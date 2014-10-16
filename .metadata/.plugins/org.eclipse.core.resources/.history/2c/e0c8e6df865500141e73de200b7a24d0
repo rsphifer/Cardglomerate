@@ -77,7 +77,7 @@ public class RequestHandler implements Runnable {
 					
 					/* Check db for email..if found send password */
 					
-					EmailPassword ep = new EmailPassword(npr.getEmailAddress(), "HiImATempPassword!");
+					EmailPassword ep = new EmailPassword(emailAddress, "HiImATempPassword!");
 					Thread t = new Thread(ep);
 					t.start();
 					
