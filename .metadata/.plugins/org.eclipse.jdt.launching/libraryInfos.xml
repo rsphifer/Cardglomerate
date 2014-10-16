@@ -40,6 +40,25 @@
 <entry path="C:\Program Files\Java\jre7\lib\endorsed"/>
 </endorsedDirs>
 </libraryInfo>
+<libraryInfo home="/usr/opt/oracle-jdk-bin-1.8.0.20/jre" version="1.8.0_20">
+<bootpath>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/lib/resources.jar"/>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/lib/rt.jar"/>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/lib/sunrsasign.jar"/>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/lib/jsse.jar"/>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/lib/jce.jar"/>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/lib/charsets.jar"/>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/lib/jfr.jar"/>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/lib/ext"/>
+<entry path="/usr/java/packages/lib/ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="/usr/opt/oracle-jdk-bin-1.8.0.20/jre/lib/endorsed"/>
+</endorsedDirs>
+</libraryInfo>
 <libraryInfo home="/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home" version="1.8.0_05">
 <bootpath>
 <entry path="/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/jre/lib/resources.jar"/>

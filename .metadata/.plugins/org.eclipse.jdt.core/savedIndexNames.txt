@@ -1,0 +1,9 @@
+INDEX VERSION 1.127+/u/data/u87/rsphifer/cs307/Cardglomerate/.metadata/.plugins/org.eclipse.jdt.core
+2954603193.index
+1615990613.index
+715336467.index
+1099418890.index
+4061540476.index
+1578190554.index
+2913336464.index
+2715425392.index

@@ -49,7 +49,7 @@ public class DatabaseAccess {
 		}
 	}
 
-	public static bool createAccount(String username, String pw, String email){
+	public static boolean createAccount(String username, String pw, String email){
 
 		Connection conn = null;
 		Statement existfunc = null;
@@ -71,7 +71,7 @@ public class DatabaseAccess {
 
 
 			ResultSet existing = existfunc.executeQuery(check_exists);
-			if(existing.getInt("COUNT(id)"){ /*Username or email already used*/
+			if(existing.getInt("COUNT(id)") != 0){ /*Username or email already used*/
 
 				System.out.println("Username or email address already used.");
 

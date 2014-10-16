@@ -57,6 +57,14 @@ public class RequestHandler implements Runnable {
 					
 				} else if (action.equals("createAccount")) {
 					System.out.println("create account request");
+					NewPlayerRequest npr = (NewPlayerRequest)request.getObject();
+					boolean isSuccessful = DatabaseAccess.createAccount(npr.getUserName(), npr.getPassword(), npr.getEmailAddress());
+					if (isSuccessful) {
+						obj = true;
+					} else {
+						obj = false;
+					}
+					
 					
 				} else if (action.equals("retrievePassword")) {
 					String emailAddress = (String)request.getObject();
