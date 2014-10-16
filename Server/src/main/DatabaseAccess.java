@@ -9,7 +9,7 @@ public class DatabaseAccess {
 
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://mydb.ics.purdue.edu/khan62?user=khan62&password=cardglomerate";
+	static final String DB_URL = "jdbc:mysql://mydb.ics.purdue.edu/khan62";
 
 	static final String USERNAME = "khan62";
 	static final String PASSWORD = "cardglomerate";
@@ -24,7 +24,7 @@ public class DatabaseAccess {
 	
 			System.out.println("TEST CONNECTION");
 
-			conn = DriverManager.getConnection(DB_URL);
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
 		
 			System.out.println("Creating statement...");
       		func = conn.createStatement();
@@ -58,7 +58,7 @@ public class DatabaseAccess {
 		try{
 			Class.forName(JDBC_DRIVER);
 
-			conn = DriverManager.getConnection(DB_URL);
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
 		
       		existfunc = conn.createStatement();
 			addfunc = conn.createStatement();
