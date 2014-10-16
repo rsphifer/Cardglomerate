@@ -1,6 +1,7 @@
 package cardgames;
 
 import java.io.Serializable;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;
 
@@ -10,19 +11,11 @@ import cards.Card;
 @SuppressWarnings("serial")
 public class CardGame implements Serializable{
 
-	private ArrayList<Player> players;
-	private Queue<Card> deck;
-	private int test(){
-		
-		return 0;
-	}
+	private ArrayDeque<Card> deck;
 
-	public CardGame(ArrayList<Player> playerNames){
+	public CardGame(){
+		deck = new ArrayDeque<Card>();
 		fillDeck();
-		for(int i=0;i<playerNames.size();i++){
-			this.players.add(playerNames.get(i));
-		}
-		int numPlayers = players.size();
 		if(connect() != 1){
 			displayError("Game failed to connect to server!");
 		}
@@ -39,7 +32,15 @@ public class CardGame implements Serializable{
 				this.deck.add(new Card(randPower,randSuit));
 			}
 		}
-
+	}
+	
+	public Card getTopOfDeck(){
+		if(!this.deck.isEmpty()){
+			return this.deck.remove();
+		}
+		else{
+			return null;
+		}
 	}
 
 	protected int connect(){
@@ -53,16 +54,11 @@ public class CardGame implements Serializable{
 	private void displayError(String error){
 		System.out.println(error);
 	}
-	
-	public ArrayList<Player> getPlayers(){
-		return this.players;
-	}
 
-	public int main(){
-		ArrayList<Player> test = null;
+	public static void main(String[] args){
+		ArrayList<Player> test = new ArrayList<Player>();
 		test.add(new Player("Bill","asd"));
 		test.add(new Player("Bob","qwe"));
-		CardGame cardGame = new CardGame(test);
-		return 0;
+		CardGame cardGame = new War(test);
 	}
 }
