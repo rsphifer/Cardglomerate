@@ -1,5 +1,7 @@
 package view;
 
+import model.Model;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -10,6 +12,8 @@ import controller.ServerAccess;
 import player.Player;
 
 public class Master extends StateBasedGame {
+	
+	private Model model;
 
 	public static final String gameName = "Cardglomerate";
 	
@@ -25,8 +29,11 @@ public class Master extends StateBasedGame {
 	public Master(String gamename){
 		super(gamename);
 		
+		/* Init model to talk to server and maintain player/game states */
+		model = new Model();
+		
 		//list of all states
-		this.addState(new LogIn(logIn));
+		this.addState(new LogIn(logIn, model));
 		this.addState(new GameMenu(gameMenu));
 		this.addState(new CreateAccount(createAccount));
 		this.addState(new ComingSoon(comingSoon));
@@ -51,7 +58,7 @@ public class Master extends StateBasedGame {
 	
 	public static void main(String[] args) {
 		//ServerAccess.createNewAccount(new Player());
-		ServerAccess.createNewGame(new Player(), new CardGame());
+		//ServerAccess.createNewGame(new Player(), new CardGame());
 		ServerAccess.retrievePassword("blah");
 		
 		AppGameContainer appgc;

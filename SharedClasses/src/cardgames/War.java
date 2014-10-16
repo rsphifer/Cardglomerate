@@ -10,15 +10,14 @@ import cards.Card;
 @SuppressWarnings("serial")
 public class War extends CardGame implements Serializable{
 
+	public War(ArrayList<Player> playerNames) {
+		super(playerNames);
+	}
+
 	private ArrayList<Player> players;
 	private Stack<Card> winnings;
 	
-	public War(ArrayList<Player> playerNames){
-		this.players = playerNames;
-		CardGame cardGame = new CardGame(this.players);
-		cardGame.connect();
-		play();
-	}
+
 
 	private void roundWin(Player winner){
 		while(!this.winnings.empty()){
@@ -27,7 +26,7 @@ public class War extends CardGame implements Serializable{
 	}
 
 	private void roundTie(){
-		model.war();
+		//model.war();
 		
 		Card p1Down = this.players.get(0).playTopCard();
 		this.winnings.push(p1Down);
@@ -39,13 +38,13 @@ public class War extends CardGame implements Serializable{
 		Card p2Up = this.players.get(1).playTopCard();
 		this.winnings.push(p2Up);
 		
-		Thread.sleep(3000);
+		//Thread.sleep(3000);
 
 		this.score(p1Up,p2Up);
 	}
 
 	private void score(Card c1, Card c2){
-		model.displayThese2Cards(c1,c2);
+		//model.displayThese2Cards(c1,c2);
 		
 		if(c1.getPower() > c2.getPower()){
 			roundWin(this.players.get(0));
@@ -57,7 +56,7 @@ public class War extends CardGame implements Serializable{
 	}
 
 	private void win(Player winner){
-		model.win(winner.userName);
+		//model.win(winner.userName);
 		System.out.println(winner.userName+" won!");
 	}
 
@@ -68,9 +67,9 @@ public class War extends CardGame implements Serializable{
 			this.winnings.push(p1Card);
 			Card p2Card = this.players.get(0).playTopCard();
 			this.winnings.push(p2Card);
-			while(model.isWaiting()){
-				Thread.sleep(1000);
-			}
+			//while(model.isWaiting()){
+			//	Thread.sleep(1000);
+			//}
 			this.score(p1Card, p2Card);
 		}
 		if(this.players.get(0).getHandSize() == 0){

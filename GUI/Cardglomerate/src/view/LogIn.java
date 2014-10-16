@@ -1,10 +1,18 @@
 package view;
-import org.lwjgl.input.*;
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.*;
-import org.newdawn.slick.gui.*;
+import model.Model;
+
+import org.lwjgl.input.Mouse;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.gui.TextField;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class LogIn extends BasicGameState{
+	
+	private Model model;
 	
 	private String mouse = "No input yet";
 	private Image logo;
@@ -22,7 +30,8 @@ public class LogIn extends BasicGameState{
 	private boolean emailFieldSelected = false;
 	private boolean forgotClicked = false;
 	
-	public LogIn(int state) {
+	public LogIn(int state, Model model) {
+		this.model = model;
 	}
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException{
@@ -145,7 +154,16 @@ public class LogIn extends BasicGameState{
 				if ((username.length() > 1) && (password.length() > 1)) {
 					//code to send username and password needs to be here
 					//if valid then enter next state
-					//if not set logInError to true					
+					//if not set logInError to true
+					
+					if (model.attemptLogin(username, password)) {
+						/* attempt successful */
+						System.out.println("login attempt success");
+					} else {
+						/* attempt failed */
+						System.out.println("login attempt failed");
+					}
+					
 					sbg.enterState(1); //go to game menu screen state
 				}
 				else {

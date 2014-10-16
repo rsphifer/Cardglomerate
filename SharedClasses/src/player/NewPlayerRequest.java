@@ -1,6 +1,8 @@
 package player;
 
-public class NewPlayerRequest {
+import java.io.Serializable;
+
+public class NewPlayerRequest implements Serializable {
 	private String userName, password;
 	private String emailAddress;
 	
