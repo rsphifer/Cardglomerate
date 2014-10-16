@@ -76,21 +76,12 @@ public class RequestHandler implements Runnable {
 					System.out.printf("retrieve password request, email: %s\n", npr.getEmailAddress());
 					
 					/* Check db for email..if found send password */
-					boolean isSuccess;
-					String randpass = DatabaseAccess.retrievePassword(npr.getUserName(), npr.getEmailAddress());
-					if (randpass.equals("")) {
-						/* creds not found..return false */
-						isSuccess = false;
-						obj = isSuccess;
-					} else {
-						/* valid email/username combo..send email */
-						isSuccess = true;
-						EmailPassword ep = new EmailPassword(npr.getEmailAddress(), randpass);
-						Thread t = new Thread(ep);
-						t.start();
-					}
 					
-					obj = isSuccess;
+					EmailPassword ep = new EmailPassword(npr.getEmailAddress(), "HiImATempPassword!");
+					Thread t = new Thread(ep);
+					t.start();
+					
+					obj = true;
 				}
 				
 				
