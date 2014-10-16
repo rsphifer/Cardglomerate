@@ -85,6 +85,7 @@ public class DatabaseAccess {
 			}
 
 			addfunc.executeUpdate(add_new);
+			System.out.println("Account successfully created.");
 
 			existing.close();
 			existfunc.close();
@@ -98,9 +99,59 @@ public class DatabaseAccess {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		System.out.println("Account successfully created.");
 
 		return true;
 	}
 
+	public static boolean logIn(String uname_try, String pw_try){
+
+		Connection conn = null;
+		Statement checkfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		checkfunc = conn.createStatement();
+      		
+			String check_cred;
+      			check_cred = "SELECT COUNT(id) FROM users WHERE username=\"" + uname_try + "\" AND password=\"" + pw_try + "\"";
+
+			ResultSet verify = checkfunc.executeQuery(check_cred);
+			verify.next();
+			if(verify.getInt("COUNT(id)") == 1){ /*Username/password correct and unique*/
+
+				System.out.println("Logged in!");
+
+				verify.close();
+				checkfunc.close();
+				conn.close();
+
+				return true;
+			}
+			else{
+
+			System.out.println("Username or password incorrect.");
+
+			verify.close();
+			checkfunc.close();
+			conn.close();
+
+			return false;
+
+			}
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+
+		return false;
+	}
 }
