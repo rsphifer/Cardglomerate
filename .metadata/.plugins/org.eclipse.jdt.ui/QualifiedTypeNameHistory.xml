@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
-<fullyQualifiedTypeName name="player.NewPlayerRequest"/>
 <fullyQualifiedTypeName name="player.Player"/>
 <fullyQualifiedTypeName name="com.sun.xml.internal.fastinfoset.sax.Properties"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
@@ -13,4 +12,6 @@
 <fullyQualifiedTypeName name="javax.mail.internet.InternetAddress"/>
 <fullyQualifiedTypeName name="javax.mail.Transport"/>
 <fullyQualifiedTypeName name="mail.EmailPassword"/>
+<fullyQualifiedTypeName name="player.NewPlayerRequest"/>
+<fullyQualifiedTypeName name="main.DatabaseAccess"/>
 </qualifiedTypeNameHistroy>

@@ -62,6 +62,7 @@ public class RequestHandler implements Runnable {
 					if (isSuccessful) {
 						obj = true;
 					} else {
+						System.out.println("hi");
 						obj = false;
 					}
 					
