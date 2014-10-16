@@ -54,11 +54,6 @@ public class War extends CardGame implements Serializable{
 		this.winnings.push(p2Down);
 		Card p2Up = this.players.get(1).playTopCard();
 		this.winnings.push(p2Up);
-		
-		cardsToDisplay.remove();
-		cardsToDisplay.remove();
-		cardsToDisplay.add(p1Up);
-		cardsToDisplay.add(p2Up);
 
 		this.score(p1Up,p2Up);
 	}
@@ -75,8 +70,8 @@ public class War extends CardGame implements Serializable{
 
 		cardsToDisplay.remove();
 		cardsToDisplay.remove();
-		cardsToDisplay.add(p1Up);
-		cardsToDisplay.add(p2Up);
+		cardsToDisplay.add(c1);
+		cardsToDisplay.add(c2);
 		
 		if(c1.getPower() > c2.getPower()){
 			roundWin(this.players.get(0));
