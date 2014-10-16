@@ -4,9 +4,6 @@ import org.lwjgl.input.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
-//this GUI needs to have 6 variables updated by the model and that is all
-//curCard1, curCard2, playerSize, opponentSize, winner, and gameOver
-
 public class WarGame extends BasicGameState {
 	
 	private String mouse = "No input yet";
@@ -22,7 +19,7 @@ public class WarGame extends BasicGameState {
 	private Image[] spades;
 	private Image[] diamonds;
 	private boolean gameOver = false;
-	private String winner = "You";
+	private String winner = "Player 1";
 
 	
 	public WarGame(int state) {
@@ -109,7 +106,7 @@ public class WarGame extends BasicGameState {
 		//deck clicked
 		if((xpos>650 && xpos<725) && (ypos>70 && ypos<165)) {
 			if(Mouse.isButtonDown(0)) {
-				//update curCard1, curCard2, playerSize, opponentSize
+				//*temp*
 				curCard1 = diamonds[11];
 				curCard2 = hearts[6];
 				playerSize = 28;
@@ -118,16 +115,6 @@ public class WarGame extends BasicGameState {
 				gameOver = true;
 			}
 		}
-		
-		//gameover check
-	//	if (playerSize == 52) {
-	//		winner = "YOU";
-	//		gameOver = true;
-	//	}
-	//	else if (opponentSize == 52) {
-	//		winner = "Your Opponent";
-	//		gameOver = true;
-	//	}
 		
 		//back button clicked
 		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150) && (gameOver)) {

@@ -4,8 +4,8 @@ import org.lwjgl.input.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.*;
 
-//this GUI needs to have 6 variables updated by the model and that is all
-//curCard1, curCard2, playerSize, opponentSize, winner, and gameOver
+//this GUI needs to have 4 variables updated by the model and that is all
+//curCard1, curCard2, playerSize, opponentSize
 
 public class WarGame extends BasicGameState {
 	
@@ -120,14 +120,14 @@ public class WarGame extends BasicGameState {
 		}
 		
 		//gameover check
-	//	if (playerSize == 52) {
-	//		winner = "YOU";
-	//		gameOver = true;
-	//	}
-	//	else if (opponentSize == 52) {
-	//		winner = "Your Opponent";
-	//		gameOver = true;
-	//	}
+		if (playerSize == 52) {
+			winner = "YOU";
+			gameOver = true;
+		}
+		else if (opponentSize == 52) {
+			winner = "Your Opponent";
+			gameOver = true;
+		}
 		
 		//back button clicked
 		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150) && (gameOver)) {
