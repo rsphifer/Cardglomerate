@@ -1,6 +1,7 @@
 package main;
 
 import java.sql.*;
+import player.Player;
 
 /**
  * Provides interface to the server to the SQL database. All queries to db come through here.
@@ -227,5 +228,107 @@ public class DatabaseAccess {
 
 		System.out.println("A problem occurred, please try again");
 		return "";
+	}
+
+	/*Returns public Player data. Assumes user is logged in and ID is valid*/
+	public static Player playerInfo(int id){
+
+		Connection conn = null;
+		Statement datafunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		datafunc = conn.createStatement();      		
+
+			String user_data;
+				user_data = SELECT username, password from users WHERE id=\"" + id + "\"";
+
+			ResultSet data = datafunc.executeQuery(user_data);
+			data.next();
+			
+			Player newplayer = new Player(data.getString("username"), data.getString("password"));
+
+			return newplayer;
+
+
+			conn.close();
+			data.close();
+			datafunc.close();
+
+
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+		return null;
+	}
+
+	public static boolean resetPassword(String pw, String new_pw, int id){
+
+		Connection conn = null;
+		Statement existfunc = null;
+		Statement resetfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		existfunc = conn.createStatement();
+			resetfunc = conn.createStatement();
+      		
+
+			String check_exists;
+				check_exists = "SELECT COUNT(id) from users WHERE id=\"" + id + "\" AND password=\"" + pw + "\"";
+
+			ResultSet existing = existfunc.executeQuery(check_exists);
+			existing.next();
+			if(existing.getInt("COUNT(id)") == 1){ /*id/password combination valid, create and send the new password*/
+
+				String new_pw_sql;
+      			new_pw_sql = "UPDATE users SET password=\"" + new_pw + "\" WHERE id=\"" + id + "\"";
+
+				resetfunc.executeUpdate(new_pw_sql);
+
+				existing.close();
+				existfunc.close();
+				resetfunc.close();
+				conn.close();
+
+				System.out.println("Your password has been reset.");
+				return true;
+			}
+			else{
+
+				System.out.println("Your current password has been entered incorrectly, please try again.");
+
+				existing.close();
+				existfunc.close();
+				resetfunc.close();
+				conn.close();
+
+				return false;
+			}
+
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+		return false;
 	}
 }
