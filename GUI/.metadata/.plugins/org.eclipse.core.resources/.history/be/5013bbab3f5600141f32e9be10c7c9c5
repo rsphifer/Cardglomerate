@@ -135,6 +135,7 @@ public class WarGame extends BasicGameState {
 			
 			if(Mouse.isButtonDown(0) && isMouseReleased && !gameOver) {
 				isMouseReleased = false;
+				System.out.println("Moose");
 				model.updateGame();
 			} 
 			

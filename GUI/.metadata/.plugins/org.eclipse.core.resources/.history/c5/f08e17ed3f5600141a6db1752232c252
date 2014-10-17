@@ -27,7 +27,7 @@ public class Model {
 	
 	public boolean createGameRequest() {
 		currentGame = new War(player);
-		currentGame.testSetup();
+		//currentGame.setupTest();
 		return true;
 		//return ServerAccess.createNewGame(player, game);
 	}
