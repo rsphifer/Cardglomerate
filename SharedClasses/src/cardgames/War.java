@@ -53,6 +53,10 @@ public class War extends CardGame implements Serializable{
 		return hands;
 	}
 
+	private Player getWinner(){
+		return this.winner;
+	}
+	
 	public boolean getGameover(){
 		return this.gameOver;
 	}
@@ -107,10 +111,6 @@ public class War extends CardGame implements Serializable{
 		} else {
 			roundTie();
 		}
-	}
-
-	private Player getWinner(){
-		return this.winner;
 	}
 	
 	private void win(Player winner){
