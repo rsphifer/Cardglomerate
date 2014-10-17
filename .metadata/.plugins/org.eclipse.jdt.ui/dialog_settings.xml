@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="/u/data/u87/rsphifer/cs307/Cardglomerate" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="/u/data/u99/ncool/Cardglomerate/Server" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="FatJarPackageWizard">
-		<item value="/u/data/u87/rsphifer/cs307/Cardglomerate" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
+		<item value="/u/data/u87/rsphifer/cs307/Cardglomerate.xml" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="Server - Server" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
 		<item value="Server/build/serverUnstable.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
@@ -52,6 +52,7 @@
 		<item value="false" key="JarManifestWizardPage.SAVE_MANIFEST"/>
 		<item value="false" key="JarPackageWizardPage.EXPORT_OUTPUT_FOLDER"/>
 		<list key="JarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="/homes/ncool/Cardglomerate/ConglomerateShared.jar"/>
 			<item value="/homes/rsphifer/cs307/Cardglomerate/ConglomerateShared.jar"/>
 		</list>
 	</section>

@@ -29,6 +29,7 @@ public class LogIn extends BasicGameState{
 	private boolean passwordFieldSelected = false;
 	private boolean emailFieldSelected = false;
 	private boolean forgotClicked = false;
+	private boolean hasSubmittedRequest;
 	
 	private boolean passwordRequestSubmitted = false;
 	
@@ -150,7 +151,8 @@ public class LogIn extends BasicGameState{
 		}
 		//log in button clicked
 		if((xpos>535 && xpos<735) && (ypos>130 && ypos<170)) {
-			if(Mouse.isButtonDown(0)) {
+			if(Mouse.isButtonDown(0) && !hasSubmittedRequest) {
+				hasSubmittedRequest = true;
 				username = usernameField.getText();
 				password = passwordField.getText();
 				if ((username.length() > 1) && (password.length() > 1)) {
@@ -161,6 +163,7 @@ public class LogIn extends BasicGameState{
 					if (model.attemptLogin(username, password)) {
 						/* attempt successful */
 						System.out.println("login attempt success");
+						hasSubmittedRequest = false;
 						sbg.enterState(1); //go to game menu screen state
 					} else {
 						/* attempt failed */
@@ -168,11 +171,11 @@ public class LogIn extends BasicGameState{
 						logInError = true;
 					}
 					
-					
 				}
 				else {
 					logInError = true;
 				}
+				hasSubmittedRequest = false;
 			}
 		}
 		

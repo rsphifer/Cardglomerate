@@ -1,5 +1,7 @@
 package view;
 
+import java.util.LinkedList;
+
 import model.Model;
 
 import org.lwjgl.input.Mouse;
@@ -9,6 +11,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import cards.Card;
 
 //this GUI needs to have 6 variables updated by the model and that is all
 //curCard1, curCard2, playerSize, opponentSize, winner, and gameOver
@@ -31,7 +35,11 @@ public class WarGame extends BasicGameState {
 	private Image[] spades;
 	private Image[] diamonds;
 	private boolean gameOver = false;
-	private String winner = "You";
+	private String winner = "Sombody";
+	private LinkedList<Card> cards;
+	private Card c1;
+	private Card c2;
+	private boolean isMouseReleased;
 
 	
 	public WarGame(int state, Model model) {
@@ -89,8 +97,8 @@ public class WarGame extends BasicGameState {
 		//draw deck image twice and size string
 		deckImage.draw(550, 25);
 		deckImage.draw(650, 550);
-		g.drawString("" +opponentSize, 525, 25);
-		g.drawString("" +playerSize, 725, 550);
+		//g.drawString("" +opponentSize, 525, 25);
+		//g.drawString("" +playerSize, 725, 550);
 		
 		//draw instructor string
 		g.drawString("Click Deck to Play Card", 725, 600);
@@ -105,6 +113,7 @@ public class WarGame extends BasicGameState {
 			g.drawImage(arrow, 0, 570);
 		}
 		
+
 		
 		
 	}
@@ -115,17 +124,23 @@ public class WarGame extends BasicGameState {
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;	
 			
+		//update curCards and sizes
+		updateCards();
+		
+		//update gameover
+		gameOver = model.getGameOver();
 		
 		//deck clicked
 		if((xpos>650 && xpos<725) && (ypos>70 && ypos<165)) {
-			if(Mouse.isButtonDown(0)) {
-				//update curCard1, curCard2, playerSize, opponentSize
-				curCard1 = diamonds[11];
-				curCard2 = hearts[6];
-				playerSize = 28;
-				opponentSize = 24;
-				
-				gameOver = true;
+			
+			if(Mouse.isButtonDown(0) && isMouseReleased && !gameOver) {
+				isMouseReleased = false;
+				System.out.println("Moose");
+				model.updateGame();
+			} 
+			
+			if (!Mouse.isButtonDown(0)){
+				isMouseReleased = true;
 			}
 		}
 		
@@ -153,6 +168,41 @@ public class WarGame extends BasicGameState {
 			}
 		}
 		
+	}
+	
+	//gets curCards and deck sizes from model and updates them
+	private void updateCards(){
+		cards = model.getCardsToDisplay();
+		if (!cards.isEmpty()) {
+			c1 = cards.get(0); //player card
+			c2 = cards.get(1); //opponent card
+			curCard1 = getCardImage(c1);
+			curCard2 = getCardImage(c2);
+		}
+
+	
+		
+	}
+	
+	private Image getCardImage(Card c) {
+		
+		//0 = hearts, 1 = diamonds, 2 = spades, 3 = clubs
+		switch(c.getSuit()) {
+		
+		case 0:
+			return hearts[c.getPower()-1];
+			
+		case 1:
+			return diamonds[c.getPower()-1];
+		
+		case 2:
+			return spades[c.getPower() - 1];
+			
+		case 3:
+			return clubs[c.getPower()-1];
+		}
+		return null;
+
 	}
 	
 	public int getID() {

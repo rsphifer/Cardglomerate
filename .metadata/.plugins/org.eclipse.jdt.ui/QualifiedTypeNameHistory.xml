@@ -14,4 +14,5 @@
 <fullyQualifiedTypeName name="mail.EmailPassword"/>
 <fullyQualifiedTypeName name="player.NewPlayerRequest"/>
 <fullyQualifiedTypeName name="main.DatabaseAccess"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>
