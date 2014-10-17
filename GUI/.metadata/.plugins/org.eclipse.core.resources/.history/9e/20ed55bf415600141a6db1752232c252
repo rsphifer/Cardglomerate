@@ -37,7 +37,6 @@ public class WarGame extends BasicGameState {
 	private boolean gameOver = false;
 	private String winner = "Sombody";
 	private LinkedList<Card> cards;
-	private LinkedList<Integer> sizes;
 	private Card c1;
 	private Card c2;
 	private boolean isMouseReleased;
@@ -98,8 +97,8 @@ public class WarGame extends BasicGameState {
 		//draw deck image twice and size string
 		deckImage.draw(550, 25);
 		deckImage.draw(650, 550);
-		g.drawString("" +opponentSize, 525, 25);
-		g.drawString("" +playerSize, 725, 550);
+		//g.drawString("" +opponentSize, 525, 25);
+		//g.drawString("" +playerSize, 725, 550);
 		
 		//draw instructor string
 		g.drawString("Click Deck to Play Card", 725, 600);
@@ -148,7 +147,17 @@ public class WarGame extends BasicGameState {
 				isMouseReleased = true;
 			}
 		}
-			
+		
+		//gameover check
+	//	if (playerSize == 52) {
+	//		winner = "YOU";
+	//		gameOver = true;
+	//	}
+	//	else if (opponentSize == 52) {
+	//		winner = "Your Opponent";
+	//		gameOver = true;
+	//	}
+		
 		//back button clicked
 		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150) && (gameOver)) {
 			if(Mouse.isButtonDown(0)) {
@@ -168,16 +177,14 @@ public class WarGame extends BasicGameState {
 	//gets curCards and deck sizes from model and updates them
 	private void updateCards(){
 		cards = model.getCardsToDisplay();
-		sizes = model.getHandSizes();
 		if (!cards.isEmpty()) {
 			c1 = cards.get(0); //player card
 			c2 = cards.get(1); //opponent card
 			curCard1 = getCardImage(c1);
 			curCard2 = getCardImage(c2);
 		}
-		playerSize = sizes.get(1);
-		opponentSize = sizes.get(0);
-		
+
+	
 		
 	}
 	

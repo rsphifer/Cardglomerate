@@ -32,14 +32,6 @@ public class Model {
 		//return ServerAccess.createNewGame(player, game);
 	}
 	
-	public String getGameWinner() {
-		return currentGame.getWinner().userName;
-	}
-	
-	public LinkedList<Integer> getHandSizes() {
-		return currentGame.getHandSizes();
-	}
-	
 	public void updateGame() {
 		currentGame.update();
 	}

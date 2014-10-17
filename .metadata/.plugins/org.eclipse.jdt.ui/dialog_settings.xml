@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<item value="/u/data/u99/ncool/Cardglomerate/Server" key="org.eclipse.jdt.ui.lastextjar"/>
+	<item value="/u/data/u99/ncool/Cardglomerate" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="FatJarPackageWizard">
 		<item value="/u/data/u87/rsphifer/cs307/Cardglomerate.xml" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="Server - Server" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>

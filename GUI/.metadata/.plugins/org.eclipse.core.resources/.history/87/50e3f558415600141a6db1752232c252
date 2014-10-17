@@ -36,10 +36,6 @@ public class Model {
 		return currentGame.getWinner().userName;
 	}
 	
-	public LinkedList<Integer> getHandSizes() {
-		return currentGame.getHandSizes();
-	}
-	
 	public void updateGame() {
 		currentGame.update();
 	}

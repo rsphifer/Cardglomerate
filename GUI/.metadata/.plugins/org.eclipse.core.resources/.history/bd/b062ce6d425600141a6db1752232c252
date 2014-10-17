@@ -177,7 +177,6 @@ public class LogIn extends BasicGameState{
 				}
 				hasSubmittedRequest = false;
 			}
-			
 		}
 		
 		//forgot password button clicked
