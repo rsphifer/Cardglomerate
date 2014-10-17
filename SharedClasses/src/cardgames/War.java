@@ -30,7 +30,7 @@ public class War extends CardGame implements Serializable{
 	}
 
 	public LinkedList<Card> getCardsToDisplay(War game){
-		return game.cardsToDisplay;
+		return cardsToDisplay;
 	}
 
 	public boolean getGameover(){

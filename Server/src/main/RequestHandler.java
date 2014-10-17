@@ -43,14 +43,13 @@ public class RequestHandler implements Runnable {
 					NewPlayerRequest npr = (NewPlayerRequest)request.getObject();
 					
 					/* Check credentials in db */
-					boolean isSuccessful = DatabaseAccess.logIn(npr.getUserName(), npr.getPassword());
-					obj = isSuccessful;
+					int playerId = DatabaseAccess.logIn(npr.getUserName(), npr.getPassword());
 					
 					/* DB layer will return player id..use id to get player and fill in information */
 					
 					
 					Player tmp = null;
-					if (isSuccessful) { /* Good login..use id to get player info to build player object to return */
+					if (playerId != 0) { /* Good login..use id to get player info to build player object to return */
 						System.out.println("success!");
 						tmp = new Player("", "");
 					} else { /* Bad login..return null player */

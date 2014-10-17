@@ -161,12 +161,14 @@ public class LogIn extends BasicGameState{
 					if (model.attemptLogin(username, password)) {
 						/* attempt successful */
 						System.out.println("login attempt success");
+						sbg.enterState(1); //go to game menu screen state
 					} else {
 						/* attempt failed */
 						System.out.println("login attempt failed");
+						logInError = true;
 					}
 					
-					sbg.enterState(1); //go to game menu screen state
+					
 				}
 				else {
 					logInError = true;
