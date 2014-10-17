@@ -28,17 +28,6 @@ public class War extends CardGame implements Serializable{
 		cardGame.connect();
 		//play();
 	}
-	
-	public War(Player p1){
-		this.players.add(new Player("AI","asd"));
-		this.players.add(p1);
-		winnings = new LinkedList<Card>();
-		cardsToDisplay = new LinkedList<Card>();
-		this.cardGame = new CardGame();
-		cardGame.fillDeck();
-		cardGame.connect();
-		//play();
-	}
 
 	public LinkedList<Card> getCardsToDisplay(){
 		return cardsToDisplay;
