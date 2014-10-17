@@ -14,7 +14,6 @@ public class War extends CardGame implements Serializable{
 	private ArrayList<Player> players;
 	private LinkedList<Card> winnings;
 	private LinkedList<Card> cardsToDisplay;
-	private Player winner;
 	private CardGame cardGame;
 	private boolean gameOver = false;
 	private Card p1Card = null;
@@ -108,12 +107,7 @@ public class War extends CardGame implements Serializable{
 		}
 	}
 
-	private Player getWinner(){
-		return this.winner;
-	}
-	
 	private void win(Player winner){
-		this.winner = winner;
 		System.out.println(winner.userName+" won!");
 	}
 	

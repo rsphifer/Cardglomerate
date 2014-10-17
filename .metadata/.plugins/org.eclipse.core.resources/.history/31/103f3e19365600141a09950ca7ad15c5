@@ -1,5 +1,6 @@
 package cards;
 
+import java.awt.Image;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -9,13 +10,13 @@ public class Card implements Serializable{
 	private int suit;
 	private int index;
 
-	public Card(int power, int suit, int index){
+	public Card(int power, int suit, Image img){
 		this.power = power;
 		this.suit = suit;
-		this.index = index;
+		this.index = img;
 	}
 
-	public int getIndex(){
+	public Image getIndex(){
 		return this.index;
 	}
 	

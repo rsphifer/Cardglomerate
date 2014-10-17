@@ -25,7 +25,7 @@ public class CardGame implements Serializable{
 	protected void fillDeck(){
 		for(int i=1;i<=13;i++){
 			for(int j=0;j<=3;j++){
-				this.deck.add(new Card(i,j,i+(13*j)-1));
+				this.deck.add(new Card(i,j,i+(13*j)));
 			}
 		}
 		Collections.shuffle((List<?>) this.deck);

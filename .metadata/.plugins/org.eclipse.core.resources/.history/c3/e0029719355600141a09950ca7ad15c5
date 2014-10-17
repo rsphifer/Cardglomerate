@@ -7,18 +7,12 @@ public class Card implements Serializable{
 
 	private int power;
 	private int suit;
-	private int index;
 
-	public Card(int power, int suit, int index){
+	public Card(int power, int suit){
 		this.power = power;
 		this.suit = suit;
-		this.index = index;
 	}
 
-	public int getIndex(){
-		return this.index;
-	}
-	
 	public int getPower(){
 		return this.power;
 	}

@@ -108,7 +108,7 @@ public class War extends CardGame implements Serializable{
 		}
 	}
 
-	private Player getWinner(){
+	private getWinner(){
 		return this.winner;
 	}
 	
