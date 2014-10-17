@@ -63,9 +63,9 @@ public class Model {
 		return currentGame;
 	}
 
-//	public void setCurrentGame(CardGame currentGame) {
-//		this.currentGame = currentGame;
-//	}
+	public void setCurrentGame(CardGame currentGame) {
+		this.currentGame = currentGame;
+	}
 
 	public Player getPlayer() {
 		return player;

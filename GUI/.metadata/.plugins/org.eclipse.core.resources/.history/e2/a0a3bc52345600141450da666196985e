@@ -1,13 +1,11 @@
 package model;
 
-import java.util.LinkedList;
-
+import misc.GameCreationRequest;
+import controller.ServerAccess;
 import player.NewPlayerRequest;
 import player.Player;
 import cardgames.CardGame;
 import cardgames.War;
-import cards.Card;
-import controller.ServerAccess;
 
 
 /**
@@ -18,26 +16,25 @@ import controller.ServerAccess;
 public class Model {
 
 	private Player player;
-	private War currentGame;
+	private int playerState;
+	private CardGame currentGame;
 	
 	public Model() {
 		player = null;
+		playerState = PlayerState.IDLE;
 		//Other things that we cant think of
 	}
 	
 	public boolean createGameRequest(CardGame game) {
 		
 		currentGame = new War(player);
+		
 		return true;
 		//return ServerAccess.createNewGame(player, game);
 	}
 	
 	public void updateGame() {
-		currentGame.update();
-	}
-	
-	public LinkedList<Card> getCardsToDisplay() {
-		return currentGame.getCardsToDisplay();
+		
 	}
 	
 	public boolean createAccountRequest(String username, String password, String email) {
@@ -63,9 +60,9 @@ public class Model {
 		return currentGame;
 	}
 
-//	public void setCurrentGame(CardGame currentGame) {
-//		this.currentGame = currentGame;
-//	}
+	public void setCurrentGame(CardGame currentGame) {
+		this.currentGame = currentGame;
+	}
 
 	public Player getPlayer() {
 		return player;

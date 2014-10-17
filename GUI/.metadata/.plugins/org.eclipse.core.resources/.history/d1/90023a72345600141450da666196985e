@@ -1,6 +1,6 @@
 package model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import player.NewPlayerRequest;
 import player.Player;
@@ -36,7 +36,7 @@ public class Model {
 		currentGame.update();
 	}
 	
-	public LinkedList<Card> getCardsToDisplay() {
+	public ArrayList<Card> getCardsToDisplay() {
 		return currentGame.getCardsToDisplay();
 	}
 	
@@ -63,9 +63,9 @@ public class Model {
 		return currentGame;
 	}
 
-//	public void setCurrentGame(CardGame currentGame) {
-//		this.currentGame = currentGame;
-//	}
+	public void setCurrentGame(CardGame currentGame) {
+		this.currentGame = currentGame;
+	}
 
 	public Player getPlayer() {
 		return player;
