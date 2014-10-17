@@ -62,8 +62,7 @@ public class CardGame implements Serializable{
 		test.add(new Player("second","qwe"));
 		War cardGame = new War(test);
 		cardGame.setup();
-		//cardGame.testSetup();
-		int j=0;
+		int j;
 		while(cardGame.update()){
 			j++;
 		}

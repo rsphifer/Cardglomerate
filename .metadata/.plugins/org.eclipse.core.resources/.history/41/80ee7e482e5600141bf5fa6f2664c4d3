@@ -44,7 +44,7 @@ public class War extends CardGame implements Serializable{
 	}
 
 	private void roundTie(){
-		//System.out.println("WAR!");
+		System.out.println("WAR!");
 		
 		Card p1Down = this.players.get(0).playTopCard();
 		this.winnings.push(p1Down);
@@ -93,25 +93,8 @@ public class War extends CardGame implements Serializable{
 		System.out.println(winner.userName+" won!");
 	}
 	
-	public void setup(){
-		for(int i=0;i<52;i++){
-			if(i%2 == 0){
-				this.players.get(0).addCardToHand(this.cardGame.getTopOfDeck());
-			} else {
-				this.players.get(1).addCardToHand(this.cardGame.getTopOfDeck());
-			}
-		}
-	}
-	
-	public void testSetup(){
-		for(int i=0;i<51;i++){
-			this.players.get(0).addCardToHand(this.cardGame.getTopOfDeck());
-		}
-		this.players.get(1).addCardToHand(this.cardGame.getTopOfDeck());
-	}
-	
 	public boolean update(){
-		/*if(this.players.get(0).getHandSize() == 0){
+		if(this.players.get(0).getHandSize() == 0){
 			if(this.players.get(0).resetHand()){
 				this.gameOver = true;
 			}
@@ -120,17 +103,9 @@ public class War extends CardGame implements Serializable{
 			if(this.players.get(1).resetHand()){
 				this.gameOver = true;
 			}
-		}*/
-		//p1Card = this.players.get(0).playTopCard();
-		//p2Card = this.players.get(1).playTopCard();
-		
-		System.out.println(this.players.get(0).getHandSize()+"   "+this.players.get(1).getHandSize());
-		if((p1Card = this.players.get(0).playTopCard()) == null){
-			this.gameOver = true;
 		}
-		if((p2Card = this.players.get(1).playTopCard()) == null){
-			this.gameOver = true;
-		}
+		p1Card = this.players.get(0).playTopCard();
+		p2Card = this.players.get(1).playTopCard();
 		
 		this.winnings.push(p1Card);
 		this.winnings.push(p2Card);

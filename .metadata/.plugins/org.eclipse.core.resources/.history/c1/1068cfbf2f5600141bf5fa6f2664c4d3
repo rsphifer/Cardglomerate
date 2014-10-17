@@ -111,7 +111,7 @@ public class War extends CardGame implements Serializable{
 	}
 	
 	public boolean update(){
-		/*if(this.players.get(0).getHandSize() == 0){
+		if(this.players.get(0).getHandSize() == 0){
 			if(this.players.get(0).resetHand()){
 				this.gameOver = true;
 			}
@@ -120,17 +120,16 @@ public class War extends CardGame implements Serializable{
 			if(this.players.get(1).resetHand()){
 				this.gameOver = true;
 			}
-		}*/
-		//p1Card = this.players.get(0).playTopCard();
-		//p2Card = this.players.get(1).playTopCard();
-		
-		System.out.println(this.players.get(0).getHandSize()+"   "+this.players.get(1).getHandSize());
-		if((p1Card = this.players.get(0).playTopCard()) == null){
+		}
+		/*if((p1Card = this.players.get(0).playTopCard()) == null){
 			this.gameOver = true;
 		}
 		if((p2Card = this.players.get(1).playTopCard()) == null){
 			this.gameOver = true;
-		}
+		}*/
+		
+		p1Card = this.players.get(0).playTopCard();
+		p2Card = this.players.get(1).playTopCard();
 		
 		this.winnings.push(p1Card);
 		this.winnings.push(p2Card);

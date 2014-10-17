@@ -43,7 +43,7 @@ public class Player implements Serializable{
 	
 	public boolean resetHand(){
 		if(this.discard.isEmpty()){
-			System.out.println(this.userName+"'s discard is empty");
+			System.out.println("game is over");
 			return true;
 		}
 		Collections.shuffle(this.discard);
@@ -63,9 +63,7 @@ public class Player implements Serializable{
 
 	public Card playTopCard(){
 		if(this.hand.isEmpty()){
-			if(resetHand()){
-				return null;
-			}
+			resetHand();
 		} //else {
 		return this.hand.remove(0);
 			/*if(this.getDiscardSize() == 0){

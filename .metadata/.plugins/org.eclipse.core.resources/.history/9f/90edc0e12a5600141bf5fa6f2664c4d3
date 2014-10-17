@@ -43,16 +43,12 @@ public class Player implements Serializable{
 	
 	public boolean resetHand(){
 		if(this.discard.isEmpty()){
-			System.out.println(this.userName+"'s discard is empty");
 			return true;
 		}
 		Collections.shuffle(this.discard);
-		for(Card c : this.discard){
-			this.hand.add(c);
-		}
+		this.hand = this.discard;
 		this.discard.clear();
 		System.out.println(this.userName+" reset their hand!");
-		System.out.println(this.userName+" has "+this.getHandSize());
 		return false;
 	}
 	
@@ -62,18 +58,15 @@ public class Player implements Serializable{
 	}
 
 	public Card playTopCard(){
-		if(this.hand.isEmpty()){
-			if(resetHand()){
-				return null;
-			}
-		} //else {
-		return this.hand.remove(0);
-			/*if(this.getDiscardSize() == 0){
+		if(!this.hand.isEmpty()){
+			return this.hand.remove(0);
+		} else {
+			if(this.resetHand()){
+				System.out.println(this.userName+" should have lost");
 				return null;
 			} else {
-				System.out.println("the fuck?!?");
-				return null;
-			}*/
-		//}
+				return this.playTopCard();
+			}
+		}
 	}
 }
