@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-task-tag-projects-already-scanned=ClientApplication,Server,ServerTestDriver
+task-tag-projects-already-scanned=Server,Cardglomerate,SharedClasses

@@ -46,20 +46,18 @@ public class RequestHandler implements Runnable {
 					boolean isSuccessful = DatabaseAccess.logIn(npr.getUserName(), npr.getPassword());
 					obj = isSuccessful;
 					
-					if (isSuccessful) {
-						System.out.println("success!");
-					} else {
-						System.out.println("fail!");
-
-					}
+					/* DB layer will return player id..use id to get player and fill in information */
 					
-//					if (true) { /* Valid login */
-//						Player tmp = new Player(npr.getUserName(), npr.getPassword());
-//						obj = tmp;
-//					} else {
-//						/* Invalid login */
-//						obj = null;
-//					}
+					
+					Player tmp = null;
+					if (isSuccessful) { /* Good login..use id to get player info to build player object to return */
+						System.out.println("success!");
+						tmp = new Player("", "");
+					} else { /* Bad login..return null player */
+						System.out.println("fail!");
+					}
+					obj = tmp;
+
 					
 				} else if (action.equals("logout")) {
 					System.out.println("logout request");
