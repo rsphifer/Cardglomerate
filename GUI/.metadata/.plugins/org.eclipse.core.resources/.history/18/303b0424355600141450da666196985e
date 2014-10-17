@@ -26,6 +26,7 @@ public class Model {
 	}
 	
 	public boolean createGameRequest(CardGame game) {
+		
 		currentGame = new War(player);
 		return true;
 		//return ServerAccess.createNewGame(player, game);
@@ -33,10 +34,6 @@ public class Model {
 	
 	public void updateGame() {
 		currentGame.update();
-	}
-	
-	public boolean getGameOver() {
-		return currentGame.getGameover();
 	}
 	
 	public LinkedList<Card> getCardsToDisplay() {
