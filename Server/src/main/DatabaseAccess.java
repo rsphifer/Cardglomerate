@@ -103,10 +103,11 @@ public class DatabaseAccess {
 		return true;
 	}
 
-	public static boolean logIn(String uname_try, String pw_try){
+	public static int logIn(String uname_try, String pw_try){
 
 		Connection conn = null;
 		Statement checkfunc = null;
+		Statement idfunc = null;
 
 		try{
 			Class.forName(JDBC_DRIVER);
@@ -122,13 +123,24 @@ public class DatabaseAccess {
 			verify.next();
 			if(verify.getInt("COUNT(id)") == 1){ /*Username/password correct and unique*/
 
+				idfunc = conn.createStatement();
+
+				String select_id;
+      				select_id = "SELECT id FROM users WHERE username=\"" + uname_try + "\" AND password=\"" + pw_try + "\"";
+				ResultSet id_res = idfunc.executeQuery(select_id);
+				id_res.next();
+
+				int ret = id_res.getInt("id");
+
 				System.out.println("Logged in!");
 
 				verify.close();
 				checkfunc.close();
+				idfunc.close();
+				id_res.close();
 				conn.close();
 
-				return true;
+				return ret;
 			}
 			else{
 
@@ -136,9 +148,10 @@ public class DatabaseAccess {
 
 				verify.close();
 				checkfunc.close();
+				idfunc.close();
 				conn.close();
 
-				return false;
+				return 0;
 			}
 		}
 		catch(SQLException se){
@@ -151,7 +164,7 @@ public class DatabaseAccess {
 
 		System.out.println("A problem occurred, please try again");
 
-		return false;
+		return 0;
 	}
 
 	public static String retrievePassword(String username, String email){
