@@ -25,7 +25,7 @@ public class Model {
 		//Other things that we cant think of
 	}
 	
-	public boolean createGameRequest() {
+	public boolean createGameRequest(CardGame game) {
 		currentGame = new War(player);
 		return true;
 		//return ServerAccess.createNewGame(player, game);
