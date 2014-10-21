@@ -59,5 +59,21 @@ public class Cipher {
         }
         return result;
     }
+    
+	public static String toPigLatin(String s) {
+		char c;
+		if (s.length() == 0) {
+			s = "";
+		}
+		else if (s.length() == 1) {
+			s = s+"ay";
+		}
+		else {
+			c = s.charAt(0);
+			s = s.substring(1);
+			s = s+c+"ay";	
+		}
+		return s;
+	}
 
 }

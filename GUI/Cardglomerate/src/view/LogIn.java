@@ -149,6 +149,8 @@ public class LogIn extends BasicGameState{
 				emailFieldSelected = true;
 			}
 		}
+		
+		
 		//log in button clicked
 		if((xpos>535 && xpos<735) && (ypos>130 && ypos<170)) {
 			if(Mouse.isButtonDown(0) && !hasSubmittedRequest) {
@@ -187,6 +189,7 @@ public class LogIn extends BasicGameState{
 			}
 		}
 		
+		
 		//send email button clicked
 		if((xpos>750 && xpos<950) && (ypos>40 && ypos<70) && (forgotClicked)) {
 			if(Mouse.isButtonDown(0) && !passwordRequestSubmitted) {
@@ -222,4 +225,5 @@ public class LogIn extends BasicGameState{
 	public int getID() {
 		return 0;
 	}
+	
 }
