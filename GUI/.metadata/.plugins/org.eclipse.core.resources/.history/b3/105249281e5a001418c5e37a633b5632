@@ -25,7 +25,6 @@ public class Master extends StateBasedGame {
 	public static final int warOptions = 4;
 	public static final int warGame = 5;
 	public static final int accountOptions = 6;
-	public static final int holdEmOptions = 7;
 	
 	public Master(String gamename){
 		super(gamename);
@@ -41,7 +40,6 @@ public class Master extends StateBasedGame {
 		this.addState(new WarOptions(warOptions, model));
 		this.addState(new WarGame(warGame, model));
 		this.addState(new AccountOptions(accountOptions, model));
-		this.addState(new HoldEmOptions(holdEmOptions, model));
 	}
 	
 	public void initStatesList(GameContainer gc) throws SlickException {
@@ -53,10 +51,9 @@ public class Master extends StateBasedGame {
 		this.getState(warOptions).init(gc, this);
 		this.getState(warGame).init(gc, this);
 		this.getState(accountOptions).init(gc, this);
-		this.getState(holdEmOptions).init(gc, this);
 		
-		//screen to display first
-		this.enterState(gameMenu);
+		//show log in screen first
+		this.enterState(logIn);
 	}
 	
 	public static void main(String[] args) {

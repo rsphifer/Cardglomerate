@@ -55,8 +55,8 @@ public class AccountOptions extends BasicGameState {
 		g.drawImage(image, 510, 40);
 		
 		//change username button
-		g.drawRect(560, 280, 200, 40);
-		g.drawString("Change Username", 590, 290);
+		g.drawRect(575, 280, 200, 40);
+		g.drawString("Change Username", 605, 290);
 		
 	}
 	

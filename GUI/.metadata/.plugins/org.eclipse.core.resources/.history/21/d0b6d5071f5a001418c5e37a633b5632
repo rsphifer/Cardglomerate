@@ -32,9 +32,6 @@ public class AccountOptions extends BasicGameState {
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
 		
-		//initialize gear image
-		image = new Image("res/Gear.jpg");
-		
 
 	}
 	
@@ -51,12 +48,9 @@ public class AccountOptions extends BasicGameState {
 		//render arrow
 		g.drawImage(arrow, 0, 570);
 		
-		//render image
-		g.drawImage(image, 510, 40);
-		
 		//change username button
-		g.drawRect(560, 280, 200, 40);
-		g.drawString("Change Username", 590, 290);
+		g.drawRect(535, 350, 200, 100);
+		g.drawString("Change Username", 600, 380);
 		
 	}
 	

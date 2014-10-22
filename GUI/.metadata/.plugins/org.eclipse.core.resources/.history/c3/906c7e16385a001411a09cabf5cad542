@@ -110,10 +110,10 @@ public class GameMenu extends BasicGameState {
 			}
 		}
 		
-		//Hold'em clicked
+		//solitaire clicked
 		if((xpos>960 && xpos<1210) && (ypos>395 && ypos<645)) {
 			if(Mouse.isButtonDown(0)) {
-				sbg.enterState(7); //display coming soon screen
+				sbg.enterState(3); //display coming soon screen
 			}
 		}
 		
