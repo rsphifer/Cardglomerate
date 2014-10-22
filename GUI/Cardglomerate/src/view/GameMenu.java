@@ -22,7 +22,13 @@ public class GameMenu extends BasicGameState {
 	private Image blackjack;
 	private Image war;
 	private Image arrow;
-	private boolean isMouseReleased = true;
+	
+	//card images for game GUI
+	public static Image[] clubs;
+	public static Image[] hearts;
+	public static Image[] spades;
+	public static Image[] diamonds;
+	public static Image deckImage;
 	
 	public GameMenu(int state, Model model) {
 		this.model = model;
@@ -55,6 +61,30 @@ public class GameMenu extends BasicGameState {
 		
 		war = new Image("res/Many Cards.jpg");
 		war = war.getScaledCopy(250,250);
+		
+		//initialize flat deck image
+		deckImage = new Image("res/Cards/b2fv.png");
+		
+		//initalize deck arrays
+		clubs = new Image[13];
+		hearts = new Image[13];
+		spades = new Image[13];
+		diamonds = new Image[13];
+		for (int i = 1; i < 14; i++) {
+			clubs[i-1] = new Image("res/Cards/c" + i + ".png");
+		}
+		
+		for (int i = 1; i < 14; i++) {
+			hearts[i-1] = new Image("res/Cards/h" + i + ".png");
+		}
+		
+		for (int i = 1; i < 14; i++) {
+			spades[i-1] = new Image("res/Cards/s" + i + ".png");
+		}
+		
+		for (int i = 1; i < 14; i++) {
+			diamonds[i-1] = new Image("res/Cards/d" + i + ".png");
+		}
 	}
 	
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
@@ -148,19 +178,18 @@ public class GameMenu extends BasicGameState {
 			}
 		}
 		
-		//back button clicked
+		//log out button clicked
 		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150)) {
-			if(Mouse.isButtonDown(0) && isMouseReleased) {
-				isMouseReleased = false;
-				//any code to log them out goes here
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+				//any code to log them out needs to go here
 				sbg.enterState(0); //display login screen
 			}
 			
-			if(Mouse.isButtonDown(0)) {
-				isMouseReleased = true;
+			if (!Mouse.isButtonDown(0)){
+				Master.isMouseReleased = true;
 			}
 		}
-		
 	}
 	
 	public int getID() {

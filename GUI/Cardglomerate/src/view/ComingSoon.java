@@ -18,7 +18,6 @@ public class ComingSoon extends BasicGameState {
 	private Image background;
 	private Image image;
 	private Image arrow;
-	private boolean isMouseReleased = true;
 
 	
 	public ComingSoon(int state, Model model) {
@@ -65,13 +64,13 @@ public class ComingSoon extends BasicGameState {
 		
 		//back button clicked
 		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150)) {
-			if(Mouse.isButtonDown(0) && isMouseReleased) {
-				isMouseReleased = false;
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
 				sbg.enterState(1); //display game menu screen
 			}
 			
 			if (!Mouse.isButtonDown(0)){
-				isMouseReleased = true;
+				Master.isMouseReleased = true;
 			}
 		}
 		

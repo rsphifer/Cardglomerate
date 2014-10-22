@@ -29,7 +29,6 @@ public class LogIn extends BasicGameState{
 	private boolean passwordFieldSelected = false;
 	private boolean emailFieldSelected = false;
 	private boolean forgotClicked = false;
-	private boolean isMouseReleased = true;
 	
 	
 	public LogIn(int state, Model model) {
@@ -152,8 +151,8 @@ public class LogIn extends BasicGameState{
 		
 		//log in button clicked
 		if((xpos>535 && xpos<735) && (ypos>130 && ypos<170)) {
-			if(Mouse.isButtonDown(0) && isMouseReleased) {
-				isMouseReleased = false;
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
 				username = usernameField.getText();
 				password = passwordField.getText();
 				if ((username.length() > 1) && (password.length() > 1)) {
@@ -178,7 +177,7 @@ public class LogIn extends BasicGameState{
 			}
 			
 			if (!Mouse.isButtonDown(0)){
-				isMouseReleased = true;
+				Master.isMouseReleased = true;
 			}
 			
 		}
@@ -193,8 +192,8 @@ public class LogIn extends BasicGameState{
 		
 		//send email button clicked
 		if((xpos>750 && xpos<950) && (ypos>40 && ypos<70) && (forgotClicked)) {
-			if(Mouse.isButtonDown(0) && isMouseReleased) {
-				isMouseReleased = false;
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
 				String uname = usernameField.getText();
 				email = emailField.getText();
 				if (email.length() > 1 && uname.length() > 1) {
@@ -213,7 +212,7 @@ public class LogIn extends BasicGameState{
 			}
 			
 			if (!Mouse.isButtonDown(0)){
-				isMouseReleased = true;
+				Master.isMouseReleased = true;
 			}
 			
 		}

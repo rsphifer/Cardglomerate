@@ -34,7 +34,6 @@ public class CreateAccount extends BasicGameState {
 	private boolean passwordLengthError = false;
 	private boolean emailError = false;
 	private boolean usernameError = false;
-	private boolean isMouseReleased = true;
 	
 	public CreateAccount(int state, Model model) {
 		this.model = model;
@@ -183,8 +182,8 @@ public class CreateAccount extends BasicGameState {
 		
 		//Create Account button clicked
 		if((xpos>535 && xpos<735) && (ypos>20 && ypos<50)) {
-			if(Mouse.isButtonDown(0) && isMouseReleased) {
-				isMouseReleased = false;
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
 				username = usernameField.getText();
 				password1 = password1Field.getText();
 				password2 = password2Field.getText();
@@ -250,7 +249,7 @@ public class CreateAccount extends BasicGameState {
 			}
 			
 			if (!Mouse.isButtonDown(0)){
-				isMouseReleased = true;
+				Master.isMouseReleased = true;
 			}
 		}
 		

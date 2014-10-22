@@ -16,6 +16,7 @@ public class Master extends StateBasedGame {
 	private Model model;
 
 	public static final String gameName = "Cardglomerate";
+	public static boolean isMouseReleased = true;
 	
 	//state numbers for each screen
 	public static final int logIn = 0;
@@ -26,6 +27,7 @@ public class Master extends StateBasedGame {
 	public static final int warGame = 5;
 	public static final int accountOptions = 6;
 	public static final int holdEmOptions = 7;
+	public static final int holdEmGame = 8;
 	
 	public Master(String gamename){
 		super(gamename);
@@ -42,6 +44,7 @@ public class Master extends StateBasedGame {
 		this.addState(new WarGame(warGame, model));
 		this.addState(new AccountOptions(accountOptions, model));
 		this.addState(new HoldEmOptions(holdEmOptions, model));
+		this.addState(new HoldEmGame(holdEmGame, model));
 	}
 	
 	public void initStatesList(GameContainer gc) throws SlickException {
@@ -54,6 +57,7 @@ public class Master extends StateBasedGame {
 		this.getState(warGame).init(gc, this);
 		this.getState(accountOptions).init(gc, this);
 		this.getState(holdEmOptions).init(gc, this);
+		this.getState(holdEmGame).init(gc, this);
 		
 		//screen to display first
 		this.enterState(gameMenu);

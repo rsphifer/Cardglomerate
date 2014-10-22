@@ -28,19 +28,13 @@ public class WarGame extends BasicGameState {
 	private Image curCard2; //opponents card
 	private int playerSize = 26; //players deck size
 	private int opponentSize = 26; //opponents deck size
-	private Image deckImage;
 	private Image arrow;
-	private Image[] clubs;
-	private Image[] hearts;
-	private Image[] spades;
-	private Image[] diamonds;
 	private boolean gameOver = false;
 	private String winner = "Sombody";
 	private LinkedList<Card> cards;
 	private LinkedList<Integer> sizes;
 	private Card c1;
 	private Card c2;
-	private boolean isMouseReleased;
 
 	
 	public WarGame(int state, Model model) {
@@ -53,29 +47,6 @@ public class WarGame extends BasicGameState {
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
 		
-		//initialize flat deck image
-		deckImage = new Image("res/Cards/b2fv.png");
-		
-		//initalize deck arrays
-		clubs = new Image[13];
-		hearts = new Image[13];
-		spades = new Image[13];
-		diamonds = new Image[13];
-		for (int i = 1; i < 14; i++) {
-			clubs[i-1] = new Image("res/Cards/c" + i + ".png");
-		}
-		
-		for (int i = 1; i < 14; i++) {
-			hearts[i-1] = new Image("res/Cards/h" + i + ".png");
-		}
-		
-		for (int i = 1; i < 14; i++) {
-			spades[i-1] = new Image("res/Cards/s" + i + ".png");
-		}
-		
-		for (int i = 1; i < 14; i++) {
-			diamonds[i-1] = new Image("res/Cards/d" + i + ".png");
-		}
 		
 		//starting curCards
 		curCard1 = new Image("res/Cards/ec.png");
@@ -96,8 +67,8 @@ public class WarGame extends BasicGameState {
 		g.drawString(mouse, 10, 25);
 		
 		//draw deck image twice and size string
-		deckImage.draw(550, 25);
-		deckImage.draw(650, 550);
+		GameMenu.deckImage.draw(550, 25);
+		GameMenu.deckImage.draw(650, 550);
 		g.drawString("" +opponentSize, 525, 25);
 		g.drawString("" +playerSize, 725, 550);
 		
@@ -139,13 +110,13 @@ public class WarGame extends BasicGameState {
 		//deck clicked
 		if((xpos>650 && xpos<725) && (ypos>70 && ypos<165)) {
 			
-			if(Mouse.isButtonDown(0) && isMouseReleased && !gameOver) {
-				isMouseReleased = false;
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased && !gameOver) {
+				Master.isMouseReleased = false;
 				model.updateGame();
 			} 
 			
 			if (!Mouse.isButtonDown(0)){
-				isMouseReleased = true;
+				Master.isMouseReleased = true;
 			}
 		}
 			
@@ -187,16 +158,16 @@ public class WarGame extends BasicGameState {
 		switch(c.getSuit()) {
 		
 		case 0:
-			return hearts[c.getPower()-1];
+			return GameMenu.hearts[c.getPower()-1];
 			
 		case 1:
-			return diamonds[c.getPower()-1];
+			return GameMenu.diamonds[c.getPower()-1];
 		
 		case 2:
-			return spades[c.getPower() - 1];
+			return GameMenu.spades[c.getPower() - 1];
 			
 		case 3:
-			return clubs[c.getPower()-1];
+			return GameMenu.clubs[c.getPower()-1];
 		}
 		return null;
 
