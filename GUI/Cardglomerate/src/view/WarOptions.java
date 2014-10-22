@@ -18,7 +18,7 @@ public class WarOptions extends BasicGameState {
 	private Image background;
 	private Image image;
 	private Image arrow;
-	private boolean hasSubmittedRequest;
+	private boolean isMouseReleased = true;
 
 	
 	public WarOptions(int state, Model model) {
@@ -74,11 +74,14 @@ public class WarOptions extends BasicGameState {
 		
 		//Play AI
 		if((xpos>535 && xpos<735) && (ypos>270 && ypos<370)) {
-			if(Mouse.isButtonDown(0) && !hasSubmittedRequest) {
-				hasSubmittedRequest = true;
+			if(Mouse.isButtonDown(0) && isMouseReleased) {
+				isMouseReleased = false;
 				model.createGameRequest();
-				hasSubmittedRequest = false;
 				sbg.enterState(5);
+			}
+			
+			if (Mouse.isButtonDown(0)) {
+				isMouseReleased = true;
 			}
 		}
 		

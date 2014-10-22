@@ -18,7 +18,7 @@ public class HoldEmOptions extends BasicGameState {
 	private Image background;
 	private Image image;
 	private Image arrow;
-	private boolean hasSubmittedRequest;
+	private boolean isMouseReleased = true;;
 
 	
 	public HoldEmOptions(int state, Model model) {
@@ -67,19 +67,26 @@ public class HoldEmOptions extends BasicGameState {
 		
 		//back button clicked
 		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150)) {
-			if(Mouse.isButtonDown(0)) {
+			if(Mouse.isButtonDown(0) && isMouseReleased) {
+				isMouseReleased = false;
 				sbg.enterState(1); //display game menu screen
+			}
+			
+			if (!Mouse.isButtonDown(0)){
+				isMouseReleased = true;
 			}
 		}
 		
 		//Play Clicked
 		if((xpos>560 && xpos<760) && (ypos>270 && ypos<370)) {
-			if(Mouse.isButtonDown(0) && !hasSubmittedRequest) {
-				hasSubmittedRequest = true;
+			if(Mouse.isButtonDown(0) && isMouseReleased) {
+				isMouseReleased = false;
 				//model.createGameRequest();
-				hasSubmittedRequest = false;
-				System.out.println("CLICK");
 				//sbg.enterState(5);
+			}
+			
+			if (!Mouse.isButtonDown(0)){
+				isMouseReleased = true;
 			}
 		}
 		

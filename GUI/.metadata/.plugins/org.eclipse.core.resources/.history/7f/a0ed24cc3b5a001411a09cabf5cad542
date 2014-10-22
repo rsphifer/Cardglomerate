@@ -64,10 +64,6 @@ public class GameMenu extends BasicGameState {
 		//mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
 		
-		//render arrow
-		g.drawImage(arrow, 0, 570);
-		g.drawString("Log Out", 5, 550);
-		
 		//welcome message
 		g.drawString("Welcome to Cardglomerate! Please Select a game (click image).", 400, 10);
 		

@@ -29,8 +29,9 @@ public class LogIn extends BasicGameState{
 	private boolean passwordFieldSelected = false;
 	private boolean emailFieldSelected = false;
 	private boolean forgotClicked = false;
-	private boolean isMouseReleased = true;
+	private boolean hasSubmittedRequest;
 	
+	private boolean passwordRequestSubmitted = false;
 	
 	public LogIn(int state, Model model) {
 		this.model = model;
@@ -152,8 +153,8 @@ public class LogIn extends BasicGameState{
 		
 		//log in button clicked
 		if((xpos>535 && xpos<735) && (ypos>130 && ypos<170)) {
-			if(Mouse.isButtonDown(0) && isMouseReleased) {
-				isMouseReleased = false;
+			if(Mouse.isButtonDown(0) && !hasSubmittedRequest) {
+				hasSubmittedRequest = true;
 				username = usernameField.getText();
 				password = passwordField.getText();
 				if ((username.length() > 1) && (password.length() > 1)) {
@@ -164,6 +165,7 @@ public class LogIn extends BasicGameState{
 					if (model.attemptLogin(username, password)) {
 						/* attempt successful */
 						System.out.println("login attempt success");
+						hasSubmittedRequest = false;
 						sbg.enterState(1); //go to game menu screen state
 					} else {
 						/* attempt failed */
@@ -175,10 +177,7 @@ public class LogIn extends BasicGameState{
 				else {
 					logInError = true;
 				}
-			}
-			
-			if (!Mouse.isButtonDown(0)){
-				isMouseReleased = true;
+				hasSubmittedRequest = false;
 			}
 			
 		}
@@ -193,8 +192,8 @@ public class LogIn extends BasicGameState{
 		
 		//send email button clicked
 		if((xpos>750 && xpos<950) && (ypos>40 && ypos<70) && (forgotClicked)) {
-			if(Mouse.isButtonDown(0) && isMouseReleased) {
-				isMouseReleased = false;
+			if(Mouse.isButtonDown(0) && !passwordRequestSubmitted) {
+				passwordRequestSubmitted = true;
 				String uname = usernameField.getText();
 				email = emailField.getText();
 				if (email.length() > 1 && uname.length() > 1) {
@@ -210,10 +209,7 @@ public class LogIn extends BasicGameState{
 				else {
 					emailError = true;
 				}
-			}
-			
-			if (!Mouse.isButtonDown(0)){
-				isMouseReleased = true;
+				passwordRequestSubmitted = false;
 			}
 			
 		}

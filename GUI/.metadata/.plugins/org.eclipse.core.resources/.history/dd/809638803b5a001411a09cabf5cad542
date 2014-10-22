@@ -21,8 +21,6 @@ public class GameMenu extends BasicGameState {
 	private Image stud;
 	private Image blackjack;
 	private Image war;
-	private Image arrow;
-	private boolean isMouseReleased = true;
 	
 	public GameMenu(int state, Model model) {
 		this.model = model;
@@ -32,10 +30,6 @@ public class GameMenu extends BasicGameState {
 		//initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
-		
-		//initialize and scale log out button
-		arrow = new Image("res/Back Arrow.jpg");
-		arrow = arrow.getScaledCopy(150, 150);
 		
 		//initialize and scale each game image
 		ratscrew = new Image("res/rat.jpg");
@@ -63,10 +57,6 @@ public class GameMenu extends BasicGameState {
 		
 		//mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
-		
-		//render arrow
-		g.drawImage(arrow, 0, 570);
-		g.drawString("Log Out", 5, 550);
 		
 		//welcome message
 		g.drawString("Welcome to Cardglomerate! Please Select a game (click image).", 400, 10);
@@ -145,19 +135,6 @@ public class GameMenu extends BasicGameState {
 		if((xpos>1070 && xpos<1270) && (ypos>10 && ypos<50)) {
 			if(Mouse.isButtonDown(0)) {
 				sbg.enterState(6);
-			}
-		}
-		
-		//back button clicked
-		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150)) {
-			if(Mouse.isButtonDown(0) && isMouseReleased) {
-				isMouseReleased = false;
-				//any code to log them out goes here
-				sbg.enterState(0); //display login screen
-			}
-			
-			if(Mouse.isButtonDown(0)) {
-				isMouseReleased = true;
 			}
 		}
 		
