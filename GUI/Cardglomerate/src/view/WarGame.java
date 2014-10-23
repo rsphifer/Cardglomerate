@@ -122,7 +122,8 @@ public class WarGame extends BasicGameState {
 			
 		//back button clicked
 		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150) && (gameOver)) {
-			if(Mouse.isButtonDown(0)) {
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
 				//resets gui for new game
 				gameOver = false;
 				curCard1 = new Image("res/Cards/ec.png");
@@ -131,6 +132,10 @@ public class WarGame extends BasicGameState {
 				opponentSize = 26;
 				
 				sbg.enterState(1); //display game menu screen
+			}
+			
+			if (!Mouse.isButtonDown(0)){
+				Master.isMouseReleased = true;
 			}
 		}
 		
