@@ -3,9 +3,12 @@ package controller;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.*;
 
 import misc.GameCreationRequest;
 import misc.Request;
+import player.Friend;
+import player.NewFriendRequest;
 import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
@@ -75,7 +78,7 @@ public class ServerAccess {
 	
 	public static boolean logoutRequest(Player player) {
 		Request request = new Request("logout", player);
-		return sendRequestWithResponse(request) != null;
+		return (boolean)sendRequestWithResponse(request);
 	}
 	
 	public static boolean retrievePassword(NewPlayerRequest player) {
@@ -86,5 +89,16 @@ public class ServerAccess {
 	public static boolean setPassword(SetPasswordRequest spr) {
 		Request request = new Request("resetPassword", spr);
 		return (boolean)sendRequestWithResponse(request);
+	}
+	
+	public static boolean addFriend(NewFriendRequest nfr) {
+		Request request = new Request("addFriend", nfr);
+		return (boolean)sendRequestWithResponse(request);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Friend> getFriends(Player player) {
+		Request request = new Request("getFriends", player);
+		return (ArrayList<Friend>)sendRequestWithResponse(request);
 	}
 }

@@ -1,0 +1,13 @@
+package player;
+
+public class NewFriendRequest {
+
+	private Player player;
+	private String usernameOfPlayerToAdd;
+	
+	public NewFriendRequest(Player player, String username) {
+		this.player = player;
+		usernameOfPlayerToAdd = username;
+	}
+	
+}

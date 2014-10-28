@@ -1,0 +1,8 @@
+package player;
+
+public class NewFriendRequest {
+
+	private Player player;
+	
+	
+}

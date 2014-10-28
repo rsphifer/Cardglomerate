@@ -14,7 +14,8 @@
 <fullyQualifiedTypeName name="player.NewPlayerRequest"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="player.SetPasswordRequest"/>
+<fullyQualifiedTypeName name="mail.EmailNewAccount"/>
+<fullyQualifiedTypeName name="player.NewFriendRequest"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="main.DatabaseAccess"/>
-<fullyQualifiedTypeName name="mail.EmailNewAccount"/>
 </qualifiedTypeNameHistroy>

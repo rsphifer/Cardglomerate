@@ -1,0 +1,8 @@
+package player;
+
+public class GetFriendsRequest {
+
+	private Player player;
+	
+	
+}

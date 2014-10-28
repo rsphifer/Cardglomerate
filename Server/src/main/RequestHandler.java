@@ -4,6 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import player.NewFriendRequest;
 import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
@@ -54,6 +55,7 @@ public class RequestHandler implements Runnable {
 					if (playerId != 0) { /* Good login..use id to get player info to build player object to return */
 						System.out.println("success!");
 						tmp = DatabaseAccess.playerInfo(playerId);
+						((Player)tmp).setPlayerId(playerId);
 					} else { /* Bad login..return null player */
 						tmp = null;
 						System.out.println("fail!");
@@ -63,17 +65,25 @@ public class RequestHandler implements Runnable {
 					
 				} else if (action.equals("logout")) {
 					System.out.println("logout request");
+					Player player = (Player)request.getObject();
+					obj = DatabaseAccess.logOut(player.getPlayerId());
 					
 				} else if (action.equals("getFriends")) {
 					System.out.println("get friends request");
 					Player player = (Player)request.getObject();
 					
 					/* Ask db for list of friends*/
-					
+					//obj = DatabaseAccess.getFriends(player.getPlayerId());
 				} else if (action.equals("addFriend")) {
+					NewFriendRequest nfr = (NewFriendRequest)request.getObject();
 					
-				} else if (action.equals("removeFriend")){
+					/* Tell db to add username to list of friends */
 					
+					obj = DatabaseAccess.addFriend(nfr.getPlayer().getPlayerId(), nfr.getUsernameOfFriend());
+				} else if (action.equals("removeFriend")) {
+					String username = (String)request.getObject();
+					
+					/* Tell db to remove username from list of friends */
 				} else if (action.equals("createAccount")) {
 							
 					System.out.println("create account request");
