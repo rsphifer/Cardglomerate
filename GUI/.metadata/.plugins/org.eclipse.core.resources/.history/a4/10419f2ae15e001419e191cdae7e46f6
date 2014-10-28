@@ -271,7 +271,7 @@ public class AccountOptions extends BasicGameState {
 					}
 					if (!passwordError) {
 						//code to send pass to server goes here
-						//model.setNewPassword(newPassword);
+						
 						changePassword = false;
 					}
 				}

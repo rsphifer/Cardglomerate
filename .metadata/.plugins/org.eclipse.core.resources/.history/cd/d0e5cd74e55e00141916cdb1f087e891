@@ -64,18 +64,7 @@ public class RequestHandler implements Runnable {
 				} else if (action.equals("logout")) {
 					System.out.println("logout request");
 					
-				} else if (action.equals("getFriends")) {
-					System.out.println("get friends request");
-					Player player = (Player)request.getObject();
-					
-					/* Ask db for list of friends*/
-					
-				} else if (action.equals("addFriend")) {
-					
-				} else if (action.equals("removeFriend")){
-					
 				} else if (action.equals("createAccount")) {
-							
 					System.out.println("create account request");
 					NewPlayerRequest npr = (NewPlayerRequest)request.getObject();
 					boolean isSuccessful = DatabaseAccess.createAccount(npr.getUserName(), npr.getPassword(), npr.getEmailAddress());

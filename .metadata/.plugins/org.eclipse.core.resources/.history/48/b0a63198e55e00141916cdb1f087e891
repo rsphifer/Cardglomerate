@@ -266,11 +266,12 @@ public class DatabaseAccess {
 			
 			Player newplayer = new Player(data.getString("username"), data.getString("password"));
 
+			return newplayer;
+
 
 			conn.close();
 			data.close();
 			datafunc.close();
-			return newplayer;
 
 
 		}

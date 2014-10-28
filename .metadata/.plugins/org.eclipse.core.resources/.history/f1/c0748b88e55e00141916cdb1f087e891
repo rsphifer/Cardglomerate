@@ -159,7 +159,7 @@ public class DatabaseAccess {
 			String is_offline;
 			is_offline = "UPDATE users set is_online=0 WHERE id=\"" + id + "\"";
 
-			onlineflagfunc.executeUpdate(is_offline);
+			onlineflagfunc.executeUpdate(online_id);
 
 			onlineflagfunc.close();
 			conn.close();
@@ -266,11 +266,12 @@ public class DatabaseAccess {
 			
 			Player newplayer = new Player(data.getString("username"), data.getString("password"));
 
+			return newplayer;
+
 
 			conn.close();
 			data.close();
 			datafunc.close();
-			return newplayer;
 
 
 		}
