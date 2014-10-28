@@ -7,7 +7,6 @@ import java.net.Socket;
 import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
-import mail.EmailNewAccount;
 import mail.EmailPassword;
 import misc.Request;
 
@@ -55,7 +54,6 @@ public class RequestHandler implements Runnable {
 						System.out.println("success!");
 						tmp = DatabaseAccess.playerInfo(playerId);
 					} else { /* Bad login..return null player */
-						tmp = null;
 						System.out.println("fail!");
 					}
 					obj = tmp;
@@ -68,11 +66,6 @@ public class RequestHandler implements Runnable {
 					System.out.println("create account request");
 					NewPlayerRequest npr = (NewPlayerRequest)request.getObject();
 					boolean isSuccessful = DatabaseAccess.createAccount(npr.getUserName(), npr.getPassword(), npr.getEmailAddress());
-					if (isSuccessful) { /* Send new account email */
-						EmailNewAccount ena = new EmailNewAccount(npr.getEmailAddress(), npr.getUserName());
-						Thread t = new Thread(ena);
-						t.start();
-					}
 					obj = isSuccessful;
 					
 					

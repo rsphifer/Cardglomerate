@@ -55,7 +55,6 @@ public class RequestHandler implements Runnable {
 						System.out.println("success!");
 						tmp = DatabaseAccess.playerInfo(playerId);
 					} else { /* Bad login..return null player */
-						tmp = null;
 						System.out.println("fail!");
 					}
 					obj = tmp;

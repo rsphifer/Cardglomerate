@@ -16,4 +16,5 @@
 <fullyQualifiedTypeName name="player.SetPasswordRequest"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="main.DatabaseAccess"/>
+<fullyQualifiedTypeName name="mail.EmailNewAccount"/>
 </qualifiedTypeNameHistroy>
