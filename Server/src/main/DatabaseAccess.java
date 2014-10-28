@@ -113,6 +113,7 @@ public class DatabaseAccess {
 				verify.close();
 				checkfunc.close();
 				idfunc.close();
+				onlineflagfunc.close();
 				id_res.close();
 				conn.close();
 
@@ -142,6 +143,45 @@ public class DatabaseAccess {
 
 		return 0;
 	}
+
+	public static boolean logOut(int id){
+
+		Connection conn = null;
+		Statement onlineflagfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+
+			onlineflagfunc = conn.createStatement();
+
+			String is_offline;
+			is_offline = "UPDATE users set is_online=0 WHERE id=\"" + id + "\"";
+
+			onlineflagfunc.executeUpdate(online_id);
+
+			onlineflagfunc.close();
+			conn.close();
+
+			System.out.println("User has been logged out");
+
+			return true;
+			
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+
+		return false;
+	}
+
 
 	public static String retrievePassword(String username, String email){
 
@@ -219,18 +259,19 @@ public class DatabaseAccess {
       		datafunc = conn.createStatement();      		
 
 			String user_data;
-				user_data = "SELECT username, password from users WHERE id=\"" + id + "\"";
+				user_data = SELECT username, password from users WHERE id=\"" + id + "\"";
 
 			ResultSet data = datafunc.executeQuery(user_data);
 			data.next();
 			
 			Player newplayer = new Player(data.getString("username"), data.getString("password"));
 
+			return newplayer;
+
+
 			conn.close();
 			data.close();
 			datafunc.close();
-			
-			return newplayer;
 
 
 		}
