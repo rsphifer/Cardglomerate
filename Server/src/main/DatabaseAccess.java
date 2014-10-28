@@ -1,7 +1,9 @@
 package main;
 
 import java.sql.*;
+import java.util.ArrayList;
 import player.Player;
+import player.Friend;
 
 /**
  * Provides interface to the server to the SQL database. All queries to db come through here.
@@ -36,6 +38,92 @@ public class DatabaseAccess {
 			existing.next();
 
 			int res = existing.getInt(id);
+
+			existing.close();
+			getfunc.close();
+			conn.close();
+			
+			return res;
+
+
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+
+		return 0;
+
+	}
+
+	public static String getName(int id){/*Assumes a valid username*/
+
+		Connection conn = null;
+		Statement getfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		getfunc = conn.createStatement();
+      		
+			String get_name;
+      			get_name = "SELECT username FROM users WHERE id=\" + id + "\"";
+
+
+			ResultSet existing = getfunc.executeQuery(get_name);
+			existing.next();
+
+			String res = existing.getString("username");
+
+			existing.close();
+			getfunc.close();
+			conn.close();
+			
+			return res;
+
+
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+
+		return "";
+
+	}
+
+	public static boolean getStatus(int id){/*Assumes a valid username*/
+
+		Connection conn = null;
+		Statement getfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		getfunc = conn.createStatement();
+      		
+			String get_stat;
+      			get_stat = "SELECT is_online FROM users WHERE id=\" + id + "\"";
+
+
+			ResultSet existing = getfunc.executeQuery(get_stat);
+			existing.next();
+
+			boolean res = existing.getBoolean("username");
 
 			existing.close();
 			getfunc.close();
@@ -434,7 +522,6 @@ public class DatabaseAccess {
 
 				existing.close();
 				existfunc.close();
-				resetfunc.close();
 				conn.close();
 
 				return false;
@@ -454,12 +541,11 @@ public class DatabaseAccess {
 
 	}
 
-	/*public static Friend[] getFriends(int id){
+	public static ArrayList<Friend> getFriends(int id){
 
 		Connection conn = null;
 		Statement existfunc = null;
-		Statement addfunc = null;
-		Statement 
+		ArrayList<Friend> friendlist = new ArrayList<Friend>(); 
 
 		try{
 			Class.forName(JDBC_DRIVER);
@@ -470,41 +556,33 @@ public class DatabaseAccess {
 			addfunc = conn.createStatement();
       		
 
-			String check_exists;
-				check_exists = "SELECT COUNT(id) from users WHERE username=\"" + friendname + "\"";
+			String get_friend_ids;
+				get_friend_ids = "SELECT friend FROM friends WHERE user=\"" + id + "\"";
 
-			ResultSet existing = existfunc.executeQuery(check_exists);
-			existing.next();
-			if(existing.getInt("COUNT(id)") == 1){ /*one user with that username was found*/
+			ResultSet existing = existfunc.executeQuery(get_friend_ids);
 
+			while(existing.next()){
+	
+				int friend_id = existing.getInt("friend");
 				
-				int friend_id = getID(friendname);
+				String friendname = getName(friend_id);
 
+				boolean friend_online = getStatus(friend_id);
 
-				String add_to_list;
-      			add_to_list = "INSERT INTO friends(user, friend) VALUES(\"" + id + "\", \"" + friend_id + "\")";
+				Friend newfriend = new Friend(friendname, friend_online);
 
-				addfunc.executeUpdate(add_to_list);
-
-				existing.close();
-				existfunc.close();
-				addfunc.close();
-				conn.close();
-
-				System.out.println("User has been added to friends list.");
-				return true;
+				friendlist.add(newfriend);
+				
 			}
-			else{
 
-				System.out.println("That user could not be found, please try again.");
+			existing.close();
+			existfunc.close();
+			conn.close();
 
-				existing.close();
-				existfunc.close();
-				resetfunc.close();
-				conn.close();
+			System.out.println("Friends list sent.");
 
-				return false;
-			}
+
+			return friendlist;
 
 		}
 		catch(SQLException se){
@@ -516,9 +594,9 @@ public class DatabaseAccess {
 		/*If execution gets here, an error occurred*/
 
 		System.out.println("A problem occurred, please try again");
-		return false;
+		return friendlist;
 
-	}*/
+	}
 
 
 }
