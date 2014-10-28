@@ -394,7 +394,6 @@ public class DatabaseAccess {
 		Connection conn = null;
 		Statement existfunc = null;
 		Statement addfunc = null;
-		Statement 
 
 		try{
 			Class.forName(JDBC_DRIVER);
@@ -454,6 +453,72 @@ public class DatabaseAccess {
 		return false;
 
 	}
+
+	/*public static Friend[] getFriends(int id){
+
+		Connection conn = null;
+		Statement existfunc = null;
+		Statement addfunc = null;
+		Statement 
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		existfunc = conn.createStatement();
+			addfunc = conn.createStatement();
+      		
+
+			String check_exists;
+				check_exists = "SELECT COUNT(id) from users WHERE username=\"" + friendname + "\"";
+
+			ResultSet existing = existfunc.executeQuery(check_exists);
+			existing.next();
+			if(existing.getInt("COUNT(id)") == 1){ /*one user with that username was found*/
+
+				
+				int friend_id = getID(friendname);
+
+
+				String add_to_list;
+      			add_to_list = "INSERT INTO friends(user, friend) VALUES(\"" + id + "\", \"" + friend_id + "\")";
+
+				addfunc.executeUpdate(add_to_list);
+
+				existing.close();
+				existfunc.close();
+				addfunc.close();
+				conn.close();
+
+				System.out.println("User has been added to friends list.");
+				return true;
+			}
+			else{
+
+				System.out.println("That user could not be found, please try again.");
+
+				existing.close();
+				existfunc.close();
+				resetfunc.close();
+				conn.close();
+
+				return false;
+			}
+
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+		return false;
+
+	}*/
 
 
 }
