@@ -37,7 +37,7 @@ public class DatabaseAccess {
 			ResultSet existing = getfunc.executeQuery(get_id);
 			existing.next();
 
-			int res = existing.getInt(id);
+			int res = existing.getInt("id");
 
 			existing.close();
 			getfunc.close();
@@ -123,7 +123,7 @@ public class DatabaseAccess {
 			ResultSet existing = getfunc.executeQuery(get_stat);
 			existing.next();
 
-			boolean res = existing.getBoolean("username");
+			boolean res = existing.getBoolean("is_online");
 
 			existing.close();
 			getfunc.close();
