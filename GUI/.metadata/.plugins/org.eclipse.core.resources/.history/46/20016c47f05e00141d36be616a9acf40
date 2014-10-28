@@ -28,7 +28,10 @@ public class Model {
 	public Model() {
 		player = null;
 		
-	
+		/* Initialize thread that will periodically ask server for updates to update model */
+		UpdateChecker updateChecker = new UpdateChecker(this);
+		Thread t = new Thread(updateChecker);
+		t.start();
 	}
 	
 	public boolean createGameRequest() {
@@ -80,13 +83,6 @@ public class Model {
 		player = ServerAccess.loginRequest(loginRequest);
 		if (player != null) {
 			System.out.printf("%s\n", player.userName);
-			/* Initialize thread that will periodically ask server for updates to update model */
-			UpdateChecker updateChecker = new UpdateChecker(this);
-			Thread t = new Thread(updateChecker);
-			t.start();
-			
-			addFriend("mounts");
-			
 			return true;
 		}
 		return false;

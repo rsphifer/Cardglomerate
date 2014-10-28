@@ -73,7 +73,7 @@ public class RequestHandler implements Runnable {
 					Player player = (Player)request.getObject();
 					
 					/* Ask db for list of friends*/
-					obj = DatabaseAccess.getFriends(player.getPlayerId());
+					//obj = DatabaseAccess.getFriends(player.getPlayerId());
 				} else if (action.equals("addFriend")) {
 					NewFriendRequest nfr = (NewFriendRequest)request.getObject();
 					

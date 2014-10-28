@@ -553,6 +553,7 @@ public class DatabaseAccess {
 			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
 		
       		existfunc = conn.createStatement();
+			addfunc = conn.createStatement();
       		
 
 			String get_friend_ids;

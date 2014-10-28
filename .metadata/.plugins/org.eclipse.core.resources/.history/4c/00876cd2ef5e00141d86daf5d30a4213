@@ -31,7 +31,7 @@ public class DatabaseAccess {
       		getfunc = conn.createStatement();
       		
 			String get_id;
-      			get_id = "SELECT id FROM users WHERE username=\"" + username + "\"";
+      			get_id = "SELECT id FROM users WHERE username=\" + username + "\"";
 
 
 			ResultSet existing = getfunc.executeQuery(get_id);
@@ -74,7 +74,7 @@ public class DatabaseAccess {
       		getfunc = conn.createStatement();
       		
 			String get_name;
-      			get_name = "SELECT username FROM users WHERE id=\"" + id + "\"";
+      			get_name = "SELECT username FROM users WHERE id=\" + id + "\"";
 
 
 			ResultSet existing = getfunc.executeQuery(get_name);
@@ -117,7 +117,7 @@ public class DatabaseAccess {
       		getfunc = conn.createStatement();
       		
 			String get_stat;
-      			get_stat = "SELECT is_online FROM users WHERE id=\"" + id + "\"";
+      			get_stat = "SELECT is_online FROM users WHERE id=\" + id + "\"";
 
 
 			ResultSet existing = getfunc.executeQuery(get_stat);
@@ -143,7 +143,7 @@ public class DatabaseAccess {
 
 		System.out.println("A problem occurred, please try again");
 
-		return false;
+		return 0;
 
 	}
 
@@ -553,6 +553,7 @@ public class DatabaseAccess {
 			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
 		
       		existfunc = conn.createStatement();
+			addfunc = conn.createStatement();
       		
 
 			String get_friend_ids;

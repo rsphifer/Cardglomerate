@@ -84,9 +84,6 @@ public class Model {
 			UpdateChecker updateChecker = new UpdateChecker(this);
 			Thread t = new Thread(updateChecker);
 			t.start();
-			
-			addFriend("mounts");
-			
 			return true;
 		}
 		return false;
