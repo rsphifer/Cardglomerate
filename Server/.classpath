@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/u/data/u99/ncool/Cardglomerate/Server/javax.mail.jar"/>
-	<classpathentry kind="lib" path="/u/data/u99/ncool/Cardglomerate/Server/mysql-connector-java-5.1.33-bin.jar"/>
-	<classpathentry kind="lib" path="/u/data/u99/ncool/Cardglomerate/ConglomerateShared.jar"/>
+	<classpathentry kind="lib" path="/u/data/u87/rsphifer/cs307/Cardglomerate/Server/mysql-connector-java-5.1.33-bin.jar"/>
+	<classpathentry kind="lib" path="/u/data/u87/rsphifer/cs307/Cardglomerate/Server/javax.mail.jar"/>
+	<classpathentry kind="lib" path="/u/data/u87/rsphifer/cs307/Cardglomerate/ConglomerateShared.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

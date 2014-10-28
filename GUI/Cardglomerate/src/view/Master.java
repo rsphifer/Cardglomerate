@@ -60,7 +60,7 @@ public class Master extends StateBasedGame {
 		this.getState(holdEmGame).init(gc, this);
 		
 		//screen to display first
-		this.enterState(gameMenu);
+		this.enterState(logIn);
 	}
 	
 	public static void main(String[] args) {

@@ -8,6 +8,7 @@ import misc.GameCreationRequest;
 import misc.Request;
 import player.NewPlayerRequest;
 import player.Player;
+import player.SetPasswordRequest;
 import cardgames.CardGame;
 
 
@@ -20,7 +21,7 @@ import cardgames.CardGame;
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME 	= "sslab08.cs.purdue.edu";
+	private static final String HOST_NAME 	= "sac07.cs.purdue.edu";
 	private static final int	PORT_NUMBER = 4000;
 	
 	private static Object sendRequestWithResponse(Request request) {
@@ -80,5 +81,10 @@ public class ServerAccess {
 	public static boolean retrievePassword(NewPlayerRequest player) {
 		Request request = new Request("retrievePassword", player);
 		return sendRequestWithResponse(request) != null;
+	}
+	
+	public static boolean setPassword(SetPasswordRequest spr) {
+		Request request = new Request("resetPassword", spr);
+		return (boolean)sendRequestWithResponse(request);
 	}
 }

@@ -1,0 +1,22 @@
+package player;
+
+public class SetPasswordRequest {
+	private String oldPass;
+	private String newPass;
+	
+	public SetPasswordRequest(String oldPass, String newPass) {
+		this.oldPass = oldPass;
+		this.newPass = newPass;
+	}
+
+	public String getOldPass() {
+		return oldPass;
+	}
+
+	public String getNewPass() {
+		return newPass;
+	}
+	
+	
+	
+}

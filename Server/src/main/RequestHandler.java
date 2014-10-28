@@ -6,6 +6,7 @@ import java.net.Socket;
 
 import player.NewPlayerRequest;
 import player.Player;
+import player.SetPasswordRequest;
 import mail.EmailPassword;
 import misc.Request;
 
@@ -38,7 +39,7 @@ public class RequestHandler implements Runnable {
 				} else if (action.equals("createGame")) {
 					System.out.println("create new game request");
 					
-				} else if (action.equals("login")) {
+				} else if (action.equals("login")) { /* Returns null if invalid..Player object if valid */
 					System.out.println("login request");
 					NewPlayerRequest npr = (NewPlayerRequest)request.getObject();
 					
@@ -51,7 +52,7 @@ public class RequestHandler implements Runnable {
 					Player tmp = null;
 					if (playerId != 0) { /* Good login..use id to get player info to build player object to return */
 						System.out.println("success!");
-						tmp = new Player("Player", "BOO");
+						tmp = DatabaseAccess.playerInfo(playerId);
 					} else { /* Bad login..return null player */
 						System.out.println("fail!");
 					}
@@ -87,6 +88,10 @@ public class RequestHandler implements Runnable {
 						t.start();
 					}
 					
+					obj = isSuccess;
+				} else if (action.equals("resetPassword")) {
+					SetPasswordRequest spr = (SetPasswordRequest)request.getObject();
+					boolean isSuccess = DatabaseAccess.resetPassword(spr.getOldPass(), spr.getNewPass(), spr.getPlayer().getPlayerId());
 					obj = isSuccess;
 				}
 				

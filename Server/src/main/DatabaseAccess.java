@@ -244,19 +244,18 @@ public class DatabaseAccess {
       		datafunc = conn.createStatement();      		
 
 			String user_data;
-				user_data = SELECT username, password from users WHERE id=\"" + id + "\"";
+				user_data = "SELECT username, password from users WHERE id=\"" + id + "\"";
 
 			ResultSet data = datafunc.executeQuery(user_data);
 			data.next();
 			
 			Player newplayer = new Player(data.getString("username"), data.getString("password"));
 
-			return newplayer;
-
-
 			conn.close();
 			data.close();
 			datafunc.close();
+			
+			return newplayer;
 
 
 		}

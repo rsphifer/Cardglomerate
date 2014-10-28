@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import player.NewPlayerRequest;
 import player.Player;
+import player.SetPasswordRequest;
 import cardgames.CardGame;
 import cardgames.War;
 import cards.Card;
@@ -69,6 +70,10 @@ public class Model {
 	
 	public boolean requestPassword(String username, String emailAddress) {
 		return ServerAccess.retrievePassword(new NewPlayerRequest(username, null, emailAddress));
+	}
+	
+	public boolean setNewPassword(String oldPassword, String newPassword) {
+		return ServerAccess.setPassword(new SetPasswordRequest(player, oldPassword, newPassword));
 	}
 
 	public CardGame getCurrentGame() {

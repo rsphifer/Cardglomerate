@@ -9,7 +9,9 @@ import cards.Card;
 
 @SuppressWarnings("serial")
 public class Player implements Serializable{
-
+	
+	private int playerId;
+	
 	private ArrayList<Player> friends;
 	private ArrayList<Card> hand;
 	private ArrayList<Card> discard;
@@ -22,6 +24,14 @@ public class Player implements Serializable{
 		this.discard = new ArrayList<Card>();
 		this.password = password;
 		this.userName = playerName;
+	}
+	
+	public void setPlayerId(int id) {
+		this.playerId = id;
+	}
+	
+	public int getPlayerId() {
+		return playerId;
 	}
 
 	public int getHandSize(){
