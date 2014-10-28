@@ -23,7 +23,11 @@ public class Model {
 	
 	public Model() {
 		player = null;
-		//Other things that we cant think of
+		
+		/* Initialize thread that will periodically ask server for updates to update model */
+		UpdateChecker updateChecker = new UpdateChecker(this);
+		Thread t = new Thread(updateChecker);
+		t.start();
 	}
 	
 	public boolean createGameRequest() {
