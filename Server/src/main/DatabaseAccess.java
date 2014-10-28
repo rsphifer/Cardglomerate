@@ -16,6 +16,50 @@ public class DatabaseAccess {
 	static final String PASSWORD = "cardglomerate";
 
 
+	public static int getID(String username){/*Assumes a valid username*/
+
+		Connection conn = null;
+		Statement getfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		getfunc = conn.createStatement();
+      		
+			String get_id;
+      			get_id = "SELECT id FROM users WHERE username=\" + username + "\"";
+
+
+			ResultSet existing = getfunc.executeQuery(get_id);
+			existing.next();
+
+			int res = existing.getInt(id);
+
+			existing.close();
+			getfunc.close();
+			conn.close();
+			
+			return res;
+
+
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+
+		return 0;
+
+	}
+
+
 	public static boolean createAccount(String username, String pw, String email){
 
 		Connection conn = null;
@@ -345,4 +389,71 @@ public class DatabaseAccess {
 		System.out.println("A problem occurred, please try again");
 		return false;
 	}
+	public static boolean addFriend(int id, String friendname){
+
+		Connection conn = null;
+		Statement existfunc = null;
+		Statement addfunc = null;
+		Statement 
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		existfunc = conn.createStatement();
+			addfunc = conn.createStatement();
+      		
+
+			String check_exists;
+				check_exists = "SELECT COUNT(id) from users WHERE username=\"" + friendname + "\"";
+
+			ResultSet existing = existfunc.executeQuery(check_exists);
+			existing.next();
+			if(existing.getInt("COUNT(id)") == 1){ /*one user with that username was found*/
+
+				
+				int friend_id = getID(friendname);
+
+
+				String add_to_list;
+      			add_to_list = "INSERT INTO friends(user, friend) VALUES(\"" + id + "\", \"" + friend_id + "\")";
+
+				addfunc.executeUpdate(add_to_list);
+
+				existing.close();
+				existfunc.close();
+				addfunc.close();
+				conn.close();
+
+				System.out.println("User has been added to friends list.");
+				return true;
+			}
+			else{
+
+				System.out.println("That user could not be found, please try again.");
+
+				existing.close();
+				existfunc.close();
+				resetfunc.close();
+				conn.close();
+
+				return false;
+			}
+
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+		return false;
+
+	}
+
+
 }
