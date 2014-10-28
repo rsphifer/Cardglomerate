@@ -29,13 +29,13 @@ public class DatabaseAccess {
       		getfunc = conn.createStatement();
       		
 			String get_id;
-      			get_id = "SELECT id FROM users WHERE username=\" + username + "\"";
+      			get_id = "SELECT id FROM users WHERE username=\"" + username + "\"";
 
 
 			ResultSet existing = getfunc.executeQuery(get_id);
 			existing.next();
 
-			int res = existing.getInt(id);
+			int res = existing.getInt("id");
 
 			existing.close();
 			getfunc.close();
@@ -434,7 +434,7 @@ public class DatabaseAccess {
 
 				existing.close();
 				existfunc.close();
-				resetfunc.close();
+				//resetfunc.close();
 				conn.close();
 
 				return false;
@@ -475,7 +475,7 @@ public class DatabaseAccess {
 
 			ResultSet existing = existfunc.executeQuery(check_exists);
 			existing.next();
-			if(existing.getInt("COUNT(id)") == 1){ /*one user with that username was found*/
+			if(existing.getInt("COUNT(id)") == 1){ /*one user with that username was found
 
 				
 				int friend_id = getID(friendname);
@@ -513,7 +513,7 @@ public class DatabaseAccess {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		/*If execution gets here, an error occurred*/
+		If execution gets here, an error occurred
 
 		System.out.println("A problem occurred, please try again");
 		return false;

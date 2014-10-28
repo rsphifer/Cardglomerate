@@ -4,4 +4,10 @@
 <fullyQualifiedTypeName name="misc.GameCreationRequest"/>
 <fullyQualifiedTypeName name="player.NewPlayerRequest"/>
 <fullyQualifiedTypeName name="controller.ServerAccess"/>
+<fullyQualifiedTypeName name="player.SetPasswordRequest"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="model.UpdateChecker"/>
+<fullyQualifiedTypeName name="player.NewFriendRequest"/>
+<fullyQualifiedTypeName name="misc.Request"/>
+<fullyQualifiedTypeName name="player.Friend"/>
 </qualifiedTypeNameHistroy>

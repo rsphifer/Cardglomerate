@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;player.GetFriendsRequest&apos; to &apos;NewFriendRequest&apos;&#x0A;- Original project: &apos;SharedClasses&apos;&#x0A;- Original element: &apos;player.GetFriendsRequest&apos;&#x0A;- Renamed element: &apos;player.NewFriendRequest&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;GetFriendsRequest&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;player{GetFriendsRequest.java[GetFriendsRequest" matchStrategy="1" name="NewFriendRequest" qualified="false" references="true" similarDeclarations="false" stamp="1414530926183" textual="false" version="1.0"/>
+</session>

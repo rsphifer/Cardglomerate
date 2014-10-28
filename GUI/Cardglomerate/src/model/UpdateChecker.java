@@ -2,6 +2,8 @@ package model;
 
 import javax.swing.JOptionPane;
 
+import controller.ServerAccess;
+
 public class UpdateChecker implements Runnable {
 	private final int MILLIS_BETWEEN_UPDATES = 5000;
 	
@@ -24,6 +26,9 @@ public class UpdateChecker implements Runnable {
 			
 			/* Update model with newest game, chat, and friend states */
 			System.out.println("Ask server for updates.");
+			
+			/* Update friends list */
+			model.setFriendList(ServerAccess.getFriends(model.getPlayer()));
 		}
 		
 	}

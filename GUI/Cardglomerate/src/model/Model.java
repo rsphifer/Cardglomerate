@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
+import player.Friend;
+import player.NewFriendRequest;
 import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
@@ -20,6 +23,7 @@ public class Model {
 
 	private Player player;
 	private War currentGame;
+	private ArrayList<Friend> friendList;
 	
 	public Model() {
 		player = null;
@@ -57,6 +61,18 @@ public class Model {
 		return currentGame.getCardsToDisplay();
 	}
 	
+	public boolean addFriend(String username) {
+		return ServerAccess.addFriend(new NewFriendRequest(player, username));
+	}
+	
+	public void setFriendList(ArrayList<Friend> friends) {
+		friendList = friends;
+	}
+	
+	public ArrayList<Friend> getFriendsList() {
+		return friendList;
+	}
+	
 	public boolean createAccountRequest(String username, String password, String email) {
 		NewPlayerRequest accountRequest = new NewPlayerRequest(username, password, email);
 		return ServerAccess.createNewAccount(accountRequest);
@@ -84,9 +100,6 @@ public class Model {
 		return currentGame;
 	}
 
-//	public void setCurrentGame(CardGame currentGame) {
-//		this.currentGame = currentGame;
-//	}
 
 	public Player getPlayer() {
 		return player;
