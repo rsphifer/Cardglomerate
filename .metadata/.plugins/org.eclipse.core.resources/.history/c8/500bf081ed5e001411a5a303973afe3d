@@ -55,7 +55,6 @@ public class RequestHandler implements Runnable {
 					if (playerId != 0) { /* Good login..use id to get player info to build player object to return */
 						System.out.println("success!");
 						tmp = DatabaseAccess.playerInfo(playerId);
-						((Player)tmp).setPlayerId(playerId);
 					} else { /* Bad login..return null player */
 						tmp = null;
 						System.out.println("fail!");

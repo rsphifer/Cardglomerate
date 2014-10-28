@@ -55,7 +55,6 @@ public class RequestHandler implements Runnable {
 					if (playerId != 0) { /* Good login..use id to get player info to build player object to return */
 						System.out.println("success!");
 						tmp = DatabaseAccess.playerInfo(playerId);
-						((Player)tmp).setPlayerId(playerId);
 					} else { /* Bad login..return null player */
 						tmp = null;
 						System.out.println("fail!");
@@ -65,8 +64,6 @@ public class RequestHandler implements Runnable {
 					
 				} else if (action.equals("logout")) {
 					System.out.println("logout request");
-					Player player = (Player)request.getObject();
-					obj = DatabaseAccess.logOut(player.getPlayerId());
 					
 				} else if (action.equals("getFriends")) {
 					System.out.println("get friends request");

@@ -22,7 +22,6 @@ public class UpdateChecker implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "An error with the server has occurred.", null, JOptionPane.ERROR_MESSAGE);
-				System.exit(0);
 			}
 			
 			/* Update model with newest game, chat, and friend states */

@@ -88,10 +88,6 @@ public class Model {
 		return false;
 	}
 	
-	public boolean logout() {
-		return ServerAccess.logoutRequest(player);
-	}
-	
 	public boolean requestPassword(String username, String emailAddress) {
 		return ServerAccess.retrievePassword(new NewPlayerRequest(username, null, emailAddress));
 	}

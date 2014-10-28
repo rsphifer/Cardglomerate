@@ -78,12 +78,12 @@ public class ServerAccess {
 	
 	public static boolean logoutRequest(Player player) {
 		Request request = new Request("logout", player);
-		return (boolean)sendRequestWithResponse(request);
+		return sendRequestWithResponse(request) != null;
 	}
 	
 	public static boolean retrievePassword(NewPlayerRequest player) {
 		Request request = new Request("retrievePassword", player);
-		return sendRequestWithResponse(request) != null;
+		return (boolean)sendRequestWithResponse(request);
 	}
 	
 	public static boolean setPassword(SetPasswordRequest spr) {
