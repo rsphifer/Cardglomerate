@@ -10,7 +10,6 @@ import cards.Card;
 @SuppressWarnings("serial")
 public class War extends CardGame implements Serializable{
 
-
 	private ArrayList<Player> players;
 	private LinkedList<Card> winnings;
 	private LinkedList<Card> cardsToDisplay;

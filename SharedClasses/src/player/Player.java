@@ -38,12 +38,29 @@ public class Player implements Serializable{
 		return this.hand.size();
 	}
 	
+	public ArrayList<Card> getHand(){
+		return this.hand;
+	}
+	
+	public void emptyHand(){
+		this.hand.clear();
+	}
+	
 	public int getDiscardSize(){
 		return this.discard.size();
 	}
 	
-	public void getMoney(int money){
+	public void addMoney(int money){
 		this.money += money;
+	}
+	
+	public int getMoney(){
+		return this.money;
+	}
+	
+	public int bet(int amount){
+		money -= amount;
+		return amount;
 	}
 	
 	public void addCardToDiscard(Card newCard){
