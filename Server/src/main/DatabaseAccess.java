@@ -15,40 +15,6 @@ public class DatabaseAccess {
 	static final String USERNAME = "khan62";
 	static final String PASSWORD = "cardglomerate";
 
-	public static void testConnection(){
-		
-		Connection conn = null;
-		Statement func = null;
-
-		try{
-			Class.forName(JDBC_DRIVER);
-	
-			System.out.println("TEST CONNECTION");
-
-			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
-		
-			System.out.println("Creating statement...");
-      		func = conn.createStatement();
-      		String sql;
-      		sql = "SELECT id from users";
-      		ResultSet rs = func.executeQuery(sql);
-
-			int id = rs.getInt("id");
-			System.out.println(id);
-
-			rs.close();
-			func.close();
-			conn.close();
-
-
-		}
-		catch(SQLException se){
-			se.printStackTrace();
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
 
 	public static boolean createAccount(String username, String pw, String email){
 
@@ -109,6 +75,7 @@ public class DatabaseAccess {
 		Connection conn = null;
 		Statement checkfunc = null;
 		Statement idfunc = null;
+		Statement onlineflagfunc = null;
 
 		try{
 			Class.forName(JDBC_DRIVER);
@@ -125,11 +92,19 @@ public class DatabaseAccess {
 			if(verify.getInt("COUNT(id)") == 1){ /*Username/password correct and unique*/
 
 				idfunc = conn.createStatement();
+				onlineflagfunc = conn.createStatement();
 
 				String select_id;
       				select_id = "SELECT id FROM users WHERE username=\"" + uname_try + "\" AND password=\"" + pw_try + "\"";
+
+				String online_id;
+				online_id = "UPDATE users set is_online=1 WHERE username=\"" + uname_try + "\" AND password=\"" + pw_try + "\"";
+
 				ResultSet id_res = idfunc.executeQuery(select_id);
 				id_res.next();
+
+
+				onlineflagfunc.executeUpdate(online_id);
 
 				int ret = id_res.getInt("id");
 
