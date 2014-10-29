@@ -23,11 +23,14 @@ public class Model {
 
 	private Player player;
 	private War currentGame;
+	
+	
 	private ArrayList<Friend> friendList;
+	public boolean isLoggedIn;
 	
 	public Model() {
 		player = null;
-		
+		isLoggedIn = false;
 	
 	}
 	
@@ -79,13 +82,15 @@ public class Model {
 		NewPlayerRequest loginRequest = new NewPlayerRequest(username, password, null);
 		player = ServerAccess.loginRequest(loginRequest);
 		if (player != null) {
-			System.out.printf("%s\n", player.userName);
+
+			isLoggedIn = true;
+			
 			/* Initialize thread that will periodically ask server for updates to update model */
 			UpdateChecker updateChecker = new UpdateChecker(this);
 			Thread t = new Thread(updateChecker);
 			t.start();
 			
-			addFriend("mounts");
+			//addFriend("mounts");
 			
 			return true;
 		}
@@ -93,7 +98,9 @@ public class Model {
 	}
 	
 	public boolean logout() {
-		return ServerAccess.logoutRequest(player);
+		boolean isSuccess = ServerAccess.logoutRequest(player);
+		if (isSuccess) isLoggedIn = false;
+		return isSuccess;
 	}
 	
 	public boolean requestPassword(String username, String emailAddress) {

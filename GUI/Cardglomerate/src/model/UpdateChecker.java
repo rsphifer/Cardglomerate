@@ -15,7 +15,7 @@ public class UpdateChecker implements Runnable {
 	
 	@Override
 	public void run() {
-		while (true) {
+		while (model.isLoggedIn) {
 			
 			/* Sleep between server calls to minimize busy waiting */
 			try {
