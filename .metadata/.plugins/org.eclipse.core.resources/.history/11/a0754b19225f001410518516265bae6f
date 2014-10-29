@@ -14,12 +14,10 @@ import misc.Request;
 
 public class RequestHandler implements Runnable {
 
-	private Socket clientSocket;
-	private ActiveGames gameTable;
+	Socket clientSocket;
 
-	public RequestHandler(Socket clientSocket, ActiveGames gameTable) {
+	public RequestHandler(Socket clientSocket) {
 		this.clientSocket = clientSocket;
-		this.gameTable = gameTable;
 	}
 
 	@Override
@@ -76,30 +74,25 @@ public class RequestHandler implements Runnable {
 					
 					/* Ask db for list of friends*/
 					obj = DatabaseAccess.getFriends(player.getPlayerId());
-					
 				} else if (action.equals("addFriend")) {
 					NewFriendRequest nfr = (NewFriendRequest)request.getObject();
 					
 					/* Tell db to add username to list of friends */
-					obj = DatabaseAccess.addFriend(nfr.getPlayer().getPlayerId(), nfr.getNameOfPlayerToAdd());
 					
+					obj = DatabaseAccess.addFriend(nfr.getPlayer().getPlayerId(), nfr.getNameOfPlayerToAdd());
 				} else if (action.equals("removeFriend")) {
 					String username = (String)request.getObject();
 					
 					/* Tell db to remove username from list of friends */
-					
-					
 				} else if (action.equals("createAccount")) {
 							
 					System.out.println("create account request");
 					NewPlayerRequest npr = (NewPlayerRequest)request.getObject();
 					boolean isSuccessful = DatabaseAccess.createAccount(npr.getUserName(), npr.getPassword(), npr.getEmailAddress());
-					if (isSuccessful) {
-						/* Send new account email */
+					if (isSuccessful) { /* Send new account email */
 						EmailNewAccount ena = new EmailNewAccount(npr.getEmailAddress(), npr.getUserName());
 						Thread t = new Thread(ena);
 						t.start();
-						
 					}
 					obj = isSuccessful;
 					

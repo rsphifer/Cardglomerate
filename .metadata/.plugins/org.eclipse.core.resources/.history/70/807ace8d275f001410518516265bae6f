@@ -23,7 +23,7 @@ public class Server {
 				
 				Socket clientSocket = serverSocket.accept();
 				
-				RequestHandler requestHandler = new RequestHandler(clientSocket, gameTable);
+				RequestHandler requestHandler = new RequestHandler(clientSocket);
 				Thread t = new Thread(requestHandler);
 				t.start();
 			}
@@ -52,7 +52,9 @@ public class Server {
 			System.exit(1);
 		}
 		
-		Server server = new Server(port);
-		server.start();
+		
+		
+
+		
 	}
 }

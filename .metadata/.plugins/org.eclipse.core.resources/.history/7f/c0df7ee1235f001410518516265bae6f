@@ -1,0 +1,34 @@
+package main;
+
+import cardgames.CardGame;
+
+
+/**
+ * @author 	Richard Phifer <rsphifer@purdue.edu>
+ * @date	Oct. 29, 2014
+ * 
+ * Defines an implicit data structure that holds a list of all active games in the system.
+ * A game's id is its index in the array.
+ */
+public class ActiveGames {
+	private final int MAX_GAMES = 50;
+	
+	private CardGame[] games;
+	private int numberOfGames;
+	
+	public ActiveGames() {
+		games = new CardGame[MAX_GAMES];
+	}
+	
+	
+	
+	private class GameListEntry {
+		final int FREE_ENTRY = 0;
+		final int USED_ENTRY = 1;
+		
+		private CardGame cardGame;
+	}
+
+}
+
+

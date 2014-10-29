@@ -14,12 +14,10 @@ import misc.Request;
 
 public class RequestHandler implements Runnable {
 
-	private Socket clientSocket;
-	private ActiveGames gameTable;
+	Socket clientSocket;
 
-	public RequestHandler(Socket clientSocket, ActiveGames gameTable) {
+	public RequestHandler(Socket clientSocket) {
 		this.clientSocket = clientSocket;
-		this.gameTable = gameTable;
 	}
 
 	@Override

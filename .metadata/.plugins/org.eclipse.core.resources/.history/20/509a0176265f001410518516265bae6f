@@ -1,0 +1,96 @@
+package main;
+
+import cardgames.CardGame;
+
+
+/**
+ * @author 	Richard Phifer <rsphifer@purdue.edu>
+ * @date	Oct. 29, 2014
+ * 
+ * Defines an implicit data structure that holds a list of all active games in the system.
+ * A game's id is its index in the array.
+ */
+public class ActiveGames {
+	private final int MAX_GAMES = 50;
+	
+	private GameListEntry[] games;
+	private int numberOfGames;
+	
+	public ActiveGames() {
+		/* Initialize all table entries */
+		games = new GameListEntry[MAX_GAMES];
+		for (int i=0; i<MAX_GAMES; i++) {
+			games[i] = new GameListEntry();
+		}
+	}
+	
+	/**
+	 * Finds a free game table entry and allocates it to the game. 
+	 * Synchronized in case of multiple clients creating games at the same time.
+	 */
+	public synchronized int addNewGame(CardGame game) {
+		int gameId=0;
+		
+		/* Find first free entry in table */
+		while(gameId < MAX_GAMES && games[gameId].getState() != GameListEntry.FREE_ENTRY) {
+			gameId++;
+		}
+		
+		if (gameId == MAX_GAMES) {
+			return -1;
+		}
+		
+		games[gameId].setState(GameListEntry.USED_ENTRY);
+		games[gameId].setCardGame(game);
+		numberOfGames++;
+		return gameId;
+	}
+	
+	/**
+	 * Simply frees the given game id table entry.
+	 */
+	public synchronized void endGame(int gameId) {
+		games[gameId].setState(GameListEntry.FREE_ENTRY);
+		games[gameId].setCardGame(null);
+		numberOfGames--;
+		return;
+	}
+	
+	public void updateGame(int gameId, CardGame game) {
+		games[gameId].setCardGame(game);
+	}
+	
+	
+	
+	private class GameListEntry {
+		final static int FREE_ENTRY = 0;
+		final static int USED_ENTRY = 1;
+		
+		private CardGame cardGame;
+		private int entryState;
+		
+		public GameListEntry() {
+			cardGame = null;
+			entryState = FREE_ENTRY;
+		}
+		
+		public void setState(int state) {
+			entryState = state;
+		}
+		
+		public int getState() {
+			return entryState;
+		}
+		
+		public void setCardGame(CardGame game) {
+			cardGame = game;
+		}
+		
+		public CardGame getCardGame() {
+			return cardGame;
+		}
+ 	}
+
+}
+
+
