@@ -18,10 +18,12 @@ public class AccountOptions extends BasicGameState {
 	private Image background;
 	private Image image;
 	private Image arrow;
+	private Image error;
 	private TextField usernameField;
 	private TextField passwordField;
 	private TextField emailField;
 	private TextField deleteField;
+	private TextField curPasswordField;
 	private boolean changeUsername = false;
 	private boolean changePassword = false;
 	private boolean changeEmail = false;
@@ -30,14 +32,20 @@ public class AccountOptions extends BasicGameState {
 	private String newPassword;
 	private String newEmail;
 	private String curPassword;
+	private String delete;
 	private boolean usernameFieldSelected = false;
 	private boolean passwordFieldSelected = false;
 	private boolean emailFieldSelected = false;
 	private boolean deleteFieldSelected = false;
+	private boolean curPasswordFieldSelected = true;
 	private boolean usernameError = false;
 	private boolean passwordError = false;
 	private boolean emailError = false;
 	private boolean deleteError = false;
+	
+	//server code should set these
+	private boolean curPasswordError = false; //if current password entered is wrong
+	private boolean globalError = false; //if server found somthing wrong with email, username, pass, whatever
 
 	
 	public AccountOptions(int state, Model model) {
@@ -52,6 +60,7 @@ public class AccountOptions extends BasicGameState {
 		//initialize and scale images		
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
+		error = new Image("res/Cards/jr.png");
 		
 		//initialize gear image
 		image = new Image("res/Gear.jpg");
@@ -61,6 +70,7 @@ public class AccountOptions extends BasicGameState {
 		passwordField = new TextField(gc, gc.getDefaultFont(), 560, 425, 200, 30);
 		emailField = new TextField(gc, gc.getDefaultFont(), 560, 525, 200, 30);
 		deleteField = new TextField(gc, gc.getDefaultFont(), 560, 625, 200, 30);
+		curPasswordField = new TextField(gc, gc.getDefaultFont(), 825, 225, 200, 30);
 		
 
 	}
@@ -68,6 +78,11 @@ public class AccountOptions extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException{
 		//render the background
 		background.draw(0,0);
+		
+		//current password stuff
+		curPasswordField.render(gc, g);
+		g.drawString("Please enter current password here", 825, 180);
+		g.drawString("to utilize account options functions.", 825, 200);
 		
 		//mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
@@ -148,15 +163,31 @@ public class AccountOptions extends BasicGameState {
 		//render delete account stuff
 		if (deleteAccount) {
 			deleteField.render(gc, g);
-			g.drawString("Please enter your current password", 770, 630);
+			g.drawString("Please type DELETE to confirm", 770, 630);
 			if (!deleteAccount) {
 				g.clear();
 			}
 		}
 		
 		if (deleteError) {
-			g.drawString("Wrong password", 560, 560);
+			g.drawString("Its case sensitive by the way", 560, 660);
 			if(!deleteError) {
+				g.clear();
+			}
+		}
+		
+		if (curPasswordError) {
+			g.drawString("Incorrect Password", 825, 260);
+			if (!curPasswordError) {
+				g.clear();
+			}
+		}
+		
+		if (globalError) {
+			g.drawImage(error, 200, 200);
+			g.drawString("Error processing request", 200, 300);
+			g.drawString("Please try again", 200, 320);
+			if(!globalError) {
 				g.clear();
 			}
 		}
@@ -185,6 +216,9 @@ public class AccountOptions extends BasicGameState {
 		if(deleteFieldSelected) {
 			deleteField.setFocus(true);
 		}
+		if (curPasswordFieldSelected) {
+			curPasswordField.setFocus(true);
+		}
 		
 		//username textbox clicked
 		if((xpos>560 && xpos<760) && (ypos>365 && ypos<395)) {
@@ -192,6 +226,7 @@ public class AccountOptions extends BasicGameState {
 				passwordFieldSelected = false;
 				emailFieldSelected = false;
 				usernameFieldSelected = true;
+				curPasswordFieldSelected = false;
 			}
 		}
 		//password textbox clicked
@@ -200,6 +235,7 @@ public class AccountOptions extends BasicGameState {
 				usernameFieldSelected = false;
 				emailFieldSelected = false;
 				passwordFieldSelected = true;
+				curPasswordFieldSelected = false;
 			}
 		}
 		//email textbox clicked
@@ -208,6 +244,7 @@ public class AccountOptions extends BasicGameState {
 				usernameFieldSelected = false;
 				passwordFieldSelected = false;
 				emailFieldSelected = true;
+				curPasswordFieldSelected = false;
 			}
 		}
 		//delete textbox clicked
@@ -217,6 +254,17 @@ public class AccountOptions extends BasicGameState {
 				passwordFieldSelected = false;
 				emailFieldSelected = false;
 				deleteFieldSelected = true;
+				curPasswordFieldSelected = false;
+			}
+		}
+		//cur password textbox fixed
+		if((xpos>825 && xpos<1025) && (ypos>465 && ypos<495)) {
+			if(Mouse.isButtonDown(0)) {
+				usernameFieldSelected = false;
+				passwordFieldSelected = false;
+				emailFieldSelected = false;
+				deleteFieldSelected = false;
+				curPasswordFieldSelected = true;
 			}
 		}
 		
@@ -241,7 +289,7 @@ public class AccountOptions extends BasicGameState {
 				}
 				else {
 					newUsername = usernameField.getText();
-					//send new username to server to check, if error set username error else don't
+					//change username code goes here
 
 					if (!usernameError) {
 						changeUsername = false;
@@ -298,7 +346,7 @@ public class AccountOptions extends BasicGameState {
 						emailError = false;
 					}
 					if (!emailError) {
-						//code to send email to server goes here
+						//code to change email
 						
 						changeEmail = false;
 					}
@@ -318,8 +366,15 @@ public class AccountOptions extends BasicGameState {
 					deleteAccount = true;
 				}
 				else {
-					curPassword = deleteField.getText();
-					//code to check if password is valid blah blah delete account blah blah
+					delete = deleteField.getText();
+					if (delete.equals("DELETE")) {
+						deleteError = false;
+						//code to delete their account or whatever
+						System.out.println("COMMENCING ACCOUNT ANNIHILATION PLEASE STAND BY");
+					}
+					else {
+						deleteError = true;
+					}
 				}
 			}
 			

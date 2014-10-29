@@ -60,7 +60,7 @@ public class Master extends StateBasedGame {
 		this.getState(holdEmGame).init(gc, this);
 		
 		//screen to display first
-		this.enterState(logIn);
+		this.enterState(gameMenu);
 	}
 	
 	/* Overrides default close operation when close is selected */
