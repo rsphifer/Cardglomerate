@@ -1,0 +1,25 @@
+package misc;
+
+import java.io.Serializable;
+
+import player.Player;
+import cardgames.CardGame;
+
+@SuppressWarnings("serial")
+public class GameCreationRequest implements Serializable{
+
+	private CardGame gameRequested;
+	
+	public GameCreationRequest(CardGame gameRequested) {
+		
+		this.gameRequested = gameRequested;
+	}
+	
+	public Player getGameRequester() {
+		return gameRequester;
+	}
+	
+	public CardGame getGameRequested() {
+		return gameRequested;
+	}
+}

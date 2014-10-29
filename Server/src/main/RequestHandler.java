@@ -4,20 +4,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import mail.EmailNewAccount;
+import mail.EmailPassword;
+import misc.Request;
+import misc.UpdateGameRequest;
 import player.NewFriendRequest;
 import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
-import mail.EmailNewAccount;
-import mail.EmailPassword;
-import misc.Request;
+import cardgames.CardGame;
 
 public class RequestHandler implements Runnable {
 
 	private Socket clientSocket;
-	private ActiveGames gameTable;
+	private GameTable gameTable;
 
-	public RequestHandler(Socket clientSocket, ActiveGames gameTable) {
+	public RequestHandler(Socket clientSocket, GameTable gameTable) {
 		this.clientSocket = clientSocket;
 		this.gameTable = gameTable;
 	}
@@ -37,11 +39,24 @@ public class RequestHandler implements Runnable {
 				obj = PLACE_HOLDER;
 				
 				
-				if (action.equals("updateCardGameState")) {
-					System.out.println("update card game state request");
+				if (action.equals("getCardGame")) {
+					
+					System.out.println("get card game request");
+					int gameId = (int)request.getObject();
+					obj = gameTable.getGame(gameId);
+					
+				} else if (action.equals("updateCardGame")) {
+					
+					System.out.println("update card game request");
+					UpdateGameRequest ugr = (UpdateGameRequest)request.getObject();
+					gameTable.updateGame(ugr.getGameId(), ugr.getCardGame());
+					obj = true;
 					
 				} else if (action.equals("createGame")) {
+					
 					System.out.println("create new game request");
+					CardGame game = (CardGame)request.getObject();
+					obj = gameTable.addNewGame(game);
 					
 				} else if (action.equals("login")) { /* Returns null if invalid..Player object if valid */
 					System.out.println("login request");

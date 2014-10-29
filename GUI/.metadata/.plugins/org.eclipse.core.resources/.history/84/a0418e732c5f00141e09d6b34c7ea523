@@ -1,0 +1,108 @@
+package controller;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+
+import misc.Request;
+import player.Friend;
+import player.NewFriendRequest;
+import player.NewPlayerRequest;
+import player.Player;
+import player.SetPasswordRequest;
+import cardgames.CardGame;
+
+
+/**
+ * @author 	Richard Phifer<rsphifer@purdue.edu>
+ * @date	Oct 11, 2014
+ * 
+ * Provides an interface for the client application to send and receive communications from the server.
+ *
+ */
+public class ServerAccess {
+
+	private static final String HOST_NAME 	= "sac07.cs.purdue.edu";
+	private static final int	PORT_NUMBER = 4000;
+	
+	private static Object sendRequestWithResponse(Request request) {
+		try {
+			/* Try to connect to server */
+			Socket serverSocket = new Socket(HOST_NAME, PORT_NUMBER);
+			
+			/* Open output stream and write request to server */
+			ObjectOutputStream oos = new ObjectOutputStream(serverSocket.getOutputStream());
+			oos.writeObject(request);
+			oos.flush();
+			
+			
+			/* Open input stream and read server response*/
+			ObjectInputStream ois = new ObjectInputStream(serverSocket.getInputStream());
+			Object response = ois.readObject();
+			oos.close();
+			ois.close();
+			
+			serverSocket.close();
+			return response;
+			
+		} catch (Exception e) {
+			System.err.println("In send request");
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static CardGame getCardGame(int gameId) {
+		Request request = new Request("getCardGame", gameId);
+		return (CardGame)sendRequestWithResponse(request);
+	}
+	
+	public static boolean updateCardGameState(int gameId, CardGame game) {
+		Request request = new Request("updateCardGame", game);
+		return sendRequestWithResponse(request) != null;
+	}
+	
+	public static boolean createNewGame(CardGame game) {
+		Request request = new Request("createGame", game);
+		return sendRequestWithResponse(request) != null;
+	}
+	
+	public static boolean createNewAccount(NewPlayerRequest player) {
+		Request request = new Request("createAccount", player);
+		return (boolean)sendRequestWithResponse(request);
+	}
+	
+	public static Player loginRequest(NewPlayerRequest player) {
+		Request request = new Request("login", player);
+		Player tmp = (Player)sendRequestWithResponse(request);
+		return tmp;
+	}
+	
+	public static boolean logoutRequest(Player player) {
+		Request request = new Request("logout", player);
+		return (boolean)sendRequestWithResponse(request);
+	}
+	
+	public static boolean retrievePassword(NewPlayerRequest player) {
+		Request request = new Request("retrievePassword", player);
+		return sendRequestWithResponse(request) != null;
+	}
+	
+	public static boolean setPassword(SetPasswordRequest spr) {
+		Request request = new Request("resetPassword", spr);
+		return (boolean)sendRequestWithResponse(request);
+	}
+	
+	public static boolean addFriend(NewFriendRequest nfr) {
+		Request request = new Request("addFriend", nfr);
+		return (boolean)sendRequestWithResponse(request);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Friend> getFriends(Player player) {
+		Request request = new Request("getFriends", player);
+		return (ArrayList<Friend>)sendRequestWithResponse(request);
+	}
+}

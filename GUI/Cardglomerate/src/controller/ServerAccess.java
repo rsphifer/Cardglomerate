@@ -3,9 +3,8 @@ package controller;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.*;
+import java.util.ArrayList;
 
-import misc.GameCreationRequest;
 import misc.Request;
 import player.Friend;
 import player.NewFriendRequest;
@@ -55,14 +54,19 @@ public class ServerAccess {
 		return null;
 	}
 	
-	public static boolean updateCardGameState(CardGame game) {
-		Request request = new Request("updateCardGameState", game);
-		return sendRequestWithResponse(request) != null;
+	public static CardGame getCardGame(int gameId) {
+		Request request = new Request("getCardGame", gameId);
+		return (CardGame)sendRequestWithResponse(request);
 	}
 	
-	public static boolean createNewGame(Player player, CardGame game) {
-		Request request = new Request("createGame", new GameCreationRequest(player, game));
-		return sendRequestWithResponse(request) != null;
+	public static boolean updateCardGameState(int gameId, CardGame game) {
+		Request request = new Request("updateCardGame", game);
+		return (boolean)sendRequestWithResponse(request);
+	}
+	
+	public static int createNewGame(CardGame game) {
+		Request request = new Request("createGame", game);
+		return (int)sendRequestWithResponse(request);
 	}
 	
 	public static boolean createNewAccount(NewPlayerRequest player) {

@@ -8,11 +8,11 @@ public class Server {
 	public static final String USAGE = "Usage: java Server portNumber";
 	
 	private int port;
-	private ActiveGames gameTable;
+	private GameTable gameTable;
 	
 	public Server(int port) {
 		this.port = port;
-		gameTable = new ActiveGames();
+		gameTable = new GameTable();
 	}
 	
 	public void start() {
