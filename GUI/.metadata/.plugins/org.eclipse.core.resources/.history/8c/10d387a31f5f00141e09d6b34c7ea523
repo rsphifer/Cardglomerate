@@ -63,24 +63,15 @@ public class Master extends StateBasedGame {
 		this.enterState(logIn);
 	}
 	
-	/* Overrides default close operation when close is selected */
-	@Override
-	public boolean closeRequested() {
-		/* If client is logged in, log the user out before exiting. */
-		if (model.isLoggedIn) {
-			model.logout();
-		}
-		System.exit(0);
-		return false;
-	}
-	
 	public static void main(String[] args) {
+		//ServerAccess.createNewAccount(new Player());
+		//ServerAccess.createNewGame(new Player(), new CardGame());
+		//ServerAccess.retrievePassword("blah");
 		
 		AppGameContainer appgc;
 		try {
 			appgc = new AppGameContainer(new Master(gameName));
 			appgc.setDisplayMode(1280,720,false);  //window size, false means no fullscreen
-			
 			appgc.start();
 		}catch(SlickException e){
 			e.printStackTrace();

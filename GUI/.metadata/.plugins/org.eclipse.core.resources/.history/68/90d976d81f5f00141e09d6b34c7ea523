@@ -63,7 +63,6 @@ public class Master extends StateBasedGame {
 		this.enterState(logIn);
 	}
 	
-	/* Overrides default close operation when close is selected */
 	@Override
 	public boolean closeRequested() {
 		/* If client is logged in, log the user out before exiting. */

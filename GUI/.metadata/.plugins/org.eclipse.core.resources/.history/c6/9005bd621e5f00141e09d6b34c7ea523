@@ -90,7 +90,7 @@ public class Model {
 			Thread t = new Thread(updateChecker);
 			t.start();
 			
-			//addFriend("arbiccdheife");
+			//addFriend("mounts");
 			
 			return true;
 		}
