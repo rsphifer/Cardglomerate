@@ -79,7 +79,7 @@ public class RequestHandler implements Runnable {
 					
 					/* Tell db to add username to list of friends */
 					
-					obj = DatabaseAccess.addFriend(nfr.getPlayer().getPlayerId(), nfr.getUsernameOfFriend());
+					obj = DatabaseAccess.addFriend(nfr.getPlayer().getPlayerId(), nfr.getNameOfPlayerToAdd());
 				} else if (action.equals("removeFriend")) {
 					String username = (String)request.getObject();
 					
