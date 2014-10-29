@@ -133,19 +133,31 @@ public class War extends CardGame implements Serializable{
 	}
 	
 	public void update(){
+		/*if(this.players.get(0).getHandSize() == 0){
+			if(this.players.get(0).resetHand()){
+				this.gameOver = true;
+			}
+		}
+		if(this.players.get(1).getHandSize() == 0){
+			if(this.players.get(1).resetHand()){
+				this.gameOver = true;
+			}
+		}*/
+		//p1Card = this.players.get(0).playTopCard();
+		//p2Card = this.players.get(1).playTopCard();
 		
 		System.out.println(this.players.get(0).getHandSize()+"   "+this.players.get(1).getHandSize());
 		if((p1Card = this.players.get(0).playTopCard()) == null){
-			gameOver = true;
+			this.gameOver = true;
 		}
-		if((p2Card = players.get(1).playTopCard()) == null){
-			gameOver = true;
+		if((p2Card = this.players.get(1).playTopCard()) == null){
+			this.gameOver = true;
 		}
 		
-		winnings.push(p1Card);
-		winnings.push(p2Card);
+		this.winnings.push(p1Card);
+		this.winnings.push(p2Card);
 		
-		score(p1Card, p2Card);
+		this.score(p1Card, p2Card);
 		
 		if(gameOver){
 			if(this.players.get(0).getHandSize() == 0){
@@ -158,12 +170,26 @@ public class War extends CardGame implements Serializable{
 	}
 
 	public void play(){
+		/*for(int i=1;i<=13;i++){
+			this.players.get(0).addCardToHand(new Card(i,0));
+		}
+		for(int i=1;i<=13;i++){
+			this.players.get(0).addCardToHand(new Card(i,1));
+		}
+		for(int i=1;i<=13;i++){
+			this.players.get(0).addCardToHand(new Card(i,2));
+		}
+		for(int i=2;i<=13;i++){
+			this.players.get(0).addCardToHand(new Card(i,3));
+		}
+		this.players.get(1).addCardToHand(new Card(1,3));
+		*/
 		
 		for(int i=0;i<52;i++){
 			if(i%2 == 0){
-				players.get(0).addCardToHand(getTopOfDeck());
+				this.players.get(0).addCardToHand(this.cardGame.getTopOfDeck());
 			} else {
-				players.get(1).addCardToHand(getTopOfDeck());
+				this.players.get(1).addCardToHand(this.cardGame.getTopOfDeck());
 			}
 		}
 		int j=0;
@@ -171,29 +197,29 @@ public class War extends CardGame implements Serializable{
 		Card p2Card = null;
 		while(!gameOver){
 			j++;
-			if(players.get(0).getHandSize() == 0){
-				if(players.get(0).resetHand()){
-					gameOver = true;
+			if(this.players.get(0).getHandSize() == 0){
+				if(this.players.get(0).resetHand()){
+					this.gameOver = true;
 				}
 			}
-			if(players.get(1).getHandSize() == 0){
-				if(players.get(1).resetHand()){
-					gameOver = true;
+			if(this.players.get(1).getHandSize() == 0){
+				if(this.players.get(1).resetHand()){
+					this.gameOver = true;
 				}
 			}
-			p1Card = players.get(0).playTopCard();
-			p2Card = players.get(1).playTopCard();
+			p1Card = this.players.get(0).playTopCard();
+			p2Card = this.players.get(1).playTopCard();
 			
-			winnings.push(p1Card);
-			winnings.push(p2Card);
+			this.winnings.push(p1Card);
+			this.winnings.push(p2Card);
 			
-			score(p1Card, p2Card);
+			this.score(p1Card, p2Card);
 		}
 		System.out.println("Turns: "+j);
-		if(players.get(0).getHandSize() == 0){
-			win(players.get(1));
+		if(this.players.get(0).getHandSize() == 0){
+			this.win(this.players.get(1));
 		} else {
-			win(players.get(0));
+			this.win(this.players.get(0));
 		}
 	}
 }

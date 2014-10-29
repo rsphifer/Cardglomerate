@@ -181,19 +181,19 @@ public class War extends CardGame implements Serializable{
 					gameOver = true;
 				}
 			}
-			p1Card = players.get(0).playTopCard();
-			p2Card = players.get(1).playTopCard();
+			p1Card = this.players.get(0).playTopCard();
+			p2Card = this.players.get(1).playTopCard();
 			
-			winnings.push(p1Card);
-			winnings.push(p2Card);
+			this.winnings.push(p1Card);
+			this.winnings.push(p2Card);
 			
-			score(p1Card, p2Card);
+			this.score(p1Card, p2Card);
 		}
 		System.out.println("Turns: "+j);
-		if(players.get(0).getHandSize() == 0){
-			win(players.get(1));
+		if(this.players.get(0).getHandSize() == 0){
+			this.win(this.players.get(1));
 		} else {
-			win(players.get(0));
+			this.win(this.players.get(0));
 		}
 	}
 }

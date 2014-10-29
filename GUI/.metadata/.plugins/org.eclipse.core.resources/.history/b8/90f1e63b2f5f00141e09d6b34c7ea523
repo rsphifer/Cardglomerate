@@ -42,7 +42,7 @@ public class Model {
 		gameId = ServerAccess.createNewGame(currentGame);
 		if (gameId != -1) {
 			isInGame = true;
-			currentGame.testSetup();
+			((War) currentGame).testSetup();
 			return true;
 		}
 		return false;

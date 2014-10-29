@@ -133,34 +133,4 @@ public class TexasHoldEm extends CardGame implements Serializable{
 			}
 		}
 	}
-
-	@Override
-	public void testSetup() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Player getWinner() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public LinkedList<Integer> getHandSizes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean getGameover() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public LinkedList<Card> getCardsToDisplay() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
