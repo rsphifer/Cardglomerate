@@ -10,7 +10,7 @@ public class SetPasswordRequest implements Serializable {
 	public SetPasswordRequest(Player player, String oldPass, String newPass) {
 		this.player = player;
 		this.oldPass = oldPass;
-		this.newPass = newPass;
+		this.newPass = org.apache.commons.codec.digest.DigestUtils.sha256Hex(newPass);
 	}
 
 	public Player getPlayer() {

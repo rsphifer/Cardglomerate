@@ -25,7 +25,7 @@ public class NewPlayerRequest implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
 	}
 
 	public String getEmailAddress() {
