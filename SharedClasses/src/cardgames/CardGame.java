@@ -64,17 +64,7 @@ public abstract class CardGame implements Serializable{
 	public abstract boolean getGameover();
 	public abstract LinkedList<Card> getCardsToDisplay();
 
-//	public static void main(String[] args){
-//		ArrayList<Player> test = new ArrayList<Player>();
-//		test.add(new Player("first","asd"));
-//		test.add(new Player("second","qwe"));
-//		War cardGame = new War(test);
-//		cardGame.setup();
-//		//cardGame.testSetup();
-//		int j=0;
-//		while(cardGame.update()){
-//			j++;
-//		}
-//		System.out.println("Turns: "+j);
-//	}
+	public static void main(String[] args){
+		System.out.println("hello");
+	}
 }
