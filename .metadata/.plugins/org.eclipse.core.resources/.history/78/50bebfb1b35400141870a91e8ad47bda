@@ -1,7 +1,0 @@
-package player;
-
-public class NewPlayer {
-	private String userName
-	
-	
-}
