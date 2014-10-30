@@ -93,8 +93,6 @@ public class Model {
 
 			isLoggedIn = true;
 			friendList = ServerAccess.getFriends(player);
-			menuChat = ServerAccess.getMenuChat();
-			
 			/*
 			 * Initialize thread that will periodically ask server for updates
 			 * to update model

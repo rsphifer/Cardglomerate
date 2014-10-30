@@ -35,9 +35,9 @@ public class UpdateChecker implements Runnable {
 			/* Update menu chat */
 			model.setMenuChat(ServerAccess.getMenuChat());
 			
-//			for (ChatEntry c : model.getMenuChat()) {
-//				System.out.printf("%s: %s\n", c.getUsername(), c.getMessage());
-//			}
+			for (ChatEntry c : model.getMenuChat()) {
+				System.out.printf("%s: %s\n", c.getUsername(), c.getMessage());
+			}
 			
 		}
 		

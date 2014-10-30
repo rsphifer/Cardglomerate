@@ -2533,3 +2533,28 @@ Caused by: java.io.FileNotFoundException: E:\Users\Richie\Desktop\cs307\Cardglom
 	at org.eclipse.swt.internal.Compatibility.newFileOutputStream(Compatibility.java:194)
 	at org.eclipse.swt.graphics.ImageLoader.save(ImageLoader.java:256)
 	... 10 more
+
+!ENTRY org.eclipse.jface.text 4 0 2014-10-30 01:26:41.343
+!MESSAGE Unexpected runtime error while computing a text hover
+!STACK 0
+org.eclipse.swt.SWTException: i/o error (java.io.FileNotFoundException: E:\Users\Richie\Desktop\cs307\Cardglomerate\GUI\.metadata\.plugins\org.eclipse.jdt.ui\jdt-images\13.png (The system cannot find the path specified))
+	at org.eclipse.swt.SWT.error(SWT.java:4361)
+	at org.eclipse.swt.SWT.error(SWT.java:4276)
+	at org.eclipse.swt.graphics.ImageLoader.save(ImageLoader.java:258)
+	at org.eclipse.jdt.internal.ui.viewsupport.ImagesOnFileSystemRegistry.getImageURL(ImagesOnFileSystemRegistry.java:104)
+	at org.eclipse.jdt.internal.ui.viewsupport.ImagesOnFileSystemRegistry.getImageURL(ImagesOnFileSystemRegistry.java:85)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavadocHover.getInfoText(JavadocHover.java:702)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavadocHover.getHoverInfo(JavadocHover.java:612)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavadocHover.internalGetHoverInfo(JavadocHover.java:565)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavadocHover.getHoverInfo2(JavadocHover.java:557)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:129)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:85)
+	at org.eclipse.jface.text.TextViewerHoverManager$4.run(TextViewerHoverManager.java:166)
+Caused by: java.io.FileNotFoundException: E:\Users\Richie\Desktop\cs307\Cardglomerate\GUI\.metadata\.plugins\org.eclipse.jdt.ui\jdt-images\13.png (The system cannot find the path specified)
+	at java.io.FileOutputStream.open(Native Method)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at java.io.FileOutputStream.<init>(Unknown Source)
+	at org.eclipse.swt.internal.Compatibility.newFileOutputStream(Compatibility.java:194)
+	at org.eclipse.swt.graphics.ImageLoader.save(ImageLoader.java:256)
+	... 10 more

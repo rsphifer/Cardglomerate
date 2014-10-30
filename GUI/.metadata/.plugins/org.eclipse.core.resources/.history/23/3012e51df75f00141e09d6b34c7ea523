@@ -200,24 +200,18 @@ public class GameMenu extends BasicGameState {
 		g.drawString("Send Message", 265, 685);
 		chatField.render(gc, g);
 		curChatx = 5;
-		
 		curChaty = 350;
 		
 		ArrayList<ChatEntry> menuChat = model.getMenuChat();
 		for (int i = 0; i < menuChat.size(); i++) {
-			ChatEntry currMessage = menuChat.get(i);
-			g.drawString(currMessage.getUsername(), curChatx, curChaty);
-			
-			curChaty += 20;
-			g.drawString(currMessage.getMessage(), curChatx+15, curChaty);
-			curChaty += 20;
-			
+			ChatEntry currChat = menuChat.get(i);
+			g.drawString(currChat.getUsername(), curChatx, curChaty);
 		}
 		
-//		for (int i = 0; i < Master.chatMessages.size(); i++) {
-//			g.drawString(Master.chatMessages.get(i), curChatx, curChaty);
-//			curChaty += 20;
-//		}
+		for (int i = 0; i < Master.chatMessages.size(); i++) {
+			g.drawString(Master.chatMessages.get(i), curChatx, curChaty);
+			curChaty += 20;
+		}
 
 	}
 

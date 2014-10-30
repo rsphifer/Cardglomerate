@@ -2,7 +2,6 @@ package controller;
 
 import javax.swing.JOptionPane;
 
-import misc.ChatEntry;
 import model.Model;
 
 public class UpdateChecker implements Runnable {
@@ -34,10 +33,6 @@ public class UpdateChecker implements Runnable {
 			
 			/* Update menu chat */
 			model.setMenuChat(ServerAccess.getMenuChat());
-			
-//			for (ChatEntry c : model.getMenuChat()) {
-//				System.out.printf("%s: %s\n", c.getUsername(), c.getMessage());
-//			}
 			
 		}
 		

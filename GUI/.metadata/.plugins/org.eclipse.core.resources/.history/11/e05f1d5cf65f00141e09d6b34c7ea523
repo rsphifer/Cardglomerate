@@ -3,7 +3,6 @@ package view;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import misc.ChatEntry;
 import model.Model;
 
 import org.lwjgl.input.Mouse;
@@ -21,7 +20,6 @@ import player.Friend;
 
 public class GameMenu extends BasicGameState {
 	private Model model;
-	
 
 	private String mouse = "No input yet";
 	private Image background;
@@ -200,24 +198,11 @@ public class GameMenu extends BasicGameState {
 		g.drawString("Send Message", 265, 685);
 		chatField.render(gc, g);
 		curChatx = 5;
-		
 		curChaty = 350;
-		
-		ArrayList<ChatEntry> menuChat = model.getMenuChat();
-		for (int i = 0; i < menuChat.size(); i++) {
-			ChatEntry currMessage = menuChat.get(i);
-			g.drawString(currMessage.getUsername(), curChatx, curChaty);
-			
+		for (int i = 0; i < Master.chatMessages.size(); i++) {
+			g.drawString(Master.chatMessages.get(i), curChatx, curChaty);
 			curChaty += 20;
-			g.drawString(currMessage.getMessage(), curChatx+15, curChaty);
-			curChaty += 20;
-			
 		}
-		
-//		for (int i = 0; i < Master.chatMessages.size(); i++) {
-//			g.drawString(Master.chatMessages.get(i), curChatx, curChaty);
-//			curChaty += 20;
-//		}
 
 	}
 
