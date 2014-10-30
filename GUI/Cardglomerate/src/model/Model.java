@@ -69,7 +69,21 @@ public class Model {
 	}
 
 	public boolean addFriend(String username) {
-		return ServerAccess.addFriend(new NewFriendRequest(player, username));
+
+		boolean isSuccess = ServerAccess.addFriend(new NewFriendRequest(player,
+				username));
+		if (isSuccess) {
+			friendList = ServerAccess.getFriends(player);
+		}
+		return isSuccess;
+	}
+
+	public void removeFriend(String username) {
+		boolean isSuccess = ServerAccess.removeFriend(new NewFriendRequest(
+				player, username));
+		if (isSuccess) {
+			friendList = ServerAccess.getFriends(player);
+		}
 	}
 
 	public void setFriendList(ArrayList<Friend> friends) {

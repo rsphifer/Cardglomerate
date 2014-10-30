@@ -100,6 +100,11 @@ public class ServerAccess {
 		return (boolean)sendRequestWithResponse(request);
 	}
 	
+	public static boolean removeFriend(NewFriendRequest nfr) {
+		Request request = new Request("removeFriend", nfr);
+		return (boolean)sendRequestWithResponse(request);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Friend> getFriends(Player player) {
 		Request request = new Request("getFriends", player);
