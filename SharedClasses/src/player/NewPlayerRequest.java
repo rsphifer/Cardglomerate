@@ -8,7 +8,7 @@ public class NewPlayerRequest implements Serializable {
 	
 	public NewPlayerRequest(String userName, String password, String emailAddress) {
 		this.userName = userName;
-		this.password = password;
+		this.password = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
 		this.emailAddress = emailAddress;
 	}
 
