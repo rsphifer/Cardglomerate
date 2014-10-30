@@ -541,6 +541,47 @@ public class DatabaseAccess {
 
 	}
 
+	public static boolean removeFriend(int id, String friendname){
+
+		Connection conn = null;
+		Statement delfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+			delfunc = conn.createStatement();
+      		
+			int friend_id = getID(friendname);
+
+
+			String del_str;
+				del_str = "DELETE FROM friends WHERE user=\"" + id + "\" AND friend=\"" + friend_id + "\"";
+
+			delfunc.executeUpdate(del_str);
+
+
+			delfunc.close();
+			conn.close();
+
+			return true;
+
+			
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+		return false;
+
+	}
+
 	public static ArrayList<Friend> getFriends(int id){
 
 		Connection conn = null;
@@ -596,6 +637,8 @@ public class DatabaseAccess {
 		return friendlist;
 
 	}
+
+	
 
 
 }
