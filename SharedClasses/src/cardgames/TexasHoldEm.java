@@ -24,7 +24,11 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	}
 	
 	public TexasHoldEm(ArrayList<Player> playerNames) {
+		this.players = playerNames;
+		winners = new ArrayList<Player>();
+		cardsOnTable = new LinkedList<Card>();
 		
+		fillDeckHoldEm();
 	}
 	
 	private void getWinners(HandValue[] values){
@@ -97,7 +101,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 			case 6: //bet
 			case 8: //bet
 				//promptForBets(winner, i);
-				System.out.println("BETS BETS BETS BETS BETS BETS\n");
+				System.out.println("BETS, BETS, BETS BETS BETS BETS\n");
 				break;
 			case 9: //find winners and give out money
 				int j=0;

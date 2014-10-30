@@ -16,9 +16,6 @@ public abstract class CardGame implements Serializable{
 
 	public CardGame(){
 		deck = new ArrayList<Card>();
-		if(connect() != 1){
-			displayError("Game failed to connect to server!");
-		}
 		displayTable();
 	}
 
@@ -29,11 +26,17 @@ public abstract class CardGame implements Serializable{
 			}
 		}
 		Collections.shuffle((List<?>) this.deck);
-		/*int j=0;
-		for(Card c : this.deck){
-			System.out.println(j+" card is "+c.getPower()+" of "+c.getSuit());
-			j++;
-		}*/
+	}
+	
+	protected void fillDeckHoldEm(){
+		for(int k=0;k<4;k++){
+			for(int i=1;i<=13;i++){
+				for(int j=0;j<=3;j++){
+					this.deck.add(new Card(i,j,i+(13*j)-1));
+				}
+			}
+		}
+		Collections.shuffle((List<?>) this.deck);
 	}
 	
 	public Card getTopOfDeck(){
@@ -43,10 +46,6 @@ public abstract class CardGame implements Serializable{
 		else{
 			return null;
 		}
-	}
-
-	protected int connect(){
-		return 1;
 	}
 
 	private void displayTable(){

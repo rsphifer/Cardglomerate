@@ -24,7 +24,6 @@ public class War extends CardGame implements Serializable{
 		cardsToDisplay = new LinkedList<Card>();
 		
 		fillDeck();
-		connect();
 		//play();
 	}
 	
@@ -35,7 +34,6 @@ public class War extends CardGame implements Serializable{
 		winnings = new LinkedList<Card>();
 		cardsToDisplay = new LinkedList<Card>();
 		fillDeck();
-		connect();
 		//play();
 	}
 
