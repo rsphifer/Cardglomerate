@@ -1,5 +1,7 @@
 package view;
 
+import java.util.LinkedList;
+
 import model.Model;
 
 import org.newdawn.slick.AppGameContainer;
@@ -8,12 +10,18 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import cardgames.CardGame;
+import cards.Card;
 import controller.ServerAccess;
 import player.Player;
 
 public class Master extends StateBasedGame {
 	
 	private Model model;
+	
+	//global lists of friends and chat
+	//might be friend or chat or other object later, strings for now
+	public static LinkedList<String> friends;
+	public static LinkedList<String> chatMessages;
 
 	public static final String gameName = "Cardglomerate";
 	public static boolean isMouseReleased = true;
@@ -80,6 +88,7 @@ public class Master extends StateBasedGame {
 		try {
 			appgc = new AppGameContainer(new Master(gameName));
 			appgc.setDisplayMode(1280,720,false);  //window size, false means no fullscreen
+			appgc.setTargetFrameRate(30); //you don't need no 60 (or 1k+) fps hardcore cardgame action
 			
 			appgc.start();
 		}catch(SlickException e){

@@ -206,7 +206,7 @@ public class HoldEmGame extends BasicGameState {
 				Master.isMouseReleased = false;
 				//code here
 				betString = betField.getText();
-				if(betString.length() > 0) {
+				if(betString.length() > 0 && isNumeric(betString)) {
 					betSize = Integer.parseInt(betString);
 					betError = false;
 					betField.setText("");
@@ -257,6 +257,17 @@ public class HoldEmGame extends BasicGameState {
 		}
 		return null;
 
+	}
+	
+	public boolean isNumeric(String str) {
+		int x;
+		try {
+			x = Integer.parseInt(str);
+		}
+		catch(NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 	
 	public int getID() {

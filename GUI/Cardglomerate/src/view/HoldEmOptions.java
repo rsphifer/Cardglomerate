@@ -19,6 +19,9 @@ public class HoldEmOptions extends BasicGameState {
 	private Image image;
 	private Image arrow;
 
+	//friends list crap
+	private int curx;
+	private int cury;
 	
 	public HoldEmOptions(int state, Model model) {
 		this.model = model;
@@ -55,6 +58,15 @@ public class HoldEmOptions extends BasicGameState {
 		
 		//render arrow
 		g.drawImage(arrow, 0, 570);
+		
+		//friends list rendering
+		g.drawString("Friends List", 1000, 10);
+		curx = 930;
+		cury = 30;
+		for (int i = 0; i < Master.friends.size(); i++) {
+			g.drawString(Master.friends.get(i), curx, cury);
+			cury += 20;
+		}
 		
 	}
 	

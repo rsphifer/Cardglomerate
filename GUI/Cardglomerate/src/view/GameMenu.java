@@ -2,6 +2,8 @@ package view;
 
 import model.Model;
 
+import java.util.LinkedList;
+
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,6 +11,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.gui.TextField;
 
 public class GameMenu extends BasicGameState {
 	private Model model;
@@ -22,6 +25,12 @@ public class GameMenu extends BasicGameState {
 	private Image blackjack;
 	private Image war;
 	private Image arrow;
+	
+	//friends list crap
+	private int curx;
+	private int cury;
+	private TextField friendField;
+	private boolean friendSelected = false;
 
 	// card images for game GUI
 	public static Image[] clubs;
@@ -36,6 +45,14 @@ public class GameMenu extends BasicGameState {
 
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
+		
+		//linked list testing code
+		Master.friends = new LinkedList<String>();
+		Master.friends.add("Test Friend Please Ignore"); Master.friends.add("420Lord360NoScope"); Master.friends.add("Billy");
+		Master.friends.add("PokerGod"); Master.friends.add("Linda"); Master.friends.add("Catman");
+		Master.friends.add("ActuallyGod"); Master.friends.add("A Moose"); Master.friends.add("Raoul the Unforgiving");
+		
+		
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
@@ -86,6 +103,9 @@ public class GameMenu extends BasicGameState {
 		for (int i = 1; i < 14; i++) {
 			diamonds[i - 1] = new Image("res/Cards/d" + i + ".png");
 		}
+		
+		//textfields
+		friendField = new TextField(gc, gc.getDefaultFont(), 1070, 635, 200, 30);
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -124,6 +144,20 @@ public class GameMenu extends BasicGameState {
 		// Account Options Button
 		g.drawRect(1070, 670, 200, 40);
 		g.drawString("Account Options", 1100, 680);
+		
+		//friends list rendering
+		g.drawString("Add Friend", 970, 640);
+		g.drawRect(965, 635, 100, 30);
+		g.drawString("Delete Frd", 865, 640);
+		g.drawRect(860, 635, 100, 30);
+		friendField.render(gc, g);
+		g.drawString("Friends List", 1030, 330);
+		curx = 960;
+		cury = 350;
+		for (int i = 0; i < Master.friends.size(); i++) {
+			g.drawString(Master.friends.get(i), curx, cury);
+			cury += 20;
+		}
 
 	}
 
@@ -133,6 +167,52 @@ public class GameMenu extends BasicGameState {
 		int xpos = Mouse.getX();
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
+		
+		//textfield crap
+		if (friendSelected) {
+			friendField.setFocus(true);
+		}
+
+		//add friend textbox clicked
+		if((xpos>1070 && xpos<1270) && (ypos>55 && ypos<85)) {
+			if(Mouse.isButtonDown(0)) { //button 0 = left click
+				friendSelected = true;
+			}
+		}
+		
+		//add friend button clicked
+		if((xpos>965 && xpos<1065) && (ypos>50 && ypos<85)) {
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+				if (friendField.getText().length() > 1) {
+					//code to add friend goes here
+					//filler code for now
+					Master.friends.add(friendField.getText());
+					friendField.setText(""); 
+				}
+			}
+			
+			if (!Mouse.isButtonDown(0)){
+				Master.isMouseReleased = true;
+			}
+		}
+		
+		//delete friend button clicked
+		if((xpos>860 && xpos<960) && (ypos>50 && ypos<85)) {
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+				if (friendField.getText().length() > 1) {
+					//code to delete friend goes here
+					//filler code for now
+					Master.friends.remove(friendField.getText());
+					friendField.setText(""); 
+				}
+			}
+			
+			if (!Mouse.isButtonDown(0)){
+				Master.isMouseReleased = true;
+			}
+		}
 
 		// stud clicked
 		if ((xpos > 60 && xpos < 310) && (ypos > 395 && ypos < 645)) {
