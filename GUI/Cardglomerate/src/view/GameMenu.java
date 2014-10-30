@@ -239,6 +239,7 @@ public class GameMenu extends BasicGameState {
 		//add friend textbox clicked
 		if((xpos>1070 && xpos<1270) && (ypos>55 && ypos<85)) {
 			if(Mouse.isButtonDown(0)) { //button 0 = left click
+				chatSelected = false;
 				friendSelected = true;
 			}
 		}
@@ -246,7 +247,9 @@ public class GameMenu extends BasicGameState {
 		//chat textbox clicked
 		if((xpos>5 && xpos<255) && (ypos>10 && ypos<40)) {
 			if(Mouse.isButtonDown(0)) { //button 0 = left click
+				friendSelected = false;
 				chatSelected = true;
+				
 			}
 		}
 		
