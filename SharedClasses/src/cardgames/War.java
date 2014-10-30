@@ -48,8 +48,10 @@ public class War extends CardGame implements Serializable{
 		return hands;
 	}
 
-	public Player getWinner(){
-		return this.winner;
+	public ArrayList<Player> getWinner(){
+		ArrayList<Player> win = new ArrayList<Player>();
+		win.add(this.winner);
+		return win;
 	}
 	
 	public boolean getGameover(){

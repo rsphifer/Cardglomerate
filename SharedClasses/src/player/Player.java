@@ -14,14 +14,12 @@ public class Player implements Serializable{
 	
 	private ArrayList<Card> hand;
 	private ArrayList<Card> discard;
-	private int money;
+	private int money = 0;
 	public String userName;
-	private String password;
 	
 	public Player(String playerName, String password){
 		this.hand = new ArrayList<Card>();
 		this.discard = new ArrayList<Card>();
-		this.password = password;
 		this.userName = playerName;
 	}
 	
@@ -63,7 +61,6 @@ public class Player implements Serializable{
 	}
 	
 	public void addCardToDiscard(Card newCard){
-		//System.out.println(this.userName+" got a "+newCard.getPower() + " of " + newCard.getSuit());
 		this.discard.add(newCard);
 	}
 	
@@ -83,7 +80,6 @@ public class Player implements Serializable{
 	}
 	
 	public void addCardToHand(Card newCard){
-		//System.out.println(this.userName+" got a "+newCard.getPower() + " of " + newCard.getSuit());
 		this.hand.add(newCard);
 	}
 
@@ -92,14 +88,7 @@ public class Player implements Serializable{
 			if(resetHand()){
 				return null;
 			}
-		} //else {
+		}
 		return this.hand.remove(0);
-			/*if(this.getDiscardSize() == 0){
-				return null;
-			} else {
-				System.out.println("the fuck?!?");
-				return null;
-			}*/
-		//}
 	}
 }

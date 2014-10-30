@@ -14,10 +14,10 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	private ArrayList<Player> winners;
 	private int winnings;
 	private LinkedList<Card> cardsOnTable;
-	private Player winner;
 	private CardGame cardGame;
 	private boolean gameOver = false;
 	private int turn;
+	private int currentBet;
 	
 	public TexasHoldEm() {
 		
@@ -27,8 +27,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		this.players = playerNames;
 		winners = new ArrayList<Player>();
 		cardsOnTable = new LinkedList<Card>();
-		
-		fillDeckHoldEm();
+		fillDeck();
 	}
 	
 	private void getWinners(HandValue[] values){
@@ -68,22 +67,14 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		winnings += p.bet(amount);
 	}
 	
-	public void update(){
-		this.turn=0;
-		
+	private void play(Player p){
 		switch(this.turn){
 			case 0: //ante
-				for(Player p : this.players){
-					this.winnings += p.bet(50);	
-				}
+				this.winnings += p.bet(50);	
 				break;
 			case 1: //deal 2
-				for(Player p : this.players){
-					p.addCardToHand(this.cardGame.getTopOfDeck());
-				}
-				for(Player p : this.players){
-					p.addCardToHand(this.cardGame.getTopOfDeck());
-				}
+				p.addCardToHand(this.cardGame.getTopOfDeck());
+				p.addCardToHand(this.cardGame.getTopOfDeck());
 				break;
 			case 3: //burn and 3 out
 				this.cardGame.getTopOfDeck();
@@ -103,25 +94,32 @@ public class TexasHoldEm extends CardGame implements Serializable{
 				//promptForBets(winner, i);
 				System.out.println("BETS, BETS, BETS BETS BETS BETS\n");
 				break;
-			case 9: //find winners and give out money
-				int j=0;
-				HandValue[] values = new HandValue[this.players.size()];
-				for(Player p : this.players){
-					values[j] = new HandValue(p);
-					j++;
-				}
-				
-				getWinners(values);
+		}
+	}
+	
+	public void update(){
+		for(Player p : players){
+			play(p);
+		}
+		
+		if(turn == 9){
+			int j=0;
+			HandValue[] values = new HandValue[this.players.size()];
+			for(Player p : this.players){
+				values[j] = new HandValue(p);
+				j++;
+			}
+			
+			getWinners(values);
 
-				for(Player p : winners){
-					p.addMoney(winnings/winners.size());
-				}
-				winnings = 0;
-				cardsOnTable.clear();
-				for(Player p : winners){
-					p.emptyHand();
-				}
-				break;
+			for(Player p : winners){
+				p.addMoney(winnings/winners.size());
+			}
+			winnings = 0;
+			cardsOnTable.clear();
+			for(Player p : winners){
+				p.emptyHand();
+			}
 		}
 		
 		this.turn++;
@@ -131,40 +129,59 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	}
 	
 	public void setup(){
-		for(int j=0;j<4;j++){
-			for(int i=0;i<52;i++){
-				// fill decks
+		for(Player p : players){
+			p.addCardToHand(this.getTopOfDeck());
+			if(p.getMoney()<5000){
+				p.addMoney(5000-p.getMoney());		// remove EVENTUALLY
+			} else {
+				p.addMoney(p.getMoney()*(-1));
+				p.addMoney(5000);
 			}
 		}
+		for(Player p : players){
+			p.addCardToHand(this.getTopOfDeck());
+		}
+		this.turn=0;
 	}
 
 	@Override
 	public void testSetup() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Player getWinner() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Player> getWinner() {
+		return winners;
 	}
 
 	@Override
 	public LinkedList<Integer> getHandSizes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean getGameover() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.gameOver;
 	}
 
 	@Override
 	public LinkedList<Card> getCardsToDisplay() {
-		// TODO Auto-generated method stub
-		return null;
+		return cardsOnTable;
+	}
+	
+	public int getPot(){
+		return this.winnings;
+	}
+	
+	public int getExpectedBet(){
+		return currentBet;
+	}
+	
+	public void quitGame(Player p) {
+		players.remove(p);
+	}
+	
+	public ArrayList<Player> getPlayerHands() {
+		return players;
 	}
 }

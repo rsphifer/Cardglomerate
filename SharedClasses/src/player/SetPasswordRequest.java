@@ -2,8 +2,6 @@ package player;
 
 import java.io.Serializable;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
 public class SetPasswordRequest implements Serializable {
 	private Player player;
 	private String oldPass;
@@ -11,8 +9,8 @@ public class SetPasswordRequest implements Serializable {
 	
 	public SetPasswordRequest(Player player, String oldPass, String newPass) {
 		this.player = player;
-		this.oldPass = DigestUtils.sha256Hex(oldPass);
-		this.newPass = DigestUtils.sha256Hex(newPass);
+		this.oldPass = oldPass;
+		this.newPass = org.apache.commons.codec.digest.DigestUtils.sha256Hex(newPass);
 	}
 
 	public Player getPlayer() {

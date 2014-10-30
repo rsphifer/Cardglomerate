@@ -2,16 +2,13 @@ package player;
 
 import java.io.Serializable;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
 public class NewPlayerRequest implements Serializable {
 	private String userName, password;
 	private String emailAddress;
 	
 	public NewPlayerRequest(String userName, String password, String emailAddress) {
 		this.userName = userName;
-		this.password = DigestUtils.sha256Hex(password);
-		System.out.println(this.password);
+		this.password = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
 		this.emailAddress = emailAddress;
 	}
 
@@ -28,7 +25,7 @@ public class NewPlayerRequest implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = DigestUtils.sha256Hex(password);
+		this.password = org.apache.commons.codec.digest.DigestUtils.sha256Hex(password);
 	}
 
 	public String getEmailAddress() {
