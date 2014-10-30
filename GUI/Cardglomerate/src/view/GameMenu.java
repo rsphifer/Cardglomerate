@@ -24,13 +24,18 @@ public class GameMenu extends BasicGameState {
 	private Image stud;
 	private Image blackjack;
 	private Image war;
-	private Image arrow;
 	
 	//friends list crap
 	private int curx;
 	private int cury;
 	private TextField friendField;
 	private boolean friendSelected = false;
+	
+	//chat stuff
+	private int curChatx;
+	private int curChaty;
+	private TextField chatField;
+	private boolean chatSelected = false;
 
 	// card images for game GUI
 	public static Image[] clubs;
@@ -52,14 +57,15 @@ public class GameMenu extends BasicGameState {
 		Master.friends.add("PokerGod"); Master.friends.add("Linda"); Master.friends.add("Catman");
 		Master.friends.add("ActuallyGod"); Master.friends.add("A Moose"); Master.friends.add("Raoul the Unforgiving");
 		
+		Master.chatMessages = new LinkedList<String>();
+		Master.chatMessages.add("HELLO FRIENDS HOW ARE YOU");
+		Master.chatMessages.add("Dude turn off caps lock");
+		Master.chatMessages.add("DON'T TELL ME WAT TO DO WAN FITE?");
+		
 		
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
-
-		// initialize and scale log out button
-		arrow = new Image("res/Back Arrow.jpg");
-		arrow = arrow.getScaledCopy(150, 150);
 
 		// initialize and scale each game image
 		ratscrew = new Image("res/rat.jpg");
@@ -106,6 +112,7 @@ public class GameMenu extends BasicGameState {
 		
 		//textfields
 		friendField = new TextField(gc, gc.getDefaultFont(), 1070, 635, 200, 30);
+		chatField = new TextField(gc, gc.getDefaultFont(), 5, 680, 250, 30);
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -116,9 +123,9 @@ public class GameMenu extends BasicGameState {
 		// mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
 
-		// render arrow
-		g.drawImage(arrow, 0, 570);
-		g.drawString("Log Out", 5, 550);
+		//log out button
+		g.drawRect(860, 670, 200, 40);
+		g.drawString("Log Out", 920, 680);
 
 		// welcome message
 		g.drawString(
@@ -145,7 +152,7 @@ public class GameMenu extends BasicGameState {
 		g.drawRect(1070, 670, 200, 40);
 		g.drawString("Account Options", 1100, 680);
 		
-		//friends list rendering
+		//friends list rendering (limit = 14 friends with current spacing)
 		g.drawString("Add Friend", 970, 640);
 		g.drawRect(965, 635, 100, 30);
 		g.drawString("Delete Frd", 865, 640);
@@ -157,6 +164,19 @@ public class GameMenu extends BasicGameState {
 		for (int i = 0; i < Master.friends.size(); i++) {
 			g.drawString(Master.friends.get(i), curx, cury);
 			cury += 20;
+		}
+		
+		//chat rendering
+		// limit: 16 chat messages of length 48
+		g.drawString("Chat", 150, 330);
+		g.drawRect(260, 680, 120, 30);
+		g.drawString("Send Message", 265, 685);
+		chatField.render(gc, g);
+		curChatx = 5;
+		curChaty = 350;
+		for (int i = 0; i < Master.chatMessages.size(); i++) {
+			g.drawString(Master.chatMessages.get(i), curChatx, curChaty);
+			curChaty += 20;
 		}
 
 	}
@@ -172,6 +192,9 @@ public class GameMenu extends BasicGameState {
 		if (friendSelected) {
 			friendField.setFocus(true);
 		}
+		if (chatSelected) {
+			chatField.setFocus(true);
+		}
 
 		//add friend textbox clicked
 		if((xpos>1070 && xpos<1270) && (ypos>55 && ypos<85)) {
@@ -179,6 +202,14 @@ public class GameMenu extends BasicGameState {
 				friendSelected = true;
 			}
 		}
+		
+		//chat textbox clicked
+		if((xpos>5 && xpos<255) && (ypos>10 && ypos<40)) {
+			if(Mouse.isButtonDown(0)) { //button 0 = left click
+				chatSelected = true;
+			}
+		}
+		
 		
 		//add friend button clicked
 		if((xpos>965 && xpos<1065) && (ypos>50 && ypos<85)) {
@@ -206,6 +237,23 @@ public class GameMenu extends BasicGameState {
 					//filler code for now
 					Master.friends.remove(friendField.getText());
 					friendField.setText(""); 
+				}
+			}
+			
+			if (!Mouse.isButtonDown(0)){
+				Master.isMouseReleased = true;
+			}
+		}
+		
+		//send chat message button clicked
+		if((xpos>260 && xpos<380) && (ypos>10 && ypos<40)) {
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+				if (chatField.getText().length() > 1) {
+					//code to send chat message to server goes here
+					//filler code for now
+					Master.chatMessages.add(chatField.getText());
+					chatField.setText(""); 
 				}
 			}
 			
@@ -264,7 +312,7 @@ public class GameMenu extends BasicGameState {
 		}
 
 		// log out button clicked
-		if ((xpos > 0 && xpos < 150) && (ypos > 0 && ypos < 150)) {
+		if ((xpos > 860 && xpos < 1060) && (ypos > 10 && ypos < 50)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				if (model.logout()) {

@@ -10,4 +10,5 @@
 <fullyQualifiedTypeName name="player.NewFriendRequest"/>
 <fullyQualifiedTypeName name="misc.Request"/>
 <fullyQualifiedTypeName name="player.Friend"/>
+<fullyQualifiedTypeName name="view.Master"/>
 </qualifiedTypeNameHistroy>
