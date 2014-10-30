@@ -30,7 +30,6 @@ public class Model {
 	public boolean isLoggedIn;
 
 	public Model() {
-		friendList = new ArrayList<Friend>();
 		player = null;
 		isLoggedIn = false;
 		isInGame = false;
@@ -109,7 +108,7 @@ public class Model {
 		if (player != null) {
 
 			isLoggedIn = true;
-			friendList = ServerAccess.getFriends(player);
+
 			/*
 			 * Initialize thread that will periodically ask server for updates
 			 * to update model

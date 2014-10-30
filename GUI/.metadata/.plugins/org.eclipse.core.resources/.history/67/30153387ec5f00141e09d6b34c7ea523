@@ -178,7 +178,7 @@ public class GameMenu extends BasicGameState {
 				} else {
 					g.setColor(Color.red);
 				}
-				g.fill(new Circle(curx-7, cury+10, 5));
+				g.fill(new Circle(curx-6, cury+6, 5));
 				g.setColor(currColor);
 				cury += 20;
 			}

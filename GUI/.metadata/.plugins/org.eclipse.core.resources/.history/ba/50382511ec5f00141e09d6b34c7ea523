@@ -169,22 +169,21 @@ public class GameMenu extends BasicGameState {
 		
 		if (model.isLoggedIn) {
 			ArrayList<Friend> friends = model.getFriendsList();
-			for (int i = 0; i < friends.size(); i++) {
-				Friend tmp = friends.get(i);
-				g.drawString(tmp.getUsername(), curx, cury);
-				Color currColor = g.getColor();
-				if (tmp.isOnline) {
-					g.setColor(Color.blue);
-				} else {
-					g.setColor(Color.red);
-				}
-				g.fill(new Circle(curx-7, cury+10, 5));
-				g.setColor(currColor);
-				cury += 20;
-			}
 		}
 		
-
+		for (int i = 0; i < friends.size(); i++) {
+			Friend tmp = friends.get(i);
+			g.drawString(tmp.getUsername(), curx, cury);
+			Color currColor = g.getColor();
+			if (tmp.isOnline) {
+				g.setColor(Color.blue);
+			} else {
+				g.setColor(Color.red);
+			}
+			g.draw(new Circle(curx-7, cury-3, 5));
+			g.setColor(currColor);
+			cury += 20;
+		}
 		
 //		for (int i = 0; i < Master.friends.size(); i++) {
 //			g.drawString(Master.friends.get(i), curx, cury);

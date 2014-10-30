@@ -1,22 +1,17 @@
 package view;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 import model.Model;
 
+import java.util.LinkedList;
+
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Circle;
-import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import player.Friend;
+import org.newdawn.slick.gui.TextField;
 
 public class GameMenu extends BasicGameState {
 	private Model model;
@@ -166,30 +161,10 @@ public class GameMenu extends BasicGameState {
 		g.drawString("Friends List", 1030, 330);
 		curx = 960;
 		cury = 350;
-		
-		if (model.isLoggedIn) {
-			ArrayList<Friend> friends = model.getFriendsList();
-			for (int i = 0; i < friends.size(); i++) {
-				Friend tmp = friends.get(i);
-				g.drawString(tmp.getUsername(), curx, cury);
-				Color currColor = g.getColor();
-				if (tmp.isOnline) {
-					g.setColor(Color.blue);
-				} else {
-					g.setColor(Color.red);
-				}
-				g.fill(new Circle(curx-7, cury+10, 5));
-				g.setColor(currColor);
-				cury += 20;
-			}
+		for (int i = 0; i < Master.friends.size(); i++) {
+			g.drawString(Master.friends.get(i), curx, cury);
+			cury += 20;
 		}
-		
-
-		
-//		for (int i = 0; i < Master.friends.size(); i++) {
-//			g.drawString(Master.friends.get(i), curx, cury);
-//			cury += 20;
-//		}
 		
 		//chat rendering
 		// limit: 16 chat messages of length 48

@@ -32,9 +32,9 @@ public class UpdateChecker implements Runnable {
 			/* Update friends list */
 			model.setFriendList(ServerAccess.getFriends(model.getPlayer()));
 			
-//			for (Friend f : model.getFriendsList()) {
-//				System.out.printf("%s %b\n", f.getUsername(), f.isOnline);
-//			}
+			for (Friend f : model.getFriendsList()) {
+				System.out.printf("%s %b\n", f.getUsername(), f.isOnline);
+			}
 		}
 		
 		return;
