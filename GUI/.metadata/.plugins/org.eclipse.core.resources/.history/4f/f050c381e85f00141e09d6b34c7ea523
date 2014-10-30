@@ -323,7 +323,7 @@ public class AccountOptions extends BasicGameState {
 					else {
 						passwordError = false;
 					}
-					if (!passwordError && !curPasswordError) {
+					if (!passwordError) {
 						//code to send pass to server goes here
 						model.setNewPassword(curPassword, newPassword);
 						changePassword = false;

@@ -311,21 +311,15 @@ public class AccountOptions extends BasicGameState {
 				}
 				else {
 					newPassword = passwordField.getText();
-					curPassword = curPasswordField.getText();
-					
-					if (curPassword.length() < 1) {
-						curPasswordError = true;
-					}
-					
 					if (newPassword.length() < 1) {
 						passwordError = true;
 					}
 					else {
 						passwordError = false;
 					}
-					if (!passwordError && !curPasswordError) {
+					if (!passwordError) {
 						//code to send pass to server goes here
-						model.setNewPassword(curPassword, newPassword);
+						//model.setNewPassword(newPassword);
 						changePassword = false;
 					}
 				}
