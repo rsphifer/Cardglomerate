@@ -619,7 +619,7 @@ public class DatabaseAccess {
 			existfunc.close();
 			conn.close();
 
-			//System.out.println("Friends list sent.");
+			System.out.println("Friends list sent.");
 
 
 			return friendlist;
