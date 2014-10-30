@@ -9,10 +9,12 @@ public class Server {
 	
 	private int port;
 	private GameTable gameTable;
+	private MenuChat menuChat;
 	
 	public Server(int port) {
 		this.port = port;
 		gameTable = new GameTable();
+		menuChat = new MenuChat();
 	}
 	
 	public void start() {
@@ -23,7 +25,7 @@ public class Server {
 				
 				Socket clientSocket = serverSocket.accept();
 				
-				RequestHandler requestHandler = new RequestHandler(clientSocket, gameTable);
+				RequestHandler requestHandler = new RequestHandler(clientSocket, gameTable, menuChat);
 				Thread t = new Thread(requestHandler);
 				t.start();
 			}

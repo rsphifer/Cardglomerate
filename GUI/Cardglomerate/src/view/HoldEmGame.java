@@ -1,7 +1,5 @@
 package view;
 
-import java.util.LinkedList;
-
 import model.Model;
 
 import org.lwjgl.input.Mouse;

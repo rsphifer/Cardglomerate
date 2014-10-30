@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import misc.ChatEntry;
 import misc.Request;
 import player.Friend;
 import player.NewFriendRequest;
@@ -54,6 +55,10 @@ public class ServerAccess {
 		return null;
 	}
 	
+	/*********************************************************
+	*	Card game mgmt server calls.
+	*********************************************************/
+	
 	public static CardGame getCardGame(int gameId) {
 		Request request = new Request("getCardGame", gameId);
 		return (CardGame)sendRequestWithResponse(request);
@@ -69,10 +74,18 @@ public class ServerAccess {
 		return (int)sendRequestWithResponse(request);
 	}
 	
+	/*********************************************************
+	*	Account creation.
+	*********************************************************/
+	
 	public static boolean createNewAccount(NewPlayerRequest player) {
 		Request request = new Request("createAccount", player);
 		return (boolean)sendRequestWithResponse(request);
 	}
+	
+	/*********************************************************
+	*	Login, logout, and password mgmt calls.
+	*********************************************************/
 	
 	public static Player loginRequest(NewPlayerRequest player) {
 		Request request = new Request("login", player);
@@ -95,6 +108,12 @@ public class ServerAccess {
 		return (boolean)sendRequestWithResponse(request);
 	}
 	
+	
+	
+	/*********************************************************
+	*	Friend list mgmt server calls.
+	*********************************************************/
+	
 	public static boolean addFriend(NewFriendRequest nfr) {
 		Request request = new Request("addFriend", nfr);
 		return (boolean)sendRequestWithResponse(request);
@@ -109,5 +128,19 @@ public class ServerAccess {
 	public static ArrayList<Friend> getFriends(Player player) {
 		Request request = new Request("getFriends", player);
 		return (ArrayList<Friend>)sendRequestWithResponse(request);
+	}
+	
+	/*********************************************************
+	*	Game menu chat mgmt server calls.
+	*********************************************************/
+	public static boolean addMenuChatEntry(ChatEntry newEntry) {
+		Request request = new Request("updateMenuChat", newEntry);
+		return (boolean)sendRequestWithResponse(request);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<ChatEntry> getMenuChat() {
+		Request request = new Request("getMenuChat", null);
+		return (ArrayList<ChatEntry>)sendRequestWithResponse(request);
 	}
 }

@@ -9,11 +9,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import cardgames.CardGame;
-import cards.Card;
-import controller.ServerAccess;
-import player.Player;
-
 public class Master extends StateBasedGame {
 	
 	private Model model;

@@ -6,6 +6,7 @@ import java.net.Socket;
 
 import mail.EmailNewAccount;
 import mail.EmailPassword;
+import misc.ChatEntry;
 import misc.Request;
 import misc.UpdateGameRequest;
 import player.NewFriendRequest;
@@ -18,10 +19,12 @@ public class RequestHandler implements Runnable {
 
 	private Socket clientSocket;
 	private GameTable gameTable;
+	private MenuChat menuChat;
 
-	public RequestHandler(Socket clientSocket, GameTable gameTable) {
+	public RequestHandler(Socket clientSocket, GameTable gameTable, MenuChat menuChat) {
 		this.clientSocket = clientSocket;
 		this.gameTable = gameTable;
+		this.menuChat = menuChat;
 	}
 
 	@Override
@@ -35,8 +38,8 @@ public class RequestHandler implements Runnable {
 			if (request != null) {
 				String action = request.getAction();
 				
-				boolean PLACE_HOLDER = true;
-				obj = PLACE_HOLDER;
+				boolean DEFAULT_RETURN = true;
+				obj = DEFAULT_RETURN;
 				
 				
 				if (action.equals("getCardGame")) {
@@ -58,6 +61,17 @@ public class RequestHandler implements Runnable {
 					CardGame game = (CardGame)request.getObject();
 					obj = gameTable.addNewGame(game);
 					
+				} else if(action.equals("getMenuChat")) {
+					
+					System.out.println("get menu chat request");
+					obj = menuChat.getChatLog();
+					
+				} else if(action.equals("updateMenuChat")) {
+					
+					System.out.println("update menu chat request");
+					ChatEntry newEntry = (ChatEntry)request.getObject();
+					menuChat.addChatEntry(newEntry);
+					
 				} else if (action.equals("login")) { /* Returns null if invalid..Player object if valid */
 					System.out.println("login request");
 					NewPlayerRequest npr = (NewPlayerRequest)request.getObject();
@@ -66,7 +80,6 @@ public class RequestHandler implements Runnable {
 					int playerId = DatabaseAccess.logIn(npr.getUserName(), npr.getPassword());
 					
 					/* DB layer will return player id..use id to get player and fill in information */
-					
 					
 					Player tmp = null;
 					if (playerId != 0) { /* Good login..use id to get player info to build player object to return */

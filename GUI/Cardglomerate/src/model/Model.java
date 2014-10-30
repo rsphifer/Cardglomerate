@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import misc.ChatEntry;
+
 import player.Friend;
 import player.NewFriendRequest;
 import player.NewPlayerRequest;
@@ -12,6 +14,7 @@ import cardgames.CardGame;
 import cardgames.War;
 import cards.Card;
 import controller.ServerAccess;
+import controller.UpdateChecker;
 
 /**
  * 
@@ -27,10 +30,14 @@ public class Model {
 	private int gameId;
 
 	private ArrayList<Friend> friendList;
+	
+	private ArrayList<ChatEntry> menuChat;
+	
 	public boolean isLoggedIn;
 
 	public Model() {
 		friendList = new ArrayList<Friend>();
+		menuChat = new ArrayList<ChatEntry>();
 		player = null;
 		isLoggedIn = false;
 		isInGame = false;
@@ -69,31 +76,7 @@ public class Model {
 		return currentGame.getCardsToDisplay();
 	}
 
-	public boolean addFriend(String username) {
 
-		boolean isSuccess = ServerAccess.addFriend(new NewFriendRequest(player,
-				username));
-		if (isSuccess) {
-			friendList = ServerAccess.getFriends(player);
-		}
-		return isSuccess;
-	}
-
-	public void removeFriend(String username) {
-		boolean isSuccess = ServerAccess.removeFriend(new NewFriendRequest(
-				player, username));
-		if (isSuccess) {
-			friendList = ServerAccess.getFriends(player);
-		}
-	}
-
-	public void setFriendList(ArrayList<Friend> friends) {
-		friendList = friends;
-	}
-
-	public ArrayList<Friend> getFriendsList() {
-		return friendList;
-	}
 
 	public boolean createAccountRequest(String username, String password,
 			String email) {
@@ -149,5 +132,53 @@ public class Model {
 	public Player getPlayer() {
 		return player;
 	}
+	
+	/*********************************************************
+	*	Friend list mgmt model calls.
+	*********************************************************/
+	public boolean addFriend(String username) {
 
+		boolean isSuccess = ServerAccess.addFriend(new NewFriendRequest(player,
+				username));
+		if (isSuccess) {
+			friendList = ServerAccess.getFriends(player);
+		}
+		return isSuccess;
+	}
+
+	public void removeFriend(String username) {
+		boolean isSuccess = ServerAccess.removeFriend(new NewFriendRequest(
+				player, username));
+		if (isSuccess) {
+			friendList = ServerAccess.getFriends(player);
+		}
+	}
+
+	public void setFriendList(ArrayList<Friend> friends) {
+		friendList = friends;
+	}
+
+	public ArrayList<Friend> getFriendsList() {
+		return friendList;
+	}
+	
+	/*********************************************************
+	*	Menu chat mgmt model calls.
+	*********************************************************/
+	public void setMenuChat(ArrayList<ChatEntry> chatLog) {
+		menuChat = chatLog;
+	}
+	
+	public ArrayList<ChatEntry> getMenuChat() {
+		return menuChat;
+	}
+	
+	public boolean addChatEntry(String message) {
+		ChatEntry newEntry = new ChatEntry(player.userName, message);
+		boolean isSuccess = ServerAccess.addMenuChatEntry(newEntry);
+		if (isSuccess) {
+			menuChat = ServerAccess.getMenuChat();
+		}
+		return isSuccess;
+	}
 }

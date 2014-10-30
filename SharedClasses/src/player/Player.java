@@ -12,7 +12,6 @@ public class Player implements Serializable{
 	
 	private int playerId;
 	
-	private ArrayList<Player> friends;
 	private ArrayList<Card> hand;
 	private ArrayList<Card> discard;
 	private int money;
