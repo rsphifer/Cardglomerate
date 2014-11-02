@@ -18,7 +18,8 @@ public class LogIn extends BasicGameState{
 	private Image logo;
 	private Image background;
 	private TextField usernameField;
-	private TextField passwordField;
+	//private TextField passwordField;
+	private PasswordTextField passwordField;
 	private TextField emailField;
 	private String username;
 	private String password;
@@ -46,7 +47,9 @@ public class LogIn extends BasicGameState{
 		
 		//initialize textfields
 		usernameField = new TextField(gc, gc.getDefaultFont(), 535, 425, 200, 30);
-		passwordField = new TextField(gc, gc.getDefaultFont(), 535, 490, 200, 30);
+		passwordField = new PasswordTextField(gc, gc.getDefaultFont(), 535, 490, 200, 30);
+		passwordField.setMaskCharacter('*');
+		passwordField.setMaskEnabled(true);
 		emailField = new TextField(gc, gc.getDefaultFont(), 750, 605, 200, 30);
 				
 		
