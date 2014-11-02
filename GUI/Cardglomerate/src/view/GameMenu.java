@@ -192,7 +192,7 @@ public class GameMenu extends BasicGameState {
 		for (int i = 0; i < menuChat.size(); i++) {
 			ChatEntry currMessage = menuChat.get(i);
 			g.drawString(currMessage.getUsername() + ": ", curChatx, curChaty);
-			g.drawString(currMessage.getMessage(), curChatx, curChaty);
+			g.drawString(currMessage.getMessage(), curChatx+90, curChaty);
 			curChaty += 20;
 			
 		}

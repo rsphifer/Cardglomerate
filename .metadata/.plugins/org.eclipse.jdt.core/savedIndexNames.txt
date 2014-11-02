@@ -1,24 +1,13 @@
-INDEX VERSION 1.126+C:\Users\Moosington\Google Drive\Classes\CS 307\Cardglomerate\.metadata\.plugins\org.eclipse.jdt.core
-3810072431.index
-1115467115.index
-30765161.index
-2321553228.index
-573543369.index
-2501520862.index
-3974580528.index
-1697886153.index
+INDEX VERSION 1.127+E:\Users\Richie\Desktop\cs307\Cardglomerate\.metadata\.plugins\org.eclipse.jdt.core
 3130826462.index
-3133528496.index
-4108727661.index
-1632015955.index
-4155206848.index
-163172794.index
-3230741258.index
-3065916431.index
-1299022128.index
-4041092966.index
-305854171.index
-1498219845.index
-1995173708.index
+875379051.index
+3810072431.index
 936676590.index
+3230741258.index
+2408868455.index
+3306689791.index
+1632015955.index
 3357528132.index
+3881442668.index
+2321553228.index
+4257325822.index

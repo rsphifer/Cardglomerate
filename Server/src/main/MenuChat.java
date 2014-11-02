@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import misc.ChatEntry;
 
 public class MenuChat {
-	private static final int MAX_CHAT_ENTRIES = 100;
+	private static final int MAX_CHAT_ENTRIES = 16;
 
 	private ArrayList<ChatEntry> chatLog;
 	
