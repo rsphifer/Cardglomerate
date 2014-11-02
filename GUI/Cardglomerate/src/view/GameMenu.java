@@ -37,13 +37,18 @@ public class GameMenu extends BasicGameState {
 	private int cury;
 	private TextField friendField;
 	private boolean friendSelected = false;
+	ArrayList<Friend> friends;
 	
 	//chat stuff
 	private int curChatx;
 	private int curChaty;
 	private TextField chatField;
 	private boolean chatSelected = false;
-
+	private String newMessage;
+	private String temp;
+	ArrayList<ChatEntry> menuChat;
+	private boolean chatError = false;
+	
 	// card images for game GUI
 	public static Image[] clubs;
 	public static Image[] hearts;
@@ -57,19 +62,7 @@ public class GameMenu extends BasicGameState {
 
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
-		
-		//linked list testing code
-		Master.friends = new LinkedList<String>();
-		Master.friends.add("Test Friend Please Ignore"); Master.friends.add("420Lord360NoScope"); Master.friends.add("Billy");
-		Master.friends.add("PokerGod"); Master.friends.add("Linda"); Master.friends.add("Catman");
-		Master.friends.add("ActuallyGod"); Master.friends.add("A Moose"); Master.friends.add("Raoul the Unforgiving");
-		
-		Master.chatMessages = new LinkedList<String>();
-		Master.chatMessages.add("HELLO FRIENDS HOW ARE YOU");
-		Master.chatMessages.add("Dude turn off caps lock");
-		Master.chatMessages.add("DON'T TELL ME WAT TO DO WAN FITE?");
-		
-		
+				
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
@@ -170,7 +163,7 @@ public class GameMenu extends BasicGameState {
 		cury = 350;
 		
 		if (model.isLoggedIn) {
-			ArrayList<Friend> friends = model.getFriendsList();
+			friends = model.getFriendsList();
 			for (int i = 0; i < friends.size(); i++) {
 				Friend tmp = friends.get(i);
 				g.drawString(tmp.getUsername(), curx, cury);
@@ -185,14 +178,7 @@ public class GameMenu extends BasicGameState {
 				cury += 20;
 			}
 		}
-		
-
-		
-//		for (int i = 0; i < Master.friends.size(); i++) {
-//			g.drawString(Master.friends.get(i), curx, cury);
-//			cury += 20;
-//		}
-		
+				
 		//chat rendering
 		// limit: 16 chat messages of length 48
 		g.drawString("Chat", 150, 330);
@@ -200,25 +186,24 @@ public class GameMenu extends BasicGameState {
 		g.drawString("Send Message", 265, 685);
 		chatField.render(gc, g);
 		curChatx = 5;
-		
 		curChaty = 350;
 		
-		ArrayList<ChatEntry> menuChat = model.getMenuChat();
+		menuChat = model.getMenuChat();
 		for (int i = 0; i < menuChat.size(); i++) {
 			ChatEntry currMessage = menuChat.get(i);
-			g.drawString(currMessage.getUsername(), curChatx, curChaty);
-			
-			curChaty += 20;
-			g.drawString(currMessage.getMessage(), curChatx+15, curChaty);
+			g.drawString(currMessage.getUsername() + ": ", curChatx, curChaty);
+			g.drawString(currMessage.getMessage(), curChatx, curChaty);
 			curChaty += 20;
 			
 		}
 		
-//		for (int i = 0; i < Master.chatMessages.size(); i++) {
-//			g.drawString(Master.chatMessages.get(i), curChatx, curChaty);
-//			curChaty += 20;
-//		}
-
+		//chat error
+		if (chatError){
+			g.drawString("Message too long", 390, 685);
+			if(!chatError) {
+				g.clear();
+			}
+		}
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -298,12 +283,24 @@ public class GameMenu extends BasicGameState {
 				Master.isMouseReleased = false;
 				if (chatField.getText().length() > 1) {
 					//code to send chat message to server goes here
-					String newMessage = chatField.getText();
-					if (!newMessage.isEmpty()) {
+					newMessage = chatField.getText();
+					if (newMessage.length() <= 48) {
 						model.addChatEntry(newMessage);
+						chatError = false;
 					}
-					//filler code for now
-					//Master.chatMessages.add(chatField.getText());
+					else if (newMessage.length() <=96) {
+						//split message in two and send both
+						temp = newMessage.substring(0, 47);
+						model.addChatEntry(temp);
+						temp = newMessage.substring(48);
+						model.addChatEntry(temp);
+						chatError = false;
+					}
+					else {
+						//chat does not support paragraphs, write your novels elsewhere
+						chatError = true;
+					}
+
 					chatField.setText(""); 
 				}
 			}

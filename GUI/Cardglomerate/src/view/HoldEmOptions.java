@@ -1,14 +1,20 @@
 package view;
 
+import java.util.ArrayList;
+
 import model.Model;
 
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import player.Friend;
 
 public class HoldEmOptions extends BasicGameState {
 	
@@ -22,6 +28,7 @@ public class HoldEmOptions extends BasicGameState {
 	//friends list crap
 	private int curx;
 	private int cury;
+	ArrayList<Friend> friends;
 	
 	public HoldEmOptions(int state, Model model) {
 		this.model = model;
@@ -63,9 +70,22 @@ public class HoldEmOptions extends BasicGameState {
 		g.drawString("Friends List", 1000, 10);
 		curx = 930;
 		cury = 30;
-		for (int i = 0; i < Master.friends.size(); i++) {
-			g.drawString(Master.friends.get(i), curx, cury);
-			cury += 20;
+		
+		if (model.isLoggedIn) {
+			friends = model.getFriendsList();
+			for (int i = 0; i < friends.size(); i++) {
+				Friend tmp = friends.get(i);
+				g.drawString(tmp.getUsername(), curx, cury);
+				Color currColor = g.getColor();
+				if (tmp.isOnline) {
+					g.setColor(Color.blue);
+				} else {
+					g.setColor(Color.red);
+				}
+				g.fill(new Circle(curx-7, cury+10, 5));
+				g.setColor(currColor);
+				cury += 20;
+			}
 		}
 		
 	}

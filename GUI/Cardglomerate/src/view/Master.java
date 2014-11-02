@@ -13,11 +13,6 @@ public class Master extends StateBasedGame {
 	
 	private Model model;
 	
-	//global lists of friends and chat
-	//might be friend or chat or other object later, strings for now
-	public static LinkedList<String> friends;
-	public static LinkedList<String> chatMessages;
-
 	public static final String gameName = "Cardglomerate";
 	public static boolean isMouseReleased = true;
 	
@@ -63,7 +58,7 @@ public class Master extends StateBasedGame {
 		this.getState(holdEmGame).init(gc, this);
 		
 		//screen to display first
-		this.enterState(logIn);
+		this.enterState(gameMenu);
 	}
 	
 	/* Overrides default close operation when close is selected */
