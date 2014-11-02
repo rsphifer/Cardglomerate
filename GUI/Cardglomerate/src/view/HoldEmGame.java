@@ -104,6 +104,10 @@ public class HoldEmGame extends BasicGameState {
 		//mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
 		
+		//render arrow
+		g.drawString("Leave Table", 15, 550);
+		g.drawImage(arrow, 0, 570);
+		
 		//draw money pot
 		money.draw(1000, 0);
 		g.drawString("Pot Size: $"+potSize, 1000, 200);
@@ -226,6 +230,20 @@ public class HoldEmGame extends BasicGameState {
 				Master.isMouseReleased = false;
 				//code here
 				System.out.println("Fold");
+			}
+			
+			if (!Mouse.isButtonDown(0)){
+				Master.isMouseReleased = true;
+			}
+		}
+		
+		//back button clicked
+		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150)) {
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+				//player left game, code to handle that
+				
+				sbg.enterState(7);
 			}
 			
 			if (!Mouse.isButtonDown(0)){
