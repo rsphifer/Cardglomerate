@@ -3,7 +3,6 @@ package view;
 import model.Model;
 
 import org.lwjgl.input.Mouse;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -86,17 +85,9 @@ public class CreateAccount extends BasicGameState {
 		password2Field.render(gc, g);
 		emailField.render(gc, g);
 		
-		Color originalColor = g.getColor();
-		
 		//create account button
 		g.drawRect(535, 670, 200, 30);
 		g.drawString("Create Account", 570, 675);
-		if (createAccountButtonFocused) {
-			g.setColor(Color.darkGray);
-			g.drawRect(534, 669, 200, 30);
-			g.drawString("Create Account", 569, 674);
-			g.setColor(originalColor);
-		}
 		
 		//password mismatch
 		if (passwordMisMatch) {
@@ -163,36 +154,23 @@ public class CreateAccount extends BasicGameState {
 				password1FieldSelected = true;
 				password1Field.setFocus(true);
 			} else if (password1FieldSelected) {
-				password1FieldSelected = false;
-				password1Field.setFocus(false);
-				password2FieldSelected = true;
-				password2Field.setFocus(true);
+				
 			} else if (password2FieldSelected) {
-				password2FieldSelected = false;
-				password2Field.setFocus(false);
-				emailFieldSelected = true;
-				emailField.setFocus(true);
+				
 			} else if (emailFieldSelected) {
-				emailFieldSelected = false;
-				emailField.setFocus(false);
-				createAccountButtonFocused = true;
+				
 			} else if (createAccountButtonFocused) {
-				createAccountButtonFocused = false;
-				usernameFieldSelected = true;
-				usernameField.setFocus(true);
+				
 			}
 		}
 		
 		if (in.isKeyPressed(Input.KEY_ENTER)) {
-			if (createAccountButtonFocused) {
-				createAccoutnButtonPressed = true;
-			}
+			
 		}
 		
 		//username textbox clicked
 		if((xpos>535 && xpos<735) && (ypos>265 && ypos<295)) {
 			if(Mouse.isButtonDown(0)) { //button 0 = left click
-				createAccountButtonFocused = false;
 				password1FieldSelected = false;
 				password2FieldSelected = false;
 				emailFieldSelected = false;
@@ -202,7 +180,6 @@ public class CreateAccount extends BasicGameState {
 		//password1 textbox clicked
 		if((xpos>535 && xpos<735) && (ypos>200 && ypos<230)) {
 			if(Mouse.isButtonDown(0)) {
-				createAccountButtonFocused = false;
 				usernameFieldSelected = false;
 				password2FieldSelected = false;
 				emailFieldSelected = false;
@@ -213,7 +190,6 @@ public class CreateAccount extends BasicGameState {
 		//password2 textbox clicked
 		if((xpos>535 && xpos<735) && (ypos>135 && ypos<165)) {
 			if(Mouse.isButtonDown(0)) {
-				createAccountButtonFocused = false;
 				usernameFieldSelected = false;
 				emailFieldSelected = false;
 				password1FieldSelected = false;
@@ -224,7 +200,6 @@ public class CreateAccount extends BasicGameState {
 		//email textbox clicked
 		if((xpos>535 && xpos<735) && (ypos>70 && ypos<100)) {
 			if(Mouse.isButtonDown(0)) {
-				createAccountButtonFocused = false;
 				usernameFieldSelected = false;
 				password1FieldSelected = false;
 				password2FieldSelected = false;
@@ -233,8 +208,8 @@ public class CreateAccount extends BasicGameState {
 		}
 		
 		//Create Account button clicked
-		if(createAccoutnButtonPressed || ((xpos>535 && xpos<735) && (ypos>20 && ypos<50))) {
-			if(createAccoutnButtonPressed || (Mouse.isButtonDown(0) && Master.isMouseReleased)) {
+		if((xpos>535 && xpos<735) && (ypos>20 && ypos<50)) {
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				username = usernameField.getText();
 				password1 = password1Field.getText();
@@ -299,7 +274,6 @@ public class CreateAccount extends BasicGameState {
 				}
 				
 			}
-			createAccoutnButtonPressed = false;
 			
 			if (!Mouse.isButtonDown(0)){
 				Master.isMouseReleased = true;
