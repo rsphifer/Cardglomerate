@@ -23,7 +23,7 @@ public class AccountOptions extends BasicGameState {
 	private PasswordTextField passwordField;
 	private TextField emailField;
 	private TextField deleteField;
-	private PasswordTextField curPasswordField;
+	private TextField curPasswordField;
 	private boolean changeUsername = false;
 	private boolean changePassword = false;
 	private boolean changeEmail = false;
@@ -67,14 +67,10 @@ public class AccountOptions extends BasicGameState {
 		
 		//initialize textfields
 		usernameField = new TextField(gc, gc.getDefaultFont(), 560, 325, 200, 30);
-		passwordField = new PasswordTextField(gc, gc.getDefaultFont(), 560, 425, 200, 30);
-		passwordField.setMaskCharacter('*');
-		passwordField.setMaskEnabled(true);
+		passwordField = new TextField(gc, gc.getDefaultFont(), 560, 425, 200, 30);
 		emailField = new TextField(gc, gc.getDefaultFont(), 560, 525, 200, 30);
 		deleteField = new TextField(gc, gc.getDefaultFont(), 560, 625, 200, 30);
-		curPasswordField = new PasswordTextField(gc, gc.getDefaultFont(), 825, 225, 200, 30);
-		curPasswordField.setMaskCharacter('*');
-		curPasswordField.setMaskEnabled(true);
+		curPasswordField = new TextField(gc, gc.getDefaultFont(), 825, 225, 200, 30);
 		
 
 	}

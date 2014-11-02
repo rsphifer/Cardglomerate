@@ -73,8 +73,7 @@ public class AccountOptions extends BasicGameState {
 		emailField = new TextField(gc, gc.getDefaultFont(), 560, 525, 200, 30);
 		deleteField = new TextField(gc, gc.getDefaultFont(), 560, 625, 200, 30);
 		curPasswordField = new PasswordTextField(gc, gc.getDefaultFont(), 825, 225, 200, 30);
-		curPasswordField.setMaskCharacter('*');
-		curPasswordField.setMaskEnabled(true);
+		curPasswordField.
 		
 
 	}
