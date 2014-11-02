@@ -29,8 +29,6 @@ public class HoldEmGame extends BasicGameState {
 	private TextField betField;
 	private boolean betError = false;
 	private String betString;
-	private String handWinner = "BillyBob";
-	private boolean handOver = false;
 
 	//misc player variables
 	private String p1Name = "Mooselord";
@@ -159,13 +157,6 @@ public class HoldEmGame extends BasicGameState {
 		if (betError) {
 			g.drawString("Please Enter Raise/Bet", 850, 570);
 			if(!betError) {
-				g.clear();
-			}
-		}
-		
-		if (handOver) {
-			g.drawString("Hand Winner(s): "+handWinner, 530,450);
-			if (!handOver){
 				g.clear();
 			}
 		}

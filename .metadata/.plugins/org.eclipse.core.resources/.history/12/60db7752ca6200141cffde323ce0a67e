@@ -30,7 +30,7 @@ public class HoldEmGame extends BasicGameState {
 	private boolean betError = false;
 	private String betString;
 	private String handWinner = "BillyBob";
-	private boolean handOver = false;
+	private boolean handOver = true;
 
 	//misc player variables
 	private String p1Name = "Mooselord";
