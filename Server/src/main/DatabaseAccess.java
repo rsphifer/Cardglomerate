@@ -257,7 +257,7 @@ public class DatabaseAccess {
 
 				verify.close();
 				checkfunc.close();
-				idfunc.close();
+				//idfunc.close();
 				conn.close();
 
 				return 0;

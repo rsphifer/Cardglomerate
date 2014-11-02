@@ -1,9 +1,0 @@
-INDEX VERSION 1.126+E:\Users\Richie\Desktop\cs307\Cardglomerate\GUI\.metadata\.plugins\org.eclipse.jdt.core
-3130826462.index
-3230741258.index
-936676590.index
-875379051.index
-3357528132.index
-2496830664.index
-2321553228.index
-2501520862.index

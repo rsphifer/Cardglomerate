@@ -57,7 +57,7 @@ public class Model {
 	}
 
 	public String getGameWinner() {
-		return currentGame.getWinner().userName;
+		return currentGame.getWinner().get(0).userName;
 	}
 
 	public LinkedList<Integer> getHandSizes() {
