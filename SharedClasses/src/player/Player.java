@@ -17,7 +17,7 @@ public class Player implements Serializable{
 	private int money = 0;
 	public String userName;
 	
-	public Player(String playerName, String password){
+	public Player(String playerName){
 		this.hand = new ArrayList<Card>();
 		this.discard = new ArrayList<Card>();
 		this.userName = playerName;

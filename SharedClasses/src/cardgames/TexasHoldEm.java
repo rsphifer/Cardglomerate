@@ -18,6 +18,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	private boolean gameOver = false;
 	private int turn;
 	private int currentBet;
+	private Player whoseTurn;
 	
 	public TexasHoldEm() {
 		
@@ -98,8 +99,13 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	}
 	
 	public void update(){
-		for(Player p : players){
-			play(p);
+		if(turn != 3 && turn != 5 && turn != 7){
+			for(Player p : players){
+				whoseTurn = p;
+				play(p);
+			}
+		} else {
+			play(new Player("admin"));
 		}
 		
 		if(turn == 9){
@@ -181,7 +187,11 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		players.remove(p);
 	}
 	
-	public ArrayList<Player> getPlayerHands() {
+	public ArrayList<Player> getPlayers() {
 		return players;
+	}
+	
+	public Player getTurn(){
+		return whoseTurn;
 	}
 }

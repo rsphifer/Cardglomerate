@@ -1,14 +1,9 @@
-INDEX VERSION 1.127+E:\Users\Richie\Desktop\cs307\Cardglomerate\.metadata\.plugins\org.eclipse.jdt.core
-3130826462.index
-875379051.index
-3810072431.index
-936676590.index
-2501520862.index
-3230741258.index
-2408868455.index
-3306689791.index
-1632015955.index
-3357528132.index
-3881442668.index
-2321553228.index
-4257325822.index
+INDEX VERSION 1.127+/u/data/u93/mounts/Cardglomerate/.metadata/.plugins/org.eclipse.jdt.core
+1578190554.index
+1218111336.index
+2715425392.index
+967313486.index
+715336467.index
+2359033806.index
+2377255721.index
+1615990613.index

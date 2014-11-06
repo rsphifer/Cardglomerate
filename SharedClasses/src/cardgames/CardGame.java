@@ -63,7 +63,10 @@ public abstract class CardGame implements Serializable{
 	public abstract void update();
 	public abstract boolean getGameover();
 	public abstract LinkedList<Card> getCardsToDisplay();
-
+	public abstract ArrayList<Player> getPlayers();
+	public abstract Player getTurn();
+	public abstract int getPot();
+	public abstract int getExpectedBet();
 	public static void main(String[] args){
 
 	}

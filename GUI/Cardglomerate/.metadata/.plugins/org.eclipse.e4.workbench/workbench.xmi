@@ -3,7 +3,7 @@
   <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;workbench>&#xA;&lt;mruList/>&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_dhT3IlSlEeSG-sijGTIFug" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_d1PfwVSlEeSG-sijGTIFug" label="%trimmedwindow.label.eclipseSDK" x="0" y="25" width="1032" height="761">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_dhT3IlSlEeSG-sijGTIFug" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_d1PfwVSlEeSG-sijGTIFug" label="%trimmedwindow.label.eclipseSDK" x="0" y="25" width="1036" height="758">
     <persistedState key="coolBarVisible" value="true"/>
     <persistedState key="perspectiveBarVisible" value="true"/>
     <persistedState key="workingSets" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;workingSets/>"/>
@@ -69,7 +69,6 @@
                 <tags>newtablook</tags>
                 <tags>org.eclipse.e4.primaryNavigationStack</tags>
                 <tags>active</tags>
-                <tags>noFocus</tags>
                 <children xsi:type="advanced:Placeholder" xmi:id="_d7xllVSlEeSG-sijGTIFug" elementId="org.eclipse.jdt.ui.PackageExplorer" ref="_d7nNgFSlEeSG-sijGTIFug"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_d7xlllSlEeSG-sijGTIFug" elementId="org.eclipse.jdt.ui.TypeHierarchy" toBeRendered="false" ref="_d7pCsFSlEeSG-sijGTIFug"/>
                 <children xsi:type="advanced:Placeholder" xmi:id="_d7xll1SlEeSG-sijGTIFug" elementId="org.eclipse.ui.views.ResourceNavigator" toBeRendered="false" ref="_d7pCsVSlEeSG-sijGTIFug"/>
@@ -162,7 +161,7 @@
       <tags>categoryTag:General</tags>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_d7ppwVSlEeSG-sijGTIFug" elementId="org.eclipse.ui.views.ProblemView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Problems" iconURI="platform:/plugin/org.eclipse.ui.ide/icons/full/eview16/problems_view.png" closeable="true">
-      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;view PRIMARY_SORT_FIELD=&quot;org.eclipse.ui.ide.severityAndDescriptionField&quot; categoryGroup=&quot;org.eclipse.ui.ide.severity&quot; markerContentGenerator=&quot;org.eclipse.ui.ide.problemsGenerator&quot; partName=&quot;Problems&quot;>&#xA;&lt;columnWidths org.eclipse.ui.ide.locationField=&quot;90&quot; org.eclipse.ui.ide.markerType=&quot;153&quot; org.eclipse.ui.ide.pathField=&quot;120&quot; org.eclipse.ui.ide.resourceField=&quot;90&quot; org.eclipse.ui.ide.severityAndDescriptionField=&quot;300&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.severityAndDescriptionField&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.resourceField&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.pathField&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.locationField&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.markerType&quot;/>&#xA;&lt;/view>"/>
+      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;view PRIMARY_SORT_FIELD=&quot;org.eclipse.ui.ide.severityAndDescriptionField&quot; categoryGroup=&quot;org.eclipse.ui.ide.severity&quot; markerContentGenerator=&quot;org.eclipse.ui.ide.problemsGenerator&quot; partName=&quot;Problems&quot;>&#xA;&lt;columnWidths org.eclipse.ui.ide.locationField=&quot;90&quot; org.eclipse.ui.ide.markerType=&quot;156&quot; org.eclipse.ui.ide.pathField=&quot;120&quot; org.eclipse.ui.ide.resourceField=&quot;90&quot; org.eclipse.ui.ide.severityAndDescriptionField=&quot;300&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.severityAndDescriptionField&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.resourceField&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.pathField&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.locationField&quot;/>&#xA;&lt;visible IMemento.internal.id=&quot;org.eclipse.ui.ide.markerType&quot;/>&#xA;&lt;/view>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
       <menus xmi:id="_eCre0FSlEeSG-sijGTIFug" elementId="org.eclipse.ui.views.ProblemView">
@@ -228,7 +227,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_d2ljkFSlEeSG-sijGTIFug" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_mfexUFV8EeS8h6BtJEFj1A" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_diAav1SlEeSG-sijGTIFug"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_cxtgQGU6EeS0TrDa1w-riQ" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_diAav1SlEeSG-sijGTIFug"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_d2ljkVSlEeSG-sijGTIFug" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -249,7 +248,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_d2mKoFSlEeSG-sijGTIFug" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_mfjp01V8EeS8h6BtJEFj1A" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_dh9-glSlEeSG-sijGTIFug"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_cxxxs2U6EeS0TrDa1w-riQ" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_dh9-glSlEeSG-sijGTIFug"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_d2mKoVSlEeSG-sijGTIFug" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
