@@ -29,7 +29,7 @@ public class War extends CardGame implements Serializable{
 	
 	public War(Player p1){
 		players = new ArrayList<Player>();
-		this.players.add(new Player("AI","asd"));
+		this.players.add(new Player("AI"));
 		this.players.add(p1);
 		winnings = new LinkedList<Card>();
 		cardsToDisplay = new LinkedList<Card>();
@@ -195,5 +195,53 @@ public class War extends CardGame implements Serializable{
 		} else {
 			win(players.get(0));
 		}
+	}
+
+	@Override
+	public ArrayList<Player> getPlayers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Player getTurn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getPot() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getExpectedBet() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean updateReady() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setBet(Player p, int bet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nextTurn(Player curP) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fold(Player p) {
+		// TODO Auto-generated method stub
+		
 	}
 }

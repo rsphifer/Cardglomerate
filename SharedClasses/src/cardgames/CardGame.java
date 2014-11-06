@@ -29,11 +29,10 @@ public abstract class CardGame implements Serializable{
 	}
 	
 	protected void fillDeckHoldEm(){
-		for(int k=0;k<4;k++){
-			for(int i=1;i<=13;i++){
-				for(int j=0;j<=3;j++){
-					this.deck.add(new Card(i,j,i+(13*j)-1));
-				}
+		this.deck.clear();
+		for(int i=1;i<=13;i++){
+			for(int j=0;j<=3;j++){
+				this.deck.add(new Card(i,j,i+(13*j)-1));
 			}
 		}
 		Collections.shuffle((List<?>) this.deck);
@@ -67,6 +66,10 @@ public abstract class CardGame implements Serializable{
 	public abstract Player getTurn();
 	public abstract int getPot();
 	public abstract int getExpectedBet();
+	public abstract boolean updateReady();
+	public abstract void setBet(Player p, int bet);
+	public abstract void nextTurn(Player curP);
+	public abstract void fold(Player p);
 	public static void main(String[] args){
 
 	}

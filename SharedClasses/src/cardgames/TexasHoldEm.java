@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import HandEvaluator.HandValue;
 import player.Player;
+import HandEvaluator.HandValue;
 import cards.Card;
 
 public class TexasHoldEm extends CardGame implements Serializable{
@@ -17,8 +17,10 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	private CardGame cardGame;
 	private boolean gameOver = false;
 	private int turn;
-	private int currentBet;
+	private int expectedBet;
 	private Player whoseTurn;
+	public boolean readyToUpdate;
+	private int playersGone = 0;
 	
 	public TexasHoldEm() {
 		
@@ -64,18 +66,18 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		winners.add(players.get(index));
 	}
 	
-	private void promptForBets(Player p, int amount){
-		winnings += p.bet(amount);
-	}
-	
-	private void play(Player p){
+	/*private void play(){
 		switch(this.turn){
 			case 0: //ante
-				this.winnings += p.bet(50);	
+				for(Player p : players){
+					p.bet(50);
+				}
 				break;
 			case 1: //deal 2
-				p.addCardToHand(this.cardGame.getTopOfDeck());
-				p.addCardToHand(this.cardGame.getTopOfDeck());
+				for(Player p : players){
+					p.addCardToHand(this.cardGame.getTopOfDeck());
+					p.addCardToHand(this.cardGame.getTopOfDeck());
+				}
 				break;
 			case 3: //burn and 3 out
 				this.cardGame.getTopOfDeck();
@@ -97,16 +99,101 @@ public class TexasHoldEm extends CardGame implements Serializable{
 				break;
 		}
 	}
+	*/
+	
+	public boolean updateReady(){
+		if(turn == 0){
+			return true;
+		}
+		for(Player p : players){
+			if(p.getCurrentBet()!=expectedBet && p.isFolded() == false){
+				readyToUpdate = false;
+				return readyToUpdate;
+			}
+		}
+		readyToUpdate = true;
+		return readyToUpdate;
+	}
+	
+	public void setBet(Player p, int bet){
+		p.bet(bet);
+		nextTurn(p);
+		this.expectedBet = bet;
+	}
+	
+	public void nextTurn(Player curP){
+		int found = 0;
+		for(Player p : players){
+			if(found == 1){
+				whoseTurn = p;
+				break;
+			}
+			if(curP.userName == p.userName){
+				found = 1;
+			}
+		}
+		if(found == 1){
+			players.get(0);
+		}
+	}
+	
+	public void fold(Player p){
+		p.fold();
+		playersGone++;
+	}
 	
 	public void update(){
-		if(turn != 3 && turn != 5 && turn != 7){
-			for(Player p : players){
-				whoseTurn = p;
-				play(p);
-			}
-		} else {
-			play(new Player("admin"));
+		//int playersGone = 0;
+		readyToUpdate = false;
+
+		switch(this.turn){
+			case 0: //ante
+				for(Player p : players){
+					p.bet(50);
+				}
+				for(Player p : players){
+					p.addCardToHand(this.cardGame.getTopOfDeck());
+					p.addCardToHand(this.cardGame.getTopOfDeck());
+				}
+				whoseTurn = players.get(0);
+				readyToUpdate = true;
+				break;
+			case 1:
+			case 3:
+			case 5:
+				readyToUpdate = false;
+				/*while(!updateReady()){
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}*/
+				break;
+			case 2: //burn and 3 out
+				this.cardGame.getTopOfDeck();
+				cardsOnTable.add(this.cardGame.getTopOfDeck());
+				cardsOnTable.add(this.cardGame.getTopOfDeck());
+				cardsOnTable.add(this.cardGame.getTopOfDeck());
+				readyToUpdate = true;
+				break;
+			case 4: //burn and deal 1
+			case 6: //burn and deal 1
+				this.cardGame.getTopOfDeck();
+				cardsOnTable.add(this.cardGame.getTopOfDeck());
+				readyToUpdate = true;
+				break;
 		}
+		
+		/*if(turn != 3 && turn != 5 && turn != 7){
+			readyToUpdate = true;
+			//for(Player p : players){
+				//whoseTurn = p;
+				play();
+			//}
+		} else {
+			readyToUpdate = true;
+		}*/
 		
 		if(turn == 9){
 			int j=0;
@@ -121,15 +208,25 @@ public class TexasHoldEm extends CardGame implements Serializable{
 			for(Player p : winners){
 				p.addMoney(winnings/winners.size());
 			}
-			winnings = 0;
-			cardsOnTable.clear();
-			for(Player p : winners){
-				p.emptyHand();
-			}
 		}
 		
-		this.turn++;
+		if(turn == 3 || turn == 5 || turn == 7){
+			for(Player p : players){
+				winnings += p.getCurrentBet();
+				p.bet(0);
+			}
+		}
+
+		turn++;
 		if(this.turn > 9){
+			for(Player p : players){
+				p.resetFold();
+				p.emptyHand();
+			}
+			this.cardGame.fillDeckHoldEm();
+			winners.clear();
+			cardsOnTable.clear();
+			winnings = 0;
 			this.turn = 0;
 		}
 	}
@@ -180,7 +277,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	}
 	
 	public int getExpectedBet(){
-		return currentBet;
+		return expectedBet;
 	}
 	
 	public void quitGame(Player p) {

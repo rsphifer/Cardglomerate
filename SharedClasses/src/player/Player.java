@@ -16,6 +16,8 @@ public class Player implements Serializable{
 	private ArrayList<Card> discard;
 	private int money = 0;
 	public String userName;
+	private int currentBet = 0;
+	private boolean folded = false;
 	
 	public Player(String playerName){
 		this.hand = new ArrayList<Card>();
@@ -55,9 +57,24 @@ public class Player implements Serializable{
 		return this.money;
 	}
 	
-	public int bet(int amount){
-		money -= amount;
-		return amount;
+	public void bet(int amount){
+		this.currentBet = amount;
+	}
+	
+	public int getCurrentBet(){
+		return this.currentBet;
+	}
+	
+	public void resetFold(){
+		folded = false;
+	}
+	
+	public void fold(){
+		folded = true;
+	}
+	
+	public boolean isFolded(){
+		return folded;
 	}
 	
 	public void addCardToDiscard(Card newCard){

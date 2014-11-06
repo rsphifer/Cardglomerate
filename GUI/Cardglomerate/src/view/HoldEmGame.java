@@ -16,6 +16,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import player.Player;
 import cards.Card;
+import cardgames.*;
 
 public class HoldEmGame extends BasicGameState {
 
@@ -34,6 +35,7 @@ public class HoldEmGame extends BasicGameState {
 	private String handWinners = "";
 	private boolean handOver = false;
 	private boolean displayOthers = false;
+	private Player currentPlayer;
 
 	// misc player variables
 	private String p1Name = "Mooselord";
@@ -193,6 +195,7 @@ public class HoldEmGame extends BasicGameState {
 					Master.isMouseReleased = false;
 					// code here
 					System.out.println("Call/Check");
+					model.getCurrentGame().setBet(model.getPlayer(), callSize);
 				}
 
 				if (!Mouse.isButtonDown(0)) {
@@ -206,11 +209,17 @@ public class HoldEmGame extends BasicGameState {
 					Master.isMouseReleased = false;
 					// code here
 					betString = betField.getText();
+					
 					if (betString.length() > 0 && isNumeric(betString)) {
 						betSize = Integer.parseInt(betString);
-						betError = false;
-						betField.setText("");
-						System.out.println("Raise/Bet $" + betSize);
+						if(betSize > playerBalance || betSize < callSize){
+							betError = false;
+							betField.setText("");
+							System.out.println("Raise/Bet $" + betSize);
+							model.getCurrentGame().setBet(model.getPlayer(), betSize);
+						} else {
+							betError = true;
+						}
 					} else {
 						betError = true;
 					}
@@ -248,6 +257,8 @@ public class HoldEmGame extends BasicGameState {
 				Master.isMouseReleased = true;
 			}
 		}
+		
+		model.updateGame();
 	}
 
 	private void updatePlayers() {

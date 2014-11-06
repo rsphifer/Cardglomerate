@@ -10,8 +10,9 @@ import player.NewFriendRequest;
 import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
-import cardgames.CardGame;
-import cardgames.War;
+//import cardgames.CardGame;
+//import cardgames.War;
+import cardgames.*;
 import cards.Card;
 import controller.ServerAccess;
 import controller.UpdateChecker;
@@ -65,7 +66,9 @@ public class Model {
 	}
 
 	public void updateGame() {
-		currentGame.update();
+		if(currentGame.updateReady()){
+			currentGame.update();
+		}
 	}
 
 	public boolean getGameOver() {
