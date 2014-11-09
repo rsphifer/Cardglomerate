@@ -396,7 +396,7 @@ public class DatabaseAccess {
 			ResultSet data = datafunc.executeQuery(user_data);
 			data.next();
 			
-			Player newplayer = new Player(data.getString("username"), data.getString("password"));
+			Player newplayer = new Player(data.getString("username"));
 
 
 			conn.close();
