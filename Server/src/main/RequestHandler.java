@@ -7,6 +7,7 @@ import java.net.Socket;
 import mail.EmailNewAccount;
 import mail.EmailPassword;
 import misc.ChatEntry;
+import misc.GameLobby;
 import misc.Request;
 import misc.UpdateGameRequest;
 import player.NewFriendRequest;
@@ -20,11 +21,13 @@ public class RequestHandler implements Runnable {
 	private Socket clientSocket;
 	private GameTable gameTable;
 	private MenuChat menuChat;
+	private GameLobby[] warLobbies;
 
-	public RequestHandler(Socket clientSocket, GameTable gameTable, MenuChat menuChat) {
+	public RequestHandler(Socket clientSocket, GameTable gameTable, MenuChat menuChat, GameLobby[] warLobbies) {
 		this.clientSocket = clientSocket;
 		this.gameTable = gameTable;
 		this.menuChat = menuChat;
+		this.warLobbies = warLobbies;
 	}
 
 	@Override

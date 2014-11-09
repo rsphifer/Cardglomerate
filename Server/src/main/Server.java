@@ -3,18 +3,32 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import misc.GameLobby;
+
 
 public class Server {
+	
+	public static final int MAX_LOBBIES = 4;
+	
 	public static final String USAGE = "Usage: java Server portNumber";
 	
 	private int port;
 	private GameTable gameTable;
 	private MenuChat menuChat;
 	
+	private GameLobby[] warLobbies;
+	
 	public Server(int port) {
 		this.port = port;
 		gameTable = new GameTable();
 		menuChat = new MenuChat();
+		
+		warLobbies = new GameLobby[MAX_LOBBIES];
+		
+		int ind = 0;
+		for (GameLobby gl : warLobbies) {
+			gl = new GameLobby(2, 2, ind++);
+		}
 	}
 	
 	public void start() {
@@ -25,7 +39,7 @@ public class Server {
 				
 				Socket clientSocket = serverSocket.accept();
 				
-				RequestHandler requestHandler = new RequestHandler(clientSocket, gameTable, menuChat);
+				RequestHandler requestHandler = new RequestHandler(clientSocket, gameTable, menuChat, warLobbies);
 				Thread t = new Thread(requestHandler);
 				t.start();
 			}

@@ -217,6 +217,8 @@ public class LogIn extends BasicGameState {
 				createAccButtonPressed = true;
 			} else if (sendEmailButtonFocused) {
 				sendEmailButtonPressed = true;
+			} else if (passwordFieldSelected) {
+				loginButtonPressed = true;
 			}
 		}
 
