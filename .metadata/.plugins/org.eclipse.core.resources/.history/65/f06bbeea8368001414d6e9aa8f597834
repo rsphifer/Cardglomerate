@@ -43,7 +43,7 @@ public class GameLobby implements Serializable {
 	
 	public void removePlayer(Player p) {
 		/* Host is leaving, assign new host */
-		if (lobbyHost != null && lobbyHost.userName.equals(p.userName)) {
+		if (lobbyHost.userName.equals(p.userName)) {
 			if (players.size() == 1) {
 				/* No other player to give host to. */
 				lobbyHost = null;
