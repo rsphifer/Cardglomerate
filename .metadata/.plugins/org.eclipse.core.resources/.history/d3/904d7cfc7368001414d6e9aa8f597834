@@ -77,8 +77,8 @@ public class RequestHandler implements Runnable {
 					ChatEntry newEntry = (ChatEntry)request.getObject();
 					menuChat.addChatEntry(newEntry);
 					
-				} else if (action.equals("getGameLobbyList")) {
-					System.out.println("get game lobby list request");
+				} else if (action.equals("getGameLobby")) {
+					System.out.println("get game lobby request");
 					CardGameType game = ((GameLobbyRequest)request.getObject()).getCardGameType();
 					if (game == CardGameType.War) {
 						obj = warLobbies;

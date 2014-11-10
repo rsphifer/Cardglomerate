@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import misc.ChatEntry;
-import misc.GameLobby;
 import misc.GameLobbyRequest;
 import misc.Request;
 import player.Friend;
@@ -122,11 +121,6 @@ public class ServerAccess {
 	public static boolean leaveLobby(GameLobbyRequest glr) {
 		Request request = new Request("leaveLobby", glr);
 		return (boolean)sendRequestWithResponse(request);
-	}
-	
-	public static GameLobby[] getGameLobbyList(GameLobbyRequest glr) {
-		Request request = new Request("getGameLobbyList", glr);
-		return (GameLobby[])sendRequestWithResponse(request);
 	}
 	
 	/*********************************************************

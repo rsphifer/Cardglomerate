@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import misc.ChatEntry;
-import misc.GameLobbyRequest;
+
 import player.Friend;
 import player.NewFriendRequest;
 import player.NewPlayerRequest;
@@ -106,6 +106,8 @@ public class Model {
 			Thread t = new Thread(updateChecker);
 			t.start();
 
+			// addFriend("arbiccdheife");
+
 			return true;
 		}
 		return false;
@@ -135,22 +137,6 @@ public class Model {
 	public Player getPlayer() {
 		return player;
 	}
-	
-	/*********************************************************
-	*	Game lobby mgmt model calls.
-	*********************************************************/
-	public void joinGameLobby(CardGameType gameType, int lobbyId) {
-		GameLobbyRequest glr = new GameLobbyRequest(player, lobbyId, gameType);
-		ServerAccess.joinLobby(glr);
-		return;
-	}
-	
-	public void leaveGameLobby(CardGameType gameType, int lobbyId) {
-		GameLobbyRequest glr = new GameLobbyRequest(player, lobbyId, gameType);
-		ServerAccess.leaveLobby(glr);
-		return;
-	}
-	
 	
 	/*********************************************************
 	*	Friend list mgmt model calls.

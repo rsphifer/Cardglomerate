@@ -16,7 +16,6 @@ import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
 import cardgames.CardGame;
-import cardgames.CardGameType;
 
 public class RequestHandler implements Runnable {
 
@@ -77,16 +76,7 @@ public class RequestHandler implements Runnable {
 					ChatEntry newEntry = (ChatEntry)request.getObject();
 					menuChat.addChatEntry(newEntry);
 					
-				} else if (action.equals("getGameLobbyList")) {
-					System.out.println("get game lobby list request");
-					CardGameType game = ((GameLobbyRequest)request.getObject()).getCardGameType();
-					if (game == CardGameType.War) {
-						obj = warLobbies;
-					} else if (game == CardGameType.TexasHoldEm) {
-						
-					}
 				} else if (action.equals("joinGameLobby")) {
-				
 					System.out.println("join game lobby request");
 					GameLobbyRequest glr = (GameLobbyRequest)request.getObject();
 					
