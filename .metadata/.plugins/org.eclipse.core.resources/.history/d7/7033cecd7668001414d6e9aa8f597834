@@ -1,6 +1,5 @@
 package view;
 
-import misc.GameLobby;
 import model.Model;
 
 import org.lwjgl.input.Mouse;
@@ -10,8 +9,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import cardgames.CardGameType;
 
 public class WarOptions extends BasicGameState {
 	
@@ -55,21 +52,6 @@ public class WarOptions extends BasicGameState {
 		//render play button
 		g.drawRect(535, 350, 200, 100);
 		g.drawString("Play Against Ai!", 570, 380);
-		
-		GameLobby[] lobbies = model.getGameLobby(CardGameType.War);
-		int quarterWidth = gc.getWidth()/4;
-		for (int i=0; i < lobbies.length; i++) {
-			int x = 170+quarterWidth*i;
-			g.drawString("Lobby " + (i+1), x, 500);
-			for (int j=0; j < 2; j++) {
-				if (lobbies[i].getPlayers().size() > j) {
-					/* Player is present at j'th index*/
-					g.drawString(lobbies[i].getPlayers().get(j).userName, x, 520+25*j);
-				} else {
-					g.drawString("Open", x, 520+25*j);
-				}
-			}
-		}
 		
 		//render arrow
 		g.drawImage(arrow, 0, 570);

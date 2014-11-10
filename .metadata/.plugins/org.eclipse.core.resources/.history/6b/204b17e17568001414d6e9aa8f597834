@@ -159,14 +159,6 @@ public class Model {
 		return;
 	}
 	
-	public void setGameLobby(CardGameType gameType, GameLobby[] lobbies) {
-		if (gameType == CardGameType.War) {
-			warLobbies = lobbies;
-		} else if (gameType == CardGameType.TexasHoldEm) {
-			
-		}
-	}
-	
 	public GameLobby[] getGameLobby(CardGameType gameType) {
 		if (gameType == CardGameType.War) {
 			return warLobbies;

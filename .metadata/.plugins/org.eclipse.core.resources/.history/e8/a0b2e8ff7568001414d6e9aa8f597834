@@ -2,9 +2,7 @@ package controller;
 
 import javax.swing.JOptionPane;
 
-import cardgames.CardGameType;
 import misc.ChatEntry;
-import misc.GameLobbyRequest;
 import model.Model;
 
 public class UpdateChecker implements Runnable {
@@ -36,9 +34,6 @@ public class UpdateChecker implements Runnable {
 			
 			/* Update menu chat */
 			model.setMenuChat(ServerAccess.getMenuChat());
-			
-			/* Update game lobbies*/
-			model.setGameLobby(CardGameType.War, ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.War)));
 			
 //			for (ChatEntry c : model.getMenuChat()) {
 //				System.out.printf("%s: %s\n", c.getUsername(), c.getMessage());

@@ -104,8 +104,6 @@ public class Model {
 			friendList = ServerAccess.getFriends(player);
 			menuChat = ServerAccess.getMenuChat();
 			
-			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.War));
-			
 			/*
 			 * Initialize thread that will periodically ask server for updates
 			 * to update model
@@ -157,14 +155,6 @@ public class Model {
 		GameLobbyRequest glr = new GameLobbyRequest(player, lobbyId, gameType);
 		ServerAccess.leaveLobby(glr);
 		return;
-	}
-	
-	public void setGameLobby(CardGameType gameType, GameLobby[] lobbies) {
-		if (gameType == CardGameType.War) {
-			warLobbies = lobbies;
-		} else if (gameType == CardGameType.TexasHoldEm) {
-			
-		}
 	}
 	
 	public GameLobby[] getGameLobby(CardGameType gameType) {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import misc.ChatEntry;
-import misc.GameLobby;
 import misc.GameLobbyRequest;
 import player.Friend;
 import player.NewFriendRequest;
@@ -13,9 +12,7 @@ import player.Player;
 import player.SetPasswordRequest;
 //import cardgames.CardGame;
 //import cardgames.War;
-import cardgames.CardGame;
-import cardgames.CardGameType;
-import cardgames.War;
+import cardgames.*;
 import cards.Card;
 import controller.ServerAccess;
 import controller.UpdateChecker;
@@ -37,14 +34,11 @@ public class Model {
 	
 	private ArrayList<ChatEntry> menuChat;
 	
-	private GameLobby[] warLobbies;
-	
 	public boolean isLoggedIn;
 
 	public Model() {
 		friendList = new ArrayList<Friend>();
 		menuChat = new ArrayList<ChatEntry>();
-		warLobbies = new GameLobby[4];
 		player = null;
 		isLoggedIn = false;
 		isInGame = false;
@@ -104,8 +98,6 @@ public class Model {
 			friendList = ServerAccess.getFriends(player);
 			menuChat = ServerAccess.getMenuChat();
 			
-			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.War));
-			
 			/*
 			 * Initialize thread that will periodically ask server for updates
 			 * to update model
@@ -157,23 +149,6 @@ public class Model {
 		GameLobbyRequest glr = new GameLobbyRequest(player, lobbyId, gameType);
 		ServerAccess.leaveLobby(glr);
 		return;
-	}
-	
-	public void setGameLobby(CardGameType gameType, GameLobby[] lobbies) {
-		if (gameType == CardGameType.War) {
-			warLobbies = lobbies;
-		} else if (gameType == CardGameType.TexasHoldEm) {
-			
-		}
-	}
-	
-	public GameLobby[] getGameLobby(CardGameType gameType) {
-		if (gameType == CardGameType.War) {
-			return warLobbies;
-		}
-		else {
-			return null;
-		}
 	}
 	
 	
