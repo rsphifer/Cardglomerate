@@ -115,7 +115,7 @@ public class ServerAccess {
 	*	Game lobby mgmt server calls.
 	*********************************************************/
 	public static boolean joinLobby(GameLobbyRequest glr) {
-		Request request = new Request("joinGameLobby", glr);
+		Request request = new Request("joinLobby", glr);
 		return (boolean)sendRequestWithResponse(request);
 	}
 	

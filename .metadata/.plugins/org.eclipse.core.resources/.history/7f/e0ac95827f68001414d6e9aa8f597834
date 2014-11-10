@@ -90,19 +90,13 @@ public class RequestHandler implements Runnable {
 					GameLobbyRequest glr = (GameLobbyRequest)request.getObject();
 					CardGameType gameType = glr.getCardGameType();
 					if (gameType == CardGameType.War) {
-						obj = warLobbies[glr.getLobbyId()].addPlayer(glr.getPlayer());
+						warLobbies[glr.getLobbyId()].addPlayer(glr.getPlayer());
 					}
-					
+					obj = true;
 					
 				} else if (action.equals("leaveGameLobby")) {
 					System.out.println("leave game lobby request");
 					GameLobbyRequest glr = (GameLobbyRequest)request.getObject();
-					
-					CardGameType gameType = glr.getCardGameType();
-					if (gameType == CardGameType.War) {
-						warLobbies[glr.getLobbyId()].removePlayer(glr.getPlayer());
-					}
-					obj = true;
 					
 				} else if (action.equals("login")) { /* Returns null if invalid..Player object if valid */
 				

@@ -81,20 +81,15 @@ public class WarOptions extends BasicGameState {
 					g.drawString("Open", x + 10, 520 + 25 * j);
 				}
 			}
-			//System.out.println(x-5);
+			System.out.println(x-5);
 
-			//g.draw(new Rectangle(x - 5, 580, 70, 30));
+			g.draw(new Rectangle(x - 5, 580, 70, 30));
 			if (lobbyJoined && lobbyNumberJoined == i) {
 				g.drawString("Leave", x + 7, 585);
 			} else {
 				g.drawString("Join", x + 10, 585);
 			}
 		}
-		
-		g.draw(lobbyOneJoin);
-		g.draw(lobbyTwoJoin);
-		g.draw(lobbyThreeJoin);
-		g.draw(lobbyFourJoin);
 
 		// render arrow
 		g.drawImage(arrow, 0, 570);
@@ -105,7 +100,7 @@ public class WarOptions extends BasicGameState {
 			throws SlickException {
 		// mouse coordinates
 		int xpos = Mouse.getX();
-		int ypos = gc.getHeight()-Mouse.getY();
+		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 
 		// back button clicked
@@ -120,41 +115,6 @@ public class WarOptions extends BasicGameState {
 			}
 		}
 		
-		Rectangle tmp = new Rectangle(xpos, ypos, 1, 1);
-		if (lobbyOneJoin.intersects(tmp) || lobbyOneJoin.includes(xpos,ypos)) {
-			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
-				Master.isMouseReleased = false;
-				model.joinGameLobby(CardGameType.War, 0);
-			}
-
-			if (!Mouse.isButtonDown(0)) {
-				Master.isMouseReleased = true;
-			}
-		} else if (lobbyTwoJoin.intersects(tmp) || lobbyTwoJoin.includes(xpos, ypos)) {
-			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
-				Master.isMouseReleased = false;
-			}
-
-			if (!Mouse.isButtonDown(0)) {
-				Master.isMouseReleased = true;
-			}
-		} else if (lobbyThreeJoin.intersects(tmp) || lobbyThreeJoin.includes(xpos, ypos)) {
-			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
-				Master.isMouseReleased = false;
-			}
-
-			if (!Mouse.isButtonDown(0)) {
-				Master.isMouseReleased = true;
-			}
-		} else if (lobbyFourJoin.intersects(tmp) || lobbyFourJoin.includes(xpos, ypos)) {
-			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
-				Master.isMouseReleased = false;
-			}
-
-			if (!Mouse.isButtonDown(0)) {
-				Master.isMouseReleased = true;
-			}
-		}
 		
 
 		// Play AI

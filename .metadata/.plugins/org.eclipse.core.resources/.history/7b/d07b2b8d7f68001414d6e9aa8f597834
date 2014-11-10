@@ -100,9 +100,8 @@ public class RequestHandler implements Runnable {
 					
 					CardGameType gameType = glr.getCardGameType();
 					if (gameType == CardGameType.War) {
-						warLobbies[glr.getLobbyId()].removePlayer(glr.getPlayer());
+						obj = warLobbies[glr.getLobbyId()].removePlayer(glr.getPlayer());
 					}
-					obj = true;
 					
 				} else if (action.equals("login")) { /* Returns null if invalid..Player object if valid */
 				

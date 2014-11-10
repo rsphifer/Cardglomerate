@@ -122,38 +122,13 @@ public class WarOptions extends BasicGameState {
 		
 		Rectangle tmp = new Rectangle(xpos, ypos, 1, 1);
 		if (lobbyOneJoin.intersects(tmp) || lobbyOneJoin.includes(xpos,ypos)) {
-			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
-				Master.isMouseReleased = false;
-				model.joinGameLobby(CardGameType.War, 0);
-			}
-
-			if (!Mouse.isButtonDown(0)) {
-				Master.isMouseReleased = true;
-			}
+			
 		} else if (lobbyTwoJoin.intersects(tmp) || lobbyTwoJoin.includes(xpos, ypos)) {
-			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
-				Master.isMouseReleased = false;
-			}
-
-			if (!Mouse.isButtonDown(0)) {
-				Master.isMouseReleased = true;
-			}
+			
 		} else if (lobbyThreeJoin.intersects(tmp) || lobbyThreeJoin.includes(xpos, ypos)) {
-			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
-				Master.isMouseReleased = false;
-			}
-
-			if (!Mouse.isButtonDown(0)) {
-				Master.isMouseReleased = true;
-			}
+			
 		} else if (lobbyFourJoin.intersects(tmp) || lobbyFourJoin.includes(xpos, ypos)) {
-			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
-				Master.isMouseReleased = false;
-			}
-
-			if (!Mouse.isButtonDown(0)) {
-				Master.isMouseReleased = true;
-			}
+			
 		}
 		
 
