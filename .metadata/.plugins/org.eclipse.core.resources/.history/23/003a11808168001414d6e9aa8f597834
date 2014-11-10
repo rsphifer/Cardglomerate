@@ -169,13 +169,7 @@ public class Model {
 	
 	public void leaveGameLobby(CardGameType gameType, int lobbyId) {
 		GameLobbyRequest glr = new GameLobbyRequest(player, lobbyId, gameType);
-		isInLobby = false;
-		setCurrentLobby(null, -1);
 		ServerAccess.leaveLobby(glr);
-		
-		if (gameType == CardGameType.War) {
-			warLobbies = ServerAccess.getGameLobbyList(glr);
-		}
 		
 		return;
 	}
@@ -197,13 +191,9 @@ public class Model {
 		}
 	}
 	
-	private void setCurrentLobby(CardGameType gameType, int lobbyNumber) {
+	public void setCurrentLobby(CardGameType gameType, int lobbyNumber) {
 		currentLobbyNumber = lobbyNumber;
 		currentLobbyType = gameType;
-	}
-	
-	public int getCurrentLobbyNumber() {
-		return currentLobbyNumber;
 	}
 	
 	

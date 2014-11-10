@@ -81,9 +81,10 @@ public class WarOptions extends BasicGameState {
 					g.drawString("Open", x + 10, 520 + 25 * j);
 				}
 			}
-			
-			
-			if (model.isInLobby && model.getCurrentLobbyNumber() == i) {
+			//System.out.println(x-5);
+
+			//g.draw(new Rectangle(x - 5, 580, 70, 30));
+			if (lobbyJoined && lobbyNumberJoined == i) {
 				g.drawString("Leave", x + 7, 585);
 			} else {
 				g.drawString("Join", x + 10, 585);
@@ -104,7 +105,7 @@ public class WarOptions extends BasicGameState {
 			throws SlickException {
 		// mouse coordinates
 		int xpos = Mouse.getX();
-		int ypos = Mouse.getY();
+		int ypos = gc.getHeight()-Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 
 		// back button clicked
@@ -119,44 +120,35 @@ public class WarOptions extends BasicGameState {
 			}
 		}
 		
-		int actualYPos = gc.getHeight()-ypos;
-		Rectangle tmp = new Rectangle(xpos, actualYPos, 1, 1);
-		if (lobbyOneJoin.intersects(tmp) || lobbyOneJoin.includes(xpos,actualYPos)) {
+		Rectangle tmp = new Rectangle(xpos, ypos, 1, 1);
+		if (lobbyOneJoin.intersects(tmp) || lobbyOneJoin.includes(xpos,ypos)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				
-				if (!model.isInLobby) {
-					model.joinGameLobby(CardGameType.War, 0);
-				} else if (model.getCurrentLobbyNumber() == 0) {
-					model.leaveGameLobby(CardGameType.War, 0);
-				}
+				model.joinGameLobby(CardGameType.War, 0);
 			}
 
 			if (!Mouse.isButtonDown(0)) {
 				Master.isMouseReleased = true;
 			}
-		} else if (lobbyTwoJoin.intersects(tmp) || lobbyTwoJoin.includes(xpos, actualYPos)) {
+		} else if (lobbyTwoJoin.intersects(tmp) || lobbyTwoJoin.includes(xpos, ypos)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				model.joinGameLobby(CardGameType.War, 1);
 			}
 
 			if (!Mouse.isButtonDown(0)) {
 				Master.isMouseReleased = true;
 			}
-		} else if (lobbyThreeJoin.intersects(tmp) || lobbyThreeJoin.includes(xpos,actualYPos)) {
+		} else if (lobbyThreeJoin.intersects(tmp) || lobbyThreeJoin.includes(xpos, ypos)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				model.joinGameLobby(CardGameType.War, 2);
 			}
 
 			if (!Mouse.isButtonDown(0)) {
 				Master.isMouseReleased = true;
 			}
-		} else if (lobbyFourJoin.intersects(tmp) || lobbyFourJoin.includes(xpos,actualYPos)) {
+		} else if (lobbyFourJoin.intersects(tmp) || lobbyFourJoin.includes(xpos, ypos)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				model.joinGameLobby(CardGameType.War, 3);
 			}
 
 			if (!Mouse.isButtonDown(0)) {

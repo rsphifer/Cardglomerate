@@ -124,12 +124,7 @@ public class WarOptions extends BasicGameState {
 		if (lobbyOneJoin.intersects(tmp) || lobbyOneJoin.includes(xpos,actualYPos)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				
-				if (!model.isInLobby) {
-					model.joinGameLobby(CardGameType.War, 0);
-				} else if (model.getCurrentLobbyNumber() == 0) {
-					model.leaveGameLobby(CardGameType.War, 0);
-				}
+				model.joinGameLobby(CardGameType.War, 0);
 			}
 
 			if (!Mouse.isButtonDown(0)) {

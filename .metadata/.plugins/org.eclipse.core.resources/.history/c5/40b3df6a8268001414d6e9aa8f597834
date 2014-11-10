@@ -120,7 +120,7 @@ public class ServerAccess {
 	}
 	
 	public static boolean leaveLobby(GameLobbyRequest glr) {
-		Request request = new Request("leaveGameLobby", glr);
+		Request request = new Request("leaveLobby", glr);
 		return (boolean)sendRequestWithResponse(request);
 	}
 	

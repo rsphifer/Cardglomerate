@@ -81,9 +81,10 @@ public class WarOptions extends BasicGameState {
 					g.drawString("Open", x + 10, 520 + 25 * j);
 				}
 			}
-			
-			
-			if (model.isInLobby && model.getCurrentLobbyNumber() == i) {
+			//System.out.println(x-5);
+
+			//g.draw(new Rectangle(x - 5, 580, 70, 30));
+			if (lobbyJoined && lobbyNumberJoined == i) {
 				g.drawString("Leave", x + 7, 585);
 			} else {
 				g.drawString("Join", x + 10, 585);
@@ -124,12 +125,7 @@ public class WarOptions extends BasicGameState {
 		if (lobbyOneJoin.intersects(tmp) || lobbyOneJoin.includes(xpos,actualYPos)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				
-				if (!model.isInLobby) {
-					model.joinGameLobby(CardGameType.War, 0);
-				} else if (model.getCurrentLobbyNumber() == 0) {
-					model.leaveGameLobby(CardGameType.War, 0);
-				}
+				model.joinGameLobby(CardGameType.War, 0);
 			}
 
 			if (!Mouse.isButtonDown(0)) {
