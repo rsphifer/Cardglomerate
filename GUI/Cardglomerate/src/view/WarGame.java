@@ -83,10 +83,7 @@ public class WarGame extends BasicGameState {
 		if (gameOver) {
 			g.drawString(winner + " Won the Game!", 700, 300);
 			g.drawImage(arrow, 0, 570);
-		}
-		
-
-		
+		}		
 		
 	}
 	

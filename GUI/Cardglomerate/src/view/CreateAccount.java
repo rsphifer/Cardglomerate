@@ -24,6 +24,7 @@ public class CreateAccount extends BasicGameState {
 	private String email;
 	private Image background;
 	private Image logo;
+	private Image arrow;
 	private TextField usernameField;
 	private PasswordTextField password1Field;
 	private PasswordTextField password2Field;
@@ -53,6 +54,9 @@ public class CreateAccount extends BasicGameState {
 		logo = new Image("res/Cardglomerate 2.png");
 		logo = logo.getScaledCopy(491, 369);
 		
+		// back arrow
+		arrow = new Image("res/Back Arrow.jpg");
+		arrow = arrow.getScaledCopy(150, 150);
 		
 		
 		//initialize textfields
@@ -77,6 +81,9 @@ public class CreateAccount extends BasicGameState {
 		
 		//render logo
 		logo.draw(394,0);
+		
+		//render arrow
+		g.drawImage(arrow, 0, 570);		
 		
 		//render text
 		g.drawString("Username", 600, 400);
@@ -304,6 +311,18 @@ public class CreateAccount extends BasicGameState {
 				
 			}
 			createAccoutnButtonPressed = false;
+			
+			if (!Mouse.isButtonDown(0)){
+				Master.isMouseReleased = true;
+			}
+		}
+		
+		//back button clicked
+		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150)) {
+			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+				sbg.enterState(0); //display game menu screen
+			}
 			
 			if (!Mouse.isButtonDown(0)){
 				Master.isMouseReleased = true;

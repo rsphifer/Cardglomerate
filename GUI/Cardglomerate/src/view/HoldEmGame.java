@@ -27,7 +27,6 @@ public class HoldEmGame extends BasicGameState {
 	private Image arrow;
 	private Image money;
 	private Image cardBack;
-	private boolean gameOver = false;
 	private TextField betField;
 	private boolean betError = false;
 	private String betString;
@@ -35,13 +34,12 @@ public class HoldEmGame extends BasicGameState {
 	private String handWinners = "";
 	private boolean handOver = false;
 	private boolean displayOthers = false;
-	private Player currentPlayer;
 
 	// misc player variables
-	private String p1Name = "Mooselord";
-	private String p2Name = "Billy Bob";
-	private String p3Name = "Raoul";
-	private String p4Name = "Rngesus";
+	private String p1Name;
+	private String p2Name;
+	private String p3Name;
+	private String p4Name;
 	private int playerBalance = 5000;
 	private int potSize = 0;
 	private int callSize = 0;
@@ -164,15 +162,39 @@ public class HoldEmGame extends BasicGameState {
 			}
 		}
 
+		if(isYourTurn) {
+			g.drawString("It is your turn make an action.", 530, 470);
+			if (!isYourTurn) {
+				g.clear();
+			}
+		}
+		
+		if (!isYourTurn) {
+			g.drawString("Other players turn please wait", 530, 470);
+			if(isYourTurn) {
+				g.clear();
+			}
+		}
+		
 		if (handOver) {
 			for (Player p : handWinnersAL) {
 				handWinners += p.userName;
 				handWinners += " ";
 			}
+			if (displayOthers) {
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					
+					e.printStackTrace();
+				}
+				newHand();
+			}
 			g.drawString("Hand Winner(s): " + handWinners, 530, 450);
 			if (!handOver) {
 				g.clear();
 			}
+			displayOthers = true;
 		}
 
 	}
@@ -207,9 +229,7 @@ public class HoldEmGame extends BasicGameState {
 			if ((xpos > 850 && xpos < 1000) && (ypos > 45 && ypos < 95)) {
 				if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 					Master.isMouseReleased = false;
-					// code here
 					betString = betField.getText();
-					
 					if (betString.length() > 0 && isNumeric(betString)) {
 						betSize = Integer.parseInt(betString);
 						if(betSize > playerBalance || betSize < callSize){
@@ -235,6 +255,7 @@ public class HoldEmGame extends BasicGameState {
 				if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 					Master.isMouseReleased = false;
 					// code here
+					model.getCurrentGame().fold(model.getPlayer());
 					System.out.println("Fold");
 				}
 
@@ -249,7 +270,7 @@ public class HoldEmGame extends BasicGameState {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				// player left game, code to handle that
-
+				model.getCurrentGame().quitGame(model.getPlayer());
 				sbg.enterState(7);
 			}
 
@@ -258,11 +279,19 @@ public class HoldEmGame extends BasicGameState {
 			}
 		}
 		
+		//update game functions
+		updatePlayers();
+		updateTableCards();
+		updateCall();
+		updateTurn();
+		handOver();
+		updatePot();
 		model.updateGame();
 	}
 
 	private void updatePlayers() {
 		int i = 0;
+		p1Name = "No Player";p2Name = "No Player"; p3Name = "No Player";p4Name = "No Player";
 		for (Player p : model.getCurrentGame().getPlayers()) {
 			if (p.userName == model.getPlayer().userName) {
 				p1C1 = getCardImage(p.getHand().get(0));
@@ -304,7 +333,7 @@ public class HoldEmGame extends BasicGameState {
 		}
 	}
 
-	private void updatePot(int bet) {
+	private void updatePot() {
 		potSize = model.getCurrentGame().getPot();
 	}
 
@@ -361,6 +390,10 @@ public class HoldEmGame extends BasicGameState {
 		t3 = GameMenu.deckImage;
 		t4 = GameMenu.deckImage;
 		t5 = GameMenu.deckImage;
+		
+		//handover
+		handOver = false;
+		displayOthers = false;
 	}
 	
 	private void updateTurn() {
@@ -371,6 +404,12 @@ public class HoldEmGame extends BasicGameState {
 		}
 		else {
 			isYourTurn = false;
+		}
+	}
+	
+	private void handOver() {
+		if (model.getCurrentGame().isHandOver()) {
+			handOver = true;
 		}
 	}
 

@@ -48,6 +48,7 @@ public class GameMenu extends BasicGameState {
 	private String temp;
 	ArrayList<ChatEntry> menuChat;
 	private boolean chatError = false;
+	private int userNameLength;
 	
 	// card images for game GUI
 	public static Image[] clubs;
@@ -191,8 +192,8 @@ public class GameMenu extends BasicGameState {
 		menuChat = model.getMenuChat();
 		for (int i = 0; i < menuChat.size(); i++) {
 			ChatEntry currMessage = menuChat.get(i);
-			g.drawString(currMessage.getUsername() + ": ", curChatx, curChaty);
-			g.drawString(currMessage.getMessage(), curChatx+90, curChaty);
+			g.drawString(currMessage.getUsername() + ": " + currMessage.getMessage(), curChatx, curChaty);
+			//g.drawString(currMessage.getMessage(), curChatx+90, curChaty);
 			curChaty += 20;
 			
 		}
@@ -278,21 +279,22 @@ public class GameMenu extends BasicGameState {
 		}
 		
 		//send chat message button clicked
+		userNameLength = model.getPlayer().userName.length();
 		if((xpos>260 && xpos<380) && (ypos>10 && ypos<40)) {
 			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				if (chatField.getText().length() > 1) {
 					//code to send chat message to server goes here
 					newMessage = chatField.getText();
-					if (newMessage.length() <= 48) {
+					if ((newMessage.length() + userNameLength) <= 37) {
 						model.addChatEntry(newMessage);
 						chatError = false;
 					}
-					else if (newMessage.length() <=96) {
+					else if ((newMessage.length() + userNameLength) <= 75) {
 						//split message in two and send both
-						temp = newMessage.substring(0, 47);
+						temp = newMessage.substring(0, (37 - userNameLength));
 						model.addChatEntry(temp);
-						temp = newMessage.substring(48);
+						temp = newMessage.substring(37 - userNameLength);
 						model.addChatEntry(temp);
 						chatError = false;
 					}
