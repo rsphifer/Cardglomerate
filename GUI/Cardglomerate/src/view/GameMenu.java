@@ -11,6 +11,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.gui.TextField;
@@ -214,6 +215,13 @@ public class GameMenu extends BasicGameState {
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 		
+		//enter functionality
+		Input in = gc.getInput();
+		boolean enterHit = false;
+		if (in.isKeyPressed(Input.KEY_ENTER)) {
+			enterHit = true;
+		}
+		
 		//textfield crap
 		if (friendSelected) {
 			friendField.setFocus(true);
@@ -241,8 +249,8 @@ public class GameMenu extends BasicGameState {
 		
 		
 		//add friend button clicked
-		if((xpos>965 && xpos<1065) && (ypos>50 && ypos<85)) {
-			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+		if(((xpos>965 && xpos<1065) && (ypos>50 && ypos<85)) || (enterHit && friendSelected)) {
+			if((Mouse.isButtonDown(0) && Master.isMouseReleased) || (enterHit && friendSelected)) {
 				Master.isMouseReleased = false;
 				if (friendField.getText().length() > 1) {
 					//code to add friend goes here
@@ -278,10 +286,11 @@ public class GameMenu extends BasicGameState {
 			}
 		}
 		
+		
 		//send chat message button clicked
 		userNameLength = model.getPlayer().userName.length();
-		if((xpos>260 && xpos<380) && (ypos>10 && ypos<40)) {
-			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+		if(((xpos>260 && xpos<380) && (ypos>10 && ypos<40)) || (enterHit && chatSelected)) {
+			if((Mouse.isButtonDown(0) && Master.isMouseReleased) || (enterHit && chatSelected)) {
 				Master.isMouseReleased = false;
 				if (chatField.getText().length() > 1) {
 					//code to send chat message to server goes here
