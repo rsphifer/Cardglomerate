@@ -57,12 +57,8 @@ public class CreateAccount extends BasicGameState {
 		
 		//initialize textfields
 		usernameField = new TextField(gc, gc.getDefaultFont(), 535, 425, 200, 30);
-		password1Field = new PasswordTextField(gc, gc.getDefaultFont(), 535, 490, 200, 30);
-		password1Field.setMaskCharacter('*');
-		password1Field.setMaskEnabled(true);
-		password2Field = new PasswordTextField(gc, gc.getDefaultFont(), 535, 555, 200, 30);
-		password2Field.setMaskCharacter('*');
-		password2Field.setMaskEnabled(true);
+		password1Field = new TextField(gc, gc.getDefaultFont(), 535, 490, 200, 30);
+		password2Field = new TextField(gc, gc.getDefaultFont(), 535, 555, 200, 30);
 		emailField = new TextField(gc, gc.getDefaultFont(), 535, 620, 200, 30);
 		
 		

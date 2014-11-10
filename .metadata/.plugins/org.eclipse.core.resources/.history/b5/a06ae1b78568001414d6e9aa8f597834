@@ -140,7 +140,7 @@ public class Model {
 
 	public boolean requestPassword(String username, String emailAddress) {
 		return ServerAccess.retrievePassword(new NewPlayerRequest(username,
-				"pass", emailAddress));
+				null, emailAddress));
 	}
 
 	public boolean setNewPassword(String oldPassword, String newPassword) {

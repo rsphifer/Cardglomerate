@@ -12,7 +12,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import player.Player;
 import cardgames.CardGameType;
 
 public class WarOptions extends BasicGameState {
@@ -78,14 +77,8 @@ public class WarOptions extends BasicGameState {
 			for (int j = 0; j < 2; j++) {
 				if (lobbies[i].getPlayers().size() > j) {
 					/* Player is present at j'th index */
-					Player curr = lobbies[i].getPlayers().get(j);
-					if (curr.userName.equals(lobbies[i].getHost().userName)) {
-						g.drawString(curr.userName+"(Host)",
-								x + 10, 520 + 25 * j);
-					} else {
-						g.drawString(curr.userName,
-								x + 10, 520 + 25 * j);
-					}
+					g.drawString(lobbies[i].getPlayers().get(j).userName,
+							x + 10, 520 + 25 * j);
 				} else {
 					g.drawString("Open", x + 10, 520 + 25 * j);
 				}

@@ -78,12 +78,11 @@ public class WarOptions extends BasicGameState {
 			for (int j = 0; j < 2; j++) {
 				if (lobbies[i].getPlayers().size() > j) {
 					/* Player is present at j'th index */
-					Player curr = lobbies[i].getPlayers().get(j);
+					Player curr = lobbies[i].getPlayers().get(j).userName;
 					if (curr.userName.equals(lobbies[i].getHost().userName)) {
-						g.drawString(curr.userName+"(Host)",
-								x + 10, 520 + 25 * j);
+
 					} else {
-						g.drawString(curr.userName,
+						g.drawString(curr,
 								x + 10, 520 + 25 * j);
 					}
 				} else {

@@ -129,9 +129,6 @@ public class Model {
 	}
 
 	public boolean logout() {
-		if(isInLobby) {
-			leaveGameLobby(currentLobbyType, currentLobbyNumber);
-		}
 		boolean isSuccess = ServerAccess.logoutRequest(player);
 		if (isSuccess)
 			isLoggedIn = false;
@@ -140,7 +137,7 @@ public class Model {
 
 	public boolean requestPassword(String username, String emailAddress) {
 		return ServerAccess.retrievePassword(new NewPlayerRequest(username,
-				"pass", emailAddress));
+				null, emailAddress));
 	}
 
 	public boolean setNewPassword(String oldPassword, String newPassword) {
@@ -207,10 +204,6 @@ public class Model {
 	
 	public int getCurrentLobbyNumber() {
 		return currentLobbyNumber;
-	}
-	
-	public CardGameType getCurrentLobbyType() {
-		return currentLobbyType;
 	}
 	
 	
