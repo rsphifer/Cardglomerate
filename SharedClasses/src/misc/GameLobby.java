@@ -10,7 +10,9 @@ public class GameLobby implements Serializable {
 
 	private int minPlayers, maxPlayers, lobbyId;
 	private ArrayList<Player> players;
+	
 	public boolean isStarted;
+	private int gameId;
 	
 	private Player lobbyHost;
 	
@@ -78,6 +80,14 @@ public class GameLobby implements Serializable {
 			lobbyHost = newHost;
 		}
 		return;
+	}
+	
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
+	
+	public int getGameId() {
+		return gameId;
 	}
 	
 	public int getLobbyId() {

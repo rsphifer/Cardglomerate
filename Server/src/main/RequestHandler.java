@@ -17,6 +17,7 @@ import player.Player;
 import player.SetPasswordRequest;
 import cardgames.CardGame;
 import cardgames.CardGameType;
+import cardgames.War;
 
 public class RequestHandler implements Runnable {
 
@@ -104,7 +105,27 @@ public class RequestHandler implements Runnable {
 					}
 					obj = true;
 					
+				} else if (action.equals("startGameFromLobby")) { 
+					System.out.println("start game from lobby request");
+					GameLobbyRequest glr = (GameLobbyRequest)request.getObject();
+					int lobbyId = glr.getLobbyId();
+					
+					CardGameType gameType = glr.getCardGameType();
+					if (gameType == CardGameType.War) {
+						int tmpGameId = gameTable.addNewGame(new War(warLobbies[lobbyId].getPlayers()));
+						if (tmpGameId > -1) {
+							/* Game created */
+							warLobbies[lobbyId].setGameId(tmpGameId);
+							warLobbies[lobbyId].isStarted = true;
+							obj = true;
+						} else {
+							/* Game creation failed */
+							obj = false;
+						}
+					}
+					
 				} else if (action.equals("login")) { /* Returns null if invalid..Player object if valid */
+				
 				
 				
 					System.out.println("login request");

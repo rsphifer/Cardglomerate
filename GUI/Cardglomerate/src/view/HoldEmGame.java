@@ -270,7 +270,7 @@ public class HoldEmGame extends BasicGameState {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				// player left game, code to handle that
-				model.getCurrentGame().quitGame(model.getPlayer());
+				//model.getCurrentGame().quitGame(model.getPlayer());
 				sbg.enterState(7);
 			}
 
@@ -408,9 +408,9 @@ public class HoldEmGame extends BasicGameState {
 	}
 	
 	private void handOver() {
-		if (model.getCurrentGame().isHandOver()) {
-			handOver = true;
-		}
+//		if (model.getCurrentGame().isHandOver()) {
+//			handOver = true;
+//		}
 	}
 
 	public int getID() {
