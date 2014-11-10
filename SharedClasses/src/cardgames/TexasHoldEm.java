@@ -21,6 +21,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	private Player whoseTurn;
 	public boolean readyToUpdate;
 	private int playersGone = 0;
+	private boolean handOver = false;
 	
 	public TexasHoldEm() {
 		
@@ -143,11 +144,13 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	}
 	
 	public void update(){
+		System.out.println(turn);
 		//int playersGone = 0;
 		readyToUpdate = false;
 
 		switch(this.turn){
 			case 0: //ante
+				handOver = false;
 				for(Player p : players){
 					p.bet(50);
 				}
@@ -208,6 +211,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 			for(Player p : winners){
 				p.addMoney(winnings/winners.size());
 			}
+			handOver = true;
 		}
 		
 		if(turn == 3 || turn == 5 || turn == 7){
@@ -278,6 +282,10 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	
 	public int getExpectedBet(){
 		return expectedBet;
+	}
+	
+	public boolean isHandOver(){
+		return this.handOver;
 	}
 	
 	public void quitGame(Player p) {
