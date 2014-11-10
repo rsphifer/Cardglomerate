@@ -2,10 +2,10 @@ package controller;
 
 import javax.swing.JOptionPane;
 
-import misc.GameLobby;
+import cardgames.CardGameType;
+import misc.ChatEntry;
 import misc.GameLobbyRequest;
 import model.Model;
-import cardgames.CardGameType;
 
 public class UpdateChecker implements Runnable {
 	private final int MILLIS_BETWEEN_UPDATES = 5000;
@@ -38,13 +38,7 @@ public class UpdateChecker implements Runnable {
 			model.setMenuChat(ServerAccess.getMenuChat());
 			
 			/* Update game lobbies*/
-			GameLobby[] tmp = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.War));
-			if (tmp == null) {
-				System.out.println("?");
-			} else if (tmp[0] == null) {
-				System.out.println("??");
-			}
-			model.setGameLobby(CardGameType.War, tmp);
+			model.setGameLobby(CardGameType.War, ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.War)));
 			
 //			for (ChatEntry c : model.getMenuChat()) {
 //				System.out.printf("%s: %s\n", c.getUsername(), c.getMessage());

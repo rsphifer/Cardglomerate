@@ -25,10 +25,10 @@ public class Server {
 		
 		warLobbies = new GameLobby[MAX_LOBBIES];
 		
-		for (int i=0; i < MAX_LOBBIES; i++) {
-			warLobbies[i] = new GameLobby(2, 2, i);
+		int ind = 0;
+		for (GameLobby gl : warLobbies) {
+			gl = new GameLobby(2, 2, ind++);
 		}
-		
 	}
 	
 	public void start() {

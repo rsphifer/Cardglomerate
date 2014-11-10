@@ -39,11 +39,6 @@ public class UpdateChecker implements Runnable {
 			
 			/* Update game lobbies*/
 			GameLobby[] tmp = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.War));
-			if (tmp == null) {
-				System.out.println("?");
-			} else if (tmp[0] == null) {
-				System.out.println("??");
-			}
 			model.setGameLobby(CardGameType.War, tmp);
 			
 //			for (ChatEntry c : model.getMenuChat()) {
