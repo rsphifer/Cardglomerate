@@ -103,15 +103,15 @@ public class WarGame extends BasicGameState {
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 
 		// update curCards and sizes
-		//updateCards();
+		updateCards();
 
 		// update gameover
-		//gameOver = model.getGameOver();
+		gameOver = model.getGameOver();
 
 		// check gameOver
-		//if (gameOver) {
-		//	winner = model.getGameWinner();
-		//}
+		if (gameOver) {
+			winner = model.getGameWinner();
+		}
 
 		War game = (War) model.getCurrentGame();
 		if (game.isMultiplayer && game.getClickCounter() == 0 && hasClicked) {

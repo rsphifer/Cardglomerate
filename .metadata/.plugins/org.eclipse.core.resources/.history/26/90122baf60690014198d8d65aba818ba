@@ -195,10 +195,6 @@ public class Model {
 		return gameId;
 	}
 	
-	public void setCurrentGame(CardGame game) {
-		this.currentGame = game;
-	}
-	
 	public CardGame getCurrentGame() {
 		return currentGame;
 	}

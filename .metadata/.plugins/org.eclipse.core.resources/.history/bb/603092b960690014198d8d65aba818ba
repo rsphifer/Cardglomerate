@@ -31,10 +31,6 @@ public class UpdateChecker implements Runnable {
 			/* Update model with newest game, chat, and friend states */
 			System.out.println("Ask server for updates.");
 			
-			if (model.isInGame) {
-				model.setCurrentGame(ServerAccess.getCardGame(model.getGameId()));
-			}
-			
 			/* Update friends list */
 			model.setFriendList(ServerAccess.getFriends(model.getPlayer()));
 			

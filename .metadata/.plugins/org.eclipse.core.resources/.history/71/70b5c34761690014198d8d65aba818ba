@@ -149,7 +149,6 @@ public class War extends CardGame implements Serializable {
 	
 	public synchronized void incrementClickCounter() {
 		clickCounter++;
-		update();
 	}
 	
 	public int getClickCounter() {
