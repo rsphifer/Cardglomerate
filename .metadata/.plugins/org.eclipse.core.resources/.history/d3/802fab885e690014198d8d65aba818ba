@@ -80,13 +80,7 @@ public class WarGame extends BasicGameState {
 		// draw current cards
 		curCard2.draw(600, 200);
 		curCard1.draw(600, 325);
-		if (hasClicked) {
-			g.drawString("player clicked", 725, 650);
-		}
-		
-		if (((War)model.getCurrentGame()).getClickCounter() == 1 && !hasClicked) {
-			g.drawString("opponent clicked",725, 300);
-		}
+
 		// gameover print
 		if (gameOver) {
 			g.drawString(winner + " Won the Game!", 700, 300);
@@ -120,13 +114,8 @@ public class WarGame extends BasicGameState {
 
 		// deck clicked
 		if ((xpos > 650 && xpos < 725) && (ypos > 70 && ypos < 165)) {
-			if (game.isMultiplayer && !hasClicked) {
-				if (Mouse.isButtonDown(0) && Master.isMouseReleased
-						&& !gameOver) {
-					Master.isMouseReleased = false;
-					hasClicked = true;
-					model.updateWarCounter();
-				}
+			if (game.isMultiplayer) {
+
 			} else {
 				if (Mouse.isButtonDown(0) && Master.isMouseReleased
 						&& !gameOver) {
