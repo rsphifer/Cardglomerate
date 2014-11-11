@@ -45,7 +45,6 @@ public class Model {
 	private ArrayList<ChatEntry> menuChat;
 
 	/* Updated regularly by update checker */
-	private GameLobby[] texasHoldemLobbies;
 	private GameLobby[] warLobbies;
 
 	public boolean isInLobby;
@@ -57,10 +56,8 @@ public class Model {
 	public Model() {
 		friendList = new ArrayList<Friend>();
 		menuChat = new ArrayList<ChatEntry>();
-		
 		warLobbies = new GameLobby[4];
-		texasHoldemLobbies = new GameLobby[4];
-		
+
 		isInLobby = false;
 		currentLobbyType = null;
 		currentLobbyNumber = -1;
@@ -133,7 +130,6 @@ public class Model {
 
 			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
 					null, 0, CardGameType.War));
-			texasHoldemLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
 
 			/*
 			 * Initialize thread that will periodically ask server for updates
@@ -218,13 +214,6 @@ public class Model {
 				ServerAccess.joinLobby(glr);
 				warLobbies = ServerAccess.getGameLobbyList(glr);
 			}
-		} else if (gameType == CardGameType.TexasHoldEm) {
-			if (texasHoldemLobbies[lobbyId].getPlayers().size()<4) {
-				isInLobby = true;
-				setCurrentLobby(gameType, lobbyId);
-				ServerAccess.joinLobby(glr);
-				texasHoldemLobbies = ServerAccess.getGameLobbyList(glr);
-			}
 		}
 		return;
 	}
@@ -237,8 +226,6 @@ public class Model {
 
 		if (gameType == CardGameType.War) {
 			warLobbies = ServerAccess.getGameLobbyList(glr);
-		} else if (gameType == CardGameType.TexasHoldEm) {
-			texasHoldemLobbies = ServerAccess.getGameLobbyList(glr);
 		}
 
 		return;
@@ -248,31 +235,24 @@ public class Model {
 		if (gameType == CardGameType.War) {
 			warLobbies = lobbies;
 		} else if (gameType == CardGameType.TexasHoldEm) {
-			texasHoldemLobbies = lobbies;
+
 		}
 	}
 
 	public GameLobby[] getGameLobby(CardGameType gameType) {
 		if (gameType == CardGameType.War) {
 			return warLobbies;
-		} else if (gameType == CardGameType.TexasHoldEm) {
-			return texasHoldemLobbies;
 		} else {
 			return null;
 		}
 	}
 
 	public void startGameFromLobby() {
-		GameLobbyRequest glr = null;
 		if (currentLobbyType == CardGameType.War) {
-			glr = new GameLobbyRequest(player,
+			GameLobbyRequest glr = new GameLobbyRequest(player,
 					currentLobbyNumber, CardGameType.War);
-		} else if (currentLobbyType == CardGameType.TexasHoldEm) {
-			glr = new GameLobbyRequest(player,
-					currentLobbyNumber, CardGameType.TexasHoldEm);
-			
+			ServerAccess.startGameFromLobby(glr);
 		}
-		ServerAccess.startGameFromLobby(glr);
 	}
 
 	private void setCurrentLobby(CardGameType gameType, int lobbyNumber) {
