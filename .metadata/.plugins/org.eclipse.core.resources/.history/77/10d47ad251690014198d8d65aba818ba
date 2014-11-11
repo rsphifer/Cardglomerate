@@ -124,7 +124,8 @@ public class WarOptions extends BasicGameState {
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 
-		/* Check if player is in a lobby and if lobby has been started. */
+		/* Check if player is in a lobby and that lobby has been started. */
+		//GameLobby[] lobbies = model.getGameLobby(CardGameType.War);
 		if (model.isInLobby && model.getGameLobby(CardGameType.War)[model.getCurrentLobbyNumber()].isStarted) {
 			if (model.enterGameFromLobby(model.getGameLobby(CardGameType.War)[model.getCurrentLobbyNumber()].getGameId())) {
 				sbg.enterState(5);

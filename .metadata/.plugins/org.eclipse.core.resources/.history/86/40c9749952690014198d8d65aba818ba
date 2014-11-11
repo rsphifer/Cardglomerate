@@ -65,10 +65,6 @@ public class GameLobby implements Serializable {
 				players.remove(i);
 			}
 		}
-		if (players.isEmpty()) {
-			isStarted = false;
-			gameId = -1;
-		}
 		return;
 		
 	}

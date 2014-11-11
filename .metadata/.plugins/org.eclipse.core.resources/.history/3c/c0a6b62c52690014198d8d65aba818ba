@@ -32,7 +32,6 @@ public class Model {
 	public boolean isInGame;
 	
 	private int gameId;
-	private CardGameType gameType;
 
 	/* Updated regularly by update checker */
 	private CardGame currentGame;
@@ -171,8 +170,6 @@ public class Model {
 		if (currentGame != null) {
 			setGameId(gameId);
 			isInGame = true;
-			gameType = currentLobbyType;
-			leaveGameLobby(currentLobbyType, currentLobbyNumber);
 			return true;
 		} 
 		return false;

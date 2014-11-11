@@ -166,13 +166,12 @@ public class Model {
 	*	Game mgmt model calls.
 	*********************************************************/
 	
-	public boolean enterGameFromLobby(int gameId) {
+	public boolean enterGameFromLobby(int gameId, CardGameType gameType) {
 		currentGame = ServerAccess.getCardGame(gameId);
 		if (currentGame != null) {
 			setGameId(gameId);
 			isInGame = true;
-			gameType = currentLobbyType;
-			leaveGameLobby(currentLobbyType, currentLobbyNumber);
+			leaveGameLobby(CardGame, lobbyId);
 			return true;
 		} 
 		return false;
