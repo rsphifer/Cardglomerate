@@ -59,7 +59,7 @@ public class GameTable {
 	}
 	
 	
-	public void updateGame(int gameId, CardGame game) {
+	public synchronized void updateGame(int gameId, CardGame game) {
 		games[gameId].setCardGame(game);
 	}
 	

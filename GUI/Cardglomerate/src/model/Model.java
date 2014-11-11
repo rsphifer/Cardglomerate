@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import misc.ChatEntry;
 import misc.GameLobby;
 import misc.GameLobbyRequest;
+import misc.UpdateGameRequest;
 import player.Friend;
 import player.NewFriendRequest;
 import player.NewPlayerRequest;
@@ -73,7 +74,7 @@ public class Model {
 		gameId = ServerAccess.createNewGame(currentGame);
 		if (gameId != -1) {
 			isInGame = true;
-			currentGame.testSetup();
+			//currentGame.testSetup();
 			return true;
 		}
 		return false;
@@ -100,8 +101,16 @@ public class Model {
 	public LinkedList<Card> getCardsToDisplay() {
 		return currentGame.getCardsToDisplay();
 	}
+	
+	public void updateWarCounter() {
+		ServerAccess.incrementWarCounter(new UpdateGameRequest(gameId, null));
+		currentGame = ServerAccess.getCardGame(gameId);
+	}
 
 
+	/*********************************************************
+	*	Account mgmt model calls.
+	*********************************************************/
 
 	public boolean createAccountRequest(String username, String password,
 			String email) {

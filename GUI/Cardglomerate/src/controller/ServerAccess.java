@@ -9,6 +9,7 @@ import misc.ChatEntry;
 import misc.GameLobby;
 import misc.GameLobbyRequest;
 import misc.Request;
+import misc.UpdateGameRequest;
 import player.Friend;
 import player.NewFriendRequest;
 import player.NewPlayerRequest;
@@ -55,6 +56,15 @@ public class ServerAccess {
 		}
 		
 		return null;
+	}
+	
+	/*********************************************************
+	*	War specific server calls.
+	*********************************************************/
+	
+	public static boolean incrementWarCounter(UpdateGameRequest ugr) {
+		Request request = new Request("incrementWarCounter", ugr);
+		return (boolean)sendRequestWithResponse(request);
 	}
 	
 	/*********************************************************

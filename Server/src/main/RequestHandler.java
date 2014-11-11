@@ -124,6 +124,14 @@ public class RequestHandler implements Runnable {
 						}
 					}
 					
+				} else if (action.equals("incrementWarCounter")) {
+					System.out.println("increment war counter request");
+					UpdateGameRequest ugr = (UpdateGameRequest)request.getObject();
+					int id = ugr.getGameId();
+					War game = (War)gameTable.getGame(id);
+					game.incrementClickCounter();
+					gameTable.updateGame(id, game);
+					obj = true;
 				} else if (action.equals("login")) { /* Returns null if invalid..Player object if valid */
 				
 				

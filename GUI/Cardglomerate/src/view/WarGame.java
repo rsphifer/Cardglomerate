@@ -91,65 +91,65 @@ public class WarGame extends BasicGameState {
 		//mouse coordinates
 		int xpos = Mouse.getX();
 		int ypos = Mouse.getY();
-		mouse = "Mouse position x: " + xpos + " y: " + ypos;	
-			
-		//update curCards and sizes
-		updateCards();
-		
-		//update gameover
-		gameOver = model.getGameOver();
-		
-		//check gameOver
-		if (gameOver) {
-			winner = model.getGameWinner();
-		}
-		
-		//deck clicked
-		if((xpos>650 && xpos<725) && (ypos>70 && ypos<165)) {
-			
-			if(Mouse.isButtonDown(0) && Master.isMouseReleased && !gameOver) {
-				Master.isMouseReleased = false;
-				model.updateGame();
-			} 
-			
-			if (!Mouse.isButtonDown(0)){
-				Master.isMouseReleased = true;
-			}
-		}
-			
-		//back button clicked
-		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150) && (gameOver)) {
-			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
-				Master.isMouseReleased = false;
-				//resets gui for new game
-				gameOver = false;
-				curCard1 = new Image("res/Cards/ec.png");
-				curCard2 = new Image("res/Cards/ec.png");
-				playerSize = 26;
-				opponentSize = 26;
-				
-				sbg.enterState(1); //display game menu screen
-			}
-			
-			if (!Mouse.isButtonDown(0)){
-				Master.isMouseReleased = true;
-			}
-		}
-		
-	}
-	
-	//gets curCards and deck sizes from model and updates them
-	private void updateCards(){
-		cards = model.getCardsToDisplay();
-		sizes = model.getHandSizes();
-		if (!cards.isEmpty()) {
-			c1 = cards.get(0); //player card
-			c2 = cards.get(1); //opponent card
-			curCard1 = getCardImage(c1);
-			curCard2 = getCardImage(c2);
-		}
-		playerSize = sizes.get(1);
-		opponentSize = sizes.get(0);
+//		mouse = "Mouse position x: " + xpos + " y: " + ypos;	
+//			
+//		//update curCards and sizes
+//		updateCards();
+//		
+//		//update gameover
+//		gameOver = model.getGameOver();
+//		
+//		//check gameOver
+//		if (gameOver) {
+//			winner = model.getGameWinner();
+//		}
+//		
+//		//deck clicked
+//		if((xpos>650 && xpos<725) && (ypos>70 && ypos<165)) {
+//			
+//			if(Mouse.isButtonDown(0) && Master.isMouseReleased && !gameOver) {
+//				Master.isMouseReleased = false;
+//				model.updateGame();
+//			} 
+//			
+//			if (!Mouse.isButtonDown(0)){
+//				Master.isMouseReleased = true;
+//			}
+//		}
+//			
+//		//back button clicked
+//		if((xpos>0 && xpos<150) && (ypos>0 && ypos<150) && (gameOver)) {
+//			if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+//				Master.isMouseReleased = false;
+//				//resets gui for new game
+//				gameOver = false;
+//				curCard1 = new Image("res/Cards/ec.png");
+//				curCard2 = new Image("res/Cards/ec.png");
+//				playerSize = 26;
+//				opponentSize = 26;
+//				
+//				sbg.enterState(1); //display game menu screen
+//			}
+//			
+//			if (!Mouse.isButtonDown(0)){
+//				Master.isMouseReleased = true;
+//			}
+//		}
+//		
+//	}
+//	
+//	//gets curCards and deck sizes from model and updates them
+//	private void updateCards(){
+//		cards = model.getCardsToDisplay();
+//		sizes = model.getHandSizes();
+//		if (!cards.isEmpty()) {
+//			c1 = cards.get(0); //player card
+//			c2 = cards.get(1); //opponent card
+//			curCard1 = getCardImage(c1);
+//			curCard2 = getCardImage(c2);
+//		}
+//		playerSize = sizes.get(1);
+//		opponentSize = sizes.get(0);
 		
 		
 	}
