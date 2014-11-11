@@ -31,37 +31,37 @@ public class Model {
 	private Player player;
 
 	public boolean isInGame;
-
+	
 	private int gameId;
 	private CardGameType gameType;
 
 	/* Updated regularly by update checker */
 	private CardGame currentGame;
-
+	
 	/* Updated regularly by update checker */
 	private ArrayList<Friend> friendList;
-
+	
 	/* Updated regularly by update checker */
 	private ArrayList<ChatEntry> menuChat;
-
+	
 	/* Updated regularly by update checker */
 	private GameLobby[] warLobbies;
-
+	
 	public boolean isInLobby;
 	private CardGameType currentLobbyType;
 	private int currentLobbyNumber;
-
+	
 	public boolean isLoggedIn;
 
 	public Model() {
 		friendList = new ArrayList<Friend>();
 		menuChat = new ArrayList<ChatEntry>();
 		warLobbies = new GameLobby[4];
-
+		
 		isInLobby = false;
 		currentLobbyType = null;
 		currentLobbyNumber = -1;
-
+		
 		player = null;
 		isLoggedIn = false;
 		isInGame = false;
@@ -74,7 +74,7 @@ public class Model {
 		gameId = ServerAccess.createNewGame(currentGame);
 		if (gameId != -1) {
 			isInGame = true;
-			// currentGame.testSetup();
+			//currentGame.testSetup();
 			return true;
 		}
 		return false;
@@ -89,7 +89,7 @@ public class Model {
 	}
 
 	public void updateGame() {
-		if (currentGame.updateReady()) {
+		if(currentGame.updateReady()){
 			currentGame.update();
 		}
 	}
@@ -101,15 +101,16 @@ public class Model {
 	public LinkedList<Card> getCardsToDisplay() {
 		return currentGame.getCardsToDisplay();
 	}
-
+	
 	public void updateWarCounter() {
 		ServerAccess.incrementWarCounter(new UpdateGameRequest(gameId, null));
 		currentGame = ServerAccess.getCardGame(gameId);
 	}
 
+
 	/*********************************************************
-	 * Account mgmt model calls.
-	 *********************************************************/
+	*	Account mgmt model calls.
+	*********************************************************/
 
 	public boolean createAccountRequest(String username, String password,
 			String email) {
@@ -127,10 +128,9 @@ public class Model {
 			isLoggedIn = true;
 			friendList = ServerAccess.getFriends(player);
 			menuChat = ServerAccess.getMenuChat();
-
-			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
-					null, 0, CardGameType.War));
-
+			
+			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.War));
+			
 			/*
 			 * Initialize thread that will periodically ask server for updates
 			 * to update model
@@ -145,7 +145,7 @@ public class Model {
 	}
 
 	public boolean logout() {
-		if (isInLobby) {
+		if(isInLobby) {
 			leaveGameLobby(currentLobbyType, currentLobbyNumber);
 		}
 		boolean isSuccess = ServerAccess.logoutRequest(player);
@@ -164,14 +164,17 @@ public class Model {
 				oldPassword, newPassword));
 	}
 
+
+
 	public Player getPlayer() {
 		return player;
 	}
-
+	
+	
 	/*********************************************************
-	 * Game mgmt model calls.
-	 *********************************************************/
-
+	*	Game mgmt model calls.
+	*********************************************************/
+	
 	public boolean enterGameFromLobby(int gameId) {
 		currentGame = ServerAccess.getCardGame(gameId);
 		if (currentGame != null) {
@@ -180,97 +183,94 @@ public class Model {
 			gameType = currentLobbyType;
 			leaveGameLobby(currentLobbyType, currentLobbyNumber);
 			return true;
-		}
+		} 
 		return false;
 	}
-
+	
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
 	}
-
+	
 	public int getGameId() {
 		return gameId;
 	}
-
+	
 	public void setCurrentGame(CardGame game) {
 		this.currentGame = game;
 	}
-
+	
 	public CardGame getCurrentGame() {
 		return currentGame;
 	}
-
+	
 	/*********************************************************
-	 * Game lobby mgmt model calls.
-	 *********************************************************/
+	*	Game lobby mgmt model calls.
+	*********************************************************/
 	public void joinGameLobby(CardGameType gameType, int lobbyId) {
 		GameLobbyRequest glr = new GameLobbyRequest(player, lobbyId, gameType);
-
+		isInLobby = true;
+		setCurrentLobby(gameType, lobbyId);
+		ServerAccess.joinLobby(glr);
 		if (gameType == CardGameType.War) {
-			/* Check for space in lobby */
-			if (warLobbies[lobbyId].getPlayers().size() < 2) {
-				isInLobby = true;
-				setCurrentLobby(gameType, lobbyId);
-				ServerAccess.joinLobby(glr);
-				warLobbies = ServerAccess.getGameLobbyList(glr);
-			}
+			warLobbies = ServerAccess.getGameLobbyList(glr);
 		}
 		return;
 	}
-
+	
 	public void leaveGameLobby(CardGameType gameType, int lobbyId) {
 		GameLobbyRequest glr = new GameLobbyRequest(player, lobbyId, gameType);
 		isInLobby = false;
 		setCurrentLobby(null, -1);
 		ServerAccess.leaveLobby(glr);
-
+		
 		if (gameType == CardGameType.War) {
 			warLobbies = ServerAccess.getGameLobbyList(glr);
 		}
-
+		
 		return;
 	}
-
+	
 	public void setGameLobby(CardGameType gameType, GameLobby[] lobbies) {
 		if (gameType == CardGameType.War) {
 			warLobbies = lobbies;
 		} else if (gameType == CardGameType.TexasHoldEm) {
-
+			
 		}
 	}
-
+	
 	public GameLobby[] getGameLobby(CardGameType gameType) {
 		if (gameType == CardGameType.War) {
 			return warLobbies;
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
-
+	
 	public void startGameFromLobby() {
 		if (currentLobbyType == CardGameType.War) {
-			GameLobbyRequest glr = new GameLobbyRequest(player,
-					currentLobbyNumber, CardGameType.War);
+			GameLobbyRequest glr = new GameLobbyRequest(player, currentLobbyNumber, CardGameType.War);
 			ServerAccess.startGameFromLobby(glr);
 		}
 	}
-
+	
 	private void setCurrentLobby(CardGameType gameType, int lobbyNumber) {
 		currentLobbyNumber = lobbyNumber;
 		currentLobbyType = gameType;
 	}
-
+	
 	public int getCurrentLobbyNumber() {
 		return currentLobbyNumber;
 	}
-
+	
 	public CardGameType getCurrentLobbyType() {
 		return currentLobbyType;
 	}
-
+	
+	
 	/*********************************************************
-	 * Friend list mgmt model calls.
-	 *********************************************************/
+	*	Friend list mgmt model calls.
+	*********************************************************/
 	public boolean addFriend(String username) {
 
 		boolean isSuccess = ServerAccess.addFriend(new NewFriendRequest(player,
@@ -296,18 +296,18 @@ public class Model {
 	public ArrayList<Friend> getFriendsList() {
 		return friendList;
 	}
-
+	
 	/*********************************************************
-	 * Menu chat mgmt model calls.
-	 *********************************************************/
+	*	Menu chat mgmt model calls.
+	*********************************************************/
 	public void setMenuChat(ArrayList<ChatEntry> chatLog) {
 		menuChat = chatLog;
 	}
-
+	
 	public ArrayList<ChatEntry> getMenuChat() {
 		return menuChat;
 	}
-
+	
 	public boolean addChatEntry(String message) {
 		ChatEntry newEntry = new ChatEntry(player.userName, message);
 		boolean isSuccess = ServerAccess.addMenuChatEntry(newEntry);
