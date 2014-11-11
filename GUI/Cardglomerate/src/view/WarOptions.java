@@ -11,6 +11,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import player.Player;
 import cardgames.CardGameType;
@@ -122,6 +124,14 @@ public class WarOptions extends BasicGameState {
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 
+		/* Check if player is in a lobby and that lobby has been started. */
+		//GameLobby[] lobbies = model.getGameLobby(CardGameType.War);
+		if (model.isInLobby && model.getGameLobby(CardGameType.War)[model.getCurrentLobbyNumber()].isStarted) {
+			if (model.enterGameFromLobby(model.getGameLobby(CardGameType.War)[model.getCurrentLobbyNumber()].getGameId())) {
+				sbg.enterState(5);
+			}
+		}
+		
 		// back button clicked
 		if ((xpos > 0 && xpos < 150) && (ypos > 0 && ypos < 150)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
@@ -212,6 +222,7 @@ public class WarOptions extends BasicGameState {
 							.equals(model.getPlayer().userName)) {
 						if (tmpLobby.getPlayers().size() == 2) {
 							System.out.println("Start game accepted");
+							model.startGameFromLobby();
 						} else {
 							System.out.println("Not enough players");
 						}

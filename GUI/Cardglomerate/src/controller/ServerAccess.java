@@ -26,7 +26,7 @@ import cardgames.CardGame;
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME 	= "sac07.cs.purdue.edu";
+	private static final String HOST_NAME 	= "sslab07.cs.purdue.edu";
 	private static final int	PORT_NUMBER = 4001;
 	
 	private static Object sendRequestWithResponse(Request request) {
@@ -127,6 +127,11 @@ public class ServerAccess {
 	public static GameLobby[] getGameLobbyList(GameLobbyRequest glr) {
 		Request request = new Request("getGameLobbyList", glr);
 		return (GameLobby[])sendRequestWithResponse(request);
+	}
+	
+	public static boolean startGameFromLobby(GameLobbyRequest glr) {
+		Request request = new Request("startGameFromLobby", glr);
+		return (boolean)sendRequestWithResponse(request);
 	}
 	
 	/*********************************************************

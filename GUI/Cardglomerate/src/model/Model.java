@@ -29,14 +29,20 @@ public class Model {
 
 	private Player player;
 
-	private boolean isInGame;
-	private CardGame currentGame;
+	public boolean isInGame;
+	
 	private int gameId;
 
+	/* Updated regularly by update checker */
+	private CardGame currentGame;
+	
+	/* Updated regularly by update checker */
 	private ArrayList<Friend> friendList;
 	
+	/* Updated regularly by update checker */
 	private ArrayList<ChatEntry> menuChat;
 	
+	/* Updated regularly by update checker */
 	private GameLobby[] warLobbies;
 	
 	public boolean isInLobby;
@@ -148,12 +154,37 @@ public class Model {
 				oldPassword, newPassword));
 	}
 
-	public CardGame getCurrentGame() {
-		return currentGame;
-	}
+
 
 	public Player getPlayer() {
 		return player;
+	}
+	
+	
+	/*********************************************************
+	*	Game mgmt model calls.
+	*********************************************************/
+	
+	public boolean enterGameFromLobby(int gameId) {
+		currentGame = ServerAccess.getCardGame(gameId);
+		if (currentGame != null) {
+			setGameId(gameId);
+			isInGame = true;
+			return true;
+		} 
+		return false;
+	}
+	
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
+	
+	public int getGameId() {
+		return gameId;
+	}
+	
+	public CardGame getCurrentGame() {
+		return currentGame;
 	}
 	
 	/*********************************************************
@@ -197,6 +228,13 @@ public class Model {
 		}
 		else {
 			return null;
+		}
+	}
+	
+	public void startGameFromLobby() {
+		if (currentLobbyType == CardGameType.War) {
+			GameLobbyRequest glr = new GameLobbyRequest(player, currentLobbyNumber, CardGameType.War);
+			ServerAccess.startGameFromLobby(glr);
 		}
 	}
 	
