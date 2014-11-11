@@ -22,11 +22,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	public boolean readyToUpdate;
 	private int playersGone = 0;
 	private boolean handOver = false;
-	
-	public TexasHoldEm() {
-		
-	}
-	
+
 	public TexasHoldEm(ArrayList<Player> playerNames) {
 		this.players = playerNames;
 		winners = new ArrayList<Player>();
@@ -67,41 +63,6 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		winners.add(players.get(index));
 	}
 	
-	/*private void play(){
-		switch(this.turn){
-			case 0: //ante
-				for(Player p : players){
-					p.bet(50);
-				}
-				break;
-			case 1: //deal 2
-				for(Player p : players){
-					p.addCardToHand(this.cardGame.getTopOfDeck());
-					p.addCardToHand(this.cardGame.getTopOfDeck());
-				}
-				break;
-			case 3: //burn and 3 out
-				this.cardGame.getTopOfDeck();
-				cardsOnTable.add(this.cardGame.getTopOfDeck());
-				cardsOnTable.add(this.cardGame.getTopOfDeck());
-				cardsOnTable.add(this.cardGame.getTopOfDeck());
-				break;
-			case 5: //burn and deal 1
-			case 7: //burn and deal 1
-				this.cardGame.getTopOfDeck();
-				cardsOnTable.add(this.cardGame.getTopOfDeck());
-				break;
-			case 2: //bet
-			case 4: //bet
-			case 6: //bet
-			case 8: //bet
-				//promptForBets(winner, i);
-				System.out.println("BETS, BETS, BETS BETS BETS BETS\n");
-				break;
-		}
-	}
-	*/
-	
 	public boolean updateReady(){
 		if(turn == 0){
 			return true;
@@ -109,11 +70,11 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		for(Player p : players){
 			if(p.getCurrentBet()!=expectedBet && p.isFolded() == false){
 				readyToUpdate = false;
-				return readyToUpdate;
+				return false;
 			}
 		}
 		readyToUpdate = true;
-		return readyToUpdate;
+		return true;
 	}
 	
 	public void setBet(Player p, int bet){
@@ -133,7 +94,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 				found = 1;
 			}
 		}
-		if(found == 1){
+		if(found == players.size()){
 			players.get(0);
 		}
 	}
@@ -145,7 +106,6 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	
 	public void update(){
 		System.out.println(turn);
-		//int playersGone = 0;
 		readyToUpdate = false;
 
 		switch(this.turn){
@@ -187,16 +147,13 @@ public class TexasHoldEm extends CardGame implements Serializable{
 				readyToUpdate = true;
 				break;
 		}
-		
-		/*if(turn != 3 && turn != 5 && turn != 7){
-			readyToUpdate = true;
-			//for(Player p : players){
-				//whoseTurn = p;
-				play();
-			//}
-		} else {
-			readyToUpdate = true;
-		}*/
+
+		if(turn == 3 || turn == 5 || turn == 7){
+			for(Player p : players){
+				winnings += p.getCurrentBet();
+				p.bet(0);
+			}
+		}
 		
 		if(turn == 9){
 			int j=0;
@@ -212,17 +169,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 				p.addMoney(winnings/winners.size());
 			}
 			handOver = true;
-		}
-		
-		if(turn == 3 || turn == 5 || turn == 7){
-			for(Player p : players){
-				winnings += p.getCurrentBet();
-				p.bet(0);
-			}
-		}
-
-		turn++;
-		if(this.turn > 9){
+			
 			for(Player p : players){
 				p.resetFold();
 				p.emptyHand();
@@ -231,8 +178,9 @@ public class TexasHoldEm extends CardGame implements Serializable{
 			winners.clear();
 			cardsOnTable.clear();
 			winnings = 0;
-			this.turn = 0;
+			this.turn = -1;
 		}
+		turn++;
 	}
 	
 	public void setup(){

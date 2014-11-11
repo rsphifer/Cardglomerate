@@ -34,7 +34,7 @@ public class Player implements Serializable{
 	}
 
 	public int getHandSize(){
-		return this.hand.size();
+		return (this.hand.size()+this.discard.size());
 	}
 	
 	public ArrayList<Card> getHand(){
