@@ -23,11 +23,7 @@ public class UpdateChecker implements Runnable {
 
 			/* Sleep between server calls to minimize busy waiting */
 			try {
-				if (model.isInGame) {
-					Thread.sleep(MILLIS_BETWEEN_UPDATES_IN_GAME);
-				} else {
-					Thread.sleep(MILLIS_BETWEEN_UPDATES);
-				}
+				Thread.sleep(MILLIS_BETWEEN_UPDATES);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null,
