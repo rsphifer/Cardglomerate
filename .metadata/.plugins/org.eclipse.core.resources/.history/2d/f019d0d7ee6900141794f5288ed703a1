@@ -17,7 +17,6 @@ public class Server {
 	private MenuChat menuChat;
 	
 	private GameLobby[] warLobbies;
-	private GameLobby[] texasHoldemLobbies;
 	
 	public Server(int port) {
 		this.port = port;
@@ -25,11 +24,9 @@ public class Server {
 		menuChat = new MenuChat();
 		
 		warLobbies = new GameLobby[MAX_LOBBIES];
-		texasHoldemLobbies = new GameLobby[MAX_LOBBIES];
 		
 		for (int i=0; i < MAX_LOBBIES; i++) {
 			warLobbies[i] = new GameLobby(2, 2, i);
-			texasHoldemLobbies[i] = new GameLobby(2,4,i);
 		}
 		
 	}
@@ -42,7 +39,7 @@ public class Server {
 				
 				Socket clientSocket = serverSocket.accept();
 				
-				RequestHandler requestHandler = new RequestHandler(clientSocket, gameTable, menuChat, warLobbies, texasHoldemLobbies);
+				RequestHandler requestHandler = new RequestHandler(clientSocket, gameTable, menuChat, warLobbies);
 				Thread t = new Thread(requestHandler);
 				t.start();
 			}

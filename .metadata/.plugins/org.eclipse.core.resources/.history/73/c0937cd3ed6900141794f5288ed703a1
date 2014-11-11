@@ -17,7 +17,6 @@ import player.Player;
 import player.SetPasswordRequest;
 import cardgames.CardGame;
 import cardgames.CardGameType;
-import cardgames.TexasHoldEm;
 import cardgames.War;
 
 public class RequestHandler implements Runnable {
@@ -26,14 +25,12 @@ public class RequestHandler implements Runnable {
 	private GameTable gameTable;
 	private MenuChat menuChat;
 	private GameLobby[] warLobbies;
-	private GameLobby[] texasHoldemLobbies;
 
-	public RequestHandler(Socket clientSocket, GameTable gameTable, MenuChat menuChat, GameLobby[] warLobbies, GameLobby[] texasHoldemLobbies) {
+	public RequestHandler(Socket clientSocket, GameTable gameTable, MenuChat menuChat, GameLobby[] warLobbies) {
 		this.clientSocket = clientSocket;
 		this.gameTable = gameTable;
 		this.menuChat = menuChat;
 		this.warLobbies = warLobbies;
-		this.texasHoldemLobbies = texasHoldemLobbies;
 	}
 
 	@Override
@@ -95,8 +92,6 @@ public class RequestHandler implements Runnable {
 					CardGameType gameType = glr.getCardGameType();
 					if (gameType == CardGameType.War) {
 						obj = warLobbies[glr.getLobbyId()].addPlayer(glr.getPlayer());
-					} else if(gameType == CardGameType.TexasHoldEm) {
-						obj = texasHoldemLobbies[glr.getLobbyId()].addPlayer(glr.getPlayer());
 					}
 					
 					
@@ -107,8 +102,6 @@ public class RequestHandler implements Runnable {
 					CardGameType gameType = glr.getCardGameType();
 					if (gameType == CardGameType.War) {
 						warLobbies[glr.getLobbyId()].removePlayer(glr.getPlayer());
-					} else if (gameType == CardGameType.TexasHoldEm) {
-						texasHoldemLobbies[glr.getLobbyId()].removePlayer(glr.getPlayer());
 					}
 					obj = true;
 					
@@ -127,15 +120,6 @@ public class RequestHandler implements Runnable {
 							obj = true;
 						} else {
 							/* Game creation failed */
-							obj = false;
-						}
-					} else if (gameType == CardGameType.TexasHoldEm) {
-						int tmpGameId = gameTable.addNewGame(new TexasHoldEm(texasHoldemLobbies[lobbyId].getPlayers()));
-						if (tmpGameId > -1) {
-							texasHoldemLobbies[lobbyId].setGameId(tmpGameId);
-							texasHoldemLobbies[lobbyId].isStarted = true;
-							obj = true;
-						} else {
 							obj = false;
 						}
 					}
