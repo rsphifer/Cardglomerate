@@ -87,7 +87,7 @@ public class RequestHandler implements Runnable {
 					if (game == CardGameType.War) {
 						obj = warLobbies;
 					} else if (game == CardGameType.TexasHoldEm) {
-						obj = texasHoldemLobbies;
+						
 					}
 				} else if (action.equals("joinGameLobby")) {
 					System.out.println("join game lobby request");
