@@ -54,10 +54,6 @@ public class UpdateChecker implements Runnable {
 						.getGameLobbyList(new GameLobbyRequest(null, 0,
 								CardGameType.War));
 				model.setGameLobby(CardGameType.War, tmp);
-				
-				tmp = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
-				model.setGameLobby(CardGameType.TexasHoldEm, tmp);
-
 			}
 
 			// for (ChatEntry c : model.getMenuChat()) {
