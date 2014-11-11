@@ -309,4 +309,39 @@ public class AchievementAccess {
 
 		return false;
 	}
+
+	public static boolean earnedAchievement(int id, String ach){/*Assumes a valid achievement*/
+
+		Connection conn = null;
+		Statement addfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		addfunc = conn.createStatement();
+
+			String add_stat;
+      			add_stat = "UPDATE users SET " + ach + "=1  WHERE id=\"" + id + "\"";
+
+			addfunc.executeUpdate(add_stat);
+
+			addfunc.close();
+			conn.close();
+			
+			return true;
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+
+		return false;
+	}
 }
