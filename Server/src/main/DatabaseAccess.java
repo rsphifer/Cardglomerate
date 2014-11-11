@@ -44,8 +44,6 @@ public class DatabaseAccess {
 			conn.close();
 			
 			return res;
-
-
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -58,7 +56,6 @@ public class DatabaseAccess {
 		System.out.println("A problem occurred, please try again");
 
 		return 0;
-
 	}
 
 	public static String getName(int id){/*Assumes a valid username*/
@@ -87,8 +84,6 @@ public class DatabaseAccess {
 			conn.close();
 			
 			return res;
-
-
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -101,7 +96,6 @@ public class DatabaseAccess {
 		System.out.println("A problem occurred, please try again");
 
 		return "";
-
 	}
 
 	public static boolean getStatus(int id){/*Assumes a valid username*/
@@ -130,8 +124,6 @@ public class DatabaseAccess {
 			conn.close();
 			
 			return res;
-
-
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -144,9 +136,7 @@ public class DatabaseAccess {
 		System.out.println("A problem occurred, please try again");
 
 		return false;
-
 	}
-
 
 	public static boolean createAccount(String username, String pw, String email){
 
@@ -167,7 +157,6 @@ public class DatabaseAccess {
 
 			String check_exists;
 				check_exists = "SELECT COUNT(id) from users WHERE email=\"" + email + "\" OR username=\"" + username + "\"";
-
 
 			ResultSet existing = existfunc.executeQuery(check_exists);
 			existing.next();
@@ -190,7 +179,6 @@ public class DatabaseAccess {
 			existfunc.close();
 			addfunc.close();
 			conn.close();
-
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -299,7 +287,6 @@ public class DatabaseAccess {
 			System.out.println("User has been logged out");
 
 			return true;
-			
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -363,7 +350,6 @@ public class DatabaseAccess {
 
 				return "";
 			}
-
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -403,8 +389,6 @@ public class DatabaseAccess {
 			data.close();
 			datafunc.close();
 			return newplayer;
-
-
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -464,7 +448,6 @@ public class DatabaseAccess {
 
 				return false;
 			}
-
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -477,6 +460,7 @@ public class DatabaseAccess {
 		System.out.println("A problem occurred, please try again");
 		return false;
 	}
+
 	public static boolean addFriend(int id, String friendname){
 
 		Connection conn = null;
@@ -499,9 +483,7 @@ public class DatabaseAccess {
 			existing.next();
 			if(existing.getInt("COUNT(id)") == 1){ /*one user with that username was found*/
 
-				
 				int friend_id = getID(friendname);
-
 
 				String add_to_list;
       			add_to_list = "INSERT INTO friends(user, friend) VALUES(\"" + id + "\", \"" + friend_id + "\")";
@@ -526,7 +508,6 @@ public class DatabaseAccess {
 
 				return false;
 			}
-
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -538,7 +519,6 @@ public class DatabaseAccess {
 
 		System.out.println("A problem occurred, please try again");
 		return false;
-
 	}
 
 	public static boolean removeFriend(int id, String friendname){
@@ -566,8 +546,6 @@ public class DatabaseAccess {
 			conn.close();
 
 			return true;
-
-			
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -579,7 +557,6 @@ public class DatabaseAccess {
 
 		System.out.println("A problem occurred, please try again");
 		return false;
-
 	}
 
 	public static ArrayList<Friend> getFriends(int id){
@@ -612,7 +589,6 @@ public class DatabaseAccess {
 				Friend newfriend = new Friend(friendname, friend_online);
 
 				friendlist.add(newfriend);
-				
 			}
 
 			existing.close();
@@ -621,9 +597,7 @@ public class DatabaseAccess {
 
 			//System.out.println("Friends list sent.");
 
-
 			return friendlist;
-
 		}
 		catch(SQLException se){
 			se.printStackTrace();
@@ -634,11 +608,7 @@ public class DatabaseAccess {
 		/*If execution gets here, an error occurred*/
 
 		System.out.println("A problem occurred, please try again");
+
 		return friendlist;
-
 	}
-
-	
-
-
 }
