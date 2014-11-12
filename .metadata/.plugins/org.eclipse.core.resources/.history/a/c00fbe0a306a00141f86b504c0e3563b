@@ -141,11 +141,10 @@ public class War extends CardGame implements Serializable {
 			}
 		}
 		
-		System.out.printf("\n\nPlayer 1 start hand:\n");
 		for (Card c : players.get(0).getHand()) {
 			System.out.printf("%d %d\n",c.getPower(), c.getSuit() );
 		}
-		System.out.printf("\n\nPlayer 2 start hand:\n");
+		
 		for (Card c : players.get(1).getHand()) {
 			System.out.printf("%d %d\n",c.getPower(), c.getSuit() );
 		}

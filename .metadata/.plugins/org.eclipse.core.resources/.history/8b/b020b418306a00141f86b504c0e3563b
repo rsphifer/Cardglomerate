@@ -26,7 +26,6 @@ public abstract class CardGame implements Serializable{
 			}
 		}
 		Collections.shuffle((List<?>) this.deck);
-		
 	}
 	
 	protected void fillDeckHoldEm(){

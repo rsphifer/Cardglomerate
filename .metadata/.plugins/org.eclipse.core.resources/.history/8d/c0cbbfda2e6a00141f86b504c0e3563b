@@ -140,16 +140,6 @@ public class War extends CardGame implements Serializable {
 				players.get(1).addCardToHand(getTopOfDeck());
 			}
 		}
-		
-		System.out.printf("\n\nPlayer 1 start hand:\n");
-		for (Card c : players.get(0).getHand()) {
-			System.out.printf("%d %d\n",c.getPower(), c.getSuit() );
-		}
-		System.out.printf("\n\nPlayer 2 start hand:\n");
-		for (Card c : players.get(1).getHand()) {
-			System.out.printf("%d %d\n",c.getPower(), c.getSuit() );
-		}
-		
 	}
 
 	public void testSetup() {
@@ -202,26 +192,6 @@ public class War extends CardGame implements Serializable {
 				System.out.println("Play card");
 				clickCounter = 0;
 				cardsFlipped++;
-				
-				if ((p1Card = players.get(0).playTopCard()) == null) {
-					gameOver = true;
-				}
-				if ((p2Card = players.get(1).playTopCard()) == null) {
-					gameOver = true;
-				}
-				
-				winnings.push(p1Card);
-				winnings.push(p2Card);
-				
-				score(p1Card, p2Card);
-				
-				if (gameOver) {
-					if (players.get(0).getHandSize() == 0) {
-						win(players.get(1));
-					} else {
-						win(players.get(0));
-					}
-				}
 			}
 			
 		}
