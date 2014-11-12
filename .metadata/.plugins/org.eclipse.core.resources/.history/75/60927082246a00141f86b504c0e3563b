@@ -127,6 +127,7 @@ public class HoldEmOptions extends BasicGameState {
 			g.draw(leaveLobbyButton);
 			g.drawString("Leave", x + 9, leaveLobbyButton.getY() + 5);
 
+			
 			if (model.getPlayer().userName.equals(holdemLobbies[model
 					.getCurrentLobbyNumber()].getHost().userName)) {
 				// render start button
@@ -183,13 +184,6 @@ public class HoldEmOptions extends BasicGameState {
 
 		int actualYPos = gc.getHeight() - ypos;
 		Rectangle tmp = new Rectangle(xpos, actualYPos, 1, 1);
-		
-		/* Check if game has been started */
-		if (model.isInLobby && model.getGameLobby(CardGameType.TexasHoldEm)[model.getCurrentLobbyNumber()].isStarted) {
-			if(model.enterGameFromLobby(model.getGameLobby(CardGameType.TexasHoldEm)[model.getCurrentLobbyNumber()].getGameId())) {
-				sbg.enterState(8);
-			}
-		}
 
 		/* Check if leave button clicked */
 		if (model.isInLobby
@@ -278,17 +272,7 @@ public class HoldEmOptions extends BasicGameState {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				// code to start the table the current user is at
-				GameLobby[] lobbies = model
-						.getGameLobby(CardGameType.TexasHoldEm);
-				
-				/* Check that player is the host and that the minimum number of players are in the lobby */
-				if (model.isInLobby
-						&& model.getPlayer().userName.equals(lobbies[model
-								.getCurrentLobbyNumber()].getHost().userName)
-						&& lobbies[model.getCurrentLobbyNumber()].getPlayers()
-								.size() >= 2) {
-					model.startGameFromLobby();
-				}
+				sbg.enterState(8);
 			}
 
 			if (!Mouse.isButtonDown(0)) {

@@ -183,13 +183,6 @@ public class HoldEmOptions extends BasicGameState {
 
 		int actualYPos = gc.getHeight() - ypos;
 		Rectangle tmp = new Rectangle(xpos, actualYPos, 1, 1);
-		
-		/* Check if game has been started */
-		if (model.isInLobby && model.getGameLobby(CardGameType.TexasHoldEm)[model.getCurrentLobbyNumber()].isStarted) {
-			if(model.enterGameFromLobby(model.getGameLobby(CardGameType.TexasHoldEm)[model.getCurrentLobbyNumber()].getGameId())) {
-				sbg.enterState(8);
-			}
-		}
 
 		/* Check if leave button clicked */
 		if (model.isInLobby
