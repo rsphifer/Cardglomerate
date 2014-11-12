@@ -59,7 +59,7 @@ public class Model {
 		menuChat = new ArrayList<ChatEntry>();
 		
 		warLobbies = new GameLobby[4];
-		texasHoldemLobbies = new GameLobby[4];
+		texasHoldemLobbies = new GameLobby[3];
 		
 		isInLobby = false;
 		currentLobbyType = null;

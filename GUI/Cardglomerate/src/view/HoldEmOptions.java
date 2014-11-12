@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
+import misc.GameLobby;
 import model.Model;
 
 import org.lwjgl.input.Mouse;
@@ -15,6 +16,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import player.Friend;
+import player.Player;
+import cardgames.CardGameType;
 
 public class HoldEmOptions extends BasicGameState {
 	
@@ -77,17 +80,51 @@ public class HoldEmOptions extends BasicGameState {
 		//render tables
 		g.drawString("Click on a table to join it", 550, 340);
 		
+		GameLobby[] holdemLobbies = model.getGameLobby(CardGameType.TexasHoldEm);
+		
+		for (int i = 0; i < holdemLobbies.length; i++) {
+			int x = 370 + i*300;
+			for (int j = 0; j < 4; j++) {
+				if (holdemLobbies[i].getPlayers().size() > j) {
+					/* Player is present at j'th index */
+					Player curr = holdemLobbies[i].getPlayers().get(j);
+					if (curr.userName.equals(holdemLobbies[i].getHost().userName)) {
+						g.drawString(curr.userName+"(Host)",
+								x, 560 + 30 * j);
+					} else {
+						g.drawString(curr.userName,
+								x, 560 + 30 * j);
+					}
+				} else {
+					g.drawString("Open", x, 560 + 30 * j);
+				}
+			}
+//
+//			if (model.isInLobby && model.getCurrentLobbyNumber() == i) {
+//				if (model.getPlayer().userName
+//						.equals(lobbies[i].getHost().userName)) {
+//					gameStartButton.setX(x - 5);
+//					gameStartButton.setY(620);
+//					g.draw(gameStartButton);
+//					g.drawString("Start", x + 7, 625);
+//				}
+//				g.drawString("Leave", x + 7, 585);
+//			} else {
+//				g.drawString("Join", x + 10, 585);
+//			}
+		}
+		
 		g.drawImage(table, 300, 400);
 		g.drawString("Table 1", 370, 380);
-		g.drawString(t1p1, 370, 560);g.drawString(t1p2, 370, 590);g.drawString(t1p3, 370, 620);g.drawString(t1p4, 370, 650);
+		//g.drawString(t1p1, 370, 560);g.drawString(t1p2, 370, 590);g.drawString(t1p3, 370, 620);g.drawString(t1p4, 370, 650);
 		
 		g.drawImage(table, 600, 400);
 		g.drawString("Table 2", 670, 380);
-		g.drawString(t2p1, 670, 560);g.drawString(t2p2, 670, 590);g.drawString(t2p3, 670, 620);g.drawString(t2p4, 670, 650);
+		//g.drawString(t2p1, 670, 560);g.drawString(t2p2, 670, 590);g.drawString(t2p3, 670, 620);g.drawString(t2p4, 670, 650);
 		
 		g.drawImage(table, 900, 400);
 		g.drawString("Table 3", 970, 380);
-		g.drawString(t3p1, 970, 560);g.drawString(t3p2, 970, 590);g.drawString(t3p3, 970, 620);g.drawString(t3p4, 970, 650);
+		//g.drawString(t3p1, 970, 560);g.drawString(t3p2, 970, 590);g.drawString(t3p3, 970, 620);g.drawString(t3p4, 970, 650);
 		
 		
 		//friends list rendering

@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="cardgames.CardGameType"/>
+<fullyQualifiedTypeName name="misc.UpdateGameRequest"/>
+<fullyQualifiedTypeName name="controller.ServerAccess"/>
+</qualifiedTypeNameHistroy>
