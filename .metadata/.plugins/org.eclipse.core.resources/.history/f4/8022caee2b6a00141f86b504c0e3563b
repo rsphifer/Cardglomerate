@@ -20,7 +20,6 @@ public class War extends CardGame implements Serializable {
 	
 	/* Multiplayer variables */
 	private int clickCounter;
-	private int cardsFlipped;
 	public boolean isMultiplayer;
 
 	/**
@@ -33,7 +32,6 @@ public class War extends CardGame implements Serializable {
 
 		isMultiplayer = true;
 		clickCounter = 0;
-		cardsFlipped = 0;
 		
 		fillDeck();
 		setup();
@@ -157,10 +155,6 @@ public class War extends CardGame implements Serializable {
 	public int getClickCounter() {
 		return clickCounter;
 	}
-	
-	public int getCardsFlippedCount() {
-		return cardsFlipped;
-	}
 
 	public void update() {
 		if (!isMultiplayer) {
@@ -191,7 +185,6 @@ public class War extends CardGame implements Serializable {
 				/* Both players clicked, play a card */
 				System.out.println("Play card");
 				clickCounter = 0;
-				cardsFlipped++;
 			}
 			
 		}

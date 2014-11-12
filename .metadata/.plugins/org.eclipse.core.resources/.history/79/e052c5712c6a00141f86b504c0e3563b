@@ -38,7 +38,6 @@ public class WarGame extends BasicGameState {
 	private Card c2;
 
 	private boolean hasClicked = false;
-	private int countWhenClicked;
 
 	public WarGame(int state, Model model) {
 		this.model = model;
@@ -115,7 +114,7 @@ public class WarGame extends BasicGameState {
 		//}
 
 		War game = (War) model.getCurrentGame();
-		if (game.isMultiplayer && (game.getClickCounter() == 0 || game.getCardsFlippedCount() != countWhenClicked)&& hasClicked) {
+		if (game.isMultiplayer && game.getClickCounter() == 0 && hasClicked) {
 			hasClicked = false;
 		}
 
@@ -127,7 +126,6 @@ public class WarGame extends BasicGameState {
 					Master.isMouseReleased = false;
 					hasClicked = true;
 					model.updateWarCounter();
-					countWhenClicked = game.getCardsFlippedCount();
 				}
 			} else {
 				if (Mouse.isButtonDown(0) && Master.isMouseReleased
