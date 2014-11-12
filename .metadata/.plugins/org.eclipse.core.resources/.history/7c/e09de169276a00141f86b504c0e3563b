@@ -280,15 +280,13 @@ public class HoldEmGame extends BasicGameState {
 		}
 		
 		//update game functions
-		
 		updatePlayers();
 		updateTableCards();
 		updateCall();
 		updateTurn();
 		handOver();
 		updatePot();
-		//model.updateGame();
-		
+		model.updateGame();
 	}
 
 	private void updatePlayers() {
@@ -400,10 +398,6 @@ public class HoldEmGame extends BasicGameState {
 	
 	private void updateTurn() {
 		Player p = model.getCurrentGame().getTurn();
-		if (p == null) {
-			System.out.println("whose turn in model is broke");
-			p = model.getCurrentGame().getPlayers().get(0);
-		}
 		whooseTurn = p.userName;
 		if (whooseTurn == model.getPlayer().userName) {
 			isYourTurn = true;

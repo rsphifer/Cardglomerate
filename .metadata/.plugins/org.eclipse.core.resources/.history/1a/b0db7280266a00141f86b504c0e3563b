@@ -93,7 +93,6 @@ public class Model {
 
 	public void updateGame() {
 		if (currentGame.updateReady()) {
-			System.out.println("que?");
 			currentGame.update();
 		}
 	}
@@ -269,7 +268,6 @@ public class Model {
 			glr = new GameLobbyRequest(player,
 					currentLobbyNumber, CardGameType.War);
 		} else if (currentLobbyType == CardGameType.TexasHoldEm) {
-			System.out.println("hey");
 			glr = new GameLobbyRequest(player,
 					currentLobbyNumber, CardGameType.TexasHoldEm);
 			

@@ -280,15 +280,13 @@ public class HoldEmGame extends BasicGameState {
 		}
 		
 		//update game functions
-		
 		updatePlayers();
 		updateTableCards();
 		updateCall();
 		updateTurn();
 		handOver();
 		updatePot();
-		//model.updateGame();
-		
+//		model.updateGame();
 	}
 
 	private void updatePlayers() {
