@@ -167,10 +167,9 @@ public class War extends CardGame implements Serializable {
 	}
 
 	public void testSetup() {
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 51; i++) {
 			players.get(0).addCardToHand(getTopOfDeck());
 		}
-		players.get(1).addCardToHand(getTopOfDeck());
 		players.get(1).addCardToHand(getTopOfDeck());
 	}
 
@@ -238,9 +237,9 @@ public class War extends CardGame implements Serializable {
 
 				if (gameOver) {
 					if (players.get(0).getHandSize() == 0) {
-						win(players.get(0));
-					} else {
 						win(players.get(1));
+					} else {
+						win(players.get(0));
 					}
 				}
 			}

@@ -41,7 +41,7 @@ public class War extends CardGame implements Serializable {
 		cardsFlipped = 0;
 
 		fillDeck();
-		setup();
+		testSetup();
 
 	}
 
