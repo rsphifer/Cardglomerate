@@ -27,7 +27,7 @@ import cardgames.CardGame;
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME 	= "sslab20.cs.purdue.edu";
+	private static final String HOST_NAME 	= "sslab21.cs.purdue.edu";
 	private static final int	PORT_NUMBER = 4001;
 	
 	private static Object sendRequestWithResponse(Request request) {
@@ -77,7 +77,7 @@ public class ServerAccess {
 	}
 	
 	public static boolean updateCardGameState(int gameId, CardGame game) {
-		Request request = new Request("updateCardGame", game);
+		Request request = new Request("updateCardGame", new UpdateGameRequest(gameId, game));
 		return (boolean)sendRequestWithResponse(request);
 	}
 	

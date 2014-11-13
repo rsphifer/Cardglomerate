@@ -131,7 +131,7 @@ public class RequestHandler implements Runnable {
 						}
 					} else if (gameType == CardGameType.TexasHoldEm) {
 						TexasHoldEm tmpGame = new TexasHoldEm(texasHoldemLobbies[lobbyId].getPlayers());
-						tmpGame.setup();
+						//tmpGame.setup();
 						int tmpGameId = gameTable.addNewGame(tmpGame);
 						if (tmpGameId > -1) {
 							

@@ -45,7 +45,7 @@ public class HoldEmGame extends BasicGameState {
 	private int callSize = 0;
 	private int betSize = 0;
 	private boolean isYourTurn = false;
-	private String whooseTurn = "";
+	private String whoseTurn = "";
 	
 	// player card variables
 	private Image p1C1; // player 1 card 1 etc etc, player 1 is current user
@@ -120,7 +120,7 @@ public class HoldEmGame extends BasicGameState {
 			p3C1.draw(20, 300);
 			p3C2.draw(70, 300);
 			p4C1.draw(1140, 300);
-			p4C1.draw(1190, 300);
+			p4C2.draw(1190, 300);
 		} else {
 			cardBack.draw(550, 25);
 			cardBack.draw(600, 25);
@@ -129,7 +129,7 @@ public class HoldEmGame extends BasicGameState {
 			cardBack.draw(1140, 300);
 			cardBack.draw(1190, 300);
 		}
-
+		
 		// draw table cards
 		t1.draw(400, 300);
 		t2.draw(500, 300);
@@ -218,6 +218,7 @@ public class HoldEmGame extends BasicGameState {
 					// code here
 					System.out.println("Call/Check");
 					model.getCurrentGame().setBet(model.getPlayer(), callSize);
+					model.updateGame();
 				}
 
 				if (!Mouse.isButtonDown(0)) {
@@ -232,11 +233,12 @@ public class HoldEmGame extends BasicGameState {
 					betString = betField.getText();
 					if (betString.length() > 0 && isNumeric(betString)) {
 						betSize = Integer.parseInt(betString);
-						if(betSize > playerBalance || betSize < callSize){
+						if(betSize < playerBalance && betSize > callSize){
 							betError = false;
 							betField.setText("");
 							System.out.println("Raise/Bet $" + betSize);
 							model.getCurrentGame().setBet(model.getPlayer(), betSize);
+							model.updateGame();
 						} else {
 							betError = true;
 						}
@@ -256,6 +258,7 @@ public class HoldEmGame extends BasicGameState {
 					Master.isMouseReleased = false;
 					// code here
 					model.getCurrentGame().fold(model.getPlayer());
+					model.updateGame();
 					System.out.println("Fold");
 				}
 
@@ -288,7 +291,6 @@ public class HoldEmGame extends BasicGameState {
 		updateTurn();
 		handOver();
 		updatePot();
-		//model.updateGame();
 		
 	}
 
@@ -296,6 +298,7 @@ public class HoldEmGame extends BasicGameState {
 		int i = 0;
 		p1Name = "No Player";p2Name = "No Player"; p3Name = "No Player";p4Name = "No Player";
 		for (Player p : model.getCurrentGame().getPlayers()) {
+			//System.out.println("getting player cards");
 			if (p.userName == model.getPlayer().userName) {
 				p1C1 = getCardImage(p.getHand().get(0));
 				p1C2 = getCardImage(p.getHand().get(1));
@@ -400,13 +403,15 @@ public class HoldEmGame extends BasicGameState {
 	}
 	
 	private void updateTurn() {
+		//System.out.println("updateTurn was called\n");
 		Player p = model.getCurrentGame().getTurn();
 		if (p == null) {
 			System.out.println("whose turn in model is broke");
 			p = model.getCurrentGame().getPlayers().get(0);
 		}
-		whooseTurn = p.userName;
-		if (whooseTurn == model.getPlayer().userName) {
+		whoseTurn = p.userName;
+		//System.out.println(whoseTurn + " " + model.getPlayer().userName);
+		if (whoseTurn.equals(model.getPlayer().userName)) {
 			isYourTurn = true;
 		}
 		else {
