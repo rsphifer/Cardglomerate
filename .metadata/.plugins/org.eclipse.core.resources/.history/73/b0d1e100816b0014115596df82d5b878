@@ -25,6 +25,8 @@ public class WarGame extends BasicGameState {
 
 	private String mouse = "No input yet";
 	private Image background;
+	private Image curCard1; // players card
+	private Image curCard2; // opponents card
 	private int playerSize = 26; // players deck size
 	private int opponentSize = 26; // opponents deck size
 	private Image arrow;
@@ -60,6 +62,10 @@ public class WarGame extends BasicGameState {
 		
 		c1 = new LinkedList<Card>();
 		c2 = new LinkedList<Card>();
+
+		// starting curCards
+		curCard1 = new Image("res/Cards/ec.png");
+		curCard2 = new Image("res/Cards/ec.png");
 
 		// back arrow
 		arrow = new Image("res/Back Arrow.jpg");
@@ -194,9 +200,11 @@ public class WarGame extends BasicGameState {
 				Master.isMouseReleased = false;
 				// resets gui for new game
 				gameOver = false;
+				curCard1 = new Image("res/Cards/ec.png");
+				curCard2 = new Image("res/Cards/ec.png");
 				playerSize = 26;
 				opponentSize = 26;
-				model.isInGame = false;
+
 				sbg.enterState(1); // display game menu screen
 			}
 
@@ -227,6 +235,9 @@ public class WarGame extends BasicGameState {
 				
 				if (playerIndex == 0) {
 					
+				//	c1.add(cards.remove(0));
+				//	c2.add(cards.get(1));
+					
 					int ind = 0;
 					while (!cards.isEmpty()) {
 						if (ind%2==0) {
@@ -241,6 +252,8 @@ public class WarGame extends BasicGameState {
 					opponentSize = sizes.get(0);
 					
 				} else {
+//					c2.add(cards.get(0));
+//					c1.add(cards.get(1));
 					
 					int ind = 0;
 					while (!cards.isEmpty()) {
@@ -256,6 +269,8 @@ public class WarGame extends BasicGameState {
 					opponentSize = sizes.get(1);
 				}
 			} else {
+//				c1.add(cards.get(0)); // player card
+//				c2.add(cards.get(1)); // opponent card
 				
 				int ind = 0;
 				while (!cards.isEmpty()) {
@@ -271,7 +286,12 @@ public class WarGame extends BasicGameState {
 				opponentSize = sizes.get(0);
 			}
 			
+//			curCard1 = getCardImage(c1);
+//			curCard2 = getCardImage(c2);
+			
 		}
+		
+
 	}
 
 	private Image getCardImage(Card c) {

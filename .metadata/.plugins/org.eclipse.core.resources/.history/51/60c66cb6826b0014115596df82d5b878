@@ -196,7 +196,7 @@ public class WarGame extends BasicGameState {
 				gameOver = false;
 				playerSize = 26;
 				opponentSize = 26;
-				model.isInGame = false;
+
 				sbg.enterState(1); // display game menu screen
 			}
 
@@ -272,6 +272,8 @@ public class WarGame extends BasicGameState {
 			}
 			
 		}
+		
+
 	}
 
 	private Image getCardImage(Card c) {
