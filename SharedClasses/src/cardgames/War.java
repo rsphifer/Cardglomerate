@@ -27,7 +27,10 @@ public class War extends CardGame implements Serializable {
 	 * Constructor for a multiplayer game of war.
 	 */
 	public War(ArrayList<Player> playerNames) {
-		this.players = playerNames;
+		players = new ArrayList<Player>();
+		for (int i=0; i<playerNames.size(); i++) {
+			players.add(playerNames.get(i));
+		}
 		winnings = new LinkedList<Card>();
 		cardsToDisplay = new LinkedList<Card>();
 

@@ -166,15 +166,15 @@ public class WarGame extends BasicGameState {
 	// gets curCards and deck sizes from model and updates them
 	private void updateCards() {
 		cards = model.getCurrentGame().getCardsToDisplay();
-		//sizes = model.getCurrentGame().getHandSizes();
+		sizes = model.getCurrentGame().getHandSizes();
 		if (!cards.isEmpty()) {
 			c1 = cards.get(0); // player card
 			c2 = cards.get(1); // opponent card
 			curCard1 = getCardImage(c1);
 			curCard2 = getCardImage(c2);
 		}
-		playerSize = 10;//sizes.get(1);
-		opponentSize = 10;//sizes.get(0);
+		playerSize = sizes.get(1);
+		opponentSize = sizes.get(0);
 
 	}
 

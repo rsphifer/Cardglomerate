@@ -24,7 +24,10 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	private boolean handOver = false;
 
 	public TexasHoldEm(ArrayList<Player> playerNames) {
-		this.players = playerNames;
+		players = new ArrayList<Player>();
+		for (int i=0; i<playerNames.size(); i++) {
+			players.add(playerNames.get(i));
+		}
 		winners = new ArrayList<Player>();
 		cardsOnTable = new LinkedList<Card>();
 		fillDeck();
