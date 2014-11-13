@@ -28,6 +28,8 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		for (int i=0; i<playerNames.size(); i++) {
 			players.add(playerNames.get(i));
 		}
+		
+		whoseTurn = players.get(0);
 		winners = new ArrayList<Player>();
 		cardsOnTable = new LinkedList<Card>();
 		fillDeck();
