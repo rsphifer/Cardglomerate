@@ -611,4 +611,74 @@ public class DatabaseAccess {
 
 		return friendlist;
 	}
+
+	public static long getMoney(int id){
+
+		Connection conn = null;
+		Statement existfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		existfunc = conn.createStatement();
+
+			String get_str;
+				get_str = "SELECT money from users WHERE id=\"" + id + "\"";
+
+			ResultSet existing = existfunc.executeQuery(get_str);
+			existing.next();
+			long money = existing.getLong("money");							
+			existing.close();
+			existfunc.close();
+			conn.close();
+
+			return money;
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+		return 0;
+	}
+
+	public static boolean setMoney(int id, long delta){/*delta can be positive or negative*/
+
+		Connection conn = null;
+		Statement altfunc = null;
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		altfunc = conn.createStatement();
+
+			String set_str;
+				set_str = "UPDATE users SET money=" + delta + "  WHERE id=\"" + id + "\"";
+
+			altfunc.executeUpdate(set_str);
+					
+			altfunc.close();
+			conn.close();
+
+			return true;
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+		return false;
+	}
 }
