@@ -94,7 +94,7 @@ public class WarGame extends BasicGameState {
 		curCard2.draw(600, 200);
 		curCard1.draw(600, 325);
 		if (hasClicked) {
-			g.drawString("Player clicked", 725, 615);
+			g.drawString("Player clicked", 725, 610);
 		}
 
 		if (((War) model.getCurrentGame()).getClickCounter() == 1

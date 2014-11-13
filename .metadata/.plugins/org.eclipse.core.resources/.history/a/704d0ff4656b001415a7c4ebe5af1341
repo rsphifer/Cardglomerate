@@ -81,7 +81,7 @@ public class War extends CardGame implements Serializable {
 
 	private void roundWin(Player winner) {
 		while (!winnings.isEmpty()) {
-			winner.addCardToDiscard((Card) winnings.remove(0));
+			this.winner.addCardToDiscard((Card) winnings.remove(0));
 		}
 	}
 

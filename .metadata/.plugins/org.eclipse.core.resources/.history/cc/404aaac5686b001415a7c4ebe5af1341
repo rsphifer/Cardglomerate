@@ -42,8 +42,6 @@ public class WarGame extends BasicGameState {
 
 	/* Holds this player's position in the players list in the game */
 	private int playerIndex;
-	
-	private String opponentName;
 
 	public WarGame(int state, Model model) {
 		this.model = model;
@@ -53,7 +51,6 @@ public class WarGame extends BasicGameState {
 			throws SlickException {
 
 		playerIndex = -1;
-		opponentName = "player";
 
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
@@ -86,20 +83,16 @@ public class WarGame extends BasicGameState {
 		// draw instructor string
 		g.drawString("Click Deck to Play Card", 725, 600);
 
-		/* Draw player names */
-		g.drawString(opponentName, 550, 8);
-		g.drawString(model.getPlayer().userName, 650, 650);
-		
 		// draw current cards
 		curCard2.draw(600, 200);
 		curCard1.draw(600, 325);
 		if (hasClicked) {
-			g.drawString("Player clicked", 725, 615);
+			g.drawString("player clicked", 725, 650);
 		}
 
 		if (((War) model.getCurrentGame()).getClickCounter() == 1
 				&& !hasClicked) {
-			g.drawString("Opponent clicked", 725, 300);
+			g.drawString("opponent clicked", 725, 300);
 		}
 		// gameover print
 		if (gameOver) {
@@ -198,35 +191,26 @@ public class WarGame extends BasicGameState {
 		sizes = model.getCurrentGame().getHandSizes();
 		if (!cards.isEmpty()) {
 			if (((War) model.getCurrentGame()).isMultiplayer) {
-				if (opponentName.equals("player")) {
-					if (playerIndex == 0) {
-						opponentName = model.getCurrentGame().getPlayers().get(1).userName;
-					} else {
-						opponentName = model.getCurrentGame().getPlayers().get(0).userName;
-					}
-				}
-				
 				if (playerIndex == 0) {
-					
 					c1 = cards.get(0);
 					c2 = cards.get(1);
 					
-					playerSize = sizes.get(0);
-					opponentSize = sizes.get(1);
+					playerSize = sizes.get(1);
+					opponentSize = sizes.get(0);
 					
 				} else {
 					c2 = cards.get(0);
 					c1 = cards.get(1);
 					
-					playerSize = sizes.get(1);
-					opponentSize = sizes.get(0);
+					playerSize = sizes.get(0);
+					opponentSize = sizes.get(1);
 				}
 			} else {
 				c1 = cards.get(0); // player card
 				c2 = cards.get(1); // opponent card
 				
-				playerSize = sizes.get(0);
-				opponentSize = sizes.get(1);
+				playerSize = sizes.get(1);
+				opponentSize = sizes.get(0);
 			}
 			
 			curCard1 = getCardImage(c1);

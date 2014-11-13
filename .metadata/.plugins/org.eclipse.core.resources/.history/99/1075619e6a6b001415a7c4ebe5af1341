@@ -53,7 +53,7 @@ public class WarGame extends BasicGameState {
 			throws SlickException {
 
 		playerIndex = -1;
-		opponentName = "player";
+		opponentName = "AI";
 
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
@@ -87,19 +87,19 @@ public class WarGame extends BasicGameState {
 		g.drawString("Click Deck to Play Card", 725, 600);
 
 		/* Draw player names */
-		g.drawString(opponentName, 550, 8);
-		g.drawString(model.getPlayer().userName, 650, 650);
+		g.drawString(opponentName, 550, 10);
+		g.drawString(model.getPlayer().userName, 650, 610);
 		
 		// draw current cards
 		curCard2.draw(600, 200);
 		curCard1.draw(600, 325);
 		if (hasClicked) {
-			g.drawString("Player clicked", 725, 615);
+			g.drawString("player clicked", 725, 650);
 		}
 
 		if (((War) model.getCurrentGame()).getClickCounter() == 1
 				&& !hasClicked) {
-			g.drawString("Opponent clicked", 725, 300);
+			g.drawString("opponent clicked", 725, 300);
 		}
 		// gameover print
 		if (gameOver) {
@@ -198,7 +198,7 @@ public class WarGame extends BasicGameState {
 		sizes = model.getCurrentGame().getHandSizes();
 		if (!cards.isEmpty()) {
 			if (((War) model.getCurrentGame()).isMultiplayer) {
-				if (opponentName.equals("player")) {
+				if (opponentName.equals("AI")) {
 					if (playerIndex == 0) {
 						opponentName = model.getCurrentGame().getPlayers().get(1).userName;
 					} else {
