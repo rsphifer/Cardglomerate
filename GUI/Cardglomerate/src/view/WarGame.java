@@ -34,10 +34,11 @@ public class WarGame extends BasicGameState {
 	private String winner = "Sombody";
 	private LinkedList<Card> cards;
 	private LinkedList<Integer> sizes;
-	private Card c1;
-	private Card c2;
+	private LinkedList <Card> c1;
+	private LinkedList <Card> c2;
 
 	private boolean hasClicked = false;
+	
 	private int countWhenClicked;
 
 	/* Holds this player's position in the players list in the game */
@@ -58,6 +59,9 @@ public class WarGame extends BasicGameState {
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
+		
+		c1 = new LinkedList<Card>();
+		c2 = new LinkedList<Card>();
 
 		// starting curCards
 		curCard1 = new Image("res/Cards/ec.png");
@@ -91,8 +95,27 @@ public class WarGame extends BasicGameState {
 		g.drawString(model.getPlayer().userName, 650, 650);
 		
 		// draw current cards
-		curCard2.draw(600, 200);
-		curCard1.draw(600, 325);
+//		curCard2.draw(600, 200);
+//		curCard1.draw(600, 325);
+		
+		int j=0;
+		for (int i=c1.size()-1; i >= 0; i--) {
+			getCardImage(c1.get(i)).draw(600+j*90, 200);
+			getCardImage(c2.get(i)).draw(600+j*90, 325);
+			
+			if (c1.size()-(i+1) > 0) {
+				GameMenu.deckImage.draw(600+j*90+20, 200);
+				GameMenu.deckImage.draw(600+j*90+40, 200);
+				GameMenu.deckImage.draw(600+j*90+60, 200);
+				
+				GameMenu.deckImage.draw(600+j*90+20, 325);
+				GameMenu.deckImage.draw(600+j*90+40, 325);
+				GameMenu.deckImage.draw(600+j*90+60, 325);
+			}
+			
+			j++;
+		}
+		
 		if (hasClicked) {
 			g.drawString("Player clicked", 725, 615);
 		}
@@ -194,6 +217,7 @@ public class WarGame extends BasicGameState {
 
 	// gets curCards and deck sizes from model and updates them
 	private void updateCards() {
+	
 		cards = model.getCurrentGame().getCardsToDisplay();
 		sizes = model.getCurrentGame().getHandSizes();
 		if (!cards.isEmpty()) {
@@ -206,31 +230,64 @@ public class WarGame extends BasicGameState {
 					}
 				}
 				
+				c1 = new LinkedList<Card>();
+				c2 = new LinkedList<Card>();
+				
 				if (playerIndex == 0) {
 					
-					c1 = cards.get(0);
-					c2 = cards.get(1);
+				//	c1.add(cards.remove(0));
+				//	c2.add(cards.get(1));
 					
-					playerSize = sizes.get(0);
-					opponentSize = sizes.get(1);
-					
-				} else {
-					c2 = cards.get(0);
-					c1 = cards.get(1);
+					int ind = 0;
+					while (!cards.isEmpty()) {
+						if (ind%2==0) {
+							c1.add(cards.remove(0));
+						} else {
+							c2.add(cards.remove(0));
+						}
+						ind++;
+					}
 					
 					playerSize = sizes.get(1);
 					opponentSize = sizes.get(0);
+					
+				} else {
+//					c2.add(cards.get(0));
+//					c1.add(cards.get(1));
+					
+					int ind = 0;
+					while (!cards.isEmpty()) {
+						if (ind%2==0) {
+							c2.add(cards.remove(0));
+						} else {
+							c1.add(cards.remove(0));
+						}
+						ind++;
+					}
+					
+					playerSize = sizes.get(0);
+					opponentSize = sizes.get(1);
 				}
 			} else {
-				c1 = cards.get(0); // player card
-				c2 = cards.get(1); // opponent card
+//				c1.add(cards.get(0)); // player card
+//				c2.add(cards.get(1)); // opponent card
 				
-				playerSize = sizes.get(0);
-				opponentSize = sizes.get(1);
+				int ind = 0;
+				while (!cards.isEmpty()) {
+					if (ind%2==0) {
+						c1.add(cards.remove(0));
+					} else {
+						c2.add(cards.remove(0));
+					}
+					ind++;
+				}
+				
+				playerSize = sizes.get(1);
+				opponentSize = sizes.get(0);
 			}
 			
-			curCard1 = getCardImage(c1);
-			curCard2 = getCardImage(c2);
+//			curCard1 = getCardImage(c1);
+//			curCard2 = getCardImage(c2);
 			
 		}
 		

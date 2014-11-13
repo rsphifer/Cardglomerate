@@ -17,7 +17,9 @@ public class War extends CardGame implements Serializable {
 	private boolean gameOver = false;
 	private Card p1Card = null;
 	private Card p2Card = null;
-	
+
+	public boolean isTieRound = false;
+
 	/* Multiplayer variables */
 	private int clickCounter;
 	private int cardsFlipped;
@@ -28,7 +30,7 @@ public class War extends CardGame implements Serializable {
 	 */
 	public War(ArrayList<Player> playerNames) {
 		players = new ArrayList<Player>();
-		for (int i=0; i<playerNames.size(); i++) {
+		for (int i = 0; i < playerNames.size(); i++) {
 			players.add(playerNames.get(i));
 		}
 		winnings = new LinkedList<Card>();
@@ -37,7 +39,7 @@ public class War extends CardGame implements Serializable {
 		isMultiplayer = true;
 		clickCounter = 0;
 		cardsFlipped = 0;
-		
+
 		fillDeck();
 		setup();
 
@@ -49,13 +51,14 @@ public class War extends CardGame implements Serializable {
 	public War(Player p1) {
 		players = new ArrayList<Player>();
 
-		this.players.add(new Player("AI"));
 		this.players.add(p1);
+		this.players.add(new Player("AI"));
 
 		winnings = new LinkedList<Card>();
 		cardsToDisplay = new LinkedList<Card>();
 		fillDeck();
 		isMultiplayer = false;
+		setup();
 	}
 
 	public LinkedList<Card> getCardsToDisplay() {
@@ -113,21 +116,29 @@ public class War extends CardGame implements Serializable {
 			gameOver = true;
 			return;
 		}
-		while (!cardsToDisplay.isEmpty()) {
-			cardsToDisplay.remove();
-		}
-		cardsToDisplay.add(c1);
-		cardsToDisplay.add(c2);
 
 		// System.out.println(c1.getPower()+" of "+c1.getSuit()+" vs "+c2.getPower()+" of "+c2.getSuit());
 
 		if (c1.getPower() > c2.getPower()) {
-			roundWin(players.get(0));
+			if (c2.getPower() == 1) {
+				roundWin(players.get(1));
+			} else {
+				roundWin(players.get(0));
+			}
 		} else if (c1.getPower() < c2.getPower()) {
-			roundWin(players.get(1));
+			if (c1.getPower() == 1) {
+				roundWin(players.get(0));
+			} else {
+				roundWin(players.get(1));
+			}
 		} else {
+			isTieRound = true;
 			roundTie();
 		}
+
+		cardsToDisplay.add(c1);
+		cardsToDisplay.add(c2);
+
 	}
 
 	private void win(Player winner) {
@@ -143,16 +154,16 @@ public class War extends CardGame implements Serializable {
 				players.get(1).addCardToHand(getTopOfDeck());
 			}
 		}
-		
+
 		System.out.printf("\n\nPlayer 1 start hand:\n");
 		for (Card c : players.get(0).getHand()) {
-			System.out.printf("%d %d\n",c.getPower(), c.getSuit() );
+			System.out.printf("%d %d\n", c.getPower(), c.getSuit());
 		}
 		System.out.printf("\n\nPlayer 2 start hand:\n");
 		for (Card c : players.get(1).getHand()) {
-			System.out.printf("%d %d\n",c.getPower(), c.getSuit() );
+			System.out.printf("%d %d\n", c.getPower(), c.getSuit());
 		}
-		
+
 	}
 
 	public void testSetup() {
@@ -161,16 +172,16 @@ public class War extends CardGame implements Serializable {
 		}
 		players.get(1).addCardToHand(getTopOfDeck());
 	}
-	
+
 	public synchronized void incrementClickCounter() {
 		clickCounter++;
 		update();
 	}
-	
+
 	public int getClickCounter() {
 		return clickCounter;
 	}
-	
+
 	public int getCardsFlippedCount() {
 		return cardsFlipped;
 	}
@@ -188,6 +199,9 @@ public class War extends CardGame implements Serializable {
 
 			winnings.push(p1Card);
 			winnings.push(p2Card);
+			
+			isTieRound = false;
+			cardsToDisplay = new LinkedList<Card>();
 
 			score(p1Card, p2Card);
 
@@ -199,25 +213,28 @@ public class War extends CardGame implements Serializable {
 				}
 			}
 		} else {
-			
-			if (clickCounter>=2) {
+
+			if (clickCounter >= 2) {
 				/* Both players clicked, play a card */
 				System.out.println("Play card");
 				clickCounter = 0;
 				cardsFlipped++;
-				
+
 				if ((p1Card = players.get(0).playTopCard()) == null) {
 					gameOver = true;
 				}
 				if ((p2Card = players.get(1).playTopCard()) == null) {
 					gameOver = true;
 				}
-				
+
 				winnings.push(p1Card);
 				winnings.push(p2Card);
-				
+
+				isTieRound = false;
+				cardsToDisplay = new LinkedList<Card>();
+
 				score(p1Card, p2Card);
-				
+
 				if (gameOver) {
 					if (players.get(0).getHandSize() == 0) {
 						win(players.get(1));
@@ -226,7 +243,7 @@ public class War extends CardGame implements Serializable {
 					}
 				}
 			}
-			
+
 		}
 		return;
 	}
@@ -296,7 +313,7 @@ public class War extends CardGame implements Serializable {
 
 	@Override
 	public boolean updateReady() {
-		return false;
+		return true;
 	}
 
 	@Override

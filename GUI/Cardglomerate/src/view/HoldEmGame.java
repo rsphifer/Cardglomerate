@@ -270,6 +270,7 @@ public class HoldEmGame extends BasicGameState {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				// player left game, code to handle that
+				model.isInGame = false;
 				//model.getCurrentGame().quitGame(model.getPlayer());
 				sbg.enterState(7);
 			}

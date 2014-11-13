@@ -31,6 +31,8 @@ public class WarOptions extends BasicGameState {
 	private Rectangle lobbyThreeJoin = new Rectangle(820, 580, 70, 30);
 	private Rectangle lobbyFourJoin = new Rectangle(1140, 580, 70, 30);
 
+	public boolean isStartSelected = false;
+	
 	private Rectangle gameStartButton = new Rectangle(1, 1, 70, 30);
 
 	private boolean lobbyJoined = false;
@@ -127,6 +129,7 @@ public class WarOptions extends BasicGameState {
 		/* Check if player is in a lobby and if lobby has been started. */
 		if (model.isInLobby && model.getGameLobby(CardGameType.War)[model.getCurrentLobbyNumber()].isStarted) {
 			if (model.enterGameFromLobby(model.getGameLobby(CardGameType.War)[model.getCurrentLobbyNumber()].getGameId())) {
+				isStartSelected = false;
 				sbg.enterState(5);
 			}
 		}
@@ -219,7 +222,8 @@ public class WarOptions extends BasicGameState {
 							.getCurrentLobbyNumber()];
 					if (tmpLobby.getHost().userName
 							.equals(model.getPlayer().userName)) {
-						if (tmpLobby.getPlayers().size() == 2) {
+						if (!isStartSelected && tmpLobby.getPlayers().size() == 2) {
+							isStartSelected = true;
 							System.out.println("Start game accepted");
 							model.startGameFromLobby();
 						} else {

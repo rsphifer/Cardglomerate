@@ -137,18 +137,12 @@ public class HoldEmOptions extends BasicGameState {
 
 		g.drawImage(table, 300, 400);
 		g.drawString("Table 1", 370, 380);
-		// g.drawString(t1p1, 370, 560);g.drawString(t1p2, 370,
-		// 590);g.drawString(t1p3, 370, 620);g.drawString(t1p4, 370, 650);
 
 		g.drawImage(table, 600, 400);
 		g.drawString("Table 2", 670, 380);
-		// g.drawString(t2p1, 670, 560);g.drawString(t2p2, 670,
-		// 590);g.drawString(t2p3, 670, 620);g.drawString(t2p4, 670, 650);
 
 		g.drawImage(table, 900, 400);
 		g.drawString("Table 3", 970, 380);
-		// g.drawString(t3p1, 970, 560);g.drawString(t3p2, 970,
-		// 590);g.drawString(t3p3, 970, 620);g.drawString(t3p4, 970, 650);
 
 		// friends list rendering
 		g.drawString("Friends List", 1000, 10);

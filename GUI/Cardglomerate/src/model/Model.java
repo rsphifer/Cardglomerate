@@ -77,7 +77,6 @@ public class Model {
 		gameId = ServerAccess.createNewGame(currentGame);
 		if (gameId != -1) {
 			isInGame = true;
-			// currentGame.testSetup();
 			return true;
 		}
 		return false;
@@ -93,7 +92,6 @@ public class Model {
 
 	public void updateGame() {
 		if (currentGame.updateReady()) {
-			System.out.println("que?");
 			currentGame.update();
 		}
 	}
