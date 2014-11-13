@@ -231,7 +231,12 @@ public class AchievementAccess {
 
 		int num_wins = getWins(id, game);
 
-		float ratio = (float)num_wins / (float)num_games;
+		
+		float ratio = 0;
+
+		if(num_games > 0){
+			ratio = (float)num_wins / (float)num_games;
+		}
 
 		return ratio;
 
