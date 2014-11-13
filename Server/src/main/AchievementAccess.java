@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import player.Player;
 import player.Friend;
+import player.Achievement
 
 /**
  * Provides interface to the server to the SQL database for metagame. All metagame queries to db come through here.
@@ -344,4 +345,5 @@ public class AchievementAccess {
 
 		return false;
 	}
+
 }
