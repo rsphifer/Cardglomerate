@@ -11,6 +11,7 @@ import misc.GameLobby;
 import misc.GameLobbyRequest;
 import misc.Request;
 import misc.UpdateGameRequest;
+import player.AchievementRequest;
 import player.NewFriendRequest;
 import player.NewPlayerRequest;
 import player.Player;
@@ -176,7 +177,20 @@ public class RequestHandler implements Runnable {
 					obj = tmp;
 
 					
+				} else if(action.equals("getWinRatio")) {
+					System.out.println("get win ratio request");
+					AchievementRequest ar = (AchievementRequest)request.getObject();
+					
+					if (ar.getGameType() == CardGameType.War) {
+						obj = AchievementAccess.getWinRat(ar.getPlayer().getPlayerId(), "war");
+					} else if (ar.getGameType() == CardGameType.TexasHoldEm) {
+						obj = AchievementAccess.getWinRat(ar.getPlayer().getPlayerId(), "holdem");
+					} else {
+						obj = 0;
+					}
+					
 				} else if (action.equals("logout")) {
+				
 					System.out.println("logout request");
 					Player player = (Player)request.getObject();
 					obj = DatabaseAccess.logOut(player.getPlayerId());

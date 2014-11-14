@@ -5,8 +5,7 @@
 		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
-			<item value="/homes/mounts/Cardglomerate/GUI/Cardglomerate"/>
-			<item value="/u/data/u87/rsphifer/cs307/Cardglomerate/GUI"/>
+			<item value="e:\Users\Richie\Desktop\cs307\Cardglomerate\GUI"/>
 			<item value="C:\Users\Moosington\Google Drive\Classes\CS 307\Cardglomerate\GUI\Cardglomerate"/>
 			<item value="C:\Users\Moosington\Google Drive\Classes\CS 307\Cardglomerate"/>
 		</list>

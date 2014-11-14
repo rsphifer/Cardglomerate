@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="cardgames.CardGameType"/>
-<fullyQualifiedTypeName name="controller.ServerAccess"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="cards.Card"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="misc.UpdateGameRequest"/>
+<fullyQualifiedTypeName name="controller.ServerAccess"/>
+<fullyQualifiedTypeName name="cardgames.TexasHoldEm"/>
+<fullyQualifiedTypeName name="cardgames.CardGameType"/>
 </qualifiedTypeNameHistroy>

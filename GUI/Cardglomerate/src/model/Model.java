@@ -7,6 +7,7 @@ import misc.ChatEntry;
 import misc.GameLobby;
 import misc.GameLobbyRequest;
 import misc.UpdateGameRequest;
+import player.AchievementRequest;
 import player.Friend;
 import player.NewFriendRequest;
 import player.NewPlayerRequest;
@@ -290,7 +291,15 @@ public class Model {
 	public CardGameType getCurrentLobbyType() {
 		return currentLobbyType;
 	}
+	
+	/*********************************************************
+	 * Achievement model calls.
+	 *********************************************************/
 
+	public float getWinRatio(CardGameType gameType, Player player) {
+		return ServerAccess.getWinRatio(new AchievementRequest(player, gameType));
+	}
+	
 	/*********************************************************
 	 * Friend list mgmt model calls.
 	 *********************************************************/

@@ -10,6 +10,7 @@ import misc.GameLobby;
 import misc.GameLobbyRequest;
 import misc.Request;
 import misc.UpdateGameRequest;
+import player.AchievementRequest;
 import player.Friend;
 import player.NewFriendRequest;
 import player.NewPlayerRequest;
@@ -142,6 +143,15 @@ public class ServerAccess {
 	public static boolean startGameFromLobby(GameLobbyRequest glr) {
 		Request request = new Request("startGameFromLobby", glr);
 		return (boolean)sendRequestWithResponse(request);
+	}
+	
+	/*********************************************************
+	*	Achievement server calls.
+	*********************************************************/
+	
+	public static float getWinRatio(AchievementRequest ar) {
+		Request request = new Request("getWinRatio", ar);
+		return (float)sendRequestWithResponse(request);
 	}
 	
 	/*********************************************************

@@ -2,8 +2,10 @@ package cardgames;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
+import player.Player;
 import cards.Card;
 
 public class BlackJack extends CardGame implements Serializable {
@@ -222,6 +224,96 @@ public class BlackJack extends CardGame implements Serializable {
 		test1.playBlackJack();
 		//test1.playBlackJack();
 		//test1.seePlayerHand();
+	}
+
+	@Override
+	public void setup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testSetup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Player> getWinner() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LinkedList<Integer> getHandSizes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean getGameover() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public LinkedList<Card> getCardsToDisplay() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Player> getPlayers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Player getTurn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getPot() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getExpectedBet() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean updateReady() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setBet(Player p, int bet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void nextTurn(Player curP) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fold(Player p) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

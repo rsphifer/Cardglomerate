@@ -1,10 +1,10 @@
 package main;
 
-import java.sql.*;
-import java.util.ArrayList;
-import player.Player;
-import player.Friend;
-import player.Achievement
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Provides interface to the server to the SQL database for metagame. All metagame queries to db come through here.
