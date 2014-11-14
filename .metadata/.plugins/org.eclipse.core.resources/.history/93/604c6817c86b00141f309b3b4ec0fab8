@@ -206,7 +206,6 @@ public class WarGame extends BasicGameState {
 				playerSize = 26;
 				opponentSize = 26;
 				model.isInGame = false;
-				model.updateAchievements();
 				sbg.enterState(1); // display game menu screen
 			}
 

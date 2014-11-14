@@ -170,7 +170,7 @@ public class ServerAccess {
 	}
 	
 	public static boolean incrementNumGames(AchievementRequest ar) {
-		Request request = new Request("incrementNumGames", ar);
+		Request request = new Request("incrementNumWins", ar);
 		return (boolean)sendRequestWithResponse(request);
 	}
 	/*********************************************************

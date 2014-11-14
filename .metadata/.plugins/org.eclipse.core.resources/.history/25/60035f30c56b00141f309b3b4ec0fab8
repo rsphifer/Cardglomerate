@@ -87,7 +87,6 @@ public class Model {
 
 		gameId = ServerAccess.createNewGame(currentGame);
 		if (gameId != -1) {
-			ServerAccess.incrementNumGames(new AchievementRequest(player, gameType));
 			isInGame = true;
 			return true;
 		}
@@ -202,7 +201,6 @@ public class Model {
 			isInGame = true;
 			gameType = currentLobbyType;
 			leaveGameLobby(currentLobbyType, currentLobbyNumber);
-			ServerAccess.incrementNumGames(new AchievementRequest(player, gameType));
 			return true;
 		}
 		return false;
@@ -312,12 +310,7 @@ public class Model {
 	/*********************************************************
 	 * Achievement model calls.
 	 *********************************************************/
-	public void updateAchievements() {
-		warGames = getServerNumberOfGames(CardGameType.War, player);
-		warWins = getServerNumberOfWins(CardGameType.War, player);
-		warWinRatio = getServerWinRatio(CardGameType.War, player);
-	}
-	
+
 	public float getServerWinRatio(CardGameType gameType, Player player) {
 		return ServerAccess.getWinRatio(new AchievementRequest(player, gameType));
 	}
@@ -349,10 +342,6 @@ public class Model {
 			return warGames;
 		}
 		return 0;
-	}
-	
-	public void incrementNumberOfWins(CardGameType gameType) {
-		ServerAccess.incrementNumWins(new AchievementRequest(player, gameType));
 	}
 	
 	/*********************************************************

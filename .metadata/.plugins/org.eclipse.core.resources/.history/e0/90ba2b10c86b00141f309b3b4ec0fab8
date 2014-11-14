@@ -204,7 +204,6 @@ public class BlackjackGame extends BasicGameState {
 				Master.isMouseReleased = false;
 
 				model.isInGame = false;
-				model.updateAchievements();
 				sbg.enterState(1); // display game menu screen
 			}
 

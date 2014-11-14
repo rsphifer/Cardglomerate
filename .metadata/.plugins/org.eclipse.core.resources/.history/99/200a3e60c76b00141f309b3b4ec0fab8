@@ -12,8 +12,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import controller.ServerAccess;
-import cardgames.CardGameType;
 import cardgames.War;
 import cards.Card;
 
@@ -38,8 +36,6 @@ public class WarGame extends BasicGameState {
 	private LinkedList <Card> c2;
 
 	private boolean hasClicked = false;
-	
-	private boolean incrementedVictory = false;
 	
 	private int countWhenClicked;
 
@@ -160,11 +156,6 @@ public class WarGame extends BasicGameState {
 		// check gameOver
 		if (gameOver) {
 			winner = currGame.getWinner().get(0).userName;
-			
-			if (winner.equals(model.getPlayer().userName) && !incrementedVictory) {
-				incrementedVictory = true;
-				model.incrementNumberOfWins(CardGameType.War);
-			}
 		}
 
 		if (currGame.isMultiplayer
@@ -206,7 +197,6 @@ public class WarGame extends BasicGameState {
 				playerSize = 26;
 				opponentSize = 26;
 				model.isInGame = false;
-				model.updateAchievements();
 				sbg.enterState(1); // display game menu screen
 			}
 

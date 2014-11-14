@@ -164,15 +164,6 @@ public class ServerAccess {
 		return (int)sendRequestWithResponse(request);
 	}
 	
-	public static boolean incrementNumWins(AchievementRequest ar) {
-		Request request = new Request("incrementNumWins", ar);
-		return (boolean)sendRequestWithResponse(request);
-	}
-	
-	public static boolean incrementNumGames(AchievementRequest ar) {
-		Request request = new Request("incrementNumGames", ar);
-		return (boolean)sendRequestWithResponse(request);
-	}
 	/*********************************************************
 	*	Friend list mgmt server calls.
 	*********************************************************/

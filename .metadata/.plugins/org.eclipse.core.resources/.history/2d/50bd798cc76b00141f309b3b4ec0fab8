@@ -312,12 +312,7 @@ public class Model {
 	/*********************************************************
 	 * Achievement model calls.
 	 *********************************************************/
-	public void updateAchievements() {
-		warGames = getServerNumberOfGames(CardGameType.War, player);
-		warWins = getServerNumberOfWins(CardGameType.War, player);
-		warWinRatio = getServerWinRatio(CardGameType.War, player);
-	}
-	
+
 	public float getServerWinRatio(CardGameType gameType, Player player) {
 		return ServerAccess.getWinRatio(new AchievementRequest(player, gameType));
 	}
@@ -349,10 +344,6 @@ public class Model {
 			return warGames;
 		}
 		return 0;
-	}
-	
-	public void incrementNumberOfWins(CardGameType gameType) {
-		ServerAccess.incrementNumWins(new AchievementRequest(player, gameType));
 	}
 	
 	/*********************************************************

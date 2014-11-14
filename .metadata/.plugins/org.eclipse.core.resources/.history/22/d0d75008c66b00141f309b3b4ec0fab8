@@ -185,10 +185,7 @@ public class RequestHandler implements Runnable {
 						obj = AchievementAccess.getWinRat(ar.getPlayer().getPlayerId(), "war");
 					} else if (ar.getGameType() == CardGameType.TexasHoldEm) {
 						obj = AchievementAccess.getWinRat(ar.getPlayer().getPlayerId(), "holdem");
-					} else if (ar.getGameType() == CardGameType.Blackjack) {
-						obj = AchievementAccess.getWinRat(ar.getPlayer().getPlayerId(), "blackjack");
 					} else {
-					
 						obj = 0;
 					}
 					
@@ -225,17 +222,6 @@ public class RequestHandler implements Runnable {
 						AchievementAccess.addGame(ar.getPlayer().getPlayerId(), "holdem");
 					} else if (ar.getGameType() == CardGameType.Blackjack) {
 						AchievementAccess.addGame(ar.getPlayer().getPlayerId(), "blackjack");
-					} 
-					obj = true;
-				} else if (action.equals("incrementNumWins")) {
-					System.out.println("increment number of wins request");
-					AchievementRequest ar = (AchievementRequest)request.getObject();
-					if (ar.getGameType() == CardGameType.War) {
-						AchievementAccess.addWin(ar.getPlayer().getPlayerId(), "war");
-					} else if (ar.getGameType() == CardGameType.TexasHoldEm) {
-						AchievementAccess.addWin(ar.getPlayer().getPlayerId(), "holdem");
-					} else if (ar.getGameType() == CardGameType.Blackjack) {
-						AchievementAccess.addWin(ar.getPlayer().getPlayerId(), "blackjack");
 					} 
 					obj = true;
 				} else if (action.equals("logout")) {
