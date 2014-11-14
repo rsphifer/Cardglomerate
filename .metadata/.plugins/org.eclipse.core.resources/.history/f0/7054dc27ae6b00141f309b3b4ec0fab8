@@ -35,11 +35,9 @@ public class BlackjackGame extends BasicGameState {
 	private LinkedList <Card> c1;
 	private LinkedList <Card> c2;
 	
-	private Rectangle hitButton = new Rectangle(700, 650,100,50);
-	private Rectangle stayButton = new Rectangle(810, 650,100,50);
-	private Rectangle playAgainButton = new Rectangle(700, 590, 150, 50);
-	
-	private String playerName = null;
+	private Rectangle hitButton = new Rectangle(700, 700,100,50);
+	private Rectangle stayButton = new Rectangle(810, 700,100,50);
+	private Rectangle playAgainButton = new Rectangle(700, 640, 150, 50);
 
 
 	/* Holds this player's position in the players list in the game */
@@ -74,26 +72,15 @@ public class BlackjackGame extends BasicGameState {
 			throws SlickException {
 		// render the background
 		background.draw(0, 0);
-		
-		
 
 		// mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
 
 	
 		g.draw(playAgainButton);
-		g.drawString("Play Again", 732, 602);
-		
 		g.draw(hitButton);
-		g.drawString("Hit", 732, 662);
 		g.draw(stayButton);
-		g.drawString("Stay", 844, 662);
 	
-		g.drawString("Count: ", 550, 620);
-		g.drawString(playerName, 550, 650);
-		
-		g.drawString("Dealer", 550, 25);
-		g.drawString("Count: ", 550, 55);
 		
 		arrow.draw(0,570);
 		
@@ -111,10 +98,7 @@ public class BlackjackGame extends BasicGameState {
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 
-
-		if (playerName == null) {
-			playerName = model.getPlayer().userName;
-		}
+		
 
 
 		// back button clicked

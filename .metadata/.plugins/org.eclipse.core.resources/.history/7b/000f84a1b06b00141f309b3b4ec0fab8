@@ -92,9 +92,6 @@ public class BlackjackGame extends BasicGameState {
 		g.drawString("Count: ", 550, 620);
 		g.drawString(playerName, 550, 650);
 		
-		g.drawString("Dealer", 550, 25);
-		g.drawString("Count: ", 550, 55);
-		
 		arrow.draw(0,570);
 		
 		// draw current cards

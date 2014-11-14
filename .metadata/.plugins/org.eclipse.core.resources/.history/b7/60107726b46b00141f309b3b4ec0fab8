@@ -18,8 +18,7 @@ public class BlackJack extends CardGame implements Serializable {
 	public boolean handStarted = true;
 	public boolean gameEnded = false;
 	public boolean waitingOnPlayer = true;
-	public boolean playerBusted = false, dealerBusted = false;
-	public boolean playerWon = false;
+	public boolean playerBusted = true;
 	
 
 	public BlackJack(){
@@ -28,21 +27,6 @@ public class BlackJack extends CardGame implements Serializable {
 		playerStay = 0;
 		dealerStay = 0;
 		fillDeck();
-		dealCards();
-	}
-	
-	public void resetGame() {
-		dealerHand = new ArrayList<Card>();
-		playerHand = new ArrayList<Card>();
-		
-		fillDeck();
-		
-		dealCards();
-		handStarted = true;
-		gameEnded = false;
-		waitingOnPlayer = true;
-		playerBusted = dealerBusted = false;
-		playerWon = false;
 	}
 	
 	public void dealCards(){
@@ -195,33 +179,19 @@ public class BlackJack extends CardGame implements Serializable {
 	
 	public void playerHit() {
 		playerHand.add(getTopOfDeck());
-		if (getPlayerScoreWithAces() > 21) {
-			waitingOnPlayer = false;
-		}
 	}
 	
 	public void playerStay() {
-		waitingOnPlayer = false;
+		
 	}
 	
 	public void dealerHit() {
 		dealerHand.add(getTopOfDeck());
-		if (getDealerScoreWithAces() > 21) {
-			gameEnded = true;
-			if (gameWinner() == 2) {
-				playerWon = true;
-			}
-		}
 	}
 	
 	public void dealerStay() {
-		gameEnded = true;
-		if (gameWinner() == 2) {
-			playerWon = true;
-		}
+		
 	}
-	
-
 	
 	
 	public void dealerVsPlayerPlay(){
