@@ -355,7 +355,7 @@ public class GameMenu extends BasicGameState {
   // blackjack clicked
   if ((xpos > 360 && xpos < 610) && (ypos > 395 && ypos < 645)) {
    if (Mouse.isButtonDown(0)) {
-    sbg.enterState(3); // display coming soon screen
+    sbg.enterState(9); // black jack options
    }
   }
 

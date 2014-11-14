@@ -246,7 +246,7 @@ public class WarOptions extends BasicGameState {
 					model.leaveGameLobby(CardGameType.War,
 							model.getCurrentLobbyNumber());
 				}
-				model.createGameRequest();
+				model.createGameRequest(CardGameType.War);
 				sbg.enterState(5);
 			}
 

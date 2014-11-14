@@ -13,6 +13,7 @@ import player.NewFriendRequest;
 import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
+import cardgames.BlackJack;
 //import cardgames.CardGame;
 //import cardgames.War;
 import cardgames.CardGame;
@@ -76,8 +77,13 @@ public class Model {
 
 	}
 
-	public boolean createGameRequest() {
-		currentGame = new War(player);
+	public boolean createGameRequest(CardGameType gameType) {
+		
+		if (gameType == CardGameType.War) {
+			currentGame = new War(player);
+		} else if (gameType == CardGameType.Blackjack) {
+			currentGame = new BlackJack();
+		}
 
 		gameId = ServerAccess.createNewGame(currentGame);
 		if (gameId != -1) {
