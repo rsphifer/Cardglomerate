@@ -48,10 +48,6 @@ public class Model {
 	/* Updated regularly by update checker */
 	private GameLobby[] texasHoldemLobbies;
 	private GameLobby[] warLobbies;
-	
-	private int warGames;
-	private int warWins;
-	private float warWinRatio;
 
 	public boolean isInLobby;
 	private CardGameType currentLobbyType;
@@ -137,11 +133,6 @@ public class Model {
 			isLoggedIn = true;
 			friendList = ServerAccess.getFriends(player);
 			menuChat = ServerAccess.getMenuChat();
-			
-			/* Server calls to initialize war stats */
-			warGames = getNumberOfGames(CardGameType.War, player);
-			warWins = getNumberOfWins(CardGameType.War, player);
-			warWinRatio = getWinRatio(CardGameType.War, player);
 
 			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
 					null, 0, CardGameType.War));
@@ -307,14 +298,6 @@ public class Model {
 
 	public float getWinRatio(CardGameType gameType, Player player) {
 		return ServerAccess.getWinRatio(new AchievementRequest(player, gameType));
-	}
-	
-	public int getNumberOfWins(CardGameType gameType, Player player) {
-		return ServerAccess.getNumWins(new AchievementRequest(player, gameType));
-	}
-	
-	public int getNumberOfGames(CardGameType gameType, Player player) {
-		return ServerAccess.getNumGames(new AchievementRequest(player, gameType));
 	}
 	
 	/*********************************************************

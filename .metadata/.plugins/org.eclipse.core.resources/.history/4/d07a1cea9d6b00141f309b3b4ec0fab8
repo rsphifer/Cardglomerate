@@ -28,7 +28,7 @@ import cardgames.CardGame;
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME 	= "sslab07.cs.purdue.edu";
+	private static final String HOST_NAME 	= "sslab21.cs.purdue.edu";
 	private static final int	PORT_NUMBER = 4001;
 	
 	private static Object sendRequestWithResponse(Request request) {
@@ -152,16 +152,6 @@ public class ServerAccess {
 	public static float getWinRatio(AchievementRequest ar) {
 		Request request = new Request("getWinRatio", ar);
 		return (float)sendRequestWithResponse(request);
-	}
-	
-	public static int getNumGames(AchievementRequest ar) {
-		Request request = new Request("getNumGames", ar);
-		return (int)sendRequestWithResponse(request);
-	}
-	
-	public static int getNumWins(AchievementRequest ar) {
-		Request request = new Request("getNumWins", ar);
-		return (int)sendRequestWithResponse(request);
 	}
 	
 	/*********************************************************

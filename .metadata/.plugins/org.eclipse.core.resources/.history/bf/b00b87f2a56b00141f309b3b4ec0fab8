@@ -199,16 +199,6 @@ public class RequestHandler implements Runnable {
 					} else {
 						obj = 0;
 					}
-				} else if (action.equals("getNumWins")) {
-					System.out.println("get number of wins request");
-					AchievementRequest ar = (AchievementRequest)request.getObject();
-					if (ar.getGameType() == CardGameType.War) {
-						obj = AchievementAccess.getWins(ar.getPlayer().getPlayerId(), "war");
-					} else if (ar.getGameType() == CardGameType.TexasHoldEm) {
-						obj = AchievementAccess.getWins(ar.getPlayer().getPlayerId(), "holdem");
-					} else {
-						obj = 0;
-					}
 				} else if (action.equals("logout")) {
 				
 					System.out.println("logout request");

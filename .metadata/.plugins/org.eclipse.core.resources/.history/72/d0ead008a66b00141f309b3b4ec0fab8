@@ -159,11 +159,6 @@ public class ServerAccess {
 		return (int)sendRequestWithResponse(request);
 	}
 	
-	public static int getNumWins(AchievementRequest ar) {
-		Request request = new Request("getNumWins", ar);
-		return (int)sendRequestWithResponse(request);
-	}
-	
 	/*********************************************************
 	*	Friend list mgmt server calls.
 	*********************************************************/

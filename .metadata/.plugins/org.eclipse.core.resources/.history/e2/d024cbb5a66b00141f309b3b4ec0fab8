@@ -138,7 +138,6 @@ public class Model {
 			friendList = ServerAccess.getFriends(player);
 			menuChat = ServerAccess.getMenuChat();
 			
-			/* Server calls to initialize war stats */
 			warGames = getNumberOfGames(CardGameType.War, player);
 			warWins = getNumberOfWins(CardGameType.War, player);
 			warWinRatio = getWinRatio(CardGameType.War, player);

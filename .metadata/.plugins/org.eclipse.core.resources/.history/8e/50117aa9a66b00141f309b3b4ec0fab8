@@ -49,8 +49,6 @@ public class Model {
 	private GameLobby[] texasHoldemLobbies;
 	private GameLobby[] warLobbies;
 	
-	private int warGames;
-	private int warWins;
 	private float warWinRatio;
 
 	public boolean isInLobby;
@@ -137,11 +135,6 @@ public class Model {
 			isLoggedIn = true;
 			friendList = ServerAccess.getFriends(player);
 			menuChat = ServerAccess.getMenuChat();
-			
-			/* Server calls to initialize war stats */
-			warGames = getNumberOfGames(CardGameType.War, player);
-			warWins = getNumberOfWins(CardGameType.War, player);
-			warWinRatio = getWinRatio(CardGameType.War, player);
 
 			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
 					null, 0, CardGameType.War));
