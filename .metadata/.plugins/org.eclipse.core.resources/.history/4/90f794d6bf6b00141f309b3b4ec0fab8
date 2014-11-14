@@ -256,8 +256,6 @@ public class WarGame extends BasicGameState {
 					opponentSize = sizes.get(1);
 				}
 			} else {
-				c1 = new LinkedList<Card>();
-				c2 = new LinkedList<Card>();
 				
 				int ind = 0;
 				while (!cards.isEmpty()) {
