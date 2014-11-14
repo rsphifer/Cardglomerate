@@ -317,27 +317,6 @@ public class Model {
 		return ServerAccess.getNumGames(new AchievementRequest(player, gameType));
 	}
 	
-	public float getPlayerWinRatio(CardGameType gameType) {
-		if (gameType == CardGameType.War) {
-			return warWinRatio;
-		}
-		return 0;
-	}
-	
-	public int getPlayerWinNumber(CardGameType gameType) {
-		if (gameType == CardGameType.War) {
-			return warWins;
-		}
-		return 0;
-	}
-	
-	public int getPlayerGameNumber(CardGameType gameType) {
-		if (gameType ==CardGameType.War) {
-			return warGames;
-		}
-		return 0;
-	}
-	
 	/*********************************************************
 	 * Friend list mgmt model calls.
 	 *********************************************************/

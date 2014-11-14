@@ -174,7 +174,7 @@ public class GameMenu extends BasicGameState {
 	  
 	g.drawString(Integer.toString(model.getPlayerGameNumber(CardGameType.War)), 1010,540);
 	g.drawString(Integer.toString(model.getPlayerWinNumber(CardGameType.War)), 1010,560);
-	String formattedRatio = String.format("%.2f", model.getPlayerWinRatio(CardGameType.War));
+	String formattedRatio = String.format("%0.2f", model.getPlayerWinRatio(CardGameType.War));
 	g.drawString(formattedRatio, 1010,580);
 	  
    friends = model.getFriendsList();

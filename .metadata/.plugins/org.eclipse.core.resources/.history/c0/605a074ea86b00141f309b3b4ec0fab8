@@ -139,10 +139,12 @@ public class Model {
 			menuChat = ServerAccess.getMenuChat();
 			
 			/* Server calls to initialize war stats */
-			warGames = getServerNumberOfGames(CardGameType.War, player);
-			warWins = getServerNumberOfWins(CardGameType.War, player);
-			warWinRatio = getServerWinRatio(CardGameType.War, player);
+			warGames = getNumberOfGames(CardGameType.War, player);
+			warWins = getNumberOfWins(CardGameType.War, player);
+			warWinRatio = getWinRatio(CardGameType.War, player);
 			
+			System.out.printf("%d %d %f\n", warGames, warWins, warWinRatio);
+
 			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
 					null, 0, CardGameType.War));
 			texasHoldemLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
@@ -315,27 +317,6 @@ public class Model {
 	
 	public int getServerNumberOfGames(CardGameType gameType, Player player) {
 		return ServerAccess.getNumGames(new AchievementRequest(player, gameType));
-	}
-	
-	public float getPlayerWinRatio(CardGameType gameType) {
-		if (gameType == CardGameType.War) {
-			return warWinRatio;
-		}
-		return 0;
-	}
-	
-	public int getPlayerWinNumber(CardGameType gameType) {
-		if (gameType == CardGameType.War) {
-			return warWins;
-		}
-		return 0;
-	}
-	
-	public int getPlayerGameNumber(CardGameType gameType) {
-		if (gameType ==CardGameType.War) {
-			return warGames;
-		}
-		return 0;
 	}
 	
 	/*********************************************************
