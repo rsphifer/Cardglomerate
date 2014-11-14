@@ -187,7 +187,7 @@ public class BlackjackGame extends BasicGameState {
 				game.dealerStay();
 				model.updateGame();
 			} else if (++ticksSinceDealerPlayed > 60) {
-				game.dealerHit();
+				game.dealerPlay();
 				model.updateGame();
 				ticksSinceDealerPlayed = 0;
 			}

@@ -105,7 +105,7 @@ public class BlackjackGame extends BasicGameState {
 			if (game.playerWon) {
 				g.drawString(model.getPlayer().userName + " won!", 530, 300);
 			} else {
-				g.drawString("Dealer won!", 530, 300);
+				
 			}
 		}
 
@@ -183,11 +183,11 @@ public class BlackjackGame extends BasicGameState {
 		/* Dealer is playing */
 		if (!game.gameEnded && !game.waitingOnPlayer) {
 			System.out.println("que?");
-			if (game.playerBusted || (game.getDealerScoreWithAces() > 15 && game.getPlayerScoreWithAces() < game.getDealerScoreWithAces())) {
+			if (game.getDealerScoreWithAces() > 15) {
 				game.dealerStay();
 				model.updateGame();
 			} else if (++ticksSinceDealerPlayed > 60) {
-				game.dealerHit();
+				game.dealerPlay();
 				model.updateGame();
 				ticksSinceDealerPlayed = 0;
 			}

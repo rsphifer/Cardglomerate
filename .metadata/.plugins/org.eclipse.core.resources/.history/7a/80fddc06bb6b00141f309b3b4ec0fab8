@@ -196,7 +196,6 @@ public class BlackJack extends CardGame implements Serializable {
 	public void playerHit() {
 		playerHand.add(getTopOfDeck());
 		if (getPlayerScoreWithAces() > 21) {
-			playerBusted = true;
 			waitingOnPlayer = false;
 		}
 	}
