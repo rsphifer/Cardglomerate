@@ -356,7 +356,7 @@ public class BlackJack extends CardGame implements Serializable {
 	@Override
 	public boolean updateReady() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 
 	@Override

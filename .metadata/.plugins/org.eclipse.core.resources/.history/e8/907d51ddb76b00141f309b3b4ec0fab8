@@ -135,12 +135,7 @@ public class BlackjackGame extends BasicGameState {
 		if (hitButton.contains(tmp) || hitButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-
-				if (game.waitingOnPlayer) {
-					game.playerHit();
-					model.updateGame();
-				}
-				
+				System.out.println("hit button");
 			}
 			
 			if (!Mouse.isButtonDown(0)) {
@@ -151,10 +146,7 @@ public class BlackjackGame extends BasicGameState {
 		if (stayButton.contains(tmp) || stayButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				if (game.waitingOnPlayer) {
-					game.playerStay();
-					model.updateGame();
-				}
+				System.out.println("stay button");
 			}
 			
 			if (!Mouse.isButtonDown(0)) {

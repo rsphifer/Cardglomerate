@@ -138,7 +138,6 @@ public class BlackjackGame extends BasicGameState {
 
 				if (game.waitingOnPlayer) {
 					game.playerHit();
-					model.updateGame();
 				}
 				
 			}
@@ -153,7 +152,6 @@ public class BlackjackGame extends BasicGameState {
 				Master.isMouseReleased = false;
 				if (game.waitingOnPlayer) {
 					game.playerStay();
-					model.updateGame();
 				}
 			}
 			

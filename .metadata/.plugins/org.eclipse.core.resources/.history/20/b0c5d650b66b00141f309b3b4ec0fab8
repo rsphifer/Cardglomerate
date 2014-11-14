@@ -13,7 +13,6 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import cardgames.BlackJack;
 import cards.Card;
 
 //this GUI needs to have 6 variables updated by the model and that is all
@@ -40,8 +39,6 @@ public class BlackjackGame extends BasicGameState {
 	private Rectangle stayButton = new Rectangle(810, 650,100,50);
 	private Rectangle playAgainButton = new Rectangle(700, 590, 150, 50);
 	
-	private int dealerScore, playerScore;
-	
 	private String playerName = null;
 
 
@@ -57,14 +54,16 @@ public class BlackjackGame extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 
+		playerIndex = -1;
+		opponentName = "player";
 
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
 		
-		dealerScore = 0;
-		playerScore = 0;
-		
+		c1 = new LinkedList<Card>();
+		c2 = new LinkedList<Card>();
+
 		// back arrow
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
@@ -90,20 +89,11 @@ public class BlackjackGame extends BasicGameState {
 		g.draw(stayButton);
 		g.drawString("Stay", 844, 662);
 	
-		g.drawString("Count: " + playerScore, 550, 620);
+		g.drawString("Count: ", 550, 620);
 		g.drawString(playerName, 550, 650);
 		
 		g.drawString("Dealer", 550, 25);
-		g.drawString("Count: "+dealerScore, 550, 55);
-		
-		BlackJack game = (BlackJack)model.getCurrentGame();
-		for(int i=0; i<game.getPlayerCards().size(); i++) {
-			getCardImage(game.getPlayerCards().get(i)).draw(530+i*30, 440);
-		}
-		
-		for(int j=0; j<game.getDealerCards().size(); j++) {
-			getCardImage(game.getDealerCards().get(j)).draw(530+j*30, 170);
-		}
+		g.drawString("Count: ", 550, 55);
 		
 		arrow.draw(0,570);
 		
@@ -126,8 +116,6 @@ public class BlackjackGame extends BasicGameState {
 			playerName = model.getPlayer().userName;
 		}
 		
-		BlackJack game = (BlackJack)model.getCurrentGame();
-		
 		int actualY = gc.getHeight()-ypos;
 		Rectangle tmp = new Rectangle(xpos, actualY, 1, 1);
 		
@@ -135,11 +123,6 @@ public class BlackjackGame extends BasicGameState {
 		if (hitButton.contains(tmp) || hitButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-
-				if (game.waitingOnPlayer) {
-					game.playerHit();
-					model.updateGame();
-				}
 				
 			}
 			
@@ -151,10 +134,7 @@ public class BlackjackGame extends BasicGameState {
 		if (stayButton.contains(tmp) || stayButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				if (game.waitingOnPlayer) {
-					game.playerStay();
-					model.updateGame();
-				}
+				
 			}
 			
 			if (!Mouse.isButtonDown(0)) {
@@ -165,7 +145,7 @@ public class BlackjackGame extends BasicGameState {
 		if (playAgainButton.contains(tmp) || playAgainButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				System.out.println("play again button");
+				
 			}
 			
 			if (!Mouse.isButtonDown(0)) {
@@ -188,9 +168,6 @@ public class BlackjackGame extends BasicGameState {
 				Master.isMouseReleased = true;
 			}
 		}
-		
-		playerScore = game.getPlayerScoreWithAces();
-		dealerScore = game.getDealerScoreWithAces();
 
 	}
 
