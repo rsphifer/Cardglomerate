@@ -149,8 +149,10 @@ public class Model {
 			friendList = ServerAccess.getFriends(player);
 			menuChat = ServerAccess.getMenuChat();
 			
-			/* Server calls to initialize stats */
-			updateAchievements();
+			/* Server calls to initialize war stats */
+			warGames = getServerNumberOfGames(CardGameType.War, player);
+			warWins = getServerNumberOfWins(CardGameType.War, player);
+			warWinRatio = getServerWinRatio(CardGameType.War, player);
 			
 			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
 					null, 0, CardGameType.War));
@@ -290,6 +292,7 @@ public class Model {
 			glr = new GameLobbyRequest(player,
 					currentLobbyNumber, CardGameType.War);
 		} else if (currentLobbyType == CardGameType.TexasHoldEm) {
+			System.out.println("hey");
 			glr = new GameLobbyRequest(player,
 					currentLobbyNumber, CardGameType.TexasHoldEm);
 			
@@ -317,10 +320,6 @@ public class Model {
 		warGames = getServerNumberOfGames(CardGameType.War, player);
 		warWins = getServerNumberOfWins(CardGameType.War, player);
 		warWinRatio = getServerWinRatio(CardGameType.War, player);
-		
-		blackjackGames = getServerNumberOfGames(CardGameType.Blackjack, player);
-		blackjackWins = getServerNumberOfWins(CardGameType.Blackjack, player);
-		blackjackWinRatio = getServerWinRatio(CardGameType.Blackjack, player);
 	}
 	
 	public float getServerWinRatio(CardGameType gameType, Player player) {
@@ -338,27 +337,21 @@ public class Model {
 	public float getPlayerWinRatio(CardGameType gameType) {
 		if (gameType == CardGameType.War) {
 			return warWinRatio;
-		} else if (gameType == CardGameType.Blackjack) {
-			return blackjackWinRatio;
-		} 
+		}
 		return 0;
 	}
 	
 	public int getPlayerWinNumber(CardGameType gameType) {
 		if (gameType == CardGameType.War) {
 			return warWins;
-		} else if (gameType == CardGameType.Blackjack) {
-			return blackjackWins;
-		} 
+		}
 		return 0;
 	}
 	
 	public int getPlayerGameNumber(CardGameType gameType) {
 		if (gameType ==CardGameType.War) {
 			return warGames;
-		} else if (gameType == CardGameType.Blackjack) {
-			return blackjackGames;
-		} 
+		}
 		return 0;
 	}
 	

@@ -1,6 +1,6 @@
 package mail;
 
-import java.util.*;
+import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.Session;

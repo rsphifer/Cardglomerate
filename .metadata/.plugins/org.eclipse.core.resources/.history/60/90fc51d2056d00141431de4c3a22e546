@@ -290,6 +290,7 @@ public class Model {
 			glr = new GameLobbyRequest(player,
 					currentLobbyNumber, CardGameType.War);
 		} else if (currentLobbyType == CardGameType.TexasHoldEm) {
+			System.out.println("hey");
 			glr = new GameLobbyRequest(player,
 					currentLobbyNumber, CardGameType.TexasHoldEm);
 			
@@ -356,9 +357,7 @@ public class Model {
 	public int getPlayerGameNumber(CardGameType gameType) {
 		if (gameType ==CardGameType.War) {
 			return warGames;
-		} else if (gameType == CardGameType.Blackjack) {
-			return blackjackGames;
-		} 
+		}
 		return 0;
 	}
 	

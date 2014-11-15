@@ -1,6 +1,6 @@
 package mail;
 
-import java.util.Properties;
+import java.util.*;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -9,14 +9,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 
-public class EmailPassword implements Runnable {
+public class EmailNewAccount implements Runnable {
 
 	private final String FROM_ADDRESS = "Cardglomerate@yahoo.com";
 	
-	private String password, toAddress;
+	private String username, toAddress;
 	
-	public EmailPassword(String toAddress, String password) {
-		this.password = password;
+	public EmailNewAccount(String toAddress, String username) {
+		this.username = username;
 		this.toAddress = toAddress;
 	}
 	
@@ -26,8 +26,7 @@ public class EmailPassword implements Runnable {
 		props.setProperty("mail.smtp.host", "localhost");
 		props.setProperty("mail.password", "307Team!!!");
 		
-		String message = "Greetings card player!\n\nYour password is: " + password
-				+ "\n\nSincerely,\nThe Cardglomerate team\n";
+		String message = "Greetings "+ username + "!\n Welcome to Cardglomerate!\n\nSincerely,\nThe Cardglomerate team\n";
 		
 		Session session = Session.getDefaultInstance(props);
 		try {
