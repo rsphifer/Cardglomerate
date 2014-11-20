@@ -14,10 +14,6 @@ import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import player.Player;
-import cards.Card;
-import cardgames.*;
-
 public class HoldEmGame extends BasicGameState {
 
 	private Model model;
@@ -81,7 +77,7 @@ public class HoldEmGame extends BasicGameState {
 
 		// money pot
 		money = new Image("res/Sock Money.jpg");
-
+		handWinnersAL = new ArrayList<Player>;
 		newHand();
 
 		// bet field
@@ -115,6 +111,7 @@ public class HoldEmGame extends BasicGameState {
 		p1C1.draw(550, 600);
 		p1C2.draw(600, 600);
 		if (displayOthers) {
+			System.out.println("should be printing cards\n");
 			p2C1.draw(550, 25);
 			p2C2.draw(600, 25);
 			p3C1.draw(20, 300);
@@ -122,6 +119,7 @@ public class HoldEmGame extends BasicGameState {
 			p4C1.draw(1140, 300);
 			p4C2.draw(1190, 300);
 		} else {
+			System.out.println("should be printing all cards\n");
 			cardBack.draw(550, 25);
 			cardBack.draw(600, 25);
 			cardBack.draw(20, 300);
@@ -177,20 +175,20 @@ public class HoldEmGame extends BasicGameState {
 		}
 		
 		if (handOver) {
+			handWinners = "Hand Winner(s): ";
 			for (Player p : handWinnersAL) {
 				handWinners += p.userName;
 				handWinners += " ";
 			}
+			g.drawString(handWinners, 530, 450);
 			if (displayOthers) {
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
-					
 					e.printStackTrace();
 				}
 				newHand();
 			}
-			g.drawString("Hand Winner(s): " + handWinners, 530, 450);
 			if (!handOver) {
 				g.clear();
 			}
@@ -285,37 +283,40 @@ public class HoldEmGame extends BasicGameState {
 		
 		//update game functions
 		
-		updatePlayers();
 		updateTableCards();
 		updateCall();
 		updateTurn();
 		handOver();
 		updatePot();
-		
 	}
 
 	private void updatePlayers() {
 		int i = 0;
 		p1Name = "No Player";p2Name = "No Player"; p3Name = "No Player";p4Name = "No Player";
 		for (Player p : model.getCurrentGame().getPlayers()) {
-			//System.out.println("getting player cards");
-			if (p.userName == model.getPlayer().userName) {
+			System.out.println(model.getPlayer().userName+"\n");
+			System.out.println(p.userName+"\n");
+			if (p.userName.equals(model.getPlayer().userName)) {
 				p1C1 = getCardImage(p.getHand().get(0));
 				p1C2 = getCardImage(p.getHand().get(1));
+				System.out.println("main player cards filled\n");
 				p1Name = p.userName;
 			} else if (i == 0) {
 				p2C1 = getCardImage(p.getHand().get(0));
 				p2C2 = getCardImage(p.getHand().get(1));
+				System.out.println("player 2 cards filled\n");
 				p2Name = p.userName;
 				i++;
 			} else if (i == 1) {
 				p3C1 = getCardImage(p.getHand().get(0));
 				p3C2 = getCardImage(p.getHand().get(1));
+				System.out.println("player 3 cards filled\n");
 				p3Name = p.userName;
 				i++;
 			} else if (i == 2) {
 				p4C1 = getCardImage(p.getHand().get(0));
 				p4C2 = getCardImage(p.getHand().get(1));
+				System.out.println("player 4 cards filled\n");
 				p4Name = p.userName;
 				i++;
 			}
@@ -400,6 +401,7 @@ public class HoldEmGame extends BasicGameState {
 		//handover
 		handOver = false;
 		displayOthers = false;
+		updatePlayers();
 	}
 	
 	private void updateTurn() {
@@ -420,9 +422,9 @@ public class HoldEmGame extends BasicGameState {
 	}
 	
 	private void handOver() {
-//		if (model.getCurrentGame().isHandOver()) {
-//			handOver = true;
-//		}
+		if (model.getCurrentGame().isHandOver()) {
+			handOver = true;
+		}
 	}
 
 	public int getID() {

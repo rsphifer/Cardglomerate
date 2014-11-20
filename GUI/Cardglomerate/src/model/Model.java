@@ -105,7 +105,8 @@ public class Model {
 	public LinkedList<Integer> getHandSizes() {
 		return currentGame.getHandSizes();
 	}
-
+	
+	// MAIN UPDATE FUNCTION
 	public void updateGame() {
 		if (currentGame.updateReady()) {
 			System.out.println("game is updating");
