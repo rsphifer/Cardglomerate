@@ -10,7 +10,6 @@ import misc.GameLobby;
 import misc.GameLobbyRequest;
 import misc.Request;
 import misc.UpdateGameRequest;
-import player.AchievementRequest;
 import player.Friend;
 import player.NewFriendRequest;
 import player.NewPlayerRequest;

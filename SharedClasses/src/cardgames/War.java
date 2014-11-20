@@ -336,4 +336,10 @@ public class War extends CardGame implements Serializable {
 	@Override
 	public void fold(Player p) {
 	}
+
+	@Override
+	public boolean isHandOver() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

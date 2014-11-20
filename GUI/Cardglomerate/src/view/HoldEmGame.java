@@ -14,6 +14,9 @@ import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import player.Player;
+import cards.Card;
+
 public class HoldEmGame extends BasicGameState {
 
 	private Model model;
@@ -77,7 +80,7 @@ public class HoldEmGame extends BasicGameState {
 
 		// money pot
 		money = new Image("res/Sock Money.jpg");
-		handWinnersAL = new ArrayList<Player>;
+		handWinnersAL = new ArrayList<Player>();
 		newHand();
 
 		// bet field

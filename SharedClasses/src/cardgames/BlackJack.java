@@ -377,5 +377,11 @@ public class BlackJack extends CardGame implements Serializable {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public boolean isHandOver() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 

@@ -71,6 +71,7 @@ public abstract class CardGame implements Serializable{
 	public abstract void setBet(Player p, int bet);
 	public abstract void nextTurn(Player curP);
 	public abstract void fold(Player p);
+	public abstract boolean isHandOver();
 	public static void main(String[] args){
 
 	}
