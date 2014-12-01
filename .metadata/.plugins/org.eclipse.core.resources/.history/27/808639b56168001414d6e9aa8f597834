@@ -1,5 +1,0 @@
-package cardgames;
-
-public enum CardGameType {
-
-}

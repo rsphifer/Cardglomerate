@@ -1,0 +1,124 @@
+package view;
+
+import model.Model;
+
+import org.lwjgl.input.Mouse;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+
+import player.Player;
+
+public class StatsPage extends BasicGameState {
+
+	private Model model;
+
+	private String mouse = "No input yet";
+	private Image background;
+	private Image image;
+	private Image arrow;
+	
+	//specific stat values
+	//war
+	private int warGamesPlayed = 0;
+	private int warGamesWon = 0;
+	//holdem
+	private int holdemGamesPlayed = 0;
+	private int holdemGamesWon = 0;
+	private int holdemWinnings = 0;
+	//blackjack
+	private int blackjackGamesPlayed = 0;
+	private int blackjackGamesWon = 0;
+	//ratscrew
+	private int ratscrewGamesPlayed = 0;
+	private int ratscrewGamesWon = 0;
+	private int ratsScrewed = 36;
+
+	public StatsPage(int state, Model model) {
+		this.model = model;
+	}
+
+	public void init(GameContainer gc, StateBasedGame sbg)
+			throws SlickException {
+		// initialize and scale background image
+		background = new Image("res/Green Background.jpg");
+		background = background.getScaledCopy(1280, 720);
+
+		// initialize and scale images
+		image = new Image("res/Cardglomerate 3.png");		
+		image = image.getScaledCopy(193, 129);
+
+		arrow = new Image("res/Back Arrow.jpg");
+		arrow = arrow.getScaledCopy(150, 150);
+	}
+
+	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
+			throws SlickException {
+		// render the background
+		background.draw(0, 0);
+
+		// mouse coordinates for testing / building
+		g.drawString(mouse, 10, 25);
+
+		// render message and image
+		g.drawString("User Statistics", 575, 10);
+		g.drawImage(image, 550, 40);
+
+		// render arrow
+		g.drawImage(arrow, 0, 570);
+		
+		//war stats
+		g.drawString("War Statistics:", 50, 175);
+		g.drawString("Games Played: " + warGamesPlayed, 70, 195);
+		g.drawString("Games Won: " + warGamesWon, 70, 215);
+		//g.drawString("Win Loss Ratio: " + (warGamesWon / warGamesPlayed), 70, 235);
+		
+		//holdem stats
+		
+		//blackjack stats
+		
+		//ratscrew stats
+		
+
+	}
+
+	public void update(GameContainer gc, StateBasedGame sbg, int delta)
+			throws SlickException {
+		// mouse coordinates
+		int xpos = Mouse.getX();
+		int ypos = Mouse.getY();
+		mouse = "Mouse position x: " + xpos + " y: " + ypos;
+
+		
+		
+		// back button clicked
+		if ((xpos > 0 && xpos < 150) && (ypos > 0 && ypos < 150)) {
+			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+				
+				sbg.enterState(1); // display game menu screen
+			}
+
+			if (!Mouse.isButtonDown(0)) {
+				Master.isMouseReleased = true;
+			}
+		}
+
+
+	}
+	
+	private void updateStats() {
+		//called to update stat variables that are displayed on the screen
+		System.out.println("THESE ARE STATS HOOOOORAAAAAAY");
+	}
+
+	public int getID() {
+		return 11;
+	}
+}
