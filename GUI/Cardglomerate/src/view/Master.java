@@ -28,7 +28,6 @@ public class Master extends StateBasedGame {
 	public static final int holdEmGame = 8;
 	public static final int blackjackOptions = 9;
 	public static final int blackjackGame = 10;
-	public static final int statsPage = 11;
 	
 	
 	public Master(String gamename){
@@ -49,7 +48,6 @@ public class Master extends StateBasedGame {
 		this.addState(new HoldEmGame(holdEmGame, model));
 		this.addState(new BlackjackOptions(blackjackOptions, model));
 		this.addState(new BlackjackGame(blackjackGame, model));
-		this.addState(new StatsPage(statsPage, model));
 		
 	}
 	
@@ -66,10 +64,9 @@ public class Master extends StateBasedGame {
 		this.getState(holdEmGame).init(gc, this);
 		this.getState(blackjackOptions).init(gc, this);
 		this.getState(blackjackGame).init(gc, this);
-		this.getState(statsPage).init(gc, this);
 		
 		//screen to display first
-		this.enterState(statsPage);
+		this.enterState(logIn);
 	}
 	
 	/* Overrides default close operation when close is selected */

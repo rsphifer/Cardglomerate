@@ -1,0 +1,34 @@
+package main;
+
+import misc.GameLobby;
+import player.Player;
+
+public class GameLobbyTable {
+	
+	public static final int MAX_GAME_LOBBIES = 4;
+	
+	private int minPlayers, maxPlayers;
+	
+	private GameLobby[] gameLobbyTable;
+	
+	public GameLobbyTable(int minPlayers, int maxPlayers) {
+		this.minPlayers = minPlayers;
+		this.maxPlayers = maxPlayers;
+		
+		/* Initialize all entries as empty lobbies. */
+		gameLobbyTable = new GameLobby[MAX_GAME_LOBBIES];
+		int ind = 0;
+		for (GameLobby gl : gameLobbyTable) {
+			gl = new GameLobby(minPlayers, maxPlayers, ind++);
+		}
+	}
+	
+	public synchronized void addPlayer(Player player, int lobbyId) {
+		
+	}
+	
+	public synchronized void removePlayer()
+	
+	
+
+}
