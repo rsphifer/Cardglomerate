@@ -81,7 +81,9 @@ public class HoldEmGame extends BasicGameState {
 		// money pot
 		money = new Image("res/Sock Money.jpg");
 		handWinnersAL = new ArrayList<Player>();
-		newHand();
+		
+		//commented out was causing null pointer crash on startup (update players)
+		//newHand();
 
 		// bet field
 		betField = new TextField(gc, gc.getDefaultFont(), 850, 590, 150, 30);
