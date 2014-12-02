@@ -33,6 +33,7 @@ public class HoldEmGame extends BasicGameState {
 	private String handWinners = "";
 	private boolean handOver = false;
 	private boolean displayOthers = false;
+	private boolean firstTime = true;
 
 	// misc player variables
 	private String p1Name;
@@ -116,7 +117,7 @@ public class HoldEmGame extends BasicGameState {
 		p1C1.draw(550, 600);
 		p1C2.draw(600, 600);
 		if (displayOthers) {
-			System.out.println("should be printing cards\n");
+			//System.out.println("should be printing cards\n");
 			p2C1.draw(550, 25);
 			p2C2.draw(600, 25);
 			p3C1.draw(20, 300);
@@ -124,7 +125,7 @@ public class HoldEmGame extends BasicGameState {
 			p4C1.draw(1140, 300);
 			p4C2.draw(1190, 300);
 		} else {
-			System.out.println("should be printing all cards\n");
+			//System.out.println("should be printing only your cards\n");
 			cardBack.draw(550, 25);
 			cardBack.draw(600, 25);
 			cardBack.draw(20, 300);
@@ -208,6 +209,11 @@ public class HoldEmGame extends BasicGameState {
 		int xpos = Mouse.getX();
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
+		
+		if(firstTime){
+			newHand();
+			firstTime=false;
+		}
 
 		// set betbox as focus
 		betField.setFocus(true);
@@ -278,6 +284,7 @@ public class HoldEmGame extends BasicGameState {
 				// player left game, code to handle that
 				model.isInGame = false;
 				//model.getCurrentGame().quitGame(model.getPlayer());
+				firstTime=true;
 				sbg.enterState(7);
 			}
 
@@ -417,11 +424,13 @@ public class HoldEmGame extends BasicGameState {
 			p = model.getCurrentGame().getPlayers().get(0);
 		}
 		whoseTurn = p.userName;
+		
 		//System.out.println(whoseTurn + " " + model.getPlayer().userName);
 		if (whoseTurn.equals(model.getPlayer().userName)) {
 			isYourTurn = true;
 		}
 		else {
+			System.out.println(whoseTurn + "'s turn");
 			isYourTurn = false;
 		}
 	}

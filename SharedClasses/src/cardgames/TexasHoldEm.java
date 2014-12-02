@@ -84,6 +84,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	}
 	
 	public void setBet(Player p, int bet){
+		System.out.println(p.userName+" is betting "+bet);
 		p.bet(bet);
 		nextTurn(p);
 		this.expectedBet = bet;
@@ -103,6 +104,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		if(found == players.size()){
 			players.get(0);
 		}
+		System.out.println("next turn function   "+whoseTurn.userName);
 	}
 	
 	public void fold(Player p){
@@ -116,7 +118,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 
 		switch(turn){
 			case 0: //ante
-				System.out.println("step 0");
+				//System.out.println("step 0");
 				handOver = false;
 				for(int i=0;i<players.size();i++){
 					players.get(i).bet(50);
@@ -124,14 +126,14 @@ public class TexasHoldEm extends CardGame implements Serializable{
 				for(int i=0;i<players.size();i++){
 					players.get(i).addCardToHand(this.getTopOfDeck());
 					players.get(i).addCardToHand(this.getTopOfDeck());
-					System.out.println(players.get(i).userName);
-					System.out.println(players.get(i).getHand().get(0).getPower() + " of "+players.get(i).getHand().get(0).getSuit());
-					System.out.println(players.get(i).getHand().get(1).getPower() + " of "+players.get(i).getHand().get(1).getSuit());
+					//System.out.println(players.get(i).userName);
+					//System.out.println(players.get(i).getHand().get(0).getPower() + " of "+players.get(i).getHand().get(0).getSuit());
+					//System.out.println(players.get(i).getHand().get(1).getPower() + " of "+players.get(i).getHand().get(1).getSuit());
 				}
 				whoseTurn = players.get(0);
 				readyToUpdate = true;
 				turn++;
-				System.out.println("step 0 end at turn "+turn);
+				//System.out.println("step 0 end at turn "+turn);
 				break;
 			case 1:
 			case 3:

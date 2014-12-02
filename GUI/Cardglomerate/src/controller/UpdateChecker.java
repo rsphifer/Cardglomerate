@@ -43,7 +43,7 @@ public class UpdateChecker implements Runnable {
 			}
 
 			/* Update model with newest game, chat, and friend states */
-			System.out.println("Ask server for updates.");
+			//System.out.println("Ask server for updates.");
 			
 			Object obj;
 			
