@@ -12,12 +12,7 @@
 		<link>
 			<name>.link0</name>
 			<type>2</type>
-			<location>E:/u/data/u93/mounts/Cardglomerate/SharedClasses/build</location>
-		</link>
-		<link>
-			<name>.link1</name>
-			<type>2</type>
-			<location>C:/Users/Moosington/Google Drive/Classes/CS 307/Cardglomerate/SharedClasses/build</location>
+			<location>E:/Users/Richie/Desktop/cs307/Cardglomerate/SharedClasses/build</location>
 		</link>
 	</linkedResources>
 </projectDescription>
