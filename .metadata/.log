@@ -5604,3 +5604,7 @@ org.eclipse.core.internal.resources.ResourceException: Resource already exists o
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
 !SUBENTRY 1 org.eclipse.core.resources 4 272 2014-12-01 22:00:17.425
 !MESSAGE Resource already exists on disk: '/SharedClasses/bin/.DS_Store'.
+
+!ENTRY org.eclipse.core.net 4 0 2014-12-01 22:16:37.989
+!MESSAGE WinHttp.GetProxyForUrl for pac failed with error 'The URL does not use a recognized protocol
+' #12006.

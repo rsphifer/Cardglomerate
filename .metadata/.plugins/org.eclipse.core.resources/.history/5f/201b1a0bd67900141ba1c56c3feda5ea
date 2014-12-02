@@ -1,0 +1,450 @@
+package model;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import misc.ChatEntry;
+import misc.GameLobby;
+import misc.GameLobbyRequest;
+import misc.UpdateGameRequest;
+import player.AchievementRequest;
+import player.Friend;
+import player.NewFriendRequest;
+import player.NewPlayerRequest;
+import player.Player;
+import player.SetPasswordRequest;
+import cardgames.BlackJack;
+//import cardgames.CardGame;
+//import cardgames.War;
+import cardgames.CardGame;
+import cardgames.CardGameType;
+import cardgames.War;
+import cards.Card;
+import controller.ServerAccess;
+import controller.UpdateChecker;
+
+/**
+ * 
+ * Maintains Player and CardGame states for client application.
+ * 
+ */
+public class Model {
+
+	private Player player;
+
+	public boolean isInGame;
+
+	private int gameId;
+	private CardGameType gameType;
+
+	/* Updated regularly by update checker */
+	private CardGame currentGame;
+
+	/* Updated regularly by update checker */
+	private ArrayList<Friend> friendList;
+
+	/* Updated regularly by update checker */
+	private ArrayList<ChatEntry> menuChat;
+
+	/* Updated regularly by update checker */
+	private GameLobby[] texasHoldemLobbies;
+	private GameLobby[] warLobbies;
+	
+	private int warGames;
+	private int warWins;
+	private float warWinRatio;
+
+	private int blackjackGames;
+	private int blackjackWins;
+	private float blackjackWinRatio;
+	
+	private Object obj;
+	
+	public boolean isInLobby;
+	private CardGameType currentLobbyType;
+	private int currentLobbyNumber;
+
+	public boolean isLoggedIn;
+
+	public Model() {
+		friendList = new ArrayList<Friend>();
+		menuChat = new ArrayList<ChatEntry>();
+		
+		warLobbies = new GameLobby[4];
+		texasHoldemLobbies = new GameLobby[3];
+		
+		isInLobby = false;
+		currentLobbyType = null;
+		currentLobbyNumber = -1;
+
+		player = null;
+		isLoggedIn = false;
+		isInGame = false;
+
+	}
+
+	public boolean createGameRequest(CardGameType gameType) {
+		
+		if (gameType == CardGameType.War) {
+			currentGame = new War(player);
+		} else if (gameType == CardGameType.Blackjack) {
+			currentGame = new BlackJack();
+		}
+
+		obj = ServerAccess.createNewGame(currentGame);
+		if (obj != null && (gameId = (int)obj) != -1) {
+			ServerAccess.incrementNumGames(new AchievementRequest(player, gameType));
+			isInGame = true;
+			return true;
+		}
+		return false;
+	}
+
+	public String getGameWinner() {
+		return currentGame.getWinner().get(0).userName;
+	}
+
+	public LinkedList<Integer> getHandSizes() {
+		return currentGame.getHandSizes();
+	}
+	
+	// MAIN UPDATE FUNCTION
+	public void updateGame() {
+		if (currentGame.updateReady()) {
+			System.out.println("game is updating");
+			currentGame.update();
+			ServerAccess.updateCardGameState(gameId, currentGame);
+			obj = ServerAccess.getCardGame(gameId);
+			if (obj != null) {
+				currentGame = (CardGame)obj;
+			}
+		}
+	}
+
+	public boolean getGameOver() {
+		return currentGame.getGameover();
+	}
+
+	public LinkedList<Card> getCardsToDisplay() {
+		return currentGame.getCardsToDisplay();
+	}
+
+	public void updateWarCounter() {
+		ServerAccess.incrementWarCounter(new UpdateGameRequest(gameId, null));
+		obj = ServerAccess.getCardGame(gameId);
+		if (obj != null) {
+			currentGame = (CardGame)obj;
+		}
+	}
+
+	/*********************************************************
+	 * Account mgmt model calls.
+	 *********************************************************/
+
+	public boolean createAccountRequest(String username, String password,
+			String email) {
+		NewPlayerRequest accountRequest = new NewPlayerRequest(username,
+				password, email);
+		if(ServerAccess.createNewAccount(accountRequest) != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean attemptLogin(String username, String password) {
+		NewPlayerRequest loginRequest = new NewPlayerRequest(username,
+				password, null);
+		obj = ServerAccess.loginRequest(loginRequest);
+		if (obj != null) {
+			player = (Player)obj;
+
+			isLoggedIn = true;
+			friendList = ServerAccess.getFriends(player);
+			menuChat = ServerAccess.getMenuChat();
+			
+			/* Server calls to initialize stats */
+			updateAchievements();
+			obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(
+					null, 0, CardGameType.War));
+			if (obj != null) {
+				warLobbies = (GameLobby[])obj;
+			}
+			//warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
+			//		null, 0, CardGameType.War));
+			texasHoldemLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
+
+			/*
+			 * Initialize thread that will periodically ask server for updates
+			 * to update model
+			 */
+			UpdateChecker updateChecker = new UpdateChecker(this);
+			Thread t = new Thread(updateChecker);
+			t.start();
+
+			return true;
+		}
+		return false;
+	}
+
+	public boolean logout() {
+		if (isInLobby) {
+			leaveGameLobby(currentLobbyType, currentLobbyNumber);
+		}
+		Object isSuccess = ServerAccess.logoutRequest(player);
+		if (isSuccess == null) {
+			return false;
+		}
+		isLoggedIn = false;
+		return (boolean)isSuccess;
+	}
+
+	public boolean requestPassword(String username, String emailAddress) {
+		Object obj = ServerAccess.retrievePassword(new NewPlayerRequest(username,
+				"pass", emailAddress));
+		if (obj == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean setNewPassword(String oldPassword, String newPassword) {
+		Object obj = ServerAccess.setPassword(new SetPasswordRequest(player,
+				oldPassword, newPassword));
+		if (obj == null) {
+			return false;
+		} else {
+			return true;
+		}
+		
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	/*********************************************************
+	 * Game mgmt model calls.
+	 *********************************************************/
+
+	public boolean enterGameFromLobby(int gameId) {
+		Object obj = ServerAccess.getCardGame(gameId);
+		if (obj != null) {
+			currentGame = (CardGame)obj;
+			setGameId(gameId);
+			isInGame = true;
+			gameType = currentLobbyType;
+			leaveGameLobby(currentLobbyType, currentLobbyNumber);
+			ServerAccess.incrementNumGames(new AchievementRequest(player, gameType));
+			return true;
+		}
+		return false;
+	}
+
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
+
+	public int getGameId() {
+		return gameId;
+	}
+
+	public void setCurrentGame(CardGame game) {
+		this.currentGame = game;
+	}
+
+	public CardGame getCurrentGame() {
+		return currentGame;
+	}
+
+	/*********************************************************
+	 * Game lobby mgmt model calls.
+	 *********************************************************/
+	public void joinGameLobby(CardGameType gameType, int lobbyId) {
+		GameLobbyRequest glr = new GameLobbyRequest(player, lobbyId, gameType);
+
+		if (gameType == CardGameType.War) {
+			/* Check for space in lobby */
+			if (warLobbies[lobbyId].getPlayers().size() < 2) {
+				isInLobby = true;
+				setCurrentLobby(gameType, lobbyId);
+				ServerAccess.joinLobby(glr);
+				warLobbies = ServerAccess.getGameLobbyList(glr);
+			}
+		} else if (gameType == CardGameType.TexasHoldEm) {
+			if (texasHoldemLobbies[lobbyId].getPlayers().size()<4) {
+				isInLobby = true;
+				setCurrentLobby(gameType, lobbyId);
+				ServerAccess.joinLobby(glr);
+				texasHoldemLobbies = ServerAccess.getGameLobbyList(glr);
+			}
+		}
+		return;
+	}
+
+	public void leaveGameLobby(CardGameType gameType, int lobbyId) {
+		GameLobbyRequest glr = new GameLobbyRequest(player, lobbyId, gameType);
+		isInLobby = false;
+		setCurrentLobby(null, -1);
+		ServerAccess.leaveLobby(glr);
+
+		if (gameType == CardGameType.War) {
+			warLobbies = ServerAccess.getGameLobbyList(glr);
+		} else if (gameType == CardGameType.TexasHoldEm) {
+			texasHoldemLobbies = ServerAccess.getGameLobbyList(glr);
+		}
+
+		return;
+	}
+
+	public void setGameLobby(CardGameType gameType, GameLobby[] lobbies) {
+		if (gameType == CardGameType.War) {
+			warLobbies = lobbies;
+		} else if (gameType == CardGameType.TexasHoldEm) {
+			texasHoldemLobbies = lobbies;
+		}
+	}
+
+	public GameLobby[] getGameLobby(CardGameType gameType) {
+		if (gameType == CardGameType.War) {
+			return warLobbies;
+		} else if (gameType == CardGameType.TexasHoldEm) {
+			return texasHoldemLobbies;
+		} else {
+			return null;
+		}
+	}
+
+	public void startGameFromLobby() {
+		GameLobbyRequest glr = null;
+		if (currentLobbyType == CardGameType.War) {
+			glr = new GameLobbyRequest(player,
+					currentLobbyNumber, CardGameType.War);
+		} else if (currentLobbyType == CardGameType.TexasHoldEm) {
+			glr = new GameLobbyRequest(player,
+					currentLobbyNumber, CardGameType.TexasHoldEm);
+			
+		}
+		ServerAccess.startGameFromLobby(glr);
+	}
+
+	private void setCurrentLobby(CardGameType gameType, int lobbyNumber) {
+		currentLobbyNumber = lobbyNumber;
+		currentLobbyType = gameType;
+	}
+
+	public int getCurrentLobbyNumber() {
+		return currentLobbyNumber;
+	}
+
+	public CardGameType getCurrentLobbyType() {
+		return currentLobbyType;
+	}
+	
+	/*********************************************************
+	 * Achievement model calls.
+	 *********************************************************/
+	public void updateAchievements() {
+		warGames = getServerNumberOfGames(CardGameType.War, player);
+		warWins = getServerNumberOfWins(CardGameType.War, player);
+		warWinRatio = getServerWinRatio(CardGameType.War, player);
+		
+		blackjackGames = getServerNumberOfGames(CardGameType.Blackjack, player);
+		blackjackWins = getServerNumberOfWins(CardGameType.Blackjack, player);
+		blackjackWinRatio = getServerWinRatio(CardGameType.Blackjack, player);
+	}
+	
+	public float getServerWinRatio(CardGameType gameType, Player player) {
+		return ServerAccess.getWinRatio(new AchievementRequest(player, gameType));
+	}
+	
+	public int getServerNumberOfWins(CardGameType gameType, Player player) {
+		return ServerAccess.getNumWins(new AchievementRequest(player, gameType));
+	}
+	
+	public int getServerNumberOfGames(CardGameType gameType, Player player) {
+		return ServerAccess.getNumGames(new AchievementRequest(player, gameType));
+	}
+	
+	public float getPlayerWinRatio(CardGameType gameType) {
+		if (gameType == CardGameType.War) {
+			return warWinRatio;
+		} else if (gameType == CardGameType.Blackjack) {
+			return blackjackWinRatio;
+		} 
+		return 0;
+	}
+	
+	public int getPlayerWinNumber(CardGameType gameType) {
+		if (gameType == CardGameType.War) {
+			return warWins;
+		} else if (gameType == CardGameType.Blackjack) {
+			return blackjackWins;
+		} 
+		return 0;
+	}
+	
+	public int getPlayerGameNumber(CardGameType gameType) {
+		if (gameType ==CardGameType.War) {
+			return warGames;
+		} else if (gameType == CardGameType.Blackjack) {
+			return blackjackGames;
+		} 
+		return 0;
+	}
+	
+	public void incrementNumberOfWins(CardGameType gameType) {
+		ServerAccess.incrementNumWins(new AchievementRequest(player, gameType));
+	}
+	
+	/*********************************************************
+	 * Friend list mgmt model calls.
+	 *********************************************************/
+	public boolean addFriend(String username) {
+
+		Object isSuccess = ServerAccess.addFriend(new NewFriendRequest(player,
+				username));
+		if (isSuccess != null && (boolean)isSuccess) {
+			friendList = ServerAccess.getFriends(player);
+			return (boolean)isSuccess;
+		}
+		return false;
+	}
+
+	public void removeFriend(String username) {
+		Object isSuccess = ServerAccess.removeFriend(new NewFriendRequest(
+				player, username));
+		if (isSuccess != null && (boolean)isSuccess) {
+			friendList = ServerAccess.getFriends(player);
+		}
+	}
+
+	public void setFriendList(ArrayList<Friend> friends) {
+		friendList = friends;
+	}
+
+	public ArrayList<Friend> getFriendsList() {
+		return friendList;
+	}
+
+	/*********************************************************
+	 * Menu chat mgmt model calls.
+	 *********************************************************/
+	public void setMenuChat(ArrayList<ChatEntry> chatLog) {
+		menuChat = chatLog;
+	}
+
+	public ArrayList<ChatEntry> getMenuChat() {
+		return menuChat;
+	}
+
+	public boolean addChatEntry(String message) {
+		ChatEntry newEntry = new ChatEntry(player.userName, message);
+		Object isSuccess = ServerAccess.addMenuChatEntry(newEntry);
+		if (isSuccess != null && (boolean)isSuccess) {
+			menuChat = ServerAccess.getMenuChat();
+			return (boolean)isSuccess;
+		}
+		return false;
+	}
+}

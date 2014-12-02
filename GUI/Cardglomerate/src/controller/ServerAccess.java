@@ -18,192 +18,307 @@ import player.Player;
 import player.SetPasswordRequest;
 import cardgames.CardGame;
 
-
 /**
- * @author 	Richard Phifer<rsphifer@purdue.edu>
- * @date	Oct 11, 2014
+ * @author Richard Phifer<rsphifer@purdue.edu>
+ * @date Oct 11, 2014
  * 
- * Provides an interface for the client application to send and receive communications from the server.
+ *       Provides an interface for the client application to send and receive
+ *       communications from the server.
  *
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME 	= "sac07.cs.purdue.edu";
-	private static final int	PORT_NUMBER = 4001;
-	
+	private static final String HOST_NAME = "sac07.cs.purdue.edu";
+	private static final int PORT_NUMBER = 4000;
+
 	private static Object sendRequestWithResponse(Request request) {
 		try {
 			/* Try to connect to server */
 			Socket serverSocket = new Socket(HOST_NAME, PORT_NUMBER);
-			
+
 			/* Open output stream and write request to server */
-			ObjectOutputStream oos = new ObjectOutputStream(serverSocket.getOutputStream());
+			ObjectOutputStream oos = new ObjectOutputStream(
+					serverSocket.getOutputStream());
 			oos.writeObject(request);
 			oos.flush();
-			
-			
-			/* Open input stream and read server response*/
-			ObjectInputStream ois = new ObjectInputStream(serverSocket.getInputStream());
+
+			/* Open input stream and read server response */
+			ObjectInputStream ois = new ObjectInputStream(
+					serverSocket.getInputStream());
 			Object response = ois.readObject();
 			oos.close();
 			ois.close();
-			
+
 			serverSocket.close();
 			return response;
-			
+
 		} catch (Exception e) {
-			System.err.println("In send request");
-			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	/*********************************************************
+	 * War specific server calls.
+	 *********************************************************/
+
+	public static Object incrementWarCounter(UpdateGameRequest ugr) {
+		Request request = new Request("incrementWarCounter", ugr);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
+	}
+
+	/*********************************************************
+	 * Card game mgmt server calls.
+	 *********************************************************/
+
+	public static Object getCardGame(int gameId) {
+		Request request = new Request("getCardGame", gameId);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (CardGame)obj; 
+		} else {
+			return null;
+		}
+	}
+
+	public static Object updateCardGameState(int gameId, CardGame game) {
+		Request request = new Request("updateCardGame", new UpdateGameRequest(
+				gameId, game));
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
+	}
+
+	public static Object createNewGame(CardGame game) {
+		Request request = new Request("createGame", game);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (int)obj;
+		} else {
+			return null;
 		}
 		
-		return null;
 	}
-	
+
 	/*********************************************************
-	*	War specific server calls.
-	*********************************************************/
-	
-	public static boolean incrementWarCounter(UpdateGameRequest ugr) {
-		Request request = new Request("incrementWarCounter", ugr);
-		return (boolean)sendRequestWithResponse(request);
-	}
-	
-	/*********************************************************
-	*	Card game mgmt server calls.
-	*********************************************************/
-	
-	public static CardGame getCardGame(int gameId) {
-		Request request = new Request("getCardGame", gameId);
-		return (CardGame)sendRequestWithResponse(request);
-	}
-	
-	public static boolean updateCardGameState(int gameId, CardGame game) {
-		Request request = new Request("updateCardGame", new UpdateGameRequest(gameId, game));
-		return (boolean)sendRequestWithResponse(request);
-	}
-	
-	public static int createNewGame(CardGame game) {
-		Request request = new Request("createGame", game);
-		return (int)sendRequestWithResponse(request);
-	}
-	
-	/*********************************************************
-	*	Account creation.
-	*********************************************************/
-	
-	public static boolean createNewAccount(NewPlayerRequest player) {
+	 * Account creation.
+	 *********************************************************/
+
+	public static Object createNewAccount(NewPlayerRequest player) {
 		Request request = new Request("createAccount", player);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
+
 	/*********************************************************
-	*	Login, logout, and password mgmt calls.
-	*********************************************************/
-	
-	public static Player loginRequest(NewPlayerRequest player) {
+	 * Login, logout, and password mgmt calls.
+	 *********************************************************/
+
+	public static Object loginRequest(NewPlayerRequest player) {
 		Request request = new Request("login", player);
-		Player tmp = (Player)sendRequestWithResponse(request);
-		return tmp;
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (Player)obj;
+		} else {
+			return null;
+		}
 	}
-	
-	public static boolean logoutRequest(Player player) {
+
+	public static Object logoutRequest(Player player) {
 		Request request = new Request("logout", player);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
-	public static boolean retrievePassword(NewPlayerRequest player) {
+
+	public static Object retrievePassword(NewPlayerRequest player) {
 		Request request = new Request("retrievePassword", player);
-		return sendRequestWithResponse(request) != null;
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
-	public static boolean setPassword(SetPasswordRequest spr) {
+
+	public static Object setPassword(SetPasswordRequest spr) {
 		Request request = new Request("resetPassword", spr);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
-	
+
 	/*********************************************************
-	*	Game lobby mgmt server calls.
-	*********************************************************/
-	public static boolean joinLobby(GameLobbyRequest glr) {
+	 * Game lobby mgmt server calls.
+	 *********************************************************/
+	public static Object joinLobby(GameLobbyRequest glr) {
 		Request request = new Request("joinGameLobby", glr);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
-	public static boolean leaveLobby(GameLobbyRequest glr) {
+
+	public static Object leaveLobby(GameLobbyRequest glr) {
 		Request request = new Request("leaveGameLobby", glr);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
-	public static GameLobby[] getGameLobbyList(GameLobbyRequest glr) {
+
+	public static Object getGameLobbyList(GameLobbyRequest glr) {
 		Request request = new Request("getGameLobbyList", glr);
-		return (GameLobby[])sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (GameLobby[])obj;
+		} else {
+			return null;
+		}
 	}
-	
-	public static boolean startGameFromLobby(GameLobbyRequest glr) {
+
+	public static Object startGameFromLobby(GameLobbyRequest glr) {
 		Request request = new Request("startGameFromLobby", glr);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
+
 	/*********************************************************
-	*	Achievement server calls.
-	*********************************************************/
-	
-	public static float getWinRatio(AchievementRequest ar) {
+	 * Achievement server calls.
+	 *********************************************************/
+
+	public static Object getWinRatio(AchievementRequest ar) {
 		Request request = new Request("getWinRatio", ar);
-		return (float)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (float)obj; 
+		} else {
+			return null;
+		}
 	}
-	
-	public static int getNumGames(AchievementRequest ar) {
+
+	public static Object getNumGames(AchievementRequest ar) {
 		Request request = new Request("getNumGames", ar);
-		return (int)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (int)obj; 
+		} else {
+			return null;
+		}
 	}
-	
-	public static int getNumWins(AchievementRequest ar) {
+
+	public static Object getNumWins(AchievementRequest ar) {
 		Request request = new Request("getNumWins", ar);
-		return (int)sendRequestWithResponse(request);
+		Object obj =  sendRequestWithResponse(request);
+		if (obj != null) {
+			return (int)obj;
+		} else {
+			return null;
+		}
 	}
-	
-	public static boolean incrementNumWins(AchievementRequest ar) {
+
+	public static Object incrementNumWins(AchievementRequest ar) {
 		Request request = new Request("incrementNumWins", ar);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
-	public static boolean incrementNumGames(AchievementRequest ar) {
+
+	public static Object incrementNumGames(AchievementRequest ar) {
 		Request request = new Request("incrementNumGames", ar);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
+
 	/*********************************************************
-	*	Friend list mgmt server calls.
-	*********************************************************/
-	
-	public static boolean addFriend(NewFriendRequest nfr) {
+	 * Friend list mgmt server calls.
+	 *********************************************************/
+
+	public static Object addFriend(NewFriendRequest nfr) {
 		Request request = new Request("addFriend", nfr);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
-	public static boolean removeFriend(NewFriendRequest nfr) {
+
+	public static Object removeFriend(NewFriendRequest nfr) {
 		Request request = new Request("removeFriend", nfr);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static ArrayList<Friend> getFriends(Player player) {
+	public static Object getFriends(Player player) {
 		Request request = new Request("getFriends", player);
-		return (ArrayList<Friend>)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (ArrayList<Friend>)obj;
+		} else {
+			return null;
+		}
 	}
-	
+
 	/*********************************************************
-	*	Game menu chat mgmt server calls.
-	*********************************************************/
-	public static boolean addMenuChatEntry(ChatEntry newEntry) {
+	 * Game menu chat mgmt server calls.
+	 *********************************************************/
+	public static Object addMenuChatEntry(ChatEntry newEntry) {
 		Request request = new Request("updateMenuChat", newEntry);
-		return (boolean)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static ArrayList<ChatEntry> getMenuChat() {
+	public static Object getMenuChat() {
 		Request request = new Request("getMenuChat", null);
-		return (ArrayList<ChatEntry>)sendRequestWithResponse(request);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (ArrayList<ChatEntry>)obj;
+		} else {
+			return null;
+		}
 	}
 }

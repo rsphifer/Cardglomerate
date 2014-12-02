@@ -58,6 +58,8 @@ public class Model {
 	private int blackjackWins;
 	private float blackjackWinRatio;
 	
+	private Object obj;
+	
 	public boolean isInLobby;
 	private CardGameType currentLobbyType;
 	private int currentLobbyNumber;
@@ -89,8 +91,8 @@ public class Model {
 			currentGame = new BlackJack();
 		}
 
-		gameId = ServerAccess.createNewGame(currentGame);
-		if (gameId != -1) {
+		obj = ServerAccess.createNewGame(currentGame);
+		if (obj != null && (gameId = (int)obj) != -1) {
 			ServerAccess.incrementNumGames(new AchievementRequest(player, gameType));
 			isInGame = true;
 			return true;
@@ -112,7 +114,10 @@ public class Model {
 			System.out.println("game is updating");
 			currentGame.update();
 			ServerAccess.updateCardGameState(gameId, currentGame);
-			currentGame = ServerAccess.getCardGame(gameId);
+			obj = ServerAccess.getCardGame(gameId);
+			if (obj != null) {
+				currentGame = (CardGame)obj;
+			}
 		}
 	}
 
@@ -126,7 +131,10 @@ public class Model {
 
 	public void updateWarCounter() {
 		ServerAccess.incrementWarCounter(new UpdateGameRequest(gameId, null));
-		currentGame = ServerAccess.getCardGame(gameId);
+		obj = ServerAccess.getCardGame(gameId);
+		if (obj != null) {
+			currentGame = (CardGame)obj;
+		}
 	}
 
 	/*********************************************************
@@ -137,25 +145,46 @@ public class Model {
 			String email) {
 		NewPlayerRequest accountRequest = new NewPlayerRequest(username,
 				password, email);
-		return ServerAccess.createNewAccount(accountRequest);
+		if(ServerAccess.createNewAccount(accountRequest) != null) {
+			return true;
+		}
+		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean attemptLogin(String username, String password) {
 		NewPlayerRequest loginRequest = new NewPlayerRequest(username,
 				password, null);
-		player = ServerAccess.loginRequest(loginRequest);
-		if (player != null) {
+		obj = ServerAccess.loginRequest(loginRequest);
+		if (obj != null) {
+			player = (Player)obj;
 
 			isLoggedIn = true;
-			friendList = ServerAccess.getFriends(player);
-			menuChat = ServerAccess.getMenuChat();
+			
+			obj = ServerAccess.getFriends(player);
+			if (obj != null) {
+				friendList = (ArrayList<Friend>)obj;
+			}
+			
+			obj = ServerAccess.getMenuChat();
+			if (obj != null) {
+				menuChat = (ArrayList<ChatEntry>)obj; 
+			}
 			
 			/* Server calls to initialize stats */
 			updateAchievements();
-			
-			warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
+			obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(
 					null, 0, CardGameType.War));
-			texasHoldemLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
+			if (obj != null) {
+				warLobbies = (GameLobby[])obj;
+			}
+			//warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
+			//		null, 0, CardGameType.War));
+			
+			obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
+			if (obj != null) {
+				texasHoldemLobbies = (GameLobby[])obj;
+			}
 
 			/*
 			 * Initialize thread that will periodically ask server for updates
@@ -174,20 +203,33 @@ public class Model {
 		if (isInLobby) {
 			leaveGameLobby(currentLobbyType, currentLobbyNumber);
 		}
-		boolean isSuccess = ServerAccess.logoutRequest(player);
-		if (isSuccess)
-			isLoggedIn = false;
-		return isSuccess;
+		Object isSuccess = ServerAccess.logoutRequest(player);
+		if (isSuccess == null) {
+			return false;
+		}
+		isLoggedIn = false;
+		return (boolean)isSuccess;
 	}
 
 	public boolean requestPassword(String username, String emailAddress) {
-		return ServerAccess.retrievePassword(new NewPlayerRequest(username,
+		obj = ServerAccess.retrievePassword(new NewPlayerRequest(username,
 				"pass", emailAddress));
+		if (obj == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public boolean setNewPassword(String oldPassword, String newPassword) {
-		return ServerAccess.setPassword(new SetPasswordRequest(player,
+		obj = ServerAccess.setPassword(new SetPasswordRequest(player,
 				oldPassword, newPassword));
+		if (obj == null) {
+			return false;
+		} else {
+			return true;
+		}
+		
 	}
 
 	public Player getPlayer() {
@@ -199,8 +241,9 @@ public class Model {
 	 *********************************************************/
 
 	public boolean enterGameFromLobby(int gameId) {
-		currentGame = ServerAccess.getCardGame(gameId);
-		if (currentGame != null) {
+		obj = ServerAccess.getCardGame(gameId);
+		if (obj != null) {
+			currentGame = (CardGame)obj;
 			setGameId(gameId);
 			isInGame = true;
 			gameType = currentLobbyType;
@@ -239,14 +282,22 @@ public class Model {
 				isInLobby = true;
 				setCurrentLobby(gameType, lobbyId);
 				ServerAccess.joinLobby(glr);
-				warLobbies = ServerAccess.getGameLobbyList(glr);
+				
+				obj = ServerAccess.getGameLobbyList(glr);
+				if (obj != null) {
+					warLobbies = (GameLobby[])obj; 
+				}
 			}
 		} else if (gameType == CardGameType.TexasHoldEm) {
 			if (texasHoldemLobbies[lobbyId].getPlayers().size()<4) {
 				isInLobby = true;
 				setCurrentLobby(gameType, lobbyId);
 				ServerAccess.joinLobby(glr);
-				texasHoldemLobbies = ServerAccess.getGameLobbyList(glr);
+				
+				obj =  ServerAccess.getGameLobbyList(glr);
+				if (obj != null) {
+					texasHoldemLobbies = (GameLobby[])obj;
+				}
 			}
 		}
 		return;
@@ -259,9 +310,15 @@ public class Model {
 		ServerAccess.leaveLobby(glr);
 
 		if (gameType == CardGameType.War) {
-			warLobbies = ServerAccess.getGameLobbyList(glr);
+			obj = ServerAccess.getGameLobbyList(glr);
+			if (obj != null) {
+				warLobbies = (GameLobby[])obj; 
+			}
 		} else if (gameType == CardGameType.TexasHoldEm) {
-			texasHoldemLobbies = ServerAccess.getGameLobbyList(glr);
+			obj = ServerAccess.getGameLobbyList(glr);
+			if (obj != null) {
+				texasHoldemLobbies = (GameLobby[])obj;
+			}
 		}
 
 		return;
@@ -325,15 +382,30 @@ public class Model {
 	}
 	
 	public float getServerWinRatio(CardGameType gameType, Player player) {
-		return ServerAccess.getWinRatio(new AchievementRequest(player, gameType));
+		obj = ServerAccess.getWinRatio(new AchievementRequest(player, gameType));
+		if (obj != null) {
+			return (float)obj;
+		} else {
+			return 0;
+		}
 	}
 	
 	public int getServerNumberOfWins(CardGameType gameType, Player player) {
-		return ServerAccess.getNumWins(new AchievementRequest(player, gameType));
+		obj = ServerAccess.getNumWins(new AchievementRequest(player, gameType));
+		if (obj != null) {
+			return (int)obj;
+		} else {
+			return 0;
+		}
 	}
 	
 	public int getServerNumberOfGames(CardGameType gameType, Player player) {
-		return ServerAccess.getNumGames(new AchievementRequest(player, gameType));
+		obj = ServerAccess.getNumGames(new AchievementRequest(player, gameType));
+		if (obj != null) {
+			return (int)obj;
+		} else {
+			return 0;
+		}
 	}
 	
 	public float getPlayerWinRatio(CardGameType gameType) {
@@ -370,21 +442,30 @@ public class Model {
 	/*********************************************************
 	 * Friend list mgmt model calls.
 	 *********************************************************/
+	@SuppressWarnings("unchecked")
 	public boolean addFriend(String username) {
 
-		boolean isSuccess = ServerAccess.addFriend(new NewFriendRequest(player,
+		Object isSuccess = ServerAccess.addFriend(new NewFriendRequest(player,
 				username));
-		if (isSuccess) {
-			friendList = ServerAccess.getFriends(player);
+		if (isSuccess != null && (boolean)isSuccess) {
+			obj = ServerAccess.getFriends(player);
+			if (obj != null) {
+				friendList = (ArrayList<Friend>)obj; 
+			}
+			return (boolean)isSuccess;
 		}
-		return isSuccess;
+		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void removeFriend(String username) {
-		boolean isSuccess = ServerAccess.removeFriend(new NewFriendRequest(
+		Object isSuccess = ServerAccess.removeFriend(new NewFriendRequest(
 				player, username));
-		if (isSuccess) {
-			friendList = ServerAccess.getFriends(player);
+		if (isSuccess != null && (boolean)isSuccess) {
+			obj = ServerAccess.getFriends(player);
+			if (obj != null) {
+				friendList = (ArrayList<Friend>)obj;
+			}
 		}
 	}
 
@@ -407,12 +488,17 @@ public class Model {
 		return menuChat;
 	}
 
+	@SuppressWarnings("unchecked")
 	public boolean addChatEntry(String message) {
 		ChatEntry newEntry = new ChatEntry(player.userName, message);
-		boolean isSuccess = ServerAccess.addMenuChatEntry(newEntry);
-		if (isSuccess) {
-			menuChat = ServerAccess.getMenuChat();
+		Object isSuccess = ServerAccess.addMenuChatEntry(newEntry);
+		if (isSuccess != null && (boolean)isSuccess) {
+			obj = ServerAccess.getMenuChat();
+			if (obj != null) {
+				menuChat = (ArrayList<ChatEntry>)obj; 
+			}
+			return (boolean)isSuccess;
 		}
-		return isSuccess;
+		return false;
 	}
 }

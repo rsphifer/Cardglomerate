@@ -1,10 +1,15 @@
 package controller;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
+import misc.ChatEntry;
 import misc.GameLobby;
 import misc.GameLobbyRequest;
 import model.Model;
+import player.Friend;
+import cardgames.CardGame;
 import cardgames.CardGameType;
 
 public class UpdateChecker implements Runnable {
@@ -17,6 +22,7 @@ public class UpdateChecker implements Runnable {
 		this.model = model;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		while (model.isLoggedIn) {
@@ -38,25 +44,40 @@ public class UpdateChecker implements Runnable {
 
 			/* Update model with newest game, chat, and friend states */
 			System.out.println("Ask server for updates.");
-
+			
+			Object obj;
+			
 			if (model.isInGame) {
-				model.setCurrentGame(ServerAccess.getCardGame(model.getGameId()));
+				obj = ServerAccess.getCardGame(model.getGameId());
+				if (obj != null) {
+					model.setCurrentGame((CardGame)obj);
+				}
 			} else {
 
 				/* Update friends list */
-				model.setFriendList(ServerAccess.getFriends(model.getPlayer()));
+				obj = ServerAccess.getFriends(model.getPlayer());
+				if (obj != null) {
+					model.setFriendList((ArrayList<Friend>)obj);
+				}
 
 				/* Update menu chat */
-				model.setMenuChat(ServerAccess.getMenuChat());
+				obj = ServerAccess.getMenuChat();
+				if (obj != null) {
+					model.setMenuChat((ArrayList<ChatEntry>)obj);
+				}
 
 				/* Update game lobbies */
-				GameLobby[] tmp = ServerAccess
-						.getGameLobbyList(new GameLobbyRequest(null, 0,
+				obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0,
 								CardGameType.War));
-				model.setGameLobby(CardGameType.War, tmp);
+				if (obj != null) {
+					model.setGameLobby(CardGameType.War, (GameLobby[])obj);
+				}
+			
 				
-				tmp = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
-				model.setGameLobby(CardGameType.TexasHoldEm, tmp);
+				obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
+				if (obj != null) {
+					model.setGameLobby(CardGameType.TexasHoldEm, (GameLobby[])obj);
+				}
 
 			}
 
