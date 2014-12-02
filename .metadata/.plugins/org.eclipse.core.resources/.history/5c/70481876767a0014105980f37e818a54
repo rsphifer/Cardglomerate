@@ -33,18 +33,6 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		cardsOnTable = new LinkedList<Card>();
 		fillDeck();
 		setup();
-		
-		handOver = false;
-		for(int i=0;i<players.size();i++){
-			players.get(i).bet(50);
-		}
-		for(int i=0;i<players.size();i++){
-			players.get(i).addCardToHand(this.getTopOfDeck());
-			players.get(i).addCardToHand(this.getTopOfDeck());
-		}
-		readyToUpdate = true;
-		turn++;
-		
 		//update();
 	}
 	
@@ -104,8 +92,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	
 	public void nextTurn(Player curP){
 		int found = 0;
-		int i=0;
-		for(i=0;i<players.size();i++){
+		for(int i=0;i<players.size();i++){
 			if(found == 1){
 				whoseTurn = players.get(i);
 				break;
@@ -114,7 +101,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 				found = 1;
 			}
 		}
-		if(i == players.size()){
+		if(found == players.size()){
 			players.get(0);
 		}
 		System.out.println("next turn function   "+whoseTurn.userName);
@@ -132,20 +119,20 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		switch(turn){
 			case 0: //ante
 				//System.out.println("step 0");
-				//handOver = false;
-				//for(int i=0;i<players.size();i++){
-				//	players.get(i).bet(50);
-				//}
-				//for(int i=0;i<players.size();i++){
-				//	players.get(i).addCardToHand(this.getTopOfDeck());
-				//	players.get(i).addCardToHand(this.getTopOfDeck());
+				handOver = false;
+				for(int i=0;i<players.size();i++){
+					players.get(i).bet(50);
+				}
+				for(int i=0;i<players.size();i++){
+					players.get(i).addCardToHand(this.getTopOfDeck());
+					players.get(i).addCardToHand(this.getTopOfDeck());
 					//System.out.println(players.get(i).userName);
 					//System.out.println(players.get(i).getHand().get(0).getPower() + " of "+players.get(i).getHand().get(0).getSuit());
 					//System.out.println(players.get(i).getHand().get(1).getPower() + " of "+players.get(i).getHand().get(1).getSuit());
-				//}
+				}
 				//whoseTurn = players.get(0);
 				readyToUpdate = true;
-				//turn++;
+				turn++;
 				//System.out.println("step 0 end at turn "+turn);
 				break;
 			case 1:

@@ -130,24 +130,24 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		readyToUpdate = false;
 
 		switch(turn){
-			case 0: //ante
+			/*case 0: //ante
 				//System.out.println("step 0");
-				//handOver = false;
-				//for(int i=0;i<players.size();i++){
-				//	players.get(i).bet(50);
-				//}
-				//for(int i=0;i<players.size();i++){
-				//	players.get(i).addCardToHand(this.getTopOfDeck());
-				//	players.get(i).addCardToHand(this.getTopOfDeck());
+				handOver = false;
+				for(int i=0;i<players.size();i++){
+					players.get(i).bet(50);
+				}
+				for(int i=0;i<players.size();i++){
+					players.get(i).addCardToHand(this.getTopOfDeck());
+					players.get(i).addCardToHand(this.getTopOfDeck());
 					//System.out.println(players.get(i).userName);
 					//System.out.println(players.get(i).getHand().get(0).getPower() + " of "+players.get(i).getHand().get(0).getSuit());
 					//System.out.println(players.get(i).getHand().get(1).getPower() + " of "+players.get(i).getHand().get(1).getSuit());
-				//}
+				}
 				//whoseTurn = players.get(0);
 				readyToUpdate = true;
-				//turn++;
+				turn++;
 				//System.out.println("step 0 end at turn "+turn);
-				break;
+				break;*/
 			case 1:
 			case 3:
 			case 5:
