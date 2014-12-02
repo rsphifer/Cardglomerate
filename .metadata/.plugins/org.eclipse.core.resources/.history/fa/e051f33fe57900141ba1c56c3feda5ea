@@ -338,6 +338,7 @@ public class GameMenu extends BasicGameState {
      }
      
      else {
+      //chat does not support paragraphs, write your novels elsewhere
       chatError = true;
      }
 

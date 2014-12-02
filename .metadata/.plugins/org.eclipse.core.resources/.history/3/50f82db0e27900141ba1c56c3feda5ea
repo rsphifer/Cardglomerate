@@ -501,23 +501,4 @@ public class Model {
 		}
 		return false;
 	}
-	
-	/*********************************************************
-	 * Game chat mgmt model calls.
-	 *********************************************************/
-	public void addGameChatEntry(String message) {
-		if (!isInGame || currentGame == null) {
-			return;
-		}
-		ChatEntry newEntry = new ChatEntry(player.userName, message);
-		currentGame.addChatEntry(newEntry);
-		obj = ServerAccess.updateCardGameState(gameId, currentGame);
-		if (obj != null) {
-			obj = ServerAccess.getCardGame(gameId);
-			if (obj != null) {
-				currentGame = (CardGame)obj;
-			}
-		}
-		
-	}
 }
