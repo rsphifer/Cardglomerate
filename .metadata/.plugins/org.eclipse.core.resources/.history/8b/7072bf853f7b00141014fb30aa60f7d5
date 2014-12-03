@@ -29,8 +29,6 @@ public class Master extends StateBasedGame {
 	public static final int blackjackOptions = 9;
 	public static final int blackjackGame = 10;
 	public static final int statsPage = 11;
-	public static final int ratscrewOptions = 12;
-	public static final int ratscrew = 13;
 	
 	
 	public Master(String gamename){
@@ -52,8 +50,6 @@ public class Master extends StateBasedGame {
 		this.addState(new BlackjackOptions(blackjackOptions, model));
 		this.addState(new BlackjackGame(blackjackGame, model));
 		this.addState(new StatsPage(statsPage, model));
-		this.addState(new RatscrewOptions(ratscrewOptions, model));
-		this.addState(new Ratscrew(ratscrew, model));
 		
 	}
 	
@@ -71,8 +67,6 @@ public class Master extends StateBasedGame {
 		this.getState(blackjackOptions).init(gc, this);
 		this.getState(blackjackGame).init(gc, this);
 		this.getState(statsPage).init(gc, this);
-		this.getState(ratscrewOptions).init(gc, this);
-		this.getState(ratscrew).init(gc, this);
 		
 		//screen to display first
 		this.enterState(logIn);

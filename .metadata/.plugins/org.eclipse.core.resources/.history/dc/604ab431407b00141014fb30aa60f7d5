@@ -364,14 +364,14 @@ public class GameMenu extends BasicGameState {
   // Hold'em clicked
   if ((xpos > 960 && xpos < 1210) && (ypos > 395 && ypos < 645)) {
    if (Mouse.isButtonDown(0)) {
-    sbg.enterState(7); 
+    sbg.enterState(7); // display coming soon screen
    }
   }
 
   // ratscrew clicked
   if ((xpos > 360 && xpos < 610) && (ypos > 95 && ypos < 345)) {
    if (Mouse.isButtonDown(0)) {
-    sbg.enterState(12); 
+    sbg.enterState(3); // display coming soon screen
    }
   }
 
