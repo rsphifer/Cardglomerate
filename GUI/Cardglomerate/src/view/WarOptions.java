@@ -1,19 +1,24 @@
 package view;
 
+import java.util.ArrayList;
+
 import misc.GameLobby;
 import model.Model;
 
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import player.Friend;
 import player.Player;
 import cardgames.CardGameType;
 
@@ -37,6 +42,11 @@ public class WarOptions extends BasicGameState {
 
 	private boolean lobbyJoined = false;
 	private int lobbyNumberJoined = 0;
+	
+	// friends list things
+	private int curx;
+	private int cury;
+	ArrayList<Friend> friends;
 
 	public WarOptions(int state, Model model) {
 		this.model = model;
@@ -116,6 +126,28 @@ public class WarOptions extends BasicGameState {
 
 		// render arrow
 		g.drawImage(arrow, 0, 570);
+		
+		// friends list rendering
+		g.drawString("Friends List", 1000, 10);
+		curx = 930;
+		cury = 30;
+
+		if (model.isLoggedIn) {
+			friends = model.getFriendsList();
+			for (int i = 0; i < friends.size(); i++) {
+				Friend tmp = friends.get(i);
+				g.drawString(tmp.getUsername(), curx, cury);
+				Color currColor = g.getColor();
+				if (tmp.isOnline) {
+					g.setColor(Color.blue);
+				} else {
+					g.setColor(Color.red);
+				}
+				g.fill(new Circle(curx - 7, cury + 10, 5));
+				g.setColor(currColor);
+				cury += 20;
+			}
+		}
 
 	}
 

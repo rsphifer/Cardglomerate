@@ -505,11 +505,17 @@ public class Model {
 	/*********************************************************
 	 * Game chat mgmt model calls.
 	 *********************************************************/
-	public void addGameChatEntry(String message) {
+	public void addGameChatEntry(String message, int i) {
 		if (!isInGame || currentGame == null) {
 			return;
 		}
-		ChatEntry newEntry = new ChatEntry(player.userName, message);
+		ChatEntry newEntry;
+		if (i == 0) {
+			newEntry = new ChatEntry(player.userName, message);
+		}
+		else {
+			newEntry = new ChatEntry("Dealer", message);
+		}
 		currentGame.addChatEntry(newEntry);
 		obj = ServerAccess.updateCardGameState(gameId, currentGame);
 		if (obj != null) {

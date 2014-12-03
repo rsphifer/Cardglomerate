@@ -10,6 +10,7 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.gui.TextField;
@@ -26,9 +27,12 @@ import cards.Card;
 public class BlackjackGame extends BasicGameState {
 
 	private Model model;
-
+	
+	private boolean firstTime = true;
+	private boolean firstCongrats = true;
 	private String mouse = "No input yet";
 	private Image background;
+	private Image dealer;
 	private int playerSize = 26; // players deck size
 	private int opponentSize = 26; // opponents deck size
 	private Image arrow;
@@ -69,6 +73,7 @@ public class BlackjackGame extends BasicGameState {
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
+		dealer = new Image("res/Dealer.png");
 
 		dealerScore = 0;
 		playerScore = 0;
@@ -89,6 +94,7 @@ public class BlackjackGame extends BasicGameState {
 			throws SlickException {
 		// render the background
 		background.draw(0, 0);
+		dealer.draw(650, 0);
 
 		// mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
@@ -119,8 +125,17 @@ public class BlackjackGame extends BasicGameState {
 			
 			if (game.playerWon) {
 				g.drawString(model.getPlayer().userName + " won!", 530, 300);
+				if (firstCongrats) {
+					model.addGameChatEntry("Congrats!", 1);
+					firstCongrats = false;
+				}
+				
 			} else {
 				g.drawString("Dealer won!", 530, 300);
+				if (firstCongrats) {
+					model.addGameChatEntry("Too bad, try again!", 1);
+					firstCongrats = false;
+				}
 			}
 		} else {
 			if (game.waitingOnPlayer) {
@@ -130,7 +145,7 @@ public class BlackjackGame extends BasicGameState {
 			}
 		}
 
-		arrow.draw(0, 570);
+		arrow.draw(1130, 570);
 		
 		
 		g.drawString("Chat", 150, 330);
@@ -158,6 +173,18 @@ public class BlackjackGame extends BasicGameState {
 		int xpos = Mouse.getX();
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
+		
+		  //enter functionality
+		  Input in = gc.getInput();
+		  boolean enterHit = false;
+		  if (in.isKeyPressed(Input.KEY_ENTER)) {
+		   enterHit = true;
+		  }
+		
+		if (firstTime) {
+			model.addGameChatEntry("Welcome to my table.", 1);
+			firstTime = false;
+		}
 
 		if (playerName == null) {
 			playerName = model.getPlayer().userName;
@@ -182,33 +209,33 @@ public class BlackjackGame extends BasicGameState {
 		  
 		  //send chat message button clicked
 		  int userNameLength = model.getPlayer().userName.length();
-		  if((xpos>260 && xpos<380) && (ypos>10 && ypos<40)) {
-		   if(Mouse.isButtonDown(0) && Master.isMouseReleased) {
+		  if(((xpos>260 && xpos<380) && (ypos>10 && ypos<40)) || enterHit) {
+		   if((Mouse.isButtonDown(0) && Master.isMouseReleased) || enterHit) {
 		    Master.isMouseReleased = false;
 		    if (chatField.getText().length() > 1) {
 		     //code to send chat message to server goes here
 		     String newMessage = chatField.getText();
 		     if ((newMessage.length() + userNameLength) <= 37) {
-		      model.addGameChatEntry(newMessage);
+		      model.addGameChatEntry(newMessage, 0);
 		      chatError = false;
 		     }
 		     else if ((newMessage.length() + (userNameLength*2)) <= 74) {
 		      //split message in two and send both
 		      String temp = newMessage.substring(0, (37 - userNameLength));
-		      model.addGameChatEntry(temp);
+		      model.addGameChatEntry(temp, 0);
 		      temp = newMessage.substring(37 - userNameLength);
-		      model.addGameChatEntry(temp);
+		      model.addGameChatEntry(temp, 0);
 		      chatError = false;
 		     }
 		     
 		     else if ((newMessage.length() + (userNameLength*3)) <= 110) {
 		      //split message into 3 and send all
 		      String temp = newMessage.substring(0, (37-userNameLength));
-		      model.addGameChatEntry(temp);
+		      model.addGameChatEntry(temp, 0);
 		      temp = newMessage.substring((37-userNameLength), (74 - (userNameLength*2)));
-		      model.addGameChatEntry(temp);
+		      model.addGameChatEntry(temp, 0);
 		      temp = newMessage.substring((74-(userNameLength*2)));
-		      model.addGameChatEntry(temp);
+		      model.addGameChatEntry(temp, 0);
 		      
 		     }
 		     
@@ -264,6 +291,7 @@ public class BlackjackGame extends BasicGameState {
 				Master.isMouseReleased = false;
 				if (game.gameEnded) {
 					game.resetGame();
+					firstCongrats = true;
 					model.updateGame();
 				}
 			}
@@ -286,10 +314,11 @@ public class BlackjackGame extends BasicGameState {
 		}
 
 		// back button clicked
-		if ((xpos > 0 && xpos < 150) && (ypos > 0 && ypos < 150)) {
+		if ((xpos > 1130 && xpos < 1280) && (ypos > 0 && ypos < 150)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-
+				firstTime = true;
+				firstCongrats = true;
 				model.isInGame = false;
 				model.updateAchievements();
 				sbg.enterState(1); // display game menu screen

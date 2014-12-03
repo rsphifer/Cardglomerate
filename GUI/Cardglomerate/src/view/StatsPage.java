@@ -14,6 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 
+import cardgames.CardGameType;
 import player.Player;
 
 
@@ -25,6 +26,7 @@ public class StatsPage extends BasicGameState {
 	private Image background;
 	private Image image;
 	private Image arrow;
+	private boolean firstTime = true;
 
 	//individual game stats
 	//war
@@ -60,7 +62,7 @@ public class StatsPage extends BasicGameState {
 
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
-
+		
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
@@ -108,13 +110,17 @@ public class StatsPage extends BasicGameState {
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 
-		
+		//update stats check
+		if (firstTime) {
+			updateStats();
+			firstTime = false;
+		}
 		
 		// back button clicked
 		if ((xpos > 0 && xpos < 150) && (ypos > 0 && ypos < 150)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				
+				firstTime = true;
 				sbg.enterState(1); // display game menu screen
 			}
 
@@ -127,7 +133,13 @@ public class StatsPage extends BasicGameState {
 	
 	public void updateStats() {
 		//update stat variables here
-		System.out.println("UPDATING STATS HOOORAY");
+		warGamesPlayed = model.getPlayerGameNumber(CardGameType.War);
+		warGamesWon = model.getPlayerWinNumber(CardGameType.War);
+		warWinLoss = model.getPlayerWinRatio(CardGameType.War);
+		
+		blackjackGamesPlayed = model.getPlayerGameNumber(CardGameType.Blackjack);
+		blackjackGamesWon = model.getPlayerWinNumber(CardGameType.Blackjack);
+		blackjackWinLoss = model.getPlayerWinRatio(CardGameType.Blackjack);
 	}
 
 	public int getID() {

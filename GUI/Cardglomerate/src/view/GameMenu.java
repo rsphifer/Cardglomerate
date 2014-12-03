@@ -155,6 +155,10 @@ public class GameMenu extends BasicGameState {
   g.drawRect(1070, 670, 200, 40);
   g.drawString("Account Options", 1100, 680);
   
+  //stats page button
+  g.drawRect(525, 670, 200, 40);
+  g.drawString("Player Stats", 570, 680);
+  
   //friends list rendering (limit = 14 friends with current spacing)
   g.drawString("Add Friend", 970, 640);
   g.drawRect(965, 635, 100, 30);
@@ -165,6 +169,7 @@ public class GameMenu extends BasicGameState {
   curx = 960;
   cury = 350;
   
+  //stats stuff
   if (model.isLoggedIn) {
 	g.drawString("Stats", 1050, 500);
 	g.drawString("War", 1010, 520);
@@ -182,7 +187,8 @@ public class GameMenu extends BasicGameState {
 	g.drawString(Integer.toString(model.getPlayerWinNumber(CardGameType.Blackjack)), 1060,560);
 	formattedRatio = String.format("%.2f", model.getPlayerWinRatio(CardGameType.Blackjack));
 	g.drawString(formattedRatio, 1060,580);
-	  
+	
+	//freinds stuff	
    friends = model.getFriendsList();
    for (int i = 0; i < friends.size(); i++) {
     Friend tmp = friends.get(i);
@@ -396,6 +402,18 @@ public class GameMenu extends BasicGameState {
   if ((xpos > 1070 && xpos < 1270) && (ypos > 10 && ypos < 50)) {
    if (Mouse.isButtonDown(0)) {
     sbg.enterState(6);
+   }
+  }
+  
+  // stats button clicked
+  if ((xpos > 525 && xpos < 725) && (ypos > 10 && ypos < 50)) {
+   if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
+    Master.isMouseReleased = false;
+    sbg.enterState(11);
+   }
+
+   if (!Mouse.isButtonDown(0)) {
+    Master.isMouseReleased = true;
    }
   }
 
