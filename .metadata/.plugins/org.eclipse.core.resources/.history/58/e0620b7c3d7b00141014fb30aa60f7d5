@@ -207,7 +207,7 @@ public class WarGame extends BasicGameState {
 		if (gameOver) {
 			winner = currGame.getWinner().get(0).userName;
 			if (firstCongrats) {
-				model.addGameChatEntry("Well Played!", 1);
+				model.addGameChatEntry("I will crush you!", 1);
 				firstCongrats = false;
 			}
 			if (winner.equals(model.getPlayer().userName) && !incrementedVictory) {

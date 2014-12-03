@@ -169,9 +169,25 @@ public class GameMenu extends BasicGameState {
   curx = 960;
   cury = 350;
   
-
+  //stats stuff
   if (model.isLoggedIn) {
-
+	g.drawString("Stats", 1050, 500);
+	g.drawString("War", 1010, 520);
+	g.drawString("Blackjack", 1060, 520);
+	g.drawString("Games", 930, 540);
+	g.drawString("Wins", 930, 560);
+	g.drawString("Ratio", 930, 580);
+	  
+	g.drawString(Integer.toString(model.getPlayerGameNumber(CardGameType.War)), 1010,540);
+	g.drawString(Integer.toString(model.getPlayerWinNumber(CardGameType.War)), 1010,560);
+	String formattedRatio = String.format("%.2f", model.getPlayerWinRatio(CardGameType.War));
+	g.drawString(formattedRatio, 1010,580);
+	
+	g.drawString(Integer.toString(model.getPlayerGameNumber(CardGameType.Blackjack)), 1060,540);
+	g.drawString(Integer.toString(model.getPlayerWinNumber(CardGameType.Blackjack)), 1060,560);
+	formattedRatio = String.format("%.2f", model.getPlayerWinRatio(CardGameType.Blackjack));
+	g.drawString(formattedRatio, 1060,580);
+	
 	//freinds stuff	
    friends = model.getFriendsList();
    for (int i = 0; i < friends.size(); i++) {

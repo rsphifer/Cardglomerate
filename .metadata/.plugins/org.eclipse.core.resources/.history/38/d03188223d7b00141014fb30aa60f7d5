@@ -29,9 +29,7 @@ import cards.Card;
 public class WarGame extends BasicGameState {
 
 	private Model model;
-	
-	private boolean firstTime = true;
-	private boolean firstCongrats = true;
+
 	private String mouse = "No input yet";
 	private Image background;
 	private int playerSize = 26; // players deck size
@@ -140,7 +138,7 @@ public class WarGame extends BasicGameState {
 		// gameover print
 		if (gameOver) {
 			g.drawString(winner + " Won the Game!", 700, 300);
-			arrow.draw(1130, 570);
+			g.drawImage(arrow, 0, 570);
 		}
 		
 		//chat stuff
@@ -177,11 +175,6 @@ public class WarGame extends BasicGameState {
 		  if (in.isKeyPressed(Input.KEY_ENTER)) {
 		   enterHit = true;
 		  }
-		  
-			if (firstTime) {
-				model.addGameChatEntry("I will crush you!", 1);
-				firstTime = false;
-			}
 		
 		War currGame = (War) model.getCurrentGame();
 
@@ -206,10 +199,7 @@ public class WarGame extends BasicGameState {
 		// check gameOver
 		if (gameOver) {
 			winner = currGame.getWinner().get(0).userName;
-			if (firstCongrats) {
-				model.addGameChatEntry("Well Played!", 1);
-				firstCongrats = false;
-			}
+			
 			if (winner.equals(model.getPlayer().userName) && !incrementedVictory) {
 				incrementedVictory = true;
 				model.incrementNumberOfWins(CardGameType.War);
@@ -247,7 +237,7 @@ public class WarGame extends BasicGameState {
 		}
 
 		// back button clicked
-		if ((xpos > 1130 && xpos < 1280) && (ypos > 0 && ypos < 150) && (gameOver)) {
+		if ((xpos > 0 && xpos < 150) && (ypos > 0 && ypos < 150) && (gameOver)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				// resets gui for new game
@@ -256,8 +246,6 @@ public class WarGame extends BasicGameState {
 				opponentSize = 26;
 				model.isInGame = false;
 				model.updateAchievements();
-				firstTime = true;
-				firstCongrats = true;
 				sbg.enterState(1); // display game menu screen
 			}
 

@@ -168,10 +168,7 @@ public class GameMenu extends BasicGameState {
   g.drawString("Friends List", 1030, 330);
   curx = 960;
   cury = 350;
-  
-
-  if (model.isLoggedIn) {
-
+  	
 	//freinds stuff	
    friends = model.getFriendsList();
    for (int i = 0; i < friends.size(); i++) {

@@ -140,7 +140,6 @@ public class StatsPage extends BasicGameState {
 		blackjackGamesPlayed = model.getPlayerGameNumber(CardGameType.Blackjack);
 		blackjackGamesWon = model.getPlayerWinNumber(CardGameType.Blackjack);
 		blackjackWinLoss = model.getPlayerWinRatio(CardGameType.Blackjack);
-		
 	}
 
 	public int getID() {

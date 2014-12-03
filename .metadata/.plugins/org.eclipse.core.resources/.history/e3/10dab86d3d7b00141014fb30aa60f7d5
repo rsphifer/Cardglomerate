@@ -140,7 +140,7 @@ public class WarGame extends BasicGameState {
 		// gameover print
 		if (gameOver) {
 			g.drawString(winner + " Won the Game!", 700, 300);
-			arrow.draw(1130, 570);
+			g.drawImage(arrow, 0, 570);
 		}
 		
 		//chat stuff
@@ -207,7 +207,7 @@ public class WarGame extends BasicGameState {
 		if (gameOver) {
 			winner = currGame.getWinner().get(0).userName;
 			if (firstCongrats) {
-				model.addGameChatEntry("Well Played!", 1);
+				model.addGameChatEntry("I will crush you!", 1);
 				firstCongrats = false;
 			}
 			if (winner.equals(model.getPlayer().userName) && !incrementedVictory) {
@@ -247,7 +247,7 @@ public class WarGame extends BasicGameState {
 		}
 
 		// back button clicked
-		if ((xpos > 1130 && xpos < 1280) && (ypos > 0 && ypos < 150) && (gameOver)) {
+		if ((xpos > 0 && xpos < 150) && (ypos > 0 && ypos < 150) && (gameOver)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				// resets gui for new game

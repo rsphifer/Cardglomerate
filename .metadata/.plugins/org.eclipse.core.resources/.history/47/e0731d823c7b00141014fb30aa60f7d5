@@ -1,23 +1,18 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
-import misc.ChatEntry;
 import model.Model;
 
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import controller.ServerAccess;
-import cardgames.BlackJack;
 import cardgames.CardGameType;
 import cardgames.War;
 import cards.Card;
@@ -29,9 +24,7 @@ import cards.Card;
 public class WarGame extends BasicGameState {
 
 	private Model model;
-	
-	private boolean firstTime = true;
-	private boolean firstCongrats = true;
+
 	private String mouse = "No input yet";
 	private Image background;
 	private int playerSize = 26; // players deck size
@@ -49,10 +42,6 @@ public class WarGame extends BasicGameState {
 	private boolean incrementedVictory = false;
 	
 	private int countWhenClicked;
-	
-	//chat stuff
-	private TextField chatField;
-	private boolean chatSelected, chatError;
 
 	/* Holds this player's position in the players list in the game */
 	private int playerIndex;
@@ -79,10 +68,6 @@ public class WarGame extends BasicGameState {
 		// back arrow
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
-		
-		//chat stuff
-		chatField = new TextField(gc, gc.getDefaultFont(), 5, 680, 250, 30);
-		chatSelected = true; chatError = false;
 
 	}
 
@@ -140,27 +125,8 @@ public class WarGame extends BasicGameState {
 		// gameover print
 		if (gameOver) {
 			g.drawString(winner + " Won the Game!", 700, 300);
-			arrow.draw(1130, 570);
+			g.drawImage(arrow, 0, 570);
 		}
-		
-		//chat stuff
-		War game = (War) model.getCurrentGame();
-		g.drawString("Chat", 150, 330);
-		g.drawRect(260, 680, 120, 30);
-		g.drawString("Send Message", 265, 685);
-		chatField.render(gc, g);
-
-		int curChatx = 5;
-		int curChaty = 350;
-		  
-		ArrayList<ChatEntry> chatLog = game.getChatLog();
-		for (int i = 0; i < chatLog.size(); i++) {
-			ChatEntry currMessage = chatLog.get(i);
-			g.drawString(currMessage.getUsername() + ": " + currMessage.getMessage(), curChatx, curChaty);
-			//g.drawString(currMessage.getMessage(), curChatx+90, curChaty);
-			curChaty += 20;
-		   
-		}  
 
 	}
 
@@ -171,18 +137,6 @@ public class WarGame extends BasicGameState {
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 
-		  //enter functionality
-		  Input in = gc.getInput();
-		  boolean enterHit = false;
-		  if (in.isKeyPressed(Input.KEY_ENTER)) {
-		   enterHit = true;
-		  }
-		  
-			if (firstTime) {
-				model.addGameChatEntry("I will crush you!", 1);
-				firstTime = false;
-			}
-		
 		War currGame = (War) model.getCurrentGame();
 
 		if (currGame.isMultiplayer && playerIndex == -1) {
@@ -206,10 +160,7 @@ public class WarGame extends BasicGameState {
 		// check gameOver
 		if (gameOver) {
 			winner = currGame.getWinner().get(0).userName;
-			if (firstCongrats) {
-				model.addGameChatEntry("Well Played!", 1);
-				firstCongrats = false;
-			}
+			
 			if (winner.equals(model.getPlayer().userName) && !incrementedVictory) {
 				incrementedVictory = true;
 				model.incrementNumberOfWins(CardGameType.War);
@@ -247,7 +198,7 @@ public class WarGame extends BasicGameState {
 		}
 
 		// back button clicked
-		if ((xpos > 1130 && xpos < 1280) && (ypos > 0 && ypos < 150) && (gameOver)) {
+		if ((xpos > 0 && xpos < 150) && (ypos > 0 && ypos < 150) && (gameOver)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				// resets gui for new game
@@ -256,8 +207,6 @@ public class WarGame extends BasicGameState {
 				opponentSize = 26;
 				model.isInGame = false;
 				model.updateAchievements();
-				firstTime = true;
-				firstCongrats = true;
 				sbg.enterState(1); // display game menu screen
 			}
 
@@ -265,62 +214,6 @@ public class WarGame extends BasicGameState {
 				Master.isMouseReleased = true;
 			}
 		}
-		
-		//chat stuff
-		War game = (War) model.getCurrentGame();
-		if (chatSelected) {
-			   chatField.setFocus(true);
-		}
-		//chat textbox clicked
-		  if((xpos>5 && xpos<255) && (ypos>10 && ypos<40)) {
-		   if(Mouse.isButtonDown(0)) { //button 0 = left click
-		    chatSelected = true;
-		   }
-		  }
-		  //send chat message button clicked
-		  int userNameLength = model.getPlayer().userName.length();
-		  if(((xpos>260 && xpos<380) && (ypos>10 && ypos<40)) || enterHit) {
-		   if((Mouse.isButtonDown(0) && Master.isMouseReleased) || enterHit) {
-		    Master.isMouseReleased = false;
-		    if (chatField.getText().length() > 1) {
-		     //code to send chat message to server goes here
-		     String newMessage = chatField.getText();
-		     if ((newMessage.length() + userNameLength) <= 37) {
-		      model.addGameChatEntry(newMessage, 0);
-		      chatError = false;
-		     }
-		     else if ((newMessage.length() + (userNameLength*2)) <= 74) {
-		      //split message in two and send both
-		      String temp = newMessage.substring(0, (37 - userNameLength));
-		      model.addGameChatEntry(temp, 0);
-		      temp = newMessage.substring(37 - userNameLength);
-		      model.addGameChatEntry(temp, 0);
-		      chatError = false;
-		     }
-		     
-		     else if ((newMessage.length() + (userNameLength*3)) <= 110) {
-		      //split message into 3 and send all
-		      String temp = newMessage.substring(0, (37-userNameLength));
-		      model.addGameChatEntry(temp, 0);
-		      temp = newMessage.substring((37-userNameLength), (74 - (userNameLength*2)));
-		      model.addGameChatEntry(temp, 0);
-		      temp = newMessage.substring((74-(userNameLength*2)));
-		      model.addGameChatEntry(temp, 0);
-		      
-		     }
-		     
-		     else {
-		      chatError = true;
-		     }
-
-		     chatField.setText(""); 
-		    }
-		   }
-		   
-		   if (!Mouse.isButtonDown(0)){
-		    Master.isMouseReleased = true;
-		   }
-		  }
 
 	}
 
@@ -391,7 +284,6 @@ public class WarGame extends BasicGameState {
 			}
 			
 		}
-		  
 	}
 
 	private Image getCardImage(Card c) {
