@@ -110,15 +110,15 @@ public class Model {
 	
 	// MAIN UPDATE FUNCTION
 	public void updateGame() {
-		if (currentGame.updateReady()) {
+		//if (currentGame.updateReady()) {
 			System.out.println("game is updating");
-			currentGame.update();
+			//currentGame.update();
 			ServerAccess.updateCardGameState(gameId, currentGame);
 			obj = ServerAccess.getCardGame(gameId);
 			if (obj != null) {
 				currentGame = (CardGame)obj;
 			}
-		}
+		//}
 	}
 
 	public boolean getGameOver() {

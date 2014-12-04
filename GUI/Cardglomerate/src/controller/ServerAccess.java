@@ -28,7 +28,7 @@ import cardgames.CardGame;
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME = "pod5-5.cs.purdue.edu";
+	private static final String HOST_NAME = "moore02.cs.purdue.edu";
 	private static final int PORT_NUMBER = 4001;
 
 	private static Object sendRequestWithResponse(Request request) {

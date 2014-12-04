@@ -62,7 +62,8 @@ public class HandEvaluator {
      * @param  hand  The player to evaulate.
      */
     public HandEvaluator(Player player) {
-    	cards = (Card[]) player.getHand().toArray();
+    	Object[] tmp = player.getHand().toArray();
+    	cards = (Card[]) tmp;
         
         // Find patterns.
         calculateDistributions();
