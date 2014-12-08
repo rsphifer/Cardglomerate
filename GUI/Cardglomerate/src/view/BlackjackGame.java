@@ -42,6 +42,7 @@ public class BlackjackGame extends BasicGameState {
 	private LinkedList<Integer> sizes;
 	private LinkedList<Card> c1;
 	private LinkedList<Card> c2;
+	private boolean dealerPlaying = false;
 
 	private Rectangle hitButton = new Rectangle(700, 650, 100, 50);
 	private Rectangle stayButton = new Rectangle(810, 650, 100, 50);
@@ -94,7 +95,7 @@ public class BlackjackGame extends BasicGameState {
 			throws SlickException {
 		// render the background
 		background.draw(0, 0);
-		dealer.draw(650, 0);
+		dealer.draw(270, 0);
 
 		// mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
@@ -107,16 +108,25 @@ public class BlackjackGame extends BasicGameState {
 		g.drawString("Count: " + playerScore, 550, 620);
 		g.drawString(playerName, 550, 650);
 
+		
+		
 		g.drawString("Dealer", 550, 25);
-		g.drawString("Count: " + dealerScore, 550, 55);
-
 		BlackJack game = (BlackJack) model.getCurrentGame();
 		for (int i = 0; i < game.getPlayerCards().size(); i++) {
 			getCardImage(game.getPlayerCards().get(i)).draw(530 + i * 30, 440);
 		}
 
-		for (int j = 0; j < game.getDealerCards().size(); j++) {
-			getCardImage(game.getDealerCards().get(j)).draw(530 + j * 30, 170);
+		if (dealerPlaying || game.gameEnded) { 
+			for (int j = 0; j < game.getDealerCards().size(); j++) {
+				getCardImage(game.getDealerCards().get(j)).draw(530 + j * 30, 170);
+			}
+			
+			g.drawString("Count: " + dealerScore, 550, 55);
+		} else {
+			getCardImage(game.getDealerCards().get(0)).draw(530, 170);
+			GameMenu.deckImage.draw(560, 170);
+			
+			g.drawString("Count: ???", 550, 55);
 		}
 
 		if (game.gameEnded) {
@@ -130,6 +140,12 @@ public class BlackjackGame extends BasicGameState {
 					firstCongrats = false;
 				}
 				
+			} else if(game.isTie) {
+				g.drawString("Push!", 530,300);
+				if (firstCongrats) {
+					model.addGameChatEntry("Tie game!", 1);
+					firstCongrats = false;
+				}
 			} else {
 				g.drawString("Dealer won!", 530, 300);
 				if (firstCongrats) {
@@ -303,7 +319,8 @@ public class BlackjackGame extends BasicGameState {
 
 		/* Dealer is playing */
 		if (!game.gameEnded && !game.waitingOnPlayer) {
-			if (game.playerBusted || (game.getDealerScoreWithAces() > 15 && game.getPlayerScoreWithAces() <= game.getDealerScoreWithAces())) {
+			dealerPlaying = true;
+			if (game.playerBusted || (game.getDealerScoreWithAces() >= 17 )) {
 				game.dealerStay();
 				model.updateGame();
 			} else if (++ticksSinceDealerPlayed > 60) {
@@ -311,6 +328,8 @@ public class BlackjackGame extends BasicGameState {
 				model.updateGame();
 				ticksSinceDealerPlayed = 0;
 			}
+		} else {
+			dealerPlaying = false;
 		}
 
 		// back button clicked

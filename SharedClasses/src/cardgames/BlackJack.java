@@ -20,6 +20,7 @@ public class BlackJack extends CardGame implements Serializable {
 	public boolean waitingOnPlayer = true;
 	public boolean playerBusted = false, dealerBusted = false;
 	public boolean playerWon = false;
+	public boolean isTie = false;
 	
 
 	public BlackJack(){
@@ -43,6 +44,7 @@ public class BlackJack extends CardGame implements Serializable {
 		waitingOnPlayer = true;
 		playerBusted = dealerBusted = false;
 		playerWon = false;
+		isTie = false;
 	}
 	
 	public void dealCards(){
@@ -211,6 +213,11 @@ public class BlackJack extends CardGame implements Serializable {
 			gameEnded = true;
 			if (gameWinner() == 2) {
 				playerWon = true;
+			} else if (gameWinner() == 3) {
+				/* tie */
+				isTie = true;
+			} else {
+				playerWon = false;
 			}
 		}
 	}
@@ -219,6 +226,12 @@ public class BlackJack extends CardGame implements Serializable {
 		gameEnded = true;
 		if (gameWinner() == 2) {
 			playerWon = true;
+		} else if (gameWinner() == 3) {
+			/* tie */
+			playerWon = false;
+			isTie = true;
+		} else {
+			playerWon = false;
 		}
 	}
 	
@@ -254,7 +267,7 @@ public class BlackJack extends CardGame implements Serializable {
 		}
 	}
 	
-	//return 1 if the dealer won, and 2 if the player won
+	//return 1 if the dealer won, and 2 if the player won, 3 if push
 	public int gameWinner(){
 		int playerScore = getPlayerScoreWithAces();
 		int dealerScore = getDealerScoreWithAces();
@@ -263,7 +276,7 @@ public class BlackJack extends CardGame implements Serializable {
 			return 1;
 		}
 		else if(playerScore == dealerScore){
-			return 1;
+			return 3;
 		}
 		else if(dealerScore > playerScore && dealerScore <= 21){
 			return 1;
