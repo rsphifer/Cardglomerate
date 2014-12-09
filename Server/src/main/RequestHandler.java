@@ -16,6 +16,7 @@ import player.NewFriendRequest;
 import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
+import cardgames.BlackJack;
 import cardgames.CardGame;
 import cardgames.CardGameType;
 import cardgames.TexasHoldEm;
@@ -28,13 +29,15 @@ public class RequestHandler implements Runnable {
 	private MenuChat menuChat;
 	private GameLobby[] warLobbies;
 	private GameLobby[] texasHoldemLobbies;
+	private int[] blackJackTables;
 
-	public RequestHandler(Socket clientSocket, GameTable gameTable, MenuChat menuChat, GameLobby[] warLobbies, GameLobby[] texasHoldemLobbies) {
+	public RequestHandler(Socket clientSocket, GameTable gameTable, MenuChat menuChat, GameLobby[] warLobbies, GameLobby[] texasHoldemLobbies, int[] blackJackTables) {
 		this.clientSocket = clientSocket;
 		this.gameTable = gameTable;
 		this.menuChat = menuChat;
 		this.warLobbies = warLobbies;
 		this.texasHoldemLobbies = texasHoldemLobbies;
+		this.blackJackTables = blackJackTables;
 	}
 
 	@Override
@@ -144,7 +147,16 @@ public class RequestHandler implements Runnable {
 						}
 					}
 					
-				} else if (action.equals("incrementWarCounter")) {
+				} else if (action.equals("joinPersistantTable")) {
+					System.out.println("join Persistant Table request");
+					GameLobbyRequest glr = (GameLobbyRequest)request.getObject();
+					
+					CardGameType gameType = glr.getCardGameType();
+					if (gameType == CardGameType.Blackjack) {
+						((BlackJack)(gameTable.getGame(blackJackTables[glr.getLobbyId()]))).addPlayer(glr.getPlayer());
+						obj = blackJackTables[glr.getLobbyId()];
+					}
+				}else if (action.equals("incrementWarCounter")) {
 					System.out.println("increment war counter request");
 					UpdateGameRequest ugr = (UpdateGameRequest)request.getObject();
 					int id = ugr.getGameId();

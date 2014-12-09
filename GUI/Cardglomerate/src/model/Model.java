@@ -354,6 +354,25 @@ public class Model {
 		}
 		ServerAccess.startGameFromLobby(glr);
 	}
+	
+	public boolean joinPersistantTable(int tableNumber, CardGameType gameType) {
+		if (gameType == CardGameType.Blackjack) {
+			GameLobbyRequest glr = new GameLobbyRequest(player,
+					currentLobbyNumber, CardGameType.Blackjack);
+			Object obj = ServerAccess.joinPersistantLobby(glr);
+			if (obj != null && (int)obj != -1) {
+				gameId = (int)obj;
+				isInGame = true;
+				obj = ServerAccess.getCardGame(gameId);
+				if (obj != null) {
+					currentGame = (CardGame)obj;
+				}
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
 
 	private void setCurrentLobby(CardGameType gameType, int lobbyNumber) {
 		currentLobbyNumber = lobbyNumber;

@@ -208,6 +208,16 @@ public class ServerAccess {
 			return null;
 		}
 	}
+	
+	public static Object joinPersistantLobby(GameLobbyRequest glr) {
+		Request request = new Request("joinPersistantTable", glr);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (int) obj;
+		} else {
+			return null;
+		}
+	}
 
 	/*********************************************************
 	 * Achievement server calls.

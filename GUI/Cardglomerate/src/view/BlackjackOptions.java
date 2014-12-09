@@ -128,9 +128,11 @@ public class BlackjackOptions extends BasicGameState {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				
-				model.createGameRequest(CardGameType.Blackjack);
-				model.getPlayer().setMoney(5000);
-				sbg.enterState(10);
+				//model.createGameRequest(CardGameType.Blackjack);
+				if (model.joinPersistantTable(0, CardGameType.Blackjack)) {
+					model.getPlayer().setMoney(5000);
+					sbg.enterState(10);
+				}
 			}
 
 			if (Mouse.isButtonDown(0)) {

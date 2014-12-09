@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import cardgames.BlackJack;
 import misc.GameLobby;
 
 public class Server {
@@ -18,6 +19,7 @@ public class Server {
 
 	private GameLobby[] warLobbies;
 	private GameLobby[] texasHoldemLobbies;
+	private int[] blackJackTables; /* Holds each game's id number for game table */
 
 	public Server(int port) {
 		this.port = port;
@@ -32,6 +34,11 @@ public class Server {
 			if (i < 3) {
 				texasHoldemLobbies[i] = new GameLobby(2, 4, i);
 			}
+		}
+		
+		blackJackTables = new int[3];
+		for (int i=0; i<3; i++) {
+			blackJackTables[i] = gameTable.addNewGame(new BlackJack());
 		}
 
 	}
@@ -49,7 +56,7 @@ public class Server {
 
 				RequestHandler requestHandler = new RequestHandler(
 						clientSocket, gameTable, menuChat, warLobbies,
-						texasHoldemLobbies);
+						texasHoldemLobbies, blackJackTables);
 				Thread t = new Thread(requestHandler);
 				t.start();
 			}
