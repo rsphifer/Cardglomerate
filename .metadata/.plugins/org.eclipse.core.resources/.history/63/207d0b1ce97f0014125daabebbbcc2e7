@@ -260,7 +260,7 @@ public class BlackjackGame extends BasicGameState {
 					g.drawString(game.getCurrentTurnPlayer() + "'s turn", 675,
 							350);
 				} else {
-					g.drawString("Dealer's turn", 675, 300);
+					g.drawString("Dealer's turn", 530, 300);
 				}
 			}
 		}

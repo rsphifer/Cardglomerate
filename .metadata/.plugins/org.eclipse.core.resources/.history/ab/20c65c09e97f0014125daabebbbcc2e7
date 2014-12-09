@@ -236,20 +236,20 @@ public class BlackjackGame extends BasicGameState {
 				g.drawString("Play Again", 892, 602);
 				int results = game.getGameResults(p);
 				if (results == BlackJack.PLAYER_WIN) {
-					g.drawString(model.getPlayer().userName + " won!", 675, 300);
+					g.drawString(model.getPlayer().userName + " won!", 530, 300);
 					if (firstCongrats) {
 						model.addGameChatEntry("Congrats!", 1);
 						firstCongrats = false;
 					}
 
 				} else if (results == BlackJack.PLAYER_TIE) {
-					g.drawString("Push!", 675, 300);
+					g.drawString("Push!", 530, 300);
 					if (firstCongrats) {
 						model.addGameChatEntry("Tie game!", 1);
 						firstCongrats = false;
 					}
 				} else {
-					g.drawString("Dealer won!", 675, 300);
+					g.drawString("Dealer won!", 530, 300);
 					if (firstCongrats) {
 						model.addGameChatEntry("Too bad, try again!", 1);
 						firstCongrats = false;
@@ -260,7 +260,7 @@ public class BlackjackGame extends BasicGameState {
 					g.drawString(game.getCurrentTurnPlayer() + "'s turn", 675,
 							350);
 				} else {
-					g.drawString("Dealer's turn", 675, 300);
+					g.drawString("Dealer's turn", 530, 300);
 				}
 			}
 		}
