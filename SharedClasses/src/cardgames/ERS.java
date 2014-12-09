@@ -21,6 +21,8 @@ public class ERS extends CardGame implements Serializable{
 	public boolean readyToUpdate;
 	private int playersGone = 0;
 	private boolean handOver = false;
+	
+	public int cardsToPlay;
 
 	public ERS(ArrayList<Player> playerNames) {
 		players = new ArrayList<Player>();
@@ -83,6 +85,29 @@ public class ERS extends CardGame implements Serializable{
 		winners.add(players.get(index));
 	}
 	
+	public void setCardsToPlay(){
+		
+		Card lastCard = cardsOnTable.peekFirst();
+		if(lastCard == null){
+			cardsToPlay = -1;
+		}
+		switch(lastCard.getPower()){
+		case 1:
+			cardsToPlay=4;
+			break;
+		case 11:
+			cardsToPlay=1;
+			break;
+		case 12:
+			cardsToPlay=2;
+			break;
+		case 13:
+			cardsToPlay=3;
+			break;
+		}
+		return;
+	}
+	
 	public boolean updateReady(){
 		if(turn == 0 || turn == 2 || turn == 4 || turn == 6){
 			return true;
@@ -131,7 +156,22 @@ public class ERS extends CardGame implements Serializable{
 		if(i == players.size()){
 			whoseTurn = players.get(0);
 		}
+		setCardsToPlay();
 		System.out.println("next turn function   "+whoseTurn.userName);
+	}
+	
+	public Player lastTurn(){
+		
+		Player lplayer = players.get(players.size()-1);
+		
+		for(int i=0;i<players.size();i++){
+			if(whoseTurn.userName.equals(players.get(i).userName)){
+				lplayer = players.get(i);
+			}
+		}
+		
+		return lplayer;
+		
 	}
 	
 	public void fold(Player p){
@@ -144,87 +184,46 @@ public class ERS extends CardGame implements Serializable{
 		System.out.println(turn);
 		readyToUpdate = false;
 		
-		switch(turn){
-			case 0: //ante
-				readyToUpdate = true;
-				break;
-			case 1:
-			case 3:
-			case 5:
-			case 7:
-				System.out.println("step bet");
-				readyToUpdate = false;
-				break;
-			case 2: //burn and 3 out
-				System.out.println("step deal 3");
-				this.getTopOfDeck();
-				cardsOnTable.add(this.getTopOfDeck());
-				cardsOnTable.add(this.getTopOfDeck());
-				cardsOnTable.add(this.getTopOfDeck());
-				readyToUpdate = true;
-				turn++;
-				System.out.println("step deal 3 end");
-				break;
-			case 4: //burn and deal 1
-			case 6: //burn and deal 1
-				System.out.println("step deal 1");
-				this.getTopOfDeck();
-				cardsOnTable.add(this.getTopOfDeck());
-				readyToUpdate = true;
-				turn++;
-				System.out.println("step deal 1 end");
-				break;
-		}
-
-		/*if(turn == 1 || turn == 3 || turn == 5 || turn == 7){
-			for(int i=0;i<players.size();i++){
-				winnings += players.get(i).getCurrentBet();
-				players.get(i).bet(0);
-			}
-		}*/
+		Card playedcard;
 		
-		if(turn == 8){
-			int j=0;
-			HandValue[] values = new HandValue[this.players.size()];
-			for(int i=0;i<players.size();i++){
-				values[j] = new HandValue(players.get(i));
-				j++;
+		if(cardsToPlay == -1){
+			if(whoseTurn.playTopCard() == null){
+				gameOver = true;
 			}
-			
-			getWinners(values);
-
-			for(int i=0;i<winners.size();i++){
-				winners.get(i).addMoney(winnings/winners.size());
-			}
-			handOver = true;
-			
-			for(int i=0;i<players.size();i++){
-				players.get(i).resetFold();
-				players.get(i).emptyHand();
-			}
-			this.fillDeckHoldEm();
-			winners.clear();
-			cardsOnTable.clear();
-			winnings = 0;
-			this.turn = 0;
 		}
-		//}
+		
+		
+		else{
+			while(cardsToPlay > 0){
+				if((playedcard = whoseTurn.playTopCard()) == null){
+					gameOver = true;
+				}
+				if(playedcard.getPower() >= 11 || playedcard.getPower() ==1){
+					break;
+				}
+				cardsToPlay--;
+			}
+			if(cardsToPlay == 0){
+				roundWin(lastTurn());
+			}
+		}
+		
+	}
+	
+	private void roundWin(Player winner) {
+		while (!cardsOnTable.isEmpty()) {
+			winner.addCardToDiscard((Card) cardsOnTable.remove(0));
+		}
 	}
 	
 	public void setup(){
-		for(int i=0;i<players.size();i++){
-			players.get(i).addCardToHand(this.getTopOfDeck());
-			if(players.get(i).getMoney()<5000){
-				players.get(i).addMoney(5000-players.get(i).getMoney());		// remove EVENTUALLY
-			} else {
-				players.get(i).addMoney(players.get(i).getMoney()*(-1));
-				players.get(i).addMoney(5000);
-			}
+			for (int i = 0; i < 52; i++) {
+				if (i % 2 == 0) {
+					players.get(0).addCardToHand(getTopOfDeck());
+				} else {
+					players.get(1).addCardToHand(getTopOfDeck());
+				}
 		}
-		for(int i=0;i<players.size();i++){
-			players.get(i).addCardToHand(this.getTopOfDeck());
-		}
-		this.turn=0;
 	}
 
 	@Override
