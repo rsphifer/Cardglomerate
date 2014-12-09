@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;SharedClasses&apos;&#x0A;- Original project: &apos;SharedClasses&apos;&#x0A;- Original element: &apos;commons-codec-1.9.jar&apos;" description="Delete element" element1="src/player/commons-codec-1.9.jar" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="1" stamp="1418149296248" subPackages="false" version="1.0"/>
+</session>

@@ -16,6 +16,7 @@ import player.NewFriendRequest;
 import player.NewPlayerRequest;
 import player.Player;
 import player.SetPasswordRequest;
+import cardgames.BlackJack;
 import cardgames.CardGame;
 
 /**
@@ -28,7 +29,7 @@ import cardgames.CardGame;
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME = "sac07.cs.purdue.edu";
+	private static final String HOST_NAME = "sac12.cs.purdue.edu";
 	private static final int PORT_NUMBER = 4000;
 
 	private static Object sendRequestWithResponse(Request request) {
@@ -214,6 +215,16 @@ public class ServerAccess {
 		Object obj = sendRequestWithResponse(request);
 		if (obj != null) {
 			return (int) obj;
+		} else {
+			return null;
+		}
+	}
+	
+	public static Object getBlackJackTables( ) {
+		Request request = new Request("getBlackJackTables", null);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (BlackJack[]) obj;
 		} else {
 			return null;
 		}

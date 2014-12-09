@@ -2,7 +2,6 @@ package view;
 
 import java.util.ArrayList;
 
-import misc.GameLobby;
 import model.Model;
 
 import org.lwjgl.input.Mouse;
@@ -15,11 +14,9 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.FadeInTransition;
-import org.newdawn.slick.state.transition.FadeOutTransition;
 
 import player.Friend;
-import player.Player;
+import cardgames.BlackJack;
 import cardgames.CardGameType;
 
 public class BlackjackOptions extends BasicGameState {
@@ -30,6 +27,10 @@ public class BlackjackOptions extends BasicGameState {
 	private Image background;
 	private Image image;
 	private Image arrow;
+	
+	private Rectangle lobbyOneJoin = new Rectangle(220, 510, 70, 30);
+	private Rectangle lobbyTwoJoin = new Rectangle(646, 510, 70, 30);
+	private Rectangle lobbyThreeJoin = new Rectangle(1072, 510, 70, 30);
 	
 	// friends list things
 	private int curx;
@@ -69,8 +70,8 @@ public class BlackjackOptions extends BasicGameState {
 		g.drawImage(image, 447, 50);
 
 		// render play button
-		g.drawRect(535, 350, 200, 100);
-		g.drawString("Play Against Ai!", 570, 380);
+//		g.drawRect(535, 350, 200, 100);
+//		g.drawString("Play Against Ai!", 570, 380);
 
 
 		// render arrow
@@ -97,7 +98,23 @@ public class BlackjackOptions extends BasicGameState {
 				cury += 20;
 			}
 		}
-
+		
+		BlackJack[] tables = model.getBlackJackTables();
+		int thirdWidth = gc.getWidth() / 3;
+		for (int i=0; i<tables.length; i++) {
+			int x = 225 + thirdWidth * i;
+			g.drawString("Table " + (i + 1), x, 400);
+			String[] tablePlayers = tables[i].getPlayerList();
+			for (int j=0; j<tablePlayers.length; j++) {
+				g.drawString(tablePlayers[j], x+10, 420+25*j);
+			}
+			g.drawString("Join", x + 10, 515);
+		}
+		
+		g.draw(lobbyOneJoin);
+		g.draw(lobbyTwoJoin);
+		g.draw(lobbyThreeJoin);
+		
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
@@ -107,7 +124,8 @@ public class BlackjackOptions extends BasicGameState {
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
 
-		
+		int actualYPos = gc.getHeight() - ypos;
+		Rectangle tmp = new Rectangle(xpos, actualYPos, 1, 1);
 		
 		// back button clicked
 		if ((xpos > 0 && xpos < 150) && (ypos > 0 && ypos < 150)) {
@@ -121,24 +139,73 @@ public class BlackjackOptions extends BasicGameState {
 				Master.isMouseReleased = true;
 			}
 		}
-
-
-		// Play AI
-		if ((xpos > 535 && xpos < 735) && (ypos > 270 && ypos < 370)) {
+		
+		BlackJack[] tables = model.getBlackJackTables();
+		
+		if (lobbyOneJoin.intersects(tmp)
+				|| lobbyOneJoin.includes(xpos, actualYPos)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				
-				//model.createGameRequest(CardGameType.Blackjack);
-				if (model.joinPersistantTable(0, CardGameType.Blackjack)) {
+
+				if (tables[0].getNumPlayers() < tables[0].MAX_PLAYERS && 
+						model.joinPersistantTable(0, CardGameType.Blackjack)) {
 					model.getPlayer().setMoney(5000);
 					sbg.enterState(10);
 				}
 			}
 
-			if (Mouse.isButtonDown(0)) {
+			if (!Mouse.isButtonDown(0)) {
+				Master.isMouseReleased = true;
+			}
+		} else if (lobbyTwoJoin.intersects(tmp)
+				|| lobbyTwoJoin.includes(xpos, actualYPos)) {
+			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+
+				if (tables[1].getNumPlayers() < tables[1].MAX_PLAYERS && 
+						model.joinPersistantTable(1, CardGameType.Blackjack)) {
+					model.getPlayer().setMoney(5000);
+					sbg.enterState(10);
+				}
+			}
+
+			if (!Mouse.isButtonDown(0)) {
+				Master.isMouseReleased = true;
+			}
+		} else if (lobbyThreeJoin.intersects(tmp)
+				|| lobbyThreeJoin.includes(xpos, actualYPos)) {
+			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+
+				if (tables[2].getNumPlayers() < tables[2].MAX_PLAYERS &&
+						model.joinPersistantTable(2, CardGameType.Blackjack)) {
+					model.getPlayer().setMoney(5000);
+					sbg.enterState(10);
+				}
+			}
+
+			if (!Mouse.isButtonDown(0)) {
 				Master.isMouseReleased = true;
 			}
 		}
+
+
+//		// Play AI
+//		if ((xpos > 535 && xpos < 735) && (ypos > 270 && ypos < 370)) {
+//			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
+//				Master.isMouseReleased = false;
+//				
+//				//model.createGameRequest(CardGameType.Blackjack);
+//				if (model.joinPersistantTable(0, CardGameType.Blackjack)) {
+//					model.getPlayer().setMoney(5000);
+//					sbg.enterState(10);
+//				}
+//			}
+//
+//			if (Mouse.isButtonDown(0)) {
+//				Master.isMouseReleased = true;
+//			}
+//		}
 
 	}
 

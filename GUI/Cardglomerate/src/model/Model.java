@@ -49,6 +49,7 @@ public class Model {
 	/* Updated regularly by update checker */
 	private GameLobby[] texasHoldemLobbies;
 	private GameLobby[] warLobbies;
+	private BlackJack[] blackJackTables;
 	
 	private int warGames;
 	private int warWins;
@@ -72,6 +73,7 @@ public class Model {
 		
 		warLobbies = new GameLobby[4];
 		texasHoldemLobbies = new GameLobby[3];
+		blackJackTables = new BlackJack[3];
 		
 		isInLobby = false;
 		currentLobbyType = null;
@@ -178,12 +180,15 @@ public class Model {
 			if (obj != null) {
 				warLobbies = (GameLobby[])obj;
 			}
-			//warLobbies = ServerAccess.getGameLobbyList(new GameLobbyRequest(
-			//		null, 0, CardGameType.War));
 			
 			obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
 			if (obj != null) {
 				texasHoldemLobbies = (GameLobby[])obj;
+			}
+			
+			obj = ServerAccess.getBlackJackTables();
+			if (obj != null) {
+				blackJackTables = (BlackJack[])obj;
 			}
 
 			/*
@@ -340,6 +345,14 @@ public class Model {
 		} else {
 			return null;
 		}
+	}
+	
+	public void setBlackJackTables(BlackJack[] tables) {
+		blackJackTables = tables;
+	}
+	
+	public BlackJack[] getBlackJackTables() {
+		return blackJackTables;
 	}
 
 	public void startGameFromLobby() {

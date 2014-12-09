@@ -9,6 +9,7 @@ import misc.GameLobby;
 import misc.GameLobbyRequest;
 import model.Model;
 import player.Friend;
+import cardgames.BlackJack;
 import cardgames.CardGame;
 import cardgames.CardGameType;
 
@@ -78,12 +79,15 @@ public class UpdateChecker implements Runnable {
 				if (obj != null) {
 					model.setGameLobby(CardGameType.TexasHoldEm, (GameLobby[])obj);
 				}
-
+				
+				/* Update blackjack tables */
+				obj = ServerAccess.getBlackJackTables();
+				if (obj != null) {
+					model.setBlackJackTables((BlackJack[])obj);
+				}
 			}
 
-			// for (ChatEntry c : model.getMenuChat()) {
-			// System.out.printf("%s: %s\n", c.getUsername(), c.getMessage());
-			// }
+			
 
 		}
 

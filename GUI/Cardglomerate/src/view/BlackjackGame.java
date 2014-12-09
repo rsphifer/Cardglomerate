@@ -216,7 +216,7 @@ public class BlackjackGame extends BasicGameState {
 		}  
 
 	}
-	
+	//TODO(Richard): Make sure players leave the game when they exit application
 	//TODO(Richard): Generalize dealer chat messages
 	//TODO(Richard): Change display to allow for 3 people
 	//TODO(Richard): Display tables in blackjack options

@@ -60,6 +60,22 @@ public class BlackJack extends CardGame implements Serializable {
 		dealCards();
 	}
 	
+	public String[] getPlayerList() {
+		String[] playerList = new String[MAX_PLAYERS];
+		for (int i=0; i<MAX_PLAYERS; i++) {
+			if (players[i].isOccupied) {
+				playerList[i] = players[i].getPlayer().userName; 
+			} else {
+				playerList[i] = "Open";
+			}
+		}
+		return playerList;
+	}
+	
+	public int getNumPlayers() {
+		return numPlayers;
+	}
+	
 	public void addPlayer(Player p) {
 		for (int i=0; i<MAX_PLAYERS; i++) {
 			if (!players[i].isOccupied) {

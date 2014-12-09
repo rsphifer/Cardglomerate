@@ -157,7 +157,15 @@ public class RequestHandler implements Runnable {
 						((BlackJack)(gameTable.getGame(id))).addPlayer(glr.getPlayer());
 						obj = blackJackTables[glr.getLobbyId()];
 					}
-				}else if (action.equals("incrementWarCounter")) {
+				} else if (action.equals("getBlackJackTables")) {
+					System.out.println("Get Blackjack tables request");
+					
+					BlackJack[] games = new BlackJack[blackJackTables.length];
+					for (int i=0; i<blackJackTables.length; i++) {
+						games[i] = (BlackJack)gameTable.getGame(blackJackTables[i]);
+					}
+					obj = games;
+				} else if (action.equals("incrementWarCounter")) {
 					System.out.println("increment war counter request");
 					UpdateGameRequest ugr = (UpdateGameRequest)request.getObject();
 					int id = ugr.getGameId();
