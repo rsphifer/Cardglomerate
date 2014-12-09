@@ -132,9 +132,6 @@ public class BlackjackGame extends BasicGameState {
 			GameMenu.deckImage.draw(530, 170);
 			GameMenu.deckImage.draw(560, 170);
 			g.drawString("Count: ???", 550, 55);
-			
-			g.draw(betButton);
-			betField.render(gc, g);
 		} else if (status == BlackJack.DEALER_TURN || status == BlackJack.GAME_ENDED) { 
 			for (int j = 0; j < game.getDealerCards().size(); j++) {
 				getCardImage(game.getDealerCards().get(j)).draw(530 + j * 30, 170);

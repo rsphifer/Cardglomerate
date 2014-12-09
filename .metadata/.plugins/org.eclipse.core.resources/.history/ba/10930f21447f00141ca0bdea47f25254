@@ -47,8 +47,6 @@ public class BlackjackGame extends BasicGameState {
 	private Rectangle hitButton = new Rectangle(700, 650, 100, 50);
 	private Rectangle stayButton = new Rectangle(810, 650, 100, 50);
 	private Rectangle playAgainButton = new Rectangle(700, 590, 150, 50);
-	private TextField betField;
-	private Rectangle betButton = new Rectangle(860, 590, 50, 50);
 
 	private int dealerScore, playerScore;
 	private int ticksSinceDealerPlayed;
@@ -84,8 +82,6 @@ public class BlackjackGame extends BasicGameState {
 		// back arrow
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
-		
-		betField = new TextField(gc, gc.getDefaultFont(), 700, 590, 150, 50);
 		
 		
 		////////Temp
@@ -132,9 +128,6 @@ public class BlackjackGame extends BasicGameState {
 			GameMenu.deckImage.draw(530, 170);
 			GameMenu.deckImage.draw(560, 170);
 			g.drawString("Count: ???", 550, 55);
-			
-			g.draw(betButton);
-			betField.render(gc, g);
 		} else if (status == BlackJack.DEALER_TURN || status == BlackJack.GAME_ENDED) { 
 			for (int j = 0; j < game.getDealerCards().size(); j++) {
 				getCardImage(game.getDealerCards().get(j)).draw(530 + j * 30, 170);

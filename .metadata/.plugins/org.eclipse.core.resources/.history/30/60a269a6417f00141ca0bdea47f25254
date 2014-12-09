@@ -13,15 +13,13 @@ public class BlackJack extends CardGame implements Serializable {
 	public static final int BET = 1;
 	public static final int PLAYER_TURN = 2;
 	public static final int DEALER_TURN = 3;
-	public static final int GAME_ENDED = 4;
+	public static final int GAME_ENDED = 3;
 	
 	
 	private ArrayList<Card> dealerHand;
 	int dealerStay;
 	private ArrayList<Card> playerHand;
 	int playerStay;
-	
-	private int gameStatus = GAME_ENDED;
 	
 	public boolean handStarted = true;
 	public boolean gameEnded = false;
@@ -48,8 +46,6 @@ public class BlackJack extends CardGame implements Serializable {
 		
 		dealCards();
 		handStarted = true;
-		
-		gameStatus = BET;
 		gameEnded = false;
 		waitingOnPlayer = true;
 		playerBusted = dealerBusted = false;
@@ -80,15 +76,6 @@ public class BlackJack extends CardGame implements Serializable {
 		System.out.println("Your combined hand is = to "+getDealerScoreWithAces());
 	}
 	
-	public void playerBet(Player p, int bet) {
-		
-		p.bet(bet);
-		
-		/* Code to go to next player */
-		
-		gameStatus = PLAYER_TURN;
-	}
-	
 	public int getPlayerScore(){
 		int sizeOfHand = playerHand.size();
 		int handScore = 0;
@@ -105,10 +92,6 @@ public class BlackJack extends CardGame implements Serializable {
 				handScore += power;
 		}
 		return handScore;
-	}
-	
-	public int getGameStatus() {
-		return gameStatus;
 	}
 	
 	public int getPlayerScoreWithAces(){
@@ -227,14 +210,12 @@ public class BlackJack extends CardGame implements Serializable {
 	}
 	
 	public void playerStay() {
-		gameStatus = DEALER_TURN;
 		waitingOnPlayer = false;
 	}
 	
 	public void dealerHit() {
 		dealerHand.add(getTopOfDeck());
 		if (getDealerScoreWithAces() > 21) {
-			gameStatus = GAME_ENDED;
 			gameEnded = true;
 			if (gameWinner() == 2) {
 				playerWon = true;
@@ -248,7 +229,6 @@ public class BlackJack extends CardGame implements Serializable {
 	}
 	
 	public void dealerStay() {
-		gameStatus = GAME_ENDED;
 		gameEnded = true;
 		if (gameWinner() == 2) {
 			playerWon = true;

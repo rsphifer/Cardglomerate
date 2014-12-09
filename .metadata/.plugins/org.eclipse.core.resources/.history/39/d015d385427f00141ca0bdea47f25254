@@ -47,8 +47,6 @@ public class BlackjackGame extends BasicGameState {
 	private Rectangle hitButton = new Rectangle(700, 650, 100, 50);
 	private Rectangle stayButton = new Rectangle(810, 650, 100, 50);
 	private Rectangle playAgainButton = new Rectangle(700, 590, 150, 50);
-	private TextField betField;
-	private Rectangle betButton = new Rectangle(860, 590, 50, 50);
 
 	private int dealerScore, playerScore;
 	private int ticksSinceDealerPlayed;
@@ -85,8 +83,6 @@ public class BlackjackGame extends BasicGameState {
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
 		
-		betField = new TextField(gc, gc.getDefaultFont(), 700, 590, 150, 50);
-		
 		
 		////////Temp
 		chatField = new TextField(gc, gc.getDefaultFont(), 5, 680, 250, 30);
@@ -116,26 +112,11 @@ public class BlackjackGame extends BasicGameState {
 		
 		g.drawString("Dealer", 550, 25);
 		BlackJack game = (BlackJack) model.getCurrentGame();
-		
-		int status = game.getGameStatus();
-		
-		if (status == BlackJack.BET) {
-			GameMenu.deckImage.draw(530, 440);
-			GameMenu.deckImage.draw(560, 440);
-		} else {
-			for (int i = 0; i < game.getPlayerCards().size(); i++) {
-				getCardImage(game.getPlayerCards().get(i)).draw(530 + i * 30, 440);
-			}
+		for (int i = 0; i < game.getPlayerCards().size(); i++) {
+			getCardImage(game.getPlayerCards().get(i)).draw(530 + i * 30, 440);
 		}
-		
-		if (status == BlackJack.BET) {
-			GameMenu.deckImage.draw(530, 170);
-			GameMenu.deckImage.draw(560, 170);
-			g.drawString("Count: ???", 550, 55);
-			
-			g.draw(betButton);
-			betField.render(gc, g);
-		} else if (status == BlackJack.DEALER_TURN || status == BlackJack.GAME_ENDED) { 
+
+		if (dealerPlaying || game.gameEnded) { 
 			for (int j = 0; j < game.getDealerCards().size(); j++) {
 				getCardImage(game.getDealerCards().get(j)).draw(530 + j * 30, 170);
 			}
@@ -148,7 +129,7 @@ public class BlackjackGame extends BasicGameState {
 			g.drawString("Count: ???", 550, 55);
 		}
 
-		if (status == BlackJack.GAME_ENDED) {
+		if (game.gameEnded) {
 			g.draw(playAgainButton);
 			g.drawString("Play Again", 732, 602);
 			
@@ -173,7 +154,7 @@ public class BlackjackGame extends BasicGameState {
 				}
 			}
 		} else {
-			if (status == BlackJack.PLAYER_TURN || status == BlackJack.BET) {
+			if (game.waitingOnPlayer) {
 				g.drawString(model.getPlayer().userName + "'s turn", 530, 300);
 			} else {
 				g.drawString("Dealer's turn", 530, 300);
@@ -293,7 +274,7 @@ public class BlackjackGame extends BasicGameState {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 
-				if (game.getGameStatus() == BlackJack.PLAYER_TURN) {
+				if (game.waitingOnPlayer) {
 					game.playerHit();
 					model.updateGame();
 				}
@@ -309,7 +290,7 @@ public class BlackjackGame extends BasicGameState {
 		if (stayButton.contains(tmp) || stayButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				if (game.getGameStatus() == BlackJack.PLAYER_TURN) {
+				if (game.waitingOnPlayer) {
 					game.playerStay();
 					model.updateGame();
 				}
@@ -324,7 +305,7 @@ public class BlackjackGame extends BasicGameState {
 		if (playAgainButton.contains(tmp) || playAgainButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				if (game.getGameStatus() == BlackJack.GAME_ENDED) {
+				if (game.gameEnded) {
 					game.resetGame();
 					firstCongrats = true;
 					model.updateGame();
@@ -337,7 +318,7 @@ public class BlackjackGame extends BasicGameState {
 		}
 
 		/* Dealer is playing */
-		if (game.getGameStatus() == BlackJack.DEALER_TURN) {
+		if (!game.gameEnded && !game.waitingOnPlayer) {
 			dealerPlaying = true;
 			if (game.playerBusted || (game.getDealerScoreWithAces() >= 17 )) {
 				game.dealerStay();
