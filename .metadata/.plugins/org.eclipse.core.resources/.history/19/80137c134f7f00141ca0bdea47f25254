@@ -84,7 +84,7 @@ public class BlackJack extends CardGame implements Serializable {
 	public void playerBet(Player p, int bet) {
 		
 		p.bet(bet);
-		p.addMoney(-bet);
+		
 		/* Code to go to next player */
 		
 		gameStatus = PLAYER_TURN;

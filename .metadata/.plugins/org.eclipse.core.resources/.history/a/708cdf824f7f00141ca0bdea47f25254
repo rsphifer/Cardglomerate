@@ -336,13 +336,9 @@ public class BlackjackGame extends BasicGameState {
 					String s;
 					if (!(s=betField.getText()).isEmpty() && isNumeric(s)) {
 						int bet = Integer.parseInt(s);
-						if (model.getPlayer().getMoney() >= bet) {
 						game.playerBet(model.getPlayer(), bet);
 						model.updateGame();
 						betError = false;
-						} else {
-							betError = true;
-						}						
 					} else {
 						betError = true;
 					}
@@ -392,7 +388,6 @@ public class BlackjackGame extends BasicGameState {
 				if (status == BlackJack.GAME_ENDED) {
 					game.resetGame();
 					firstCongrats = true;
-					betsResolved = false;
 					model.updateGame();
 				}
 			}

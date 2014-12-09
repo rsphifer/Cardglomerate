@@ -342,7 +342,8 @@ public class BlackjackGame extends BasicGameState {
 						betError = false;
 						} else {
 							betError = true;
-						}						
+						}
+						
 					} else {
 						betError = true;
 					}

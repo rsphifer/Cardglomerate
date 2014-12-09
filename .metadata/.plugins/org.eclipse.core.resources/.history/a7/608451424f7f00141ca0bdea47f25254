@@ -17,7 +17,6 @@ import org.newdawn.slick.gui.TextField;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import player.Player;
 import cardgames.BlackJack;
 import cards.Card;
 
@@ -51,8 +50,6 @@ public class BlackjackGame extends BasicGameState {
 	private TextField betField;
 	private Rectangle betButton = new Rectangle(840, 610, 70, 30);
 	private boolean betSelected = false, betError = false;
-	
-	private boolean betsResolved = false;
 
 	private int dealerScore, playerScore;
 	private int ticksSinceDealerPlayed;
@@ -244,20 +241,6 @@ public class BlackjackGame extends BasicGameState {
 		
 		int status = game.getGameStatus();
 		
-		if (status == BlackJack.GAME_ENDED && !betsResolved) {
-			Player p = model.getPlayer();
-			betsResolved = true;
-			if (game.playerWon) {
-				p.addMoney(p.getCurrentBet() * 2);
-				p.bet(0);
-			} else if (game.isTie) {
-				p.addMoney(p.getCurrentBet());
-				p.bet(0);
-			} else {
-				p.bet(0);
-			}
-		}
-		
 		if (betSelected && status == BlackJack.BET) {
 			betField.setFocus(true);
 		}
@@ -336,13 +319,9 @@ public class BlackjackGame extends BasicGameState {
 					String s;
 					if (!(s=betField.getText()).isEmpty() && isNumeric(s)) {
 						int bet = Integer.parseInt(s);
-						if (model.getPlayer().getMoney() >= bet) {
 						game.playerBet(model.getPlayer(), bet);
 						model.updateGame();
 						betError = false;
-						} else {
-							betError = true;
-						}						
 					} else {
 						betError = true;
 					}
@@ -392,7 +371,6 @@ public class BlackjackGame extends BasicGameState {
 				if (status == BlackJack.GAME_ENDED) {
 					game.resetGame();
 					firstCongrats = true;
-					betsResolved = false;
 					model.updateGame();
 				}
 			}
