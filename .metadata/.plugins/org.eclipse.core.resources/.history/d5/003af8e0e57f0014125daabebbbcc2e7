@@ -101,7 +101,7 @@ public class BlackjackGame extends BasicGameState {
 		g.drawString("Money: " + model.getPlayer().getMoney(), 700, 680);
 
 		g.drawString("Bet: " + model.getPlayer().getCurrentBet(), 700, 590);
-		g.drawString("Dealer", 700, 25);
+		g.drawString("Dealer", 550, 25);
 		BlackJack game = (BlackJack) model.getCurrentGame();
 
 		int status = game.getGameStatus();
@@ -143,7 +143,6 @@ public class BlackjackGame extends BasicGameState {
 
 			} else {
 				for (int i = 0; i < playerList.length; i++) {
-					System.out.println("hi");
 					if (i == playerIndex) {
 						g.drawString("Count: " + playerScore, 700, 620);
 						ArrayList<Card> hand = game.getPlayerCards(p);
@@ -204,9 +203,9 @@ public class BlackjackGame extends BasicGameState {
 		if (model.isInGame) {
 			/* Draw dealer cards and count */
 			if (status == BlackJack.BET) {
-				GameMenu.deckImage.draw(700, 170);
-				GameMenu.deckImage.draw(720, 170);
-				g.drawString("Count: ???", 700, 55);
+				GameMenu.deckImage.draw(530, 170);
+				GameMenu.deckImage.draw(560, 170);
+				g.drawString("Count: ???", 550, 55);
 
 				if (betError) {
 					g.drawString("Enter a valid bet", 860, 580);
@@ -219,15 +218,15 @@ public class BlackjackGame extends BasicGameState {
 					|| status == BlackJack.GAME_ENDED) {
 				for (int j = 0; j < game.getDealerCards().size(); j++) {
 					getCardImage(game.getDealerCards().get(j)).draw(
-							700 + j * 20, 170);
+							530 + j * 30, 170);
 				}
 
-				g.drawString("Count: " + dealerScore, 700, 55);
+				g.drawString("Count: " + dealerScore, 550, 55);
 			} else {
-				getCardImage(game.getDealerCards().get(0)).draw(700, 170);
-				GameMenu.deckImage.draw(720, 170);
+				getCardImage(game.getDealerCards().get(0)).draw(530, 170);
+				GameMenu.deckImage.draw(560, 170);
 
-				g.drawString("Count: ???", 700, 55);
+				g.drawString("Count: ???", 550, 55);
 			}
 		}
 
@@ -258,8 +257,8 @@ public class BlackjackGame extends BasicGameState {
 				}
 			} else {
 				if (status == BlackJack.PLAYER_TURN || status == BlackJack.BET) {
-					g.drawString(game.getCurrentTurnPlayer() + "'s turn", 675,
-							350);
+					g.drawString(game.getCurrentTurnPlayer() + "'s turn", 530,
+							300);
 				} else {
 					g.drawString("Dealer's turn", 530, 300);
 				}
@@ -296,7 +295,6 @@ public class BlackjackGame extends BasicGameState {
 
 	}
 
-	// TODO(Richard): Figure out why 2nd player cards won't display after betting phase
 	// TODO(Richard): Generalize dealer chat messages
 	// TODO(Richard): Deal with scenario where player joins mid game
 	// TODO(Richard): Time player actions to prevent player from locking table
@@ -316,7 +314,10 @@ public class BlackjackGame extends BasicGameState {
 			enterHit = true;
 		}
 
-	
+		if (firstTime) {
+			model.addGameChatEntry("Welcome to my table.", 1);
+			firstTime = false;
+		}
 
 		if (playerName == null) {
 			playerName = model.getPlayer().userName;
@@ -324,14 +325,6 @@ public class BlackjackGame extends BasicGameState {
 
 		BlackJack game = (BlackJack) model.getCurrentGame();
 		int status = game.getGameStatus();
-		
-		if (firstTime) {
-			model.addGameChatEntry("Welcome to my table.", 1);
-			game.updatePlayer(model.getPlayer());
-			model.updateGame();
-			System.out.println("first time money " + model.getPlayer().getMoney());
-			firstTime = false;
-		}
 
 		int actualY = gc.getHeight() - ypos;
 		Rectangle tmp = new Rectangle(xpos, actualY, 1, 1);
@@ -440,7 +433,6 @@ public class BlackjackGame extends BasicGameState {
 						int bet = Integer.parseInt(s);
 						if (bet > 0 && model.getPlayer().getMoney() >= bet) {
 							game.playerBet(model.getPlayer(), bet);
-							game.updatePlayer(model.getPlayer());
 							model.updateGame();
 							betError = false;
 						} else {
@@ -545,7 +537,6 @@ public class BlackjackGame extends BasicGameState {
 		if (model.isInGame) {
 			playerScore = game.getPlayerScoreWithAces(model.getPlayer());
 			dealerScore = game.getDealerScoreWithAces();
-			
 		}
 
 	}

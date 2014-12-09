@@ -101,7 +101,7 @@ public class BlackjackGame extends BasicGameState {
 		g.drawString("Money: " + model.getPlayer().getMoney(), 700, 680);
 
 		g.drawString("Bet: " + model.getPlayer().getCurrentBet(), 700, 590);
-		g.drawString("Dealer", 700, 25);
+		g.drawString("Dealer", 550, 25);
 		BlackJack game = (BlackJack) model.getCurrentGame();
 
 		int status = game.getGameStatus();
@@ -204,9 +204,9 @@ public class BlackjackGame extends BasicGameState {
 		if (model.isInGame) {
 			/* Draw dealer cards and count */
 			if (status == BlackJack.BET) {
-				GameMenu.deckImage.draw(700, 170);
-				GameMenu.deckImage.draw(720, 170);
-				g.drawString("Count: ???", 700, 55);
+				GameMenu.deckImage.draw(530, 170);
+				GameMenu.deckImage.draw(560, 170);
+				g.drawString("Count: ???", 550, 55);
 
 				if (betError) {
 					g.drawString("Enter a valid bet", 860, 580);
@@ -219,15 +219,15 @@ public class BlackjackGame extends BasicGameState {
 					|| status == BlackJack.GAME_ENDED) {
 				for (int j = 0; j < game.getDealerCards().size(); j++) {
 					getCardImage(game.getDealerCards().get(j)).draw(
-							700 + j * 20, 170);
+							530 + j * 30, 170);
 				}
 
-				g.drawString("Count: " + dealerScore, 700, 55);
+				g.drawString("Count: " + dealerScore, 550, 55);
 			} else {
-				getCardImage(game.getDealerCards().get(0)).draw(700, 170);
-				GameMenu.deckImage.draw(720, 170);
+				getCardImage(game.getDealerCards().get(0)).draw(530, 170);
+				GameMenu.deckImage.draw(560, 170);
 
-				g.drawString("Count: ???", 700, 55);
+				g.drawString("Count: ???", 550, 55);
 			}
 		}
 
@@ -258,8 +258,8 @@ public class BlackjackGame extends BasicGameState {
 				}
 			} else {
 				if (status == BlackJack.PLAYER_TURN || status == BlackJack.BET) {
-					g.drawString(game.getCurrentTurnPlayer() + "'s turn", 675,
-							350);
+					g.drawString(game.getCurrentTurnPlayer() + "'s turn", 530,
+							300);
 				} else {
 					g.drawString("Dealer's turn", 530, 300);
 				}
@@ -296,7 +296,6 @@ public class BlackjackGame extends BasicGameState {
 
 	}
 
-	// TODO(Richard): Figure out why 2nd player cards won't display after betting phase
 	// TODO(Richard): Generalize dealer chat messages
 	// TODO(Richard): Deal with scenario where player joins mid game
 	// TODO(Richard): Time player actions to prevent player from locking table

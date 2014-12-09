@@ -224,10 +224,10 @@ public class BlackjackGame extends BasicGameState {
 
 				g.drawString("Count: " + dealerScore, 700, 55);
 			} else {
-				getCardImage(game.getDealerCards().get(0)).draw(700, 170);
-				GameMenu.deckImage.draw(720, 170);
+				getCardImage(game.getDealerCards().get(0)).draw(530, 170);
+				GameMenu.deckImage.draw(560, 170);
 
-				g.drawString("Count: ???", 700, 55);
+				g.drawString("Count: ???", 550, 55);
 			}
 		}
 
@@ -258,8 +258,8 @@ public class BlackjackGame extends BasicGameState {
 				}
 			} else {
 				if (status == BlackJack.PLAYER_TURN || status == BlackJack.BET) {
-					g.drawString(game.getCurrentTurnPlayer() + "'s turn", 675,
-							350);
+					g.drawString(game.getCurrentTurnPlayer() + "'s turn", 530,
+							300);
 				} else {
 					g.drawString("Dealer's turn", 530, 300);
 				}
@@ -296,7 +296,6 @@ public class BlackjackGame extends BasicGameState {
 
 	}
 
-	// TODO(Richard): Figure out why 2nd player cards won't display after betting phase
 	// TODO(Richard): Generalize dealer chat messages
 	// TODO(Richard): Deal with scenario where player joins mid game
 	// TODO(Richard): Time player actions to prevent player from locking table

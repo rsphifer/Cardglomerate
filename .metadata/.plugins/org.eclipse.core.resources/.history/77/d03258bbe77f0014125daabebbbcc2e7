@@ -296,7 +296,6 @@ public class BlackjackGame extends BasicGameState {
 
 	}
 
-	// TODO(Richard): Figure out why 2nd player cards won't display after betting phase
 	// TODO(Richard): Generalize dealer chat messages
 	// TODO(Richard): Deal with scenario where player joins mid game
 	// TODO(Richard): Time player actions to prevent player from locking table

@@ -60,15 +60,6 @@ public class BlackJack extends CardGame implements Serializable {
 		dealCards();
 	}
 	
-	public Player getPlayer(String playerName) {
-		for (int i=0; i<MAX_PLAYERS; i++) {
-			if (players[i].isOccupied && players[i].getPlayer().userName.equals(playerName)) {
-				return players[i].getPlayer();
-			}
-		}
-		return null;
-	}
-	
 	public String[] getPlayerList() {
 		String[] playerList = new String[MAX_PLAYERS];
 		for (int i=0; i<MAX_PLAYERS; i++) {
@@ -161,14 +152,6 @@ public class BlackJack extends CardGame implements Serializable {
 				}
 			}
 			dealerHand.add(getTopOfDeck());
-		}
-	}
-	
-	public void updatePlayer(Player p) {
-		for (int i=0; i<MAX_PLAYERS; i++) {
-			if (players[i].isOccupied && players[i].getPlayer().userName.equals(p.userName)) {
-				players[i].updatePlayer(p);
-			}
 		}
 	}
 	
@@ -568,7 +551,6 @@ public class BlackJack extends CardGame implements Serializable {
 			return PLAYER_WIN;
 	}
 	
-	
 	public int getGameResults(Player p) {
 		for (int i=0; i<MAX_PLAYERS; i++) {
 			if (players[i].isOccupied && players[i].getPlayer().userName.equals(p.userName)) {
@@ -613,10 +595,6 @@ public class BlackJack extends CardGame implements Serializable {
 			player = null;
 			isOccupied = false;
 			hand = null;
-		}
-		
-		public void updatePlayer (Player p) {
-			this.player = p;
 		}
 		
 		public Player getPlayer() {
