@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="misc.UpdateGameRequest"/>
+<fullyQualifiedTypeName name="controller.ServerAccess"/>
+<fullyQualifiedTypeName name="cardgames.TexasHoldEm"/>
+<fullyQualifiedTypeName name="cardgames.CardGameType"/>
+<fullyQualifiedTypeName name="player.Player"/>
+<fullyQualifiedTypeName name="java.util.concurrent.ScheduledExecutorService"/>
+<fullyQualifiedTypeName name="java.util.Timer"/>
+<fullyQualifiedTypeName name="java.util.TimerTask"/>
+</qualifiedTypeNameHistroy>

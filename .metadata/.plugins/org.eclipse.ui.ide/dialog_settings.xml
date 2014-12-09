@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExternalProjectImportWizard">
+		<item value="true" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="/Users/Modnar2/Desktop/CS307/Cardglomerate/GUI/Cardglomerate"/>
+			<item value="C:\Users\Moosington\Google Drive\Classes\CS 307\Cardglomerate\GUI\Cardglomerate"/>
+			<item value="e:\Users\Richie\Desktop\cs307\Cardglomerate\GUI"/>
+			<item value="C:\Users\Moosington\Google Drive\Classes\CS 307\Cardglomerate"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
+</section>
