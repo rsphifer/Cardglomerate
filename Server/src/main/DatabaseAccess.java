@@ -686,7 +686,7 @@ public class DatabaseAccess {
 		System.out.println("A problem occurred, please try again");
 		return false;
 	}
-public static ArrayList<String> getLeaderBoard(String critera){
+public static ArrayList<String> getLeaderBoard(String criteria){
 
 		Connection conn = null;
 		Statement existfunc = null;

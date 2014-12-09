@@ -8,4 +8,11 @@
 	</buildSpec>
 	<natures>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>.link0</name>
+			<type>2</type>
+			<location>/u/data/u93/mounts/Cardglomerate/SharedClasses/build</location>
+		</link>
+	</linkedResources>
 </projectDescription>

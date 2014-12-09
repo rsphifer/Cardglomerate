@@ -101,19 +101,22 @@ public class TexasHoldEm extends CardGame implements Serializable{
 				players.get(i).bet(0);
 			}
 			turn++;
-			update();
+			readyToUpdate = true;
 			expectedBet = 0;
+			update();
 		//}
-		readyToUpdate = true;
 		return true;
 	}
 	
 	public void setBet(Player p, int bet){
 		System.out.println(p.userName+" is betting "+bet);
 		p.bet(bet);
-		this.expectedBet = bet;
-		updateReady();
-		nextTurn(p);
+		if(bet > this.expectedBet){
+			this.expectedBet = bet;
+		}
+		if(!updateReady()){
+			nextTurn(p);
+		}
 	}
 	
 	public void nextTurn(Player curP){
@@ -141,7 +144,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 	
 	public void update(){
 		//if(updateReady()){
-		System.out.println(turn);
+		System.out.println("Turn: "+turn);
 		readyToUpdate = false;
 		
 		switch(turn){
