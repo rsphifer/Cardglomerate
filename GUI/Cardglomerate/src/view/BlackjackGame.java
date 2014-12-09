@@ -216,6 +216,10 @@ public class BlackjackGame extends BasicGameState {
 		}  
 
 	}
+	
+	//TODO(Richard): Generalize dealer chat messages
+	//TODO(Richard): Change display to allow for 3 people
+	//TODO(Richard): Display tables in blackjack options
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
@@ -345,7 +349,7 @@ public class BlackjackGame extends BasicGameState {
 					String s;
 					if (!(s=betField.getText()).isEmpty() && isNumeric(s)) {
 						int bet = Integer.parseInt(s);
-						if (model.getPlayer().getMoney() >= bet) {
+						if (bet > 0 && model.getPlayer().getMoney() >= bet) {
 							game.playerBet(model.getPlayer(), bet);
 							model.updateGame();
 							betError = false;
@@ -413,11 +417,13 @@ public class BlackjackGame extends BasicGameState {
 		}
 
 		/* Dealer is playing */
-		if (status == BlackJack.DEALER_TURN) {
-			//TODO(RICHARD):Fix this so only one client can update the dealer at a time
-			//TODO(RICHARD):Look into what happens if all players bust
+		/* Only let client who has control to update dealer */
+		if (isPlayersTurn && status == BlackJack.DEALER_TURN) {
+			
 			dealerPlaying = true;
-			if ((game.getDealerScoreWithAces() >= 17 )) {
+			
+			
+			if (game.getAllPlayersBust() || game.getDealerScoreWithAces() >= 17 ) {
 				game.dealerStay();
 				model.updateGame();
 			} else if (++ticksSinceDealerPlayed > 60) {

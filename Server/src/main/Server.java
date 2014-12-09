@@ -39,6 +39,9 @@ public class Server {
 		blackJackTables = new int[3];
 		for (int i=0; i<3; i++) {
 			blackJackTables[i] = gameTable.addNewGame(new BlackJack());
+			if (blackJackTables[i] == -1) {
+				System.err.printf("Error with creating blackjack tables!\n");
+			} 
 		}
 
 	}

@@ -358,14 +358,16 @@ public class Model {
 	public boolean joinPersistantTable(int tableNumber, CardGameType gameType) {
 		if (gameType == CardGameType.Blackjack) {
 			GameLobbyRequest glr = new GameLobbyRequest(player,
-					currentLobbyNumber, CardGameType.Blackjack);
+					tableNumber, CardGameType.Blackjack);
 			Object obj = ServerAccess.joinPersistantLobby(glr);
 			if (obj != null && (int)obj != -1) {
 				gameId = (int)obj;
-				isInGame = true;
+				
 				obj = ServerAccess.getCardGame(gameId);
 				if (obj != null) {
+					isInGame = true;
 					currentGame = (CardGame)obj;
+					return true;
 				}
 			} else {
 				return false;

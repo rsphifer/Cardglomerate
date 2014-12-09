@@ -1,0 +1,96 @@
+package main;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import cardgames.BlackJack;
+import misc.GameLobby;
+
+public class Server {
+
+	public static final int MAX_LOBBIES = 4;
+
+	public static final String USAGE = "Usage: java Server portNumber";
+
+	private int port;
+	private GameTable gameTable;
+	private MenuChat menuChat;
+
+	private GameLobby[] warLobbies;
+	private GameLobby[] texasHoldemLobbies;
+	private int[] blackJackTables; /* Holds each game's id number for game table */
+
+	public Server(int port) {
+		this.port = port;
+		gameTable = new GameTable();
+		menuChat = new MenuChat();
+
+		warLobbies = new GameLobby[MAX_LOBBIES];
+		texasHoldemLobbies = new GameLobby[3];
+
+		for (int i = 0; i < MAX_LOBBIES; i++) {
+			warLobbies[i] = new GameLobby(2, 2, i);
+			if (i < 3) {
+				texasHoldemLobbies[i] = new GameLobby(2, 4, i);
+			}
+		}
+		
+		blackJackTables = new int[3];
+		for (int i=0; i<3; i++) {
+			blackJackTables[i] = gameTable.addNewGame(new BlackJack());
+			if (blackJackTables[i] == -1) {
+				System.err.printf("Error with creating blackjack tables!\n");
+			} else {
+				System.err.printf("BlackJack id: %d\n", blackJackTables[i]);
+			}
+		}
+
+	}
+
+	public void start() {
+		/*
+		 * Server spawns a thread for every server request. Active threads are
+		 * in this list.
+		 */
+		try {
+			ServerSocket serverSocket = new ServerSocket(port);
+			while (System.in.available() == 0) {
+
+				Socket clientSocket = serverSocket.accept();
+
+				RequestHandler requestHandler = new RequestHandler(
+						clientSocket, gameTable, menuChat, warLobbies,
+						texasHoldemLobbies, blackJackTables);
+				Thread t = new Thread(requestHandler);
+				t.start();
+			}
+			serverSocket.close();
+
+		} catch (IOException ioe) {
+
+		} catch (Exception e) {
+
+		}
+	}
+
+	/* To run server: java Server portNumber */
+	public static void main(String[] args) {
+
+		if (args.length != 1) { /* Check cmd line inputs */
+			System.err.printf("%s\n", USAGE);
+			System.exit(1);
+		}
+
+		int port = 0;
+		try { /* Make sure arg passed is a number */
+			port = Integer.parseInt(args[0]);
+		} catch (Exception e) {
+			System.err.printf("%s\n", USAGE);
+			System.exit(1);
+		}
+
+		Server server = new Server(port);
+		server.start();
+	}
+}

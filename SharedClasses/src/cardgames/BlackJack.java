@@ -67,7 +67,8 @@ public class BlackJack extends CardGame implements Serializable {
 				numPlayers++;
 				if (numPlayers == 1) {
 					/* Is first player */
-					gameStatus = BET;
+					
+					resetGame();
 				}
 				return;
 			}
@@ -178,17 +179,19 @@ public class BlackJack extends CardGame implements Serializable {
 		p.bet(bet);
 		p.addMoney(-bet);
 		
+		
 		/* Code to go to next player */
 		boolean lastPlayer = true;
-		players[seatIndex].hasPlayed = true;
+		players[seatIndex].hasBet = true;
 		for (int i=0; i<MAX_PLAYERS; i++) {
-			if (players[i].isOccupied && !players[i].hasPlayed) {
+			if (players[i].isOccupied && !players[i].hasBet) {
 				currentTurn = i;
 				lastPlayer = false;
 			}
 		}
 		if (lastPlayer) {
 			/* Go to playing round and set current turn to first person in players array */
+			System.out.printf("last player went\n");
 			gameStatus = PLAYER_TURN;
 			currentTurn = 0;
 			for (int i=0; i<MAX_PLAYERS; i++) {
@@ -223,6 +226,15 @@ public class BlackJack extends CardGame implements Serializable {
 	
 	public int getGameStatus() {
 		return gameStatus;
+	}
+	
+	public boolean getAllPlayersBust() {
+		for (int i=0; i<MAX_PLAYERS; i++) {
+			if (players[i].isOccupied && !players[i].hasBusted) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public int getPlayerScoreWithAces(Player p){
@@ -366,7 +378,7 @@ public class BlackJack extends CardGame implements Serializable {
 		seat.addCard(getTopOfDeck());
 		if (getPlayerScoreWithAces(p) > 21) {
 			
-			playerBusted = true;
+			players[seatIndex].hasBusted = true;
 			waitingOnPlayer = false;
 			
 			boolean lastPlayer = true;
@@ -379,6 +391,14 @@ public class BlackJack extends CardGame implements Serializable {
 			}
 			if (lastPlayer) {
 				gameStatus = DEALER_TURN;
+				
+				currentTurn = 0;
+				for (int i=0; i<MAX_PLAYERS; i++) {
+					if (players[i].isOccupied) {
+						currentTurn = i;
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -411,6 +431,14 @@ public class BlackJack extends CardGame implements Serializable {
 		}
 		if (lastPlayer) {
 			gameStatus = DEALER_TURN;
+			
+			currentTurn = 0;
+			for (int i=0; i<MAX_PLAYERS; i++) {
+				if (players[i].isOccupied) {
+					currentTurn = i;
+					break;
+				}
+			}
 		}
 	}
 	
@@ -539,12 +567,13 @@ public class BlackJack extends CardGame implements Serializable {
 		//test1.seePlayerHand();
 	}
 	
-	private class PlayerSeat {
+	private class PlayerSeat implements Serializable {
 		
 		private Player player;
 		private ArrayList<Card> hand;
-		public boolean isOccupied, hasBet, hasPlayed;
+		public boolean isOccupied, hasBet, hasPlayed, hasBusted;
 		private int gameResult;
+		
 		
 		public PlayerSeat() {
 			player = null;
@@ -593,6 +622,7 @@ public class BlackJack extends CardGame implements Serializable {
 				hand = new ArrayList<Card>();
 				hasBet = false;
 				hasPlayed = false;
+				hasBusted = false;
 			} else {
 				System.err.printf("Tried to reset a null hand!\n");
 			}
