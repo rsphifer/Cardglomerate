@@ -686,4 +686,51 @@ public class DatabaseAccess {
 		System.out.println("A problem occurred, please try again");
 		return false;
 	}
+public static ArrayList<String> getLeaderBoard(String critera){
+
+		Connection conn = null;
+		Statement existfunc = null;
+		ArrayList<String> leaderboard = new ArrayList<String>(); 
+
+		try{
+			Class.forName(JDBC_DRIVER);
+
+			conn = DriverManager.getConnection(DB_URL,USERNAME,PASSWORD);
+		
+      		existfunc = conn.createStatement();
+      		
+
+			String get_board;
+				get_board = "SELECT username FROM users ORDER BY \"" + criteria + "\"";
+
+			ResultSet existing = existfunc.executeQuery(get_board);
+
+			while(existing.next()){
+	
+				String person = existing.getString("username");
+
+				leaderboard.add(person);
+			}
+
+			existing.close();
+			existfunc.close();
+			conn.close();
+
+			//System.out.println("Friends list sent.");
+
+			return leaderboard;
+		}
+		catch(SQLException se){
+			se.printStackTrace();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		/*If execution gets here, an error occurred*/
+
+		System.out.println("A problem occurred, please try again");
+
+		return leaderboard;
+	}
+
 }
