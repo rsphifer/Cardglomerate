@@ -95,7 +95,7 @@ public class Master extends StateBasedGame {
 		try {
 			appgc = new AppGameContainer(new Master(gameName));
 			appgc.setDisplayMode(1280,720,false);  //window size, false means no fullscreen
-			appgc.setTargetFrameRate(30); //you don't need no 60 (or 1k+) fps hardcore cardgame action
+			appgc.setTargetFrameRate(30); 
 			
 			appgc.start();
 		}catch(SlickException e){

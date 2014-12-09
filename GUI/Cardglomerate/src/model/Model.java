@@ -35,7 +35,7 @@ public class Model {
 	public boolean isInGame;
 
 	private int gameId;
-	private CardGameType gameType;
+	public CardGameType gameType;
 
 	/* Updated regularly by update checker */
 	private CardGame currentGame;
@@ -205,9 +205,15 @@ public class Model {
 	}
 
 	public boolean logout() {
-		if (isInLobby) {
-			leaveGameLobby(currentLobbyType, currentLobbyNumber);
+		if (isInGame && gameType == CardGameType.Blackjack) {
+			System.out.println("??");
+			((BlackJack)currentGame).removePlayer(player);
+			updateGame();
 		}
+		else if (isInLobby) {
+			leaveGameLobby(currentLobbyType, currentLobbyNumber);
+		} 
+		
 		Object isSuccess = ServerAccess.logoutRequest(player);
 		if (isSuccess == null) {
 			return false;
@@ -380,6 +386,8 @@ public class Model {
 				if (obj != null) {
 					isInGame = true;
 					currentGame = (CardGame)obj;
+					System.out.println("hey there");
+					gameType = CardGameType.Blackjack;
 					return true;
 				}
 			} else {

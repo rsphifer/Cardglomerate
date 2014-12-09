@@ -19,6 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import player.Player;
 import cardgames.BlackJack;
+import cardgames.CardGameType;
 import cards.Card;
 
 //this GUI needs to have 6 variables updated by the model and that is all
@@ -28,31 +29,22 @@ import cards.Card;
 public class BlackjackGame extends BasicGameState {
 
 	private Model model;
-	
+
 	private boolean firstTime = true;
 	private boolean firstCongrats = true;
 	private String mouse = "No input yet";
 	private Image background;
 	private Image dealer;
-	private int playerSize = 26; // players deck size
-	private int opponentSize = 26; // opponents deck size
 	private Image arrow;
-	private boolean gameOver = false;
-	private String winner = "Sombody";
-	private LinkedList<Card> cards;
-	private LinkedList<Integer> sizes;
-	private LinkedList<Card> c1;
-	private LinkedList<Card> c2;
-	private boolean dealerPlaying = false;
 	private boolean isPlayersTurn = false;
 
-	private Rectangle hitButton = new Rectangle(700, 650, 100, 50);
-	private Rectangle stayButton = new Rectangle(810, 650, 100, 50);
-	private Rectangle playAgainButton = new Rectangle(700, 590, 150, 50);
+	private Rectangle hitButton = new Rectangle(860, 650, 80, 50);
+	private Rectangle stayButton = new Rectangle(950, 650, 80, 50);
+	private Rectangle playAgainButton = new Rectangle(860, 590, 150, 50);
 	private TextField betField;
-	private Rectangle betButton = new Rectangle(840, 610, 70, 30);
+	private Rectangle betButton = new Rectangle(980, 610, 50, 30);
 	private boolean betSelected = false, betError = false;
-	
+
 	private boolean betsResolved = false;
 
 	private int dealerScore, playerScore;
@@ -60,16 +52,8 @@ public class BlackjackGame extends BasicGameState {
 
 	private String playerName = null;
 
-	/* Holds this player's position in the players list in the game */
-	private int playerIndex;
-
-	private String opponentName;
-	
-	////////////////TEMP
 	private TextField chatField;
 	private boolean chatSelected, chatError;
-	
-	//////////////////////
 
 	public BlackjackGame(int state, Model model) {
 		this.model = model;
@@ -78,10 +62,12 @@ public class BlackjackGame extends BasicGameState {
 	public void init(GameContainer gc, StateBasedGame sbg)
 			throws SlickException {
 
+		betField = new TextField(gc, gc.getDefaultFont(), 860, 610, 110, 30);
+		
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
-		//dealer = new Image("res/Dealer.png");
+		// dealer = new Image("res/Dealer.png");
 		dealer = new Image("res/DealerSmall.png");
 
 		dealerScore = 0;
@@ -90,14 +76,12 @@ public class BlackjackGame extends BasicGameState {
 		// back arrow
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
+
 		
-		betField = new TextField(gc, gc.getDefaultFont(), 700, 610, 130, 30);
-		
-		
-		////////Temp
+
 		chatField = new TextField(gc, gc.getDefaultFont(), 5, 680, 250, 30);
-		chatSelected = true; chatError = false;
-		///////////////
+		chatSelected = true;
+		chatError = false;
 
 	}
 
@@ -111,93 +95,130 @@ public class BlackjackGame extends BasicGameState {
 		g.drawString(mouse, 10, 25);
 
 		g.draw(hitButton);
-		g.drawString("Hit", 732, 662);
+		g.drawString("Hit", 884, 662);
 		g.draw(stayButton);
-		g.drawString("Stay", 844, 662);
+		g.drawString("Stay", 972, 662);
 
-		
-		g.drawString(playerName, 550, 650);
-		g.drawString("Money: " + model.getPlayer().getMoney(), 550, 680);
-		
-		g.drawString("Bet: " + model.getPlayer().getCurrentBet(), 550, 590);
+		g.drawString(playerName, 700, 650);
+		g.drawString("Money: " + model.getPlayer().getMoney(), 700, 680);
+
+		g.drawString("Bet: " + model.getPlayer().getCurrentBet(), 700, 590);
 		g.drawString("Dealer", 550, 25);
 		BlackJack game = (BlackJack) model.getCurrentGame();
-		
+
 		int status = game.getGameStatus();
 		Player p = model.getPlayer();
-		
-		if (status == BlackJack.BET) {
-			g.drawString("Count: ???", 550, 620);
-			GameMenu.deckImage.draw(530, 440);
-			GameMenu.deckImage.draw(560, 440);
-		} else {
-			g.drawString("Count: " + playerScore, 550, 620);
-			ArrayList<Card> hand = game.getPlayerCards(p);
-			for (int i = 0; i < hand.size(); i++) {
-				getCardImage(hand.get(i)).draw(530 + i * 30, 440);
-			}
-		}
-		
-		if (status == BlackJack.BET) {
-			GameMenu.deckImage.draw(530, 170);
-			GameMenu.deckImage.draw(560, 170);
-			g.drawString("Count: ???", 550, 55);
-			
-			if (betError) {
-				g.drawString("Enter a valid bet", 700, 580);
-			}
-			
-			g.draw(betButton);
-			g.drawString("Bet", 861, 612);
-			betField.render(gc, g);
-		} else if (status == BlackJack.DEALER_TURN || status == BlackJack.GAME_ENDED) { 
-			for (int j = 0; j < game.getDealerCards().size(); j++) {
-				getCardImage(game.getDealerCards().get(j)).draw(530 + j * 30, 170);
-			}
-			
-			g.drawString("Count: " + dealerScore, 550, 55);
-		} else {
-			getCardImage(game.getDealerCards().get(0)).draw(530, 170);
-			GameMenu.deckImage.draw(560, 170);
-			
-			g.drawString("Count: ???", 550, 55);
-		}
 
-		if (status == BlackJack.GAME_ENDED) {
-			g.draw(playAgainButton);
-			g.drawString("Play Again", 732, 602);
-			int results = game.getGameResults(p);
-			if (results == BlackJack.PLAYER_WIN) {
-				g.drawString(model.getPlayer().userName + " won!", 530, 300);
-				if (firstCongrats) {
-					model.addGameChatEntry("Congrats!", 1);
-					firstCongrats = false;
+		String[] playerList = game.getPlayerList();
+		int playerIndex = 0;
+		for (int i=0; i<playerList.length; i++) {
+			if (playerList[i].equals(p.userName)) {
+				playerIndex = i;
+				break;
+			}
+		}
+		
+		int othersDrawn = 0;
+		
+		if (model.isInGame) {
+			
+			/* Draw player cards and count */
+			if (status == BlackJack.BET) {
+				for (int i=0; i<playerList.length; i++) {
+					if (i == playerIndex) {
+						g.drawString("Count: ???", 700, 620);
+						GameMenu.deckImage.draw(700, 440);
+						GameMenu.deckImage.draw(720, 440);
+					} else if (!playerList[i].equals("Open")) {
+						if (othersDrawn == 0) {
+							g.drawString("Count: ???", 1050, 620);
+							GameMenu.deckImage.draw(1050, 440);
+							GameMenu.deckImage.draw(1070, 440);
+						} else {
+							g.drawString("Count: ???", 390, 620);
+							GameMenu.deckImage.draw(390, 440);
+							GameMenu.deckImage.draw(410, 440);
+						}
+						othersDrawn++;
+					} 
 				}
 				
-			} else if(results == BlackJack.PLAYER_TIE) {
-				g.drawString("Push!", 530,300);
-				if (firstCongrats) {
-					model.addGameChatEntry("Tie game!", 1);
-					firstCongrats = false;
-				}
 			} else {
-				g.drawString("Dealer won!", 530, 300);
-				if (firstCongrats) {
-					model.addGameChatEntry("Too bad, try again!", 1);
-					firstCongrats = false;
+				g.drawString("Count: " + playerScore, 550, 620);
+				ArrayList<Card> hand = game.getPlayerCards(p);
+				for (int i = 0; i < hand.size(); i++) {
+					getCardImage(hand.get(i)).draw(530 + i * 30, 440);
 				}
-			}
-		} else {
-			if (status == BlackJack.PLAYER_TURN || status == BlackJack.BET) {
-				g.drawString(game.getCurrentTurnPlayer() + "'s turn", 530, 300);
-			} else {
-				g.drawString("Dealer's turn", 530, 300);
 			}
 		}
 
-		arrow.draw(1130, 570);
-		
-		
+		if (model.isInGame) {
+			/* Draw dealer cards and count */
+			if (status == BlackJack.BET) {
+				GameMenu.deckImage.draw(530, 170);
+				GameMenu.deckImage.draw(560, 170);
+				g.drawString("Count: ???", 550, 55);
+
+				if (betError) {
+					g.drawString("Enter a valid bet", 700, 580);
+				}
+
+				g.draw(betButton);
+				g.drawString("Bet", 991, 612);
+				betField.render(gc, g);
+			} else if (status == BlackJack.DEALER_TURN
+					|| status == BlackJack.GAME_ENDED) {
+				for (int j = 0; j < game.getDealerCards().size(); j++) {
+					getCardImage(game.getDealerCards().get(j)).draw(
+							530 + j * 30, 170);
+				}
+
+				g.drawString("Count: " + dealerScore, 550, 55);
+			} else {
+				getCardImage(game.getDealerCards().get(0)).draw(530, 170);
+				GameMenu.deckImage.draw(560, 170);
+
+				g.drawString("Count: ???", 550, 55);
+			}
+		}
+
+		if (model.isInGame) {
+			if (status == BlackJack.GAME_ENDED) {
+				g.draw(playAgainButton);
+				g.drawString("Play Again", 732, 602);
+				int results = game.getGameResults(p);
+				if (results == BlackJack.PLAYER_WIN) {
+					g.drawString(model.getPlayer().userName + " won!", 530, 300);
+					if (firstCongrats) {
+						model.addGameChatEntry("Congrats!", 1);
+						firstCongrats = false;
+					}
+
+				} else if (results == BlackJack.PLAYER_TIE) {
+					g.drawString("Push!", 530, 300);
+					if (firstCongrats) {
+						model.addGameChatEntry("Tie game!", 1);
+						firstCongrats = false;
+					}
+				} else {
+					g.drawString("Dealer won!", 530, 300);
+					if (firstCongrats) {
+						model.addGameChatEntry("Too bad, try again!", 1);
+						firstCongrats = false;
+					}
+				}
+			} else {
+				if (status == BlackJack.PLAYER_TURN || status == BlackJack.BET) {
+					g.drawString(game.getCurrentTurnPlayer() + "'s turn", 530,
+							300);
+				} else {
+					g.drawString("Dealer's turn", 530, 300);
+				}
+			}
+		}
+
+		arrow.draw(1130, 0);
+
 		g.drawString("Chat", 150, 330);
 		g.drawRect(260, 680, 120, 30);
 		g.drawString("Send Message", 265, 685);
@@ -205,21 +226,32 @@ public class BlackjackGame extends BasicGameState {
 
 		int curChatx = 5;
 		int curChaty = 350;
-		  
+
 		ArrayList<ChatEntry> chatLog = game.getChatLog();
 		for (int i = 0; i < chatLog.size(); i++) {
 			ChatEntry currMessage = chatLog.get(i);
-			g.drawString(currMessage.getUsername() + ": " + currMessage.getMessage(), curChatx, curChaty);
-			//g.drawString(currMessage.getMessage(), curChatx+90, curChaty);
+			g.drawString(
+					currMessage.getUsername() + ": " + currMessage.getMessage(),
+					curChatx, curChaty);
+			// g.drawString(currMessage.getMessage(), curChatx+90, curChaty);
 			curChaty += 20;
-		   
-		}  
+
+		}
+
+		if (chatError) {
+			g.drawString("Message too long", 390, 685);
+			if (!chatError) {
+				g.clear();
+			}
+		}
 
 	}
-	//TODO(Richard): Make sure players leave the game when they exit application
-	//TODO(Richard): Generalize dealer chat messages
-	//TODO(Richard): Change display to allow for 3 people
-	//TODO(Richard): Display tables in blackjack options
+
+	// TODO(Richard): Make sure players leave the game when they exit
+	// application
+	// TODO(Richard): Generalize dealer chat messages
+	// TODO(Richard): Change display to allow for 3 people
+	// TODO(Richard): Display tables in blackjack options
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
 			throws SlickException {
@@ -227,14 +259,14 @@ public class BlackjackGame extends BasicGameState {
 		int xpos = Mouse.getX();
 		int ypos = Mouse.getY();
 		mouse = "Mouse position x: " + xpos + " y: " + ypos;
-		
-		  //enter functionality
-		  Input in = gc.getInput();
-		  boolean enterHit = false;
-		  if (in.isKeyPressed(Input.KEY_ENTER)) {
-		   enterHit = true;
-		  }
-		
+
+		// enter functionality
+		Input in = gc.getInput();
+		boolean enterHit = false;
+		if (in.isKeyPressed(Input.KEY_ENTER)) {
+			enterHit = true;
+		}
+
 		if (firstTime) {
 			model.addGameChatEntry("Welcome to my table.", 1);
 			firstTime = false;
@@ -246,16 +278,15 @@ public class BlackjackGame extends BasicGameState {
 
 		BlackJack game = (BlackJack) model.getCurrentGame();
 		int status = game.getGameStatus();
-		
+
 		int actualY = gc.getHeight() - ypos;
 		Rectangle tmp = new Rectangle(xpos, actualY, 1, 1);
-		
+
 		isPlayersTurn = false;
 		if (game.getCurrentTurnPlayer().equals(model.getPlayer().userName)) {
 			isPlayersTurn = true;
 		}
-		
-		
+
 		if (status == BlackJack.GAME_ENDED && !betsResolved) {
 			Player p = model.getPlayer();
 			int victoryCon = game.getGameResults(p);
@@ -270,11 +301,12 @@ public class BlackjackGame extends BasicGameState {
 				p.bet(0);
 			}
 		}
-		
+
 		if (betSelected && status == BlackJack.BET) {
 			betField.setFocus(true);
 		}
-		if (status == BlackJack.BET && ((xpos>700 && xpos<830) && (actualY>590 && actualY<640))) {
+		if (status == BlackJack.BET
+				&& ((xpos > 700 && xpos < 830) && (actualY > 590 && actualY < 640))) {
 			if (Mouse.isButtonDown(0)) {
 				chatSelected = false;
 				chatField.setFocus(false);
@@ -282,72 +314,75 @@ public class BlackjackGame extends BasicGameState {
 				betSelected = true;
 			}
 		}
-		
-		if (chatSelected) {
-			   chatField.setFocus(true);
-		}
-		
-		//chat textbox clicked
-		  if((xpos>5 && xpos<255) && (ypos>10 && ypos<40)) {
-		   if(Mouse.isButtonDown(0)) { //button 0 = left click
-		    chatSelected = true;
-		   }
-		  }
-		  
-		  //send chat message button clicked
-		  int userNameLength = model.getPlayer().userName.length();
-		  if(((xpos>260 && xpos<380) && (ypos>10 && ypos<40)) || enterHit) {
-		   if((Mouse.isButtonDown(0) && Master.isMouseReleased) || enterHit) {
-		    Master.isMouseReleased = false;
-		    if (chatField.getText().length() > 1) {
-		     //code to send chat message to server goes here
-		     String newMessage = chatField.getText();
-		     if ((newMessage.length() + userNameLength) <= 37) {
-		      model.addGameChatEntry(newMessage, 0);
-		      chatError = false;
-		     }
-		     else if ((newMessage.length() + (userNameLength*2)) <= 74) {
-		      //split message in two and send both
-		      String temp = newMessage.substring(0, (37 - userNameLength));
-		      model.addGameChatEntry(temp, 0);
-		      temp = newMessage.substring(37 - userNameLength);
-		      model.addGameChatEntry(temp, 0);
-		      chatError = false;
-		     }
-		     
-		     else if ((newMessage.length() + (userNameLength*3)) <= 110) {
-		      //split message into 3 and send all
-		      String temp = newMessage.substring(0, (37-userNameLength));
-		      model.addGameChatEntry(temp, 0);
-		      temp = newMessage.substring((37-userNameLength), (74 - (userNameLength*2)));
-		      model.addGameChatEntry(temp, 0);
-		      temp = newMessage.substring((74-(userNameLength*2)));
-		      model.addGameChatEntry(temp, 0);
-		      
-		     }
-		     
-		     else {
-		      chatError = true;
-		     }
 
-		     chatField.setText(""); 
-		    }
-		   }
-		   
-		   if (!Mouse.isButtonDown(0)){
-		    Master.isMouseReleased = true;
-		   }
-		  }
-		///////////////////////
-		  
+		if (chatSelected) {
+			chatField.setFocus(true);
+		}
+
+		// chat textbox clicked
+		if ((xpos > 5 && xpos < 255) && (ypos > 10 && ypos < 40)) {
+			if (Mouse.isButtonDown(0)) { // button 0 = left click
+				chatSelected = true;
+			}
+		}
+
+		// send chat message button clicked
+		int userNameLength = model.getPlayer().userName.length();
+		if (((xpos > 260 && xpos < 380) && (ypos > 10 && ypos < 40))
+				|| enterHit) {
+			if ((Mouse.isButtonDown(0) && Master.isMouseReleased) || enterHit) {
+				Master.isMouseReleased = false;
+				if (chatField.getText().length() > 1) {
+					// code to send chat message to server goes here
+					String newMessage = chatField.getText();
+					if ((newMessage.length() + userNameLength) <= 37) {
+						model.addGameChatEntry(newMessage, 0);
+						chatError = false;
+					} else if ((newMessage.length() + (userNameLength * 2)) <= 74) {
+						// split message in two and send both
+						String temp = newMessage.substring(0,
+								(37 - userNameLength));
+						model.addGameChatEntry(temp, 0);
+						temp = newMessage.substring(37 - userNameLength);
+						model.addGameChatEntry(temp, 0);
+						chatError = false;
+					}
+
+					else if ((newMessage.length() + (userNameLength * 3)) <= 110) {
+						// split message into 3 and send all
+						String temp = newMessage.substring(0,
+								(37 - userNameLength));
+						model.addGameChatEntry(temp, 0);
+						temp = newMessage.substring((37 - userNameLength),
+								(74 - (userNameLength * 2)));
+						model.addGameChatEntry(temp, 0);
+						temp = newMessage
+								.substring((74 - (userNameLength * 2)));
+						model.addGameChatEntry(temp, 0);
+
+					}
+
+					else {
+						chatError = true;
+					}
+
+					chatField.setText("");
+				}
+			}
+
+			if (!Mouse.isButtonDown(0)) {
+				Master.isMouseReleased = true;
+			}
+		}
+
 		/* Bet button selected */
 		if (betButton.contains(tmp) || betButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				
+
 				if (status == BlackJack.BET && isPlayersTurn) {
 					String s;
-					if (!(s=betField.getText()).isEmpty() && isNumeric(s)) {
+					if (!(s = betField.getText()).isEmpty() && isNumeric(s)) {
 						int bet = Integer.parseInt(s);
 						if (bet > 0 && model.getPlayer().getMoney() >= bet) {
 							game.playerBet(model.getPlayer(), bet);
@@ -355,7 +390,7 @@ public class BlackjackGame extends BasicGameState {
 							betError = false;
 						} else {
 							betError = true;
-						}						
+						}
 					} else {
 						betError = true;
 					}
@@ -365,6 +400,10 @@ public class BlackjackGame extends BasicGameState {
 			if (!Mouse.isButtonDown(0)) {
 				Master.isMouseReleased = true;
 			}
+		}
+		
+		if (model.gameType != CardGameType.Blackjack) {
+			model.gameType = CardGameType.Blackjack;
 		}
 
 		/* Hit button selected */
@@ -419,11 +458,10 @@ public class BlackjackGame extends BasicGameState {
 		/* Dealer is playing */
 		/* Only let client who has control to update dealer */
 		if (isPlayersTurn && status == BlackJack.DEALER_TURN) {
+
 			
-			dealerPlaying = true;
-			
-			
-			if (game.getAllPlayersBust() || game.getDealerScoreWithAces() >= 17 ) {
+
+			if (game.getAllPlayersBust() || game.getDealerScoreWithAces() >= 17) {
 				game.dealerStay();
 				model.updateGame();
 			} else if (++ticksSinceDealerPlayed > 60) {
@@ -431,17 +469,17 @@ public class BlackjackGame extends BasicGameState {
 				model.updateGame();
 				ticksSinceDealerPlayed = 0;
 			}
-		} else {
-			dealerPlaying = false;
-		}
+		} 
 
 		// back button clicked
-		if ((xpos > 1130 && xpos < 1280) && (ypos > 0 && ypos < 150)) {
+		if ((xpos > 1130 && xpos < 1280) && (actualY > 0 && actualY < 150)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				firstTime = true;
 				firstCongrats = true;
 				model.isInGame = false;
+				game.removePlayer(model.getPlayer());
+				model.updateGame();
 				model.updateAchievements();
 				sbg.enterState(1); // display game menu screen
 			}
@@ -451,11 +489,13 @@ public class BlackjackGame extends BasicGameState {
 			}
 		}
 
-		playerScore = game.getPlayerScoreWithAces(model.getPlayer());
-		dealerScore = game.getDealerScoreWithAces();
+		if (model.isInGame) {
+			playerScore = game.getPlayerScoreWithAces(model.getPlayer());
+			dealerScore = game.getDealerScoreWithAces();
+		}
 
 	}
-	
+
 	public boolean isNumeric(String str) {
 		int x;
 		try {
@@ -465,7 +505,6 @@ public class BlackjackGame extends BasicGameState {
 		}
 		return true;
 	}
-
 
 	private Image getCardImage(Card c) {
 
