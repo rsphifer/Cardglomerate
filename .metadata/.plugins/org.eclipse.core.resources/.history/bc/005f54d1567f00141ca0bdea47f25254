@@ -104,7 +104,7 @@ public class BlackjackGame extends BasicGameState {
 			throws SlickException {
 		// render the background
 		background.draw(0, 0);
-		dealer.draw(270, 0);
+		//dealer.draw(270, 0);
 
 		// mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);

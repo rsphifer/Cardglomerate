@@ -80,8 +80,7 @@ public class BlackjackGame extends BasicGameState {
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
-		//dealer = new Image("res/Dealer.png");
-		dealer = new Image("res/DealerSmall.png");
+		dealer = new Image("res/Dealer.png");
 
 		dealerScore = 0;
 		playerScore = 0;
@@ -118,7 +117,7 @@ public class BlackjackGame extends BasicGameState {
 		g.drawString(playerName, 550, 650);
 		g.drawString("Money: " + model.getPlayer().getMoney(), 550, 680);
 		
-		g.drawString("Bet: " + model.getPlayer().getCurrentBet(), 550, 590);
+		
 		g.drawString("Dealer", 550, 25);
 		BlackJack game = (BlackJack) model.getCurrentGame();
 		
@@ -338,9 +337,9 @@ public class BlackjackGame extends BasicGameState {
 					if (!(s=betField.getText()).isEmpty() && isNumeric(s)) {
 						int bet = Integer.parseInt(s);
 						if (model.getPlayer().getMoney() >= bet) {
-							game.playerBet(model.getPlayer(), bet);
-							model.updateGame();
-							betError = false;
+						game.playerBet(model.getPlayer(), bet);
+						model.updateGame();
+						betError = false;
 						} else {
 							betError = true;
 						}						
@@ -348,7 +347,6 @@ public class BlackjackGame extends BasicGameState {
 						betError = true;
 					}
 				}
-				betField.setText("");
 			}
 			if (!Mouse.isButtonDown(0)) {
 				Master.isMouseReleased = true;

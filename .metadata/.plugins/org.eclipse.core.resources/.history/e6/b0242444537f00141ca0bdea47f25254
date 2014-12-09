@@ -80,8 +80,7 @@ public class BlackjackGame extends BasicGameState {
 		// initialize and scale background image
 		background = new Image("res/Green Background.jpg");
 		background = background.getScaledCopy(1280, 720);
-		//dealer = new Image("res/Dealer.png");
-		dealer = new Image("res/DealerSmall.png");
+		dealer = new Image("res/Dealer.png");
 
 		dealerScore = 0;
 		playerScore = 0;
@@ -104,7 +103,7 @@ public class BlackjackGame extends BasicGameState {
 			throws SlickException {
 		// render the background
 		background.draw(0, 0);
-		dealer.draw(270, 0);
+		//dealer.draw(270, 0);
 
 		// mouse coordinates for testing / building
 		g.drawString(mouse, 10, 25);
