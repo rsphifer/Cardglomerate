@@ -48,7 +48,8 @@ public class BlackjackGame extends BasicGameState {
 	private Rectangle stayButton = new Rectangle(810, 650, 100, 50);
 	private Rectangle playAgainButton = new Rectangle(700, 590, 150, 50);
 	private TextField betField;
-	private Rectangle betButton = new Rectangle(860, 590, 50, 50);
+	private Rectangle betButton = new Rectangle(840, 610, 70, 30);
+	private boolean betSelected = false, betError = false;
 
 	private int dealerScore, playerScore;
 	private int ticksSinceDealerPlayed;
@@ -85,7 +86,7 @@ public class BlackjackGame extends BasicGameState {
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
 		
-		betField = new TextField(gc, gc.getDefaultFont(), 700, 590, 150, 50);
+		betField = new TextField(gc, gc.getDefaultFont(), 700, 610, 130, 30);
 		
 		
 		////////Temp
@@ -109,9 +110,9 @@ public class BlackjackGame extends BasicGameState {
 		g.draw(stayButton);
 		g.drawString("Stay", 844, 662);
 
-		g.drawString("Count: " + playerScore, 550, 620);
+		
 		g.drawString(playerName, 550, 650);
-
+		g.drawString("Money: " + model.getPlayer().getMoney(), 550, 680);
 		
 		
 		g.drawString("Dealer", 550, 25);
@@ -120,9 +121,11 @@ public class BlackjackGame extends BasicGameState {
 		int status = game.getGameStatus();
 		
 		if (status == BlackJack.BET) {
+			g.drawString("Count: ???", 550, 620);
 			GameMenu.deckImage.draw(530, 440);
 			GameMenu.deckImage.draw(560, 440);
 		} else {
+			g.drawString("Count: " + playerScore, 550, 620);
 			for (int i = 0; i < game.getPlayerCards().size(); i++) {
 				getCardImage(game.getPlayerCards().get(i)).draw(530 + i * 30, 440);
 			}
@@ -133,7 +136,12 @@ public class BlackjackGame extends BasicGameState {
 			GameMenu.deckImage.draw(560, 170);
 			g.drawString("Count: ???", 550, 55);
 			
+			if (betError) {
+				g.drawString("Enter a valid bet", 700, 580);
+			}
+			
 			g.draw(betButton);
+			g.drawString("Bet", 861, 612);
 			betField.render(gc, g);
 		} else if (status == BlackJack.DEALER_TURN || status == BlackJack.GAME_ENDED) { 
 			for (int j = 0; j < game.getDealerCards().size(); j++) {
@@ -230,7 +238,21 @@ public class BlackjackGame extends BasicGameState {
 		int actualY = gc.getHeight() - ypos;
 		Rectangle tmp = new Rectangle(xpos, actualY, 1, 1);
 		
-		////////////////TEMP
+		
+		int status = game.getGameStatus();
+		
+		if (betSelected && status == BlackJack.BET) {
+			betField.setFocus(true);
+		}
+		if (status == BlackJack.BET && ((xpos>700 && xpos<830) && (actualY>590 && actualY<640))) {
+			if (Mouse.isButtonDown(0)) {
+				chatSelected = false;
+				chatField.setFocus(false);
+				betField.setFocus(true);
+				betSelected = true;
+			}
+		}
+		
 		if (chatSelected) {
 			   chatField.setFocus(true);
 		}
@@ -287,13 +309,35 @@ public class BlackjackGame extends BasicGameState {
 		   }
 		  }
 		///////////////////////
+		  
+		/* Bet button selected */
+		if (betButton.contains(tmp) || betButton.intersects(tmp)) {
+			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
+				Master.isMouseReleased = false;
+				
+				if (status == BlackJack.BET) {
+					String s;
+					if (!(s=betField.getText()).isEmpty() && isNumeric(s)) {
+						int bet = Integer.parseInt(s);
+						game.playerBet(model.getPlayer(), bet);
+						model.updateGame();
+						betError = false;
+					} else {
+						betError = true;
+					}
+				}
+			}
+			if (!Mouse.isButtonDown(0)) {
+				Master.isMouseReleased = true;
+			}
+		}
 
 		/* Hit button selected */
 		if (hitButton.contains(tmp) || hitButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 
-				if (game.getGameStatus() == BlackJack.PLAYER_TURN) {
+				if (status == BlackJack.PLAYER_TURN) {
 					game.playerHit();
 					model.updateGame();
 				}
@@ -309,7 +353,7 @@ public class BlackjackGame extends BasicGameState {
 		if (stayButton.contains(tmp) || stayButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				if (game.getGameStatus() == BlackJack.PLAYER_TURN) {
+				if (status == BlackJack.PLAYER_TURN) {
 					game.playerStay();
 					model.updateGame();
 				}
@@ -324,7 +368,7 @@ public class BlackjackGame extends BasicGameState {
 		if (playAgainButton.contains(tmp) || playAgainButton.intersects(tmp)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
-				if (game.getGameStatus() == BlackJack.GAME_ENDED) {
+				if (status == BlackJack.GAME_ENDED) {
 					game.resetGame();
 					firstCongrats = true;
 					model.updateGame();
@@ -337,7 +381,7 @@ public class BlackjackGame extends BasicGameState {
 		}
 
 		/* Dealer is playing */
-		if (game.getGameStatus() == BlackJack.DEALER_TURN) {
+		if (status == BlackJack.DEALER_TURN) {
 			dealerPlaying = true;
 			if (game.playerBusted || (game.getDealerScoreWithAces() >= 17 )) {
 				game.dealerStay();
@@ -370,6 +414,16 @@ public class BlackjackGame extends BasicGameState {
 		playerScore = game.getPlayerScoreWithAces();
 		dealerScore = game.getDealerScoreWithAces();
 
+	}
+	
+	public boolean isNumeric(String str) {
+		int x;
+		try {
+			x = Integer.parseInt(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 
 
