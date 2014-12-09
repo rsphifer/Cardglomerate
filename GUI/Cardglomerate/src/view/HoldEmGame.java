@@ -187,13 +187,8 @@ public class HoldEmGame extends BasicGameState {
 				handWinners += " ";
 			}
 			g.drawString(handWinners, 530, 450);
-			if (displayOthers) {
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				newHand();
+			if (displayOthers && !firstTime) {
+				firstTime = true;
 			}
 			if (!handOver) {
 				g.clear();

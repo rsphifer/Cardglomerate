@@ -56,6 +56,7 @@ public class TexasHoldEm extends CardGame implements Serializable{
 		int tie=-1;
 		int tie2=-1;
 		int tie3=-1;
+		
 		for(int i=0;i<values.length;i++){
 			if(max < values[i].getValue()){
 				tie=0; tie2=0; tie3=0;
@@ -199,13 +200,14 @@ public class TexasHoldEm extends CardGame implements Serializable{
 			for(int i=0;i<winners.size();i++){
 				winners.get(i).addMoney(winnings/winners.size());
 			}
-			handOver = true;
 			
 			for(int i=0;i<players.size();i++){
 				players.get(i).resetFold();
 				players.get(i).emptyHand();
 			}
+			handOver = true;
 			this.fillDeckHoldEm();
+			this.setup();
 			winners.clear();
 			cardsOnTable.clear();
 			winnings = 0;
