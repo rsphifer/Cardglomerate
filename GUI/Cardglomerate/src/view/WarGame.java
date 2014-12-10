@@ -137,10 +137,12 @@ public class WarGame extends BasicGameState {
 				&& !hasClicked) {
 			g.drawString("Opponent clicked", 725, 300);
 		}
+		
+		arrow.draw(1130, 570);
+		
 		// gameover print
 		if (gameOver) {
 			g.drawString(winner + " Won the Game!", 700, 300);
-			arrow.draw(1130, 570);
 		}
 		
 		//chat stuff
@@ -178,12 +180,12 @@ public class WarGame extends BasicGameState {
 		   enterHit = true;
 		  }
 		  
-			if (firstTime) {
+		  War currGame = (War) model.getCurrentGame();
+		  
+			if (firstTime && (!currGame.isMultiplayer)) {
 				model.addGameChatEntry("I will crush you!", 1);
 				firstTime = false;
 			}
-		
-		War currGame = (War) model.getCurrentGame();
 
 		if (currGame.isMultiplayer && playerIndex == -1) {
 			/* player index has not been updated yet */
@@ -248,7 +250,7 @@ public class WarGame extends BasicGameState {
 		}
 
 		// back button clicked
-		if ((xpos > 1130 && xpos < 1280) && (ypos > 0 && ypos < 150) && (gameOver)) {
+		if ((xpos > 1130 && xpos < 1280) && (ypos > 0 && ypos < 150)) {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				// resets gui for new game

@@ -29,6 +29,7 @@ public class StatsPage extends BasicGameState {
 	private Image image;
 	private Image arrow;
 	private boolean firstTime = true;
+	private String tmp;
 
 	//individual game stats
 	//war
@@ -96,25 +97,29 @@ public class StatsPage extends BasicGameState {
 		g.drawString("War Statistics:", 50, 185);
 		g.drawString("Games Played: " + warGamesPlayed, 70, 205);
 		g.drawString("Games Won: " + warGamesWon, 70, 225);
-		String tmp = String.format("%.2f", warWinLoss);
+		tmp = String.format("%.2f", warWinLoss);
 		g.drawString("Win Loss Ratio: " + tmp, 70, 245);
 		
 		g.drawString("Holdem Statistics:", 350, 185);
 		g.drawString("Games Played: " + holdemGamesPlayed, 370, 205);
 		g.drawString("Games Won: " + holdemGamesWon, 370, 225);
-		g.drawString("Win Loss Ratio: " + holdemWinLoss, 370, 245);
+		tmp = String.format("%.2f", holdemWinLoss);
+		g.drawString("Win Loss Ratio: " + tmp, 370, 245);
 		
 		g.drawString("Blackjack Statistics:", 650, 185);
 		g.drawString("Games Played: " + blackjackGamesPlayed, 670, 205);
 		g.drawString("Games Won: " + blackjackGamesWon, 670, 225);
-		g.drawString("Win Loss Ratio: " + blackjackWinLoss, 670, 245);
+		tmp = String.format("%.2f", blackjackWinLoss);
+		g.drawString("Win Loss Ratio: " + tmp, 670, 245);
 		
 		g.drawString("Ratscrew Statistics:", 950, 185);
 		g.drawString("Games Played: " + ratscrewGamesPlayed, 970, 205);
 		g.drawString("Games Won: " + ratscrewGamesWon, 970, 225);
-		g.drawString("Win Loss Ratio: " + ratscrewWinLoss, 970, 245);
+		tmp = String.format("%.2f", ratscrewWinLoss);
+		g.drawString("Win Loss Ratio: " + tmp, 970, 245);
 		
-		g.drawString("War wins leader board:", 280, 480);
+		//leaderboard code
+		g.drawString("War wins Leaderboard:", 280, 480);
 		for (int i=0; i<warWins.size(); i++) {
 			if (i < 10) {
 				g.drawString(warWins.get(i), 300, 500+20*i);
@@ -122,7 +127,24 @@ public class StatsPage extends BasicGameState {
 				break;
 			}
 		}
-
+		
+		g.drawString("Hold'em Wins Leaderboard:", 500, 480);
+		for (int i=0; i<holdemWins.size(); i++) {
+			if (i < 10) {
+				g.drawString(holdemWins.get(i), 520, 500+20*i);
+			} else {
+				break;
+			}
+		}
+		
+		g.drawString("Blackjack Wins Leaderboard:", 750, 480);
+		for (int i=0; i<blackjackWins.size(); i++) {
+			if (i < 10) {
+				g.drawString(blackjackWins.get(i), 770, 500+20*i);
+			} else {
+				break;
+			}
+		}
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta)
