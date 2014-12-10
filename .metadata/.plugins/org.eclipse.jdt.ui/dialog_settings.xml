@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<item value="e:\Users\Richie\Desktop\cs307\Cardglomerate\SharedClasses\build" key="org.eclipse.jdt.ui.lastextjar"/>
 	<section name="FatJarPackageWizard">
-		<item value="E:\Users\Richie\Desktop\cs307\Cardglomerate" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
+		<item value="/u/data/u99/ncool/Cardglomerate/E:\Users\Richie\Desktop\cs307\Cardglomerate.xml" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="Server - Server" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
-		<item value="Server\build\server.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="Server/build/server.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="1" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
@@ -14,6 +14,7 @@
 			<item value="SharedClasses\build\ConglomerateShared.jar"/>
 		</list>
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
+			<item value="/u/data/u99/ncool/Cardglomerate/E:\Users\Richie\Desktop\cs307\Cardglomerate.xml"/>
 			<item value="E:\Users\Richie\Desktop\cs307\Cardglomerate.xml"/>
 			<item value=".xml"/>
 		</list>

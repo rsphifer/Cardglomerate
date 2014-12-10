@@ -23,7 +23,7 @@ public class ERS extends CardGame implements Serializable{
 	private boolean handOver = false;
 	private int clickCounter = 0;
 	
-	public int cardsToPlay = -1;
+	public int cardsToPlay;
 
 	public ERS(ArrayList<Player> playerNames) {
 		players = new ArrayList<Player>();

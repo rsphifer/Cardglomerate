@@ -117,7 +117,12 @@ public class Ratscrew extends BasicGameState {
 		// draw current cards
 		getCardImage(c3).draw(600, 300);
 		getCardImage(c2).draw(620, 300);
-		getCardImage(c1).draw(640, 300);		
+		getCardImage(c1).draw(640, 300);
+		
+		
+		if (hasClicked) {
+			g.drawString("Player clicked", 725, 615);
+		}
 
 
 		// gameover print
@@ -192,19 +197,30 @@ public class Ratscrew extends BasicGameState {
 				model.incrementNumberOfWins(CardGameType.ERS);
 			}
 		}
-		
+
+
 		// deck clicked
 		if ((xpos > 650 && xpos < 725) && (ypos > 70 && ypos < 165) && myTurn) {
-			if (Mouse.isButtonDown(0) && Master.isMouseReleased && !gameOver) {
-				Master.isMouseReleased = false;
-				model.updateERSCounter();
+			if (!hasClicked) {
+				if (Mouse.isButtonDown(0) && Master.isMouseReleased
+						&& !gameOver) {
+					Master.isMouseReleased = false;
+					hasClicked = true;
+					model.updateERSCounter();
+				}
+			} else {
+				if (Mouse.isButtonDown(0) && Master.isMouseReleased
+						&& !gameOver) {
+					Master.isMouseReleased = false;
+					model.getCurrentGame().update();
+					model.updateGame();
+				}
 			}
 
 			if (!Mouse.isButtonDown(0)) {
 				Master.isMouseReleased = true;
 			}
 		}
-		
 
 		// back button clicked
 		if ((xpos > 1130 && xpos < 1280) && (ypos > 0 && ypos < 150) && (gameOver)) {
@@ -299,7 +315,6 @@ public class Ratscrew extends BasicGameState {
 	
 		//int x = ((ERS) model.getCurrentGame()).cardsToPlay;
 		//System.out.println(x);
-		
 		Player turn = model.getCurrentGame().getTurn();
 		if (turn.userName.equals(model.getPlayer().userName)) {
 			myTurn = true;
@@ -309,11 +324,6 @@ public class Ratscrew extends BasicGameState {
 		}
 		cards = model.getCurrentGame().getCardsToDisplay();
 		//sizes = model.getCurrentGame().getHandSizes();
-		
-		//ArrayList<Card> c = model.getPlayer().getHand();
-		//c1 = c.get(0);
-		//c2 = c.get(1);
-		//c3 = c.get(2);
 		
 		if (cards.size() >= 3) {
 			c1 = cards.get(0);

@@ -310,10 +310,10 @@ public class Ratscrew extends BasicGameState {
 		cards = model.getCurrentGame().getCardsToDisplay();
 		//sizes = model.getCurrentGame().getHandSizes();
 		
-		//ArrayList<Card> c = model.getPlayer().getHand();
-		//c1 = c.get(0);
-		//c2 = c.get(1);
-		//c3 = c.get(2);
+		ArrayList<Card> c = model.getPlayer().getHand();
+		c1 = c.get(0);
+		c2 = c.get(1);
+		c3 = c.get(2);
 		
 		if (cards.size() >= 3) {
 			c1 = cards.get(0);
