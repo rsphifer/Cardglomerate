@@ -3,7 +3,6 @@ package cardgames;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Scanner;
 
 import player.Player;
 import cards.Card;

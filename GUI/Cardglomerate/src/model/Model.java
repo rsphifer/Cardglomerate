@@ -413,6 +413,28 @@ public class Model {
 	/*********************************************************
 	 * Achievement model calls.
 	 *********************************************************/
+	
+	public ArrayList<String> getLeaderboards(CardGameType gameType) {
+		String criteria = null;
+		if (gameType == CardGameType.War) {
+			criteria = "wins_war";
+		} else if (gameType == CardGameType.TexasHoldEm) {
+			criteria = "wins_holdem";
+		} else if (gameType == CardGameType.Blackjack) {
+			criteria = "wins_blackjack";
+		} else if (gameType == CardGameType.ERS) {
+			//criteria = "wins_ers";
+		} else {
+			return new ArrayList<String>();
+		}
+		
+		Object obj = ServerAccess.getLeaderboard(criteria);
+		if (obj != null) {
+			return (ArrayList<String>)obj;
+		} 
+		return new ArrayList<String>();
+	}
+	
 	public void updateAchievements() {
 		warGames = getServerNumberOfGames(CardGameType.War, player);
 		warWins = getServerNumberOfWins(CardGameType.War, player);

@@ -29,7 +29,7 @@ import cardgames.CardGame;
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME = "sac12.cs.purdue.edu";
+	private static final String HOST_NAME = "sac07.cs.purdue.edu";
 	private static final int PORT_NUMBER = 4000;
 
 	private static Object sendRequestWithResponse(Request request) {
@@ -233,7 +233,18 @@ public class ServerAccess {
 	/*********************************************************
 	 * Achievement server calls.
 	 *********************************************************/
-
+	
+	@SuppressWarnings("unchecked")
+	public static Object getLeaderboard(String criteria) {
+		Request request = new Request("getLeaderboard", criteria);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (ArrayList<String>)obj; 
+		} else {
+			return null;
+		}
+	}
+	
 	public static Object getWinRatio(AchievementRequest ar) {
 		Request request = new Request("getWinRatio", ar);
 		Object obj = sendRequestWithResponse(request);

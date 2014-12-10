@@ -1,20 +1,13 @@
-INDEX VERSION 1.127+/u/data/u93/mounts/Cardglomerate/.metadata/.plugins/org.eclipse.jdt.core
-3518093574.index
-1619331558.index
-929259357.index
-3043919228.index
-2715425392.index
-1662633935.index
-1218111336.index
-2320623984.index
-1608964521.index
-3765020915.index
-959308154.index
-4221938072.index
-3769173212.index
-1863283194.index
-2768313878.index
-2377255721.index
-690314056.index
-3500774584.index
-1430610781.index
+INDEX VERSION 1.127+E:\Users\Richie\Desktop\cs307\Cardglomerate\.metadata\.plugins\org.eclipse.jdt.core
+3357528132.index
+2321553228.index
+3230741258.index
+4257325822.index
+1632015955.index
+936676590.index
+3130826462.index
+3881442668.index
+2603692686.index
+2501520862.index
+812528488.index
+3810072431.index

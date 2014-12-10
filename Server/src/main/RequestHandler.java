@@ -198,6 +198,11 @@ public class RequestHandler implements Runnable {
 					obj = tmp;
 
 					
+				} else if(action.equals("getLeaderboard")) {
+					System.out.println("get leader board request");
+					String criteria = (String)request.getObject();
+					obj = DatabaseAccess.getLeaderBoard(criteria);
+					
 				} else if(action.equals("getWinRatio")) {
 					System.out.println("get win ratio request");
 					AchievementRequest ar = (AchievementRequest)request.getObject();

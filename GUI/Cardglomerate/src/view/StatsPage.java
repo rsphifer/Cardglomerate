@@ -1,5 +1,7 @@
 package view;
 
+import java.util.ArrayList;
+
 import misc.GameLobby;
 import model.Model;
 
@@ -46,6 +48,12 @@ public class StatsPage extends BasicGameState {
 	private int ratscrewGamesWon = 0;
 	private double ratscrewWinLoss = 0;
 	
+	/* Leader boards (wins only) */
+	private ArrayList<String> warWins;
+	private ArrayList<String> blackjackWins;
+	private ArrayList<String> holdemWins;
+	//private ArrayList<String> ersWins; /* No ers data in db */
+	
 	public StatsPage(int state, Model model) {
 		this.model = model;
 	}
@@ -62,6 +70,10 @@ public class StatsPage extends BasicGameState {
 
 		arrow = new Image("res/Back Arrow.jpg");
 		arrow = arrow.getScaledCopy(150, 150);
+		
+		warWins = new ArrayList<String>();
+		blackjackWins = new ArrayList<String>();
+		holdemWins = new ArrayList<String>();
 		
 	}
 
@@ -84,7 +96,8 @@ public class StatsPage extends BasicGameState {
 		g.drawString("War Statistics:", 50, 185);
 		g.drawString("Games Played: " + warGamesPlayed, 70, 205);
 		g.drawString("Games Won: " + warGamesWon, 70, 225);
-		g.drawString("Win Loss Ratio: " + warWinLoss, 70, 245);
+		String tmp = String.format("%.2f", warWinLoss);
+		g.drawString("Win Loss Ratio: " + tmp, 70, 245);
 		
 		g.drawString("Holdem Statistics:", 350, 185);
 		g.drawString("Games Played: " + holdemGamesPlayed, 370, 205);
@@ -100,6 +113,15 @@ public class StatsPage extends BasicGameState {
 		g.drawString("Games Played: " + ratscrewGamesPlayed, 970, 205);
 		g.drawString("Games Won: " + ratscrewGamesWon, 970, 225);
 		g.drawString("Win Loss Ratio: " + ratscrewWinLoss, 970, 245);
+		
+		g.drawString("War wins leader board:", 280, 480);
+		for (int i=0; i<warWins.size(); i++) {
+			if (i < 10) {
+				g.drawString(warWins.get(i), 300, 500+20*i);
+			} else {
+				break;
+			}
+		}
 
 	}
 
@@ -140,6 +162,12 @@ public class StatsPage extends BasicGameState {
 		blackjackGamesPlayed = model.getPlayerGameNumber(CardGameType.Blackjack);
 		blackjackGamesWon = model.getPlayerWinNumber(CardGameType.Blackjack);
 		blackjackWinLoss = model.getPlayerWinRatio(CardGameType.Blackjack);
+		
+		warWins = model.getLeaderboards(CardGameType.War);
+		blackjackWins = model.getLeaderboards(CardGameType.Blackjack);
+		holdemWins = model.getLeaderboards(CardGameType.TexasHoldEm);
+		
+		
 		
 	}
 

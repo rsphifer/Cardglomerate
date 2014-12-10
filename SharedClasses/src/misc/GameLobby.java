@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import player.Player;
-import cardgames.CardGame;
 
 public class GameLobby implements Serializable {
 

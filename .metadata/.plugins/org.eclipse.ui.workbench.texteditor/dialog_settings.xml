@@ -2,32 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="dealer" key="selection"/>
+		<item value="playerWon" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
-		<item value="true" key="wholeword"/>
+		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="dealer"/>
-			<item value="scanner"/>
-			<item value="username"/>
-			<item value="fillDeck"/>
-			<item value="setup"/>
-			<item value="whoseTurn"/>
-			<item value="betError"/>
-			<item value="turn"/>
+			<item value="playerWon"/>
+			<item value="t1"/>
 		</list>
 		<list key="replacehistory">
-			<item value="players.get(i)"/>
-			<item value="player.get(i)"/>
-			<item value="whoseTurn"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="265" key="DIALOG_WIDTH"/>
-		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
-		<item value="399" key="DIALOG_HEIGHT"/>
-		<item value="135" key="DIALOG_Y_ORIGIN"/>
-		<item value="1009" key="DIALOG_X_ORIGIN"/>
+		<item value="257" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="380" key="DIALOG_HEIGHT"/>
+		<item value="840" key="DIALOG_X_ORIGIN"/>
+		<item value="275" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

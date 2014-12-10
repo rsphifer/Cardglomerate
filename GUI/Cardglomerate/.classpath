@@ -8,10 +8,10 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jars/lwjgl.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/homes/rsphifer/cs307/Cardglomerate/GUI/Cardglomerate/lib/natives/linux"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Cardglomerate/lib/natives/windows"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jars/slick.jar"/>
-	<classpathentry kind="lib" path="/u/data/u87/rsphifer/cs307/Cardglomerate/SharedClasses/build/ConglomerateShared.jar"/>
+	<classpathentry kind="lib" path="E:/Users/Richie/Desktop/cs307/Cardglomerate/SharedClasses/build/ConglomerateShared.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
