@@ -37,7 +37,7 @@ public class Ratscrew extends BasicGameState {
 	private boolean gameOver = false;
 	private String winner = "Sombody";
 	private LinkedList<Card> cards;
-	private LinkedList<Integer> sizes; //deck sizes
+	private LinkedList<Integer> sizes;
 	private LinkedList <Card> c1;
 	private LinkedList <Card> c2;
 

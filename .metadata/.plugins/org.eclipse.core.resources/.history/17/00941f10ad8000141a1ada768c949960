@@ -28,6 +28,8 @@ public class Ratscrew extends BasicGameState {
 
 	private Model model;
 	
+	private boolean firstTime = true;
+	private boolean firstCongrats = true;
 	private String mouse = "No input yet";
 	private Image background;
 	private int playerSize = 26; // players deck size
@@ -37,7 +39,7 @@ public class Ratscrew extends BasicGameState {
 	private boolean gameOver = false;
 	private String winner = "Sombody";
 	private LinkedList<Card> cards;
-	private LinkedList<Integer> sizes; //deck sizes
+	private LinkedList<Integer> sizes;
 	private LinkedList <Card> c1;
 	private LinkedList <Card> c2;
 
@@ -183,6 +185,11 @@ public class Ratscrew extends BasicGameState {
 		   enterHit = true;
 		  }
 		  
+			if (firstTime) {
+				model.addGameChatEntry("I will crush you!", 1);
+				firstTime = false;
+			}
+		
 		ERS currGame = (ERS) model.getCurrentGame();
 
 		boolean isMultiplayer = true;
@@ -209,6 +216,10 @@ public class Ratscrew extends BasicGameState {
 		// check gameOver
 		if (gameOver) {
 			winner = currGame.getWinner().get(0).userName;
+			if (firstCongrats) {
+				model.addGameChatEntry("Well Played!", 1);
+				firstCongrats = false;
+			}
 			if (winner.equals(model.getPlayer().userName) && !incrementedVictory) {
 				incrementedVictory = true;
 				model.incrementNumberOfWins(CardGameType.ERS);
@@ -255,6 +266,8 @@ public class Ratscrew extends BasicGameState {
 				opponentSize = 26;
 				model.isInGame = false;
 				model.updateAchievements();
+				firstTime = true;
+				firstCongrats = true;
 				sbg.enterState(1); // display game menu screen
 			}
 
