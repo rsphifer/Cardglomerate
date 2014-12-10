@@ -49,6 +49,7 @@ public class BlackjackGame extends BasicGameState {
 
 	private int dealerScore, playerScore;
 	private int ticksSinceDealerPlayed;
+	private int lastBet;
 
 	private String playerName = null;
 
@@ -125,17 +126,24 @@ public class BlackjackGame extends BasicGameState {
 				for (int i = 0; i < playerList.length; i++) {
 					if (i == playerIndex) {
 						g.drawString("Count: ???", 700, 620);
-						GameMenu.deckImage.draw(700, 440);
-						GameMenu.deckImage.draw(720, 440);
+						if (game.getPlayerInHand(p)) {
+							GameMenu.deckImage.draw(700, 440);
+							GameMenu.deckImage.draw(720, 440);
+						}
 					} else if (!playerList[i].equals("Open")) {
+						Player tmpPlayer = game.getPlayer(playerList[i]);
 						if (othersDrawn == 0) {
 							g.drawString("Count: ???", 1050, 620);
-							GameMenu.deckImage.draw(1050, 440);
-							GameMenu.deckImage.draw(1070, 440);
+							if (game.getPlayerInHand(tmpPlayer)) {
+								GameMenu.deckImage.draw(1050, 440);
+								GameMenu.deckImage.draw(1070, 440);
+							}
 						} else {
 							g.drawString("Count: ???", 390, 620);
-							GameMenu.deckImage.draw(390, 440);
-							GameMenu.deckImage.draw(410, 440);
+							if (game.getPlayerInHand(tmpPlayer)) {
+								GameMenu.deckImage.draw(390, 440);
+								GameMenu.deckImage.draw(410, 440);
+							}
 						}
 						othersDrawn++;
 					}
@@ -187,13 +195,16 @@ public class BlackjackGame extends BasicGameState {
 					Player tmpPlayer = game.getPlayer(playerList[i]);
 					if (othersDrawn == 0) {
 						g.drawString(playerList[i], 1050, 650);
-						g.drawString("Money: " + tmpPlayer.getMoney(), 1050, 680);
-						g.drawString("Bet: " + tmpPlayer.getCurrentBet(), 1050, 590);
+						g.drawString("Money: " + tmpPlayer.getMoney(), 1050,
+								680);
+						g.drawString("Bet: " + tmpPlayer.getCurrentBet(), 1050,
+								590);
 
 					} else {
 						g.drawString(playerList[i], 390, 650);
 						g.drawString("Money: " + tmpPlayer.getMoney(), 390, 680);
-						g.drawString("Bet: " + tmpPlayer.getCurrentBet(), 390, 590);
+						g.drawString("Bet: " + tmpPlayer.getCurrentBet(), 390,
+								590);
 					}
 					othersDrawn++;
 				}
@@ -235,25 +246,13 @@ public class BlackjackGame extends BasicGameState {
 				g.draw(playAgainButton);
 				g.drawString("Play Again", 892, 602);
 				int results = game.getGameResults(p);
+				boolean betStatus = game.getAllBetsResolved();
 				if (results == BlackJack.PLAYER_WIN) {
 					g.drawString(model.getPlayer().userName + " won!", 675, 300);
-					if (firstCongrats) {
-						model.addGameChatEntry("Congrats!", 1);
-						firstCongrats = false;
-					}
-
 				} else if (results == BlackJack.PLAYER_TIE) {
 					g.drawString("Push!", 675, 300);
-					if (firstCongrats) {
-						model.addGameChatEntry("Tie game!", 1);
-						firstCongrats = false;
-					}
-				} else {
+				} else if (results == BlackJack.PLAYER_LOSE) {
 					g.drawString("Dealer won!", 675, 300);
-					if (firstCongrats) {
-						model.addGameChatEntry("Too bad, try again!", 1);
-						firstCongrats = false;
-					}
 				}
 			} else {
 				if (status == BlackJack.PLAYER_TURN || status == BlackJack.BET) {
@@ -295,9 +294,6 @@ public class BlackjackGame extends BasicGameState {
 
 	}
 
-	// TODO(Richard): Figure out why 2nd player cards won't display after betting phase
-	// TODO(Richard): Generalize dealer chat messages
-	// TODO(Richard): Deal with scenario where player joins mid game
 	// TODO(Richard): Time player actions to prevent player from locking table
 	// up
 
@@ -315,20 +311,19 @@ public class BlackjackGame extends BasicGameState {
 			enterHit = true;
 		}
 
-	
-
 		if (playerName == null) {
 			playerName = model.getPlayer().userName;
 		}
 
 		BlackJack game = (BlackJack) model.getCurrentGame();
 		int status = game.getGameStatus();
-		
+
 		if (firstTime) {
-			model.addGameChatEntry("Welcome to my table.", 1);
+
+			model.addGameChatEntry("Greetings, " + model.getPlayer().userName
+					+ ".", 1);
 			game.updatePlayer(model.getPlayer());
 			model.updateGame();
-			System.out.println("first time money " + model.getPlayer().getMoney());
 			firstTime = false;
 		}
 
@@ -340,10 +335,13 @@ public class BlackjackGame extends BasicGameState {
 			isPlayersTurn = true;
 		}
 
-		if (status == BlackJack.GAME_ENDED && !betsResolved) {
+		if (status == BlackJack.GAME_ENDED
+				&& !game.getPlayerBetResolved(model.getPlayer())) {
 			Player p = model.getPlayer();
 			int victoryCon = game.getGameResults(p);
 			betsResolved = true;
+			lastBet = p.getCurrentBet();
+			game.setPlayerLastBet(p, p.getCurrentBet());
 			if (victoryCon == BlackJack.PLAYER_WIN) {
 				p.addMoney(p.getCurrentBet() * 2);
 				p.bet(0);
@@ -352,6 +350,38 @@ public class BlackjackGame extends BasicGameState {
 				p.bet(0);
 			} else {
 				p.bet(0);
+			}
+			game.updatePlayer(p);
+			game.setBetResolved(p);
+			model.updateGame();
+
+			if (isPlayersTurn) {
+				String[] playerList = game.getPlayerList();
+				for (int i = 0; i < playerList.length; i++) {
+					if (!playerList[i].equals("Open")) {
+						Player tmpPlayer = game.getPlayer(playerList[i]);
+						if (game.getPlayerInHand(tmpPlayer)) {
+							int results = game.getGameResults(tmpPlayer);
+							int number = 0;
+							if ((number=tmpPlayer.getCurrentBet()) == 0) {
+								number = game.getPlayerLastBet(tmpPlayer);
+							}
+							
+							if (results == BlackJack.PLAYER_WIN) {
+								
+								model.addGameChatEntry(tmpPlayer.userName
+										+ " wins " + number
+										+ ".", 1);
+							} else if (results == BlackJack.PLAYER_TIE) {
+								model.addGameChatEntry(tmpPlayer.userName
+										+ " ties.", 1);
+							} else if (results == BlackJack.PLAYER_LOSE) {
+								model.addGameChatEntry(tmpPlayer.userName
+										+ " loses " + number + ".", 1);
+							}
+						}
+					}
+				}
 			}
 		}
 
@@ -544,7 +574,7 @@ public class BlackjackGame extends BasicGameState {
 		if (model.isInGame) {
 			playerScore = game.getPlayerScoreWithAces(model.getPlayer());
 			dealerScore = game.getDealerScoreWithAces();
-			
+
 		}
 
 	}

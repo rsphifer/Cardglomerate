@@ -104,21 +104,42 @@ public class BlackJack extends CardGame implements Serializable {
 		PlayerSeat seat;
 		for (int i=0; i<MAX_PLAYERS; i++) {
 			if (players[i].isOccupied && players[i].getPlayer().userName.equals(p.userName)) {
+				
 				players[i].removePlayer();
 				numPlayers--;
 				if (numPlayers == 0) {
 					/* Table is now empty */
 					gameStatus = IDLE;
+				} else if (currentTurn == i) {
+					if (gameStatus == PLAYER_TURN) {
+						playerStay(p);
+					}
+					boolean inHandPlayerExists = false;
+					for (int j=0; j<MAX_PLAYERS; j++) {
+						if (players[j].isOccupied && players[j].isInHand) {
+							inHandPlayerExists = true;
+							currentTurn = j;
+						}
+					}
+					if (!inHandPlayerExists) {
+						for (int j=0; j<MAX_PLAYERS; j++) {
+							if (players[j].isOccupied) {
+								currentTurn = j;
+								resetGame();
+							}
+						}	
+					}
+					
 				}
 				return;
 			}
 		}
 		
 	}
+	//TODO(Richard): Lots..
 	
 	public void resetGame() {
 		dealerHand = new ArrayList<Card>();
-		//playerHand = new ArrayList<Card>();
 		
 		for (int i=0; i<MAX_PLAYERS; i++) {
 			if (players[i].isOccupied) {
@@ -129,7 +150,7 @@ public class BlackJack extends CardGame implements Serializable {
 		/* Set current turn to first player found in players array */
 		currentTurn = 0;
 		for (int i=0; i<MAX_PLAYERS; i++) {
-			if (players[i].isOccupied) {
+			if (players[i].isOccupied && players[i].isInHand) {
 				currentTurn = i;
 				break;
 			}
@@ -148,14 +169,10 @@ public class BlackJack extends CardGame implements Serializable {
 	}
 	
 	public void dealCards(){
-//		playerHand.add(getTopOfDeck());
-//		dealerHand.add(getTopOfDeck());
-//		playerHand.add(getTopOfDeck());
-//		dealerHand.add(getTopOfDeck());
 		
 		for (int i=0; i<2; i++) {
 			for (int j=0; j<MAX_PLAYERS; j++) {
-				if (players[j].isOccupied) {
+				if (players[j].isOccupied && players[j].isInHand) {
 					players[j].addCard(getTopOfDeck());
 				}
 			}
@@ -171,21 +188,6 @@ public class BlackJack extends CardGame implements Serializable {
 		}
 	}
 	
-//	public void seePlayerHand(){
-//		int sizeOfHand = playerHand.size();
-//		for(int i = 0; i < sizeOfHand;i++){
-//			System.out.println("Card is Suit ="+playerHand.get(i).getSuit()+"Power"+playerHand.get(i).getPower());
-//		}	
-//		System.out.println("Your combined hand is = to "+getPlayerScoreWithAces());
-//	}
-	
-	public void seeDealerHand(){
-		int sizeOfHand = dealerHand.size();
-		for(int i = 0; i < sizeOfHand;i++){
-			System.out.println("Card is Suit ="+dealerHand.get(i).getSuit()+"Power"+dealerHand.get(i).getPower());
-		}	
-		System.out.println("Your combined hand is = to "+getDealerScoreWithAces());
-	}
 	
 	public String getCurrentTurnPlayer() {
 		return players[currentTurn].getPlayer().userName;
@@ -216,7 +218,7 @@ public class BlackJack extends CardGame implements Serializable {
 		boolean lastPlayer = true;
 		players[seatIndex].hasBet = true;
 		for (int i=0; i<MAX_PLAYERS; i++) {
-			if (players[i].isOccupied && !players[i].hasBet) {
+			if (players[i].isOccupied && players[i].isInHand && !players[i].hasBet) {
 				currentTurn = i;
 				lastPlayer = false;
 			}
@@ -227,7 +229,7 @@ public class BlackJack extends CardGame implements Serializable {
 			gameStatus = PLAYER_TURN;
 			currentTurn = 0;
 			for (int i=0; i<MAX_PLAYERS; i++) {
-				if (players[i].isOccupied) {
+				if (players[i].isOccupied && players[i].isInHand) {
 					currentTurn = i;
 					break;
 				}
@@ -262,11 +264,48 @@ public class BlackJack extends CardGame implements Serializable {
 	
 	public boolean getAllPlayersBust() {
 		for (int i=0; i<MAX_PLAYERS; i++) {
-			if (players[i].isOccupied && !players[i].hasBusted) {
+			if (players[i].isOccupied && players[i].isInHand && !players[i].hasBusted) {
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	public void setBetResolved(Player p) {
+		for (int i=0; i<MAX_PLAYERS; i++) {
+			if (players[i].isOccupied && players[i].getPlayer().userName.equals(p.userName)) {
+				players[i].betResolved = true;
+				return;
+			}
+		}
+	}
+	
+	public boolean getPlayerInHand(Player p) {
+		for (int i=0; i<MAX_PLAYERS; i++) {
+			if (players[i].isOccupied && players[i].getPlayer().userName.equals(p.userName)) {
+				return players[i].isInHand;
+			}
+		}
+		return false;
+	}
+	
+	public boolean getAllBetsResolved() {
+		for (int i=0; i<MAX_PLAYERS; i++) {
+			if(players[i].isOccupied && !players[i].betResolved) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean getPlayerBetResolved(Player p) {
+		for (int i=0; i<MAX_PLAYERS; i++) {
+			if (players[i].isOccupied && players[i].getPlayer().userName.equals(p.userName)) {
+				return players[i].betResolved;
+			}
+		}
+		System.err.printf("Player not found in get player bet resolved call!\n");
+		return false;
 	}
 	
 	public int getPlayerScoreWithAces(Player p){
@@ -349,46 +388,6 @@ public class BlackJack extends CardGame implements Serializable {
 		return newScore;
 	}
 	
-//	public void dealerPlay(){
-//		if(getPlayerScoreWithAces() <= 21 && getDealerScoreWithAces() <= 21){
-//			int dealerScore = getDealerScoreWithAces();
-//			if(dealerScore < 15){
-//				dealerHand.add(getTopOfDeck());
-//			}
-//			else
-//				dealerStay = 1;
-//		}
-//		else
-//			dealerStay = 1;
-//	}
-//	
-//	public void playerPlay(){
-//		int breaker = 0;
-//		if(getPlayerScoreWithAces() <= 21){
-//			if(playerStay != 1){
-//				seePlayerHand();
-//				System.out.println();
-//				int valueEntered = 0;
-//				while(breaker == 0){
-//					System.out.println("To Hit Press 1, To Stay press 2");
-//					Scanner player1Input = new Scanner( System.in );
-//					valueEntered = player1Input.nextInt();
-//					if(valueEntered == 1){
-//						System.out.println("value entered = "+valueEntered);
-//						playerHand.add(getTopOfDeck());
-//						breaker = 1;
-//					}
-//					else if(valueEntered == 2){
-//						System.out.println("value entered = "+valueEntered);
-//						playerStay = 1;
-//						breaker = 1;
-//					}
-//				}
-//			}
-//		}
-//		else 
-//			playerStay = 1;
-//	}
 	
 	public void playerHit(Player p) {
 		
@@ -416,7 +415,7 @@ public class BlackJack extends CardGame implements Serializable {
 			boolean lastPlayer = true;
 			players[seatIndex].hasPlayed = true;
 			for (int i=0; i<MAX_PLAYERS; i++) {
-				if (players[i].isOccupied && !players[i].hasPlayed) {
+				if (players[i].isOccupied && players[i].isInHand && !players[i].hasPlayed) {
 					currentTurn = i;
 					lastPlayer = false;
 				}
@@ -426,7 +425,7 @@ public class BlackJack extends CardGame implements Serializable {
 				
 				currentTurn = 0;
 				for (int i=0; i<MAX_PLAYERS; i++) {
-					if (players[i].isOccupied) {
+					if (players[i].isOccupied && players[i].isInHand) {
 						currentTurn = i;
 						break;
 					}
@@ -456,7 +455,7 @@ public class BlackJack extends CardGame implements Serializable {
 		boolean lastPlayer = true;
 		players[seatIndex].hasPlayed = true;
 		for (int i=0; i<MAX_PLAYERS; i++) {
-			if (players[i].isOccupied && !players[i].hasPlayed) {
+			if (players[i].isOccupied && players[i].isInHand && !players[i].hasPlayed) {
 				currentTurn = i;
 				lastPlayer = false;
 			}
@@ -466,7 +465,7 @@ public class BlackJack extends CardGame implements Serializable {
 			
 			currentTurn = 0;
 			for (int i=0; i<MAX_PLAYERS; i++) {
-				if (players[i].isOccupied) {
+				if (players[i].isOccupied && players[i].isInHand) {
 					currentTurn = i;
 					break;
 				}
@@ -481,19 +480,11 @@ public class BlackJack extends CardGame implements Serializable {
 			gameEnded = true;
 			
 			for (int i=0; i<MAX_PLAYERS; i++) {
-				if (players[i].isOccupied) {
+				if (players[i].isOccupied && players[i].isInHand) {
 					players[i].setGameResult(getResult(players[i]));
 				}
 			}
 			
-//			if (gameWinner() == 2) {
-//				playerWon = true;
-//			} else if (gameWinner() == 3) {
-//				/* tie */
-//				isTie = true;
-//			} else {
-//				playerWon = false;
-//			}
 		}
 	}
 	
@@ -502,52 +493,33 @@ public class BlackJack extends CardGame implements Serializable {
 		gameEnded = true;
 		
 		for (int i=0; i<MAX_PLAYERS; i++) {
-			if (players[i].isOccupied) {
+			if (players[i].isOccupied && players[i].isInHand) {
 				players[i].setGameResult(getResult(players[i]));
 			}
 		}
-//		if (gameWinner() == 2) {
-//			playerWon = true;
-//		} else if (gameWinner() == 3) {
-//			/* tie */
-//			playerWon = false;
-//			isTie = true;
-//		} else {
-//			playerWon = false;
-//		}
+
 	}
 	
 
+	public void setPlayerLastBet(Player p, int lastBet) {
+		for (int i=0; i<MAX_PLAYERS; i++) {
+			if (players[i].isOccupied && players[i].getPlayer().userName.equals(p.userName)) {
+				players[i].setLastBet(lastBet);
+			}
+		}
+	}
+	
+	public int getPlayerLastBet(Player p) {
+		for (int i=0; i<MAX_PLAYERS; i++) {
+			if (players[i].isOccupied && players[i].getPlayer().userName.equals(p.userName)) {
+				return players[i].lastBet;
+			}
+		}
+		return 0;
+	}
 	
 	
-//	public void dealerVsPlayerPlay(){
-//		while(playerStay != 1){
-//			playerPlay();
-//		}
-//		while(dealerStay != 1){
-//			dealerPlay();
-//		}
-//		
-//	}
 	
-	
-//	public void playBlackJack(){
-//		dealCards();
-//		dealerVsPlayerPlay();
-//		int result = gameWinner();
-//		if(result == 1){
-//			System.out.println("The Dealer won with the cards:");
-//			seeDealerHand();
-//			System.out.println("The player had these cards:");
-//			seePlayerHand();
-//		}
-//		else if(result == 2){
-//			System.out.println("The Player won with the cards:");
-//			seePlayerHand();
-//			System.out.println("The Dealer had these cards:");
-//			seeDealerHand();
-//		}
-//	}
 	
 	
 	public int getResult(PlayerSeat seat){
@@ -605,7 +577,9 @@ public class BlackJack extends CardGame implements Serializable {
 		private Player player;
 		private ArrayList<Card> hand;
 		public boolean isOccupied, hasBet, hasPlayed, hasBusted;
+		public boolean isInHand, betResolved;
 		private int gameResult;
+		private int lastBet;
 		
 		
 		public PlayerSeat() {
@@ -625,13 +599,25 @@ public class BlackJack extends CardGame implements Serializable {
 		public void addPlayer(Player player) {
 			this.player = player;
 			isOccupied = true;
+			isInHand = false;
 			hand = new ArrayList<Card>();
+			lastBet = 0;
+		}
+		
+		public void setLastBet(int bet) {
+			lastBet = bet;
+		}
+		
+		public int getLastBet() {
+			return lastBet;
 		}
 		
 		public void removePlayer() {
 			player = null;
 			isOccupied = false;
 			hand = null;
+			gameResult = 0;
+			isInHand = false;
 		}
 		
 		public void setGameResult(int result) {
@@ -660,6 +646,9 @@ public class BlackJack extends CardGame implements Serializable {
 				hasBet = false;
 				hasPlayed = false;
 				hasBusted = false;
+				isInHand = true;
+				betResolved = false;
+				gameResult = 0;
 			} else {
 				System.err.printf("Tried to reset a null hand!\n");
 			}

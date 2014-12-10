@@ -14,8 +14,8 @@ import cardgames.CardGame;
 import cardgames.CardGameType;
 
 public class UpdateChecker implements Runnable {
-	private final int MILLIS_BETWEEN_UPDATES_IN_GAME = 1500;
-	private final int MILLIS_BETWEEN_UPDATES = 5000;
+	private final int MILLIS_BETWEEN_UPDATES_IN_GAME = 750;
+	private final int MILLIS_BETWEEN_UPDATES = 2500;
 
 	private Model model;
 
