@@ -21,6 +21,7 @@ public class ERS extends CardGame implements Serializable{
 	public boolean readyToUpdate;
 	private int playersGone = 0;
 	private boolean handOver = false;
+	private int clickCounter = 0;
 	
 	public int cardsToPlay;
 
@@ -174,6 +175,15 @@ public class ERS extends CardGame implements Serializable{
 		
 	}
 	
+	public synchronized void incrementClickCounter() {
+		clickCounter++;
+		update();
+	}
+	
+	public int getClickCounter() {
+		return clickCounter;
+	}
+	
 	public void fold(Player p){
 		p.fold();
 		playersGone++;
@@ -184,27 +194,32 @@ public class ERS extends CardGame implements Serializable{
 		System.out.println(turn);
 		readyToUpdate = false;
 		
-		Card playedcard;
-		
-		if(cardsToPlay == -1){
-			if(whoseTurn.playTopCard() == null){
-				gameOver = true;
-			}
-		}
-		
-		
-		else{
-			while(cardsToPlay > 0){
-				if((playedcard = whoseTurn.playTopCard()) == null){
+		if(clickCounter > 0){
+			
+			clickCounter = 0;
+			
+			Card playedcard;
+			
+			if(cardsToPlay == -1){
+				if(whoseTurn.playTopCard() == null){
 					gameOver = true;
 				}
-				if(playedcard.getPower() >= 11 || playedcard.getPower() ==1){
-					break;
-				}
-				cardsToPlay--;
 			}
-			if(cardsToPlay == 0){
-				roundWin(lastTurn());
+			
+			
+			else{
+				while(cardsToPlay > 0){
+					if((playedcard = whoseTurn.playTopCard()) == null){
+						gameOver = true;
+					}
+					if(playedcard.getPower() >= 11 || playedcard.getPower() ==1){
+						break;
+					}
+					cardsToPlay--;
+				}
+				if(cardsToPlay == 0){
+					roundWin(lastTurn());
+				}
 			}
 		}
 		

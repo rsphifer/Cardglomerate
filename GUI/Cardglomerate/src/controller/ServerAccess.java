@@ -74,6 +74,20 @@ public class ServerAccess {
 	}
 
 	/*********************************************************
+	 * Egyptian Ratscrew specific server calls.
+	 *********************************************************/
+
+	public static Object incrementERSCounter(UpdateGameRequest ugr) {
+		Request request = new Request("incrementERSCounter", ugr);
+		Object obj = sendRequestWithResponse(request);
+		if (obj != null) {
+			return (boolean) obj;
+		} else {
+			return null;
+		}
+	}
+
+	/*********************************************************
 	 * Card game mgmt server calls.
 	 *********************************************************/
 

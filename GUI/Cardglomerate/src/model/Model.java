@@ -19,6 +19,7 @@ import cardgames.BlackJack;
 import cardgames.CardGame;
 import cardgames.CardGameType;
 import cardgames.War;
+import cardgames.ERS;
 import cards.Card;
 import controller.ServerAccess;
 import controller.UpdateChecker;
@@ -135,6 +136,14 @@ public class Model {
 
 	public void updateWarCounter() {
 		ServerAccess.incrementWarCounter(new UpdateGameRequest(gameId, null));
+		obj = ServerAccess.getCardGame(gameId);
+		if (obj != null) {
+			currentGame = (CardGame)obj;
+		}
+	}
+
+	public void updateERSCounter() {
+		ServerAccess.incrementERSCounter(new UpdateGameRequest(gameId, null));
 		obj = ServerAccess.getCardGame(gameId);
 		if (obj != null) {
 			currentGame = (CardGame)obj;

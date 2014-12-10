@@ -193,6 +193,15 @@ public class RequestHandler implements Runnable {
 					
 					gameTable.updateGame(id, game);
 					obj = true;
+				} else if (action.equals("incrementERSCounter")) {
+					System.out.println("increment ERS counter request");
+					UpdateGameRequest ugr = (UpdateGameRequest)request.getObject();
+					int id = ugr.getGameId();
+					ERS game = (ERS)gameTable.getGame(id);
+					game.incrementClickCounter();
+					
+					gameTable.updateGame(id, game);
+					obj = true;					
 				} else if (action.equals("login")) { /* Returns null if invalid..Player object if valid */
 				
 				
