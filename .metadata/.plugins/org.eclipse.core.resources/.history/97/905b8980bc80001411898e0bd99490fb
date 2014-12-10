@@ -115,9 +115,9 @@ public class Ratscrew extends BasicGameState {
 		g.drawString(model.getPlayer().userName, 650, 650);
 		
 		// draw current cards
-		getCardImage(c3).draw(600, 300);
+		getCardImage(c1).draw(600, 300);
 		getCardImage(c2).draw(620, 300);
-		getCardImage(c1).draw(640, 300);
+		getCardImage(c3).draw(640, 300);
 		
 		
 		if (hasClicked) {
