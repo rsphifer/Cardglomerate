@@ -272,9 +272,9 @@ public class RatscrewOptions extends BasicGameState {
 			if (Mouse.isButtonDown(0) && Master.isMouseReleased) {
 				Master.isMouseReleased = false;
 				
-				//currently ratscrew is just a copy of war
-				model.createGameRequest(CardGameType.War);
-				sbg.enterState(13);
+				//BROKEN
+				//model.createGameRequest(CardGameType.ERS);
+				//sbg.enterState(13);
 			}
 
 			if (Mouse.isButtonDown(0)) {
