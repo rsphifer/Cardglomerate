@@ -19,6 +19,7 @@ public class Server {
 
 	private GameLobby[] warLobbies;
 	private GameLobby[] texasHoldemLobbies;
+	private GameLobby[] ratscrewLobbies;
 	private int[] blackJackTables; /* Holds each game's id number for game table */
 
 	public Server(int port) {
@@ -27,12 +28,15 @@ public class Server {
 		menuChat = new MenuChat();
 
 		warLobbies = new GameLobby[MAX_LOBBIES];
+		ratscrewLobbies = new GameLobby[MAX_LOBBIES];
 		texasHoldemLobbies = new GameLobby[3];
 
 		for (int i = 0; i < MAX_LOBBIES; i++) {
 			warLobbies[i] = new GameLobby(2, 2, i);
+			ratscrewLobbies[i] = new GameLobby(2, 2, i);
 			if (i < 3) {
 				texasHoldemLobbies[i] = new GameLobby(2, 4, i);
+				
 			}
 		}
 		
@@ -59,7 +63,7 @@ public class Server {
 
 				RequestHandler requestHandler = new RequestHandler(
 						clientSocket, gameTable, menuChat, warLobbies,
-						texasHoldemLobbies, blackJackTables);
+						texasHoldemLobbies, blackJackTables, ratscrewLobbies);
 				Thread t = new Thread(requestHandler);
 				t.start();
 			}

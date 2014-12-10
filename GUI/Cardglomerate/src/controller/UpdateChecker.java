@@ -44,50 +44,55 @@ public class UpdateChecker implements Runnable {
 			}
 
 			/* Update model with newest game, chat, and friend states */
-			//System.out.println("Ask server for updates.");
-			
+			// System.out.println("Ask server for updates.");
+
 			Object obj;
-			
+
 			if (model.isInGame) {
 				obj = ServerAccess.getCardGame(model.getGameId());
 				if (obj != null) {
-					model.setCurrentGame((CardGame)obj);
+					model.setCurrentGame((CardGame) obj);
 				}
 			} else {
 
 				/* Update friends list */
 				obj = ServerAccess.getFriends(model.getPlayer());
 				if (obj != null) {
-					model.setFriendList((ArrayList<Friend>)obj);
+					model.setFriendList((ArrayList<Friend>) obj);
 				}
 
 				/* Update menu chat */
 				obj = ServerAccess.getMenuChat();
 				if (obj != null) {
-					model.setMenuChat((ArrayList<ChatEntry>)obj);
+					model.setMenuChat((ArrayList<ChatEntry>) obj);
 				}
 
 				/* Update game lobbies */
-				obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0,
-								CardGameType.War));
+				obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null,
+						0, CardGameType.War));
 				if (obj != null) {
-					model.setGameLobby(CardGameType.War, (GameLobby[])obj);
+					model.setGameLobby(CardGameType.War, (GameLobby[]) obj);
 				}
-			
-				
-				obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
+
+				obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null,
+						0, CardGameType.ERS));
 				if (obj != null) {
-					model.setGameLobby(CardGameType.TexasHoldEm, (GameLobby[])obj);
+					model.setGameLobby(CardGameType.ERS, (GameLobby[]) obj);
 				}
-				
+
+				obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null,
+						0, CardGameType.TexasHoldEm));
+				if (obj != null) {
+					model.setGameLobby(CardGameType.TexasHoldEm,
+							(GameLobby[]) obj);
+				}
+
 				/* Update blackjack tables */
 				obj = ServerAccess.getBlackJackTables();
 				if (obj != null) {
-					model.setBlackJackTables((BlackJack[])obj);
+					model.setBlackJackTables((BlackJack[]) obj);
 				}
 			}
-
-			
 
 		}
 

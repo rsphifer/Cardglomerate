@@ -19,6 +19,7 @@ import player.SetPasswordRequest;
 import cardgames.BlackJack;
 import cardgames.CardGame;
 import cardgames.CardGameType;
+import cardgames.ERS;
 import cardgames.TexasHoldEm;
 import cardgames.War;
 
@@ -29,15 +30,17 @@ public class RequestHandler implements Runnable {
 	private MenuChat menuChat;
 	private GameLobby[] warLobbies;
 	private GameLobby[] texasHoldemLobbies;
+	private GameLobby[] ratscrewLobbies;
 	private int[] blackJackTables;
 
-	public RequestHandler(Socket clientSocket, GameTable gameTable, MenuChat menuChat, GameLobby[] warLobbies, GameLobby[] texasHoldemLobbies, int[] blackJackTables) {
+	public RequestHandler(Socket clientSocket, GameTable gameTable, MenuChat menuChat, GameLobby[] warLobbies, GameLobby[] texasHoldemLobbies, int[] blackJackTables, GameLobby[] ratscrewLobbies) {
 		this.clientSocket = clientSocket;
 		this.gameTable = gameTable;
 		this.menuChat = menuChat;
 		this.warLobbies = warLobbies;
 		this.texasHoldemLobbies = texasHoldemLobbies;
 		this.blackJackTables = blackJackTables;
+		this.ratscrewLobbies = ratscrewLobbies;
 	}
 
 	@Override
@@ -92,6 +95,8 @@ public class RequestHandler implements Runnable {
 						obj = warLobbies;
 					} else if (game == CardGameType.TexasHoldEm) {
 						obj = texasHoldemLobbies;
+					} else if (game == CardGameType.ERS) {
+						obj = ratscrewLobbies;
 					}
 				} else if (action.equals("joinGameLobby")) {
 					System.out.println("join game lobby request");
@@ -101,6 +106,8 @@ public class RequestHandler implements Runnable {
 						obj = warLobbies[glr.getLobbyId()].addPlayer(glr.getPlayer());
 					} else if(gameType == CardGameType.TexasHoldEm) {
 						obj = texasHoldemLobbies[glr.getLobbyId()].addPlayer(glr.getPlayer());
+					} else if (gameType == CardGameType.ERS) {
+						obj = ratscrewLobbies[glr.getLobbyId()].addPlayer(glr.getPlayer());
 					}
 					
 					
@@ -113,6 +120,8 @@ public class RequestHandler implements Runnable {
 						warLobbies[glr.getLobbyId()].removePlayer(glr.getPlayer());
 					} else if (gameType == CardGameType.TexasHoldEm) {
 						texasHoldemLobbies[glr.getLobbyId()].removePlayer(glr.getPlayer());
+					} else if (gameType == CardGameType.ERS) {
+						ratscrewLobbies[glr.getLobbyId()].removePlayer(glr.getPlayer());
 					}
 					obj = true;
 					
@@ -141,6 +150,16 @@ public class RequestHandler implements Runnable {
 							
 							texasHoldemLobbies[lobbyId].setGameId(tmpGameId);
 							texasHoldemLobbies[lobbyId].isStarted = true;
+							obj = true;
+						} else {
+							obj = false;
+						}
+					} else if (gameType == CardGameType.ERS) {
+						ERS tmpGame = new ERS(ratscrewLobbies[lobbyId].getPlayers());
+						int tmpGameId = gameTable.addNewGame(tmpGame);
+						if (tmpGameId > -1) {
+							ratscrewLobbies[lobbyId].setGameId(tmpGameId);
+							ratscrewLobbies[lobbyId].isStarted = true;
 							obj = true;
 						} else {
 							obj = false;

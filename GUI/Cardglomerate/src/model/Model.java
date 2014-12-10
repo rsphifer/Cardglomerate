@@ -49,6 +49,7 @@ public class Model {
 	/* Updated regularly by update checker */
 	private GameLobby[] texasHoldemLobbies;
 	private GameLobby[] warLobbies;
+	private GameLobby[] ratscrewLobbies;
 	private BlackJack[] blackJackTables;
 	
 	private int warGames;
@@ -72,6 +73,7 @@ public class Model {
 		menuChat = new ArrayList<ChatEntry>();
 		
 		warLobbies = new GameLobby[4];
+		ratscrewLobbies = new GameLobby[4];
 		texasHoldemLobbies = new GameLobby[3];
 		blackJackTables = new BlackJack[3];
 		
@@ -179,6 +181,12 @@ public class Model {
 					null, 0, CardGameType.War));
 			if (obj != null) {
 				warLobbies = (GameLobby[])obj;
+			}
+			
+			obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(
+					null, 0, CardGameType.ERS));
+			if (obj != null) {
+				ratscrewLobbies = (GameLobby[])obj;
 			}
 			
 			obj = ServerAccess.getGameLobbyList(new GameLobbyRequest(null, 0, CardGameType.TexasHoldEm));
@@ -310,6 +318,18 @@ public class Model {
 					texasHoldemLobbies = (GameLobby[])obj;
 				}
 			}
+		} else if (gameType == CardGameType.ERS) {
+			System.out.println("hello");
+			if (ratscrewLobbies[lobbyId].getPlayers().size() < 2) {
+				isInLobby = true;
+				setCurrentLobby(gameType, lobbyId);
+				ServerAccess.joinLobby(glr);
+				
+				obj = ServerAccess.getGameLobbyList(glr);
+				if (obj != null) {
+					ratscrewLobbies = (GameLobby[])obj;
+				}
+			}
 		}
 		return;
 	}
@@ -330,6 +350,11 @@ public class Model {
 			if (obj != null) {
 				texasHoldemLobbies = (GameLobby[])obj;
 			}
+		} else if (gameType == CardGameType.ERS) {
+			obj = ServerAccess.getGameLobbyList(glr);
+			if (obj != null) {
+				ratscrewLobbies = (GameLobby[])obj;
+			}
 		}
 
 		return;
@@ -340,6 +365,8 @@ public class Model {
 			warLobbies = lobbies;
 		} else if (gameType == CardGameType.TexasHoldEm) {
 			texasHoldemLobbies = lobbies;
+		} else if (gameType == CardGameType.ERS) {
+			ratscrewLobbies = lobbies;
 		}
 	}
 
@@ -348,6 +375,8 @@ public class Model {
 			return warLobbies;
 		} else if (gameType == CardGameType.TexasHoldEm) {
 			return texasHoldemLobbies;
+		} else if (gameType == CardGameType.ERS) {
+			return ratscrewLobbies;
 		} else {
 			return null;
 		}
@@ -370,6 +399,8 @@ public class Model {
 			glr = new GameLobbyRequest(player,
 					currentLobbyNumber, CardGameType.TexasHoldEm);
 			
+		} else if (currentLobbyType == CardGameType.ERS) {
+			glr = new GameLobbyRequest(player, currentLobbyNumber, CardGameType.ERS);
 		}
 		ServerAccess.startGameFromLobby(glr);
 	}

@@ -19,6 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import controller.ServerAccess;
 import cardgames.BlackJack;
 import cardgames.CardGameType;
+import cardgames.ERS;
 import cardgames.War; 
 import cards.Card;
 
@@ -139,10 +140,10 @@ public class Ratscrew extends BasicGameState {
 			g.drawString("Player clicked", 725, 615);
 		}
 
-		if (((War) model.getCurrentGame()).getClickCounter() == 1
-				&& !hasClicked) {
-			g.drawString("Opponent clicked", 725, 300);
-		}
+//		if (((War) model.getCurrentGame()).getClickCounter() == 1
+//				&& !hasClicked) {
+//			g.drawString("Opponent clicked", 725, 300);
+//		}
 		// gameover print
 		if (gameOver) {
 			g.drawString(winner + " Won the Game!", 700, 300);
@@ -150,7 +151,7 @@ public class Ratscrew extends BasicGameState {
 		}
 		
 		//chat stuff
-		War game = (War) model.getCurrentGame();
+		ERS game = (ERS) model.getCurrentGame();
 		g.drawString("Chat", 150, 330);
 		g.drawRect(260, 680, 120, 30);
 		g.drawString("Send Message", 265, 685);
@@ -189,9 +190,12 @@ public class Ratscrew extends BasicGameState {
 				firstTime = false;
 			}
 		
-		War currGame = (War) model.getCurrentGame();
+		ERS currGame = (ERS) model.getCurrentGame();
 
-		if (currGame.isMultiplayer && playerIndex == -1) {
+		boolean isMultiplayer = true;
+		
+		if (isMultiplayer && playerIndex == -1) {
+		//if (currGame.isMultiplayer && playerIndex == -1) {
 			/* player index has not been updated yet */
 			int i;
 			for (i = 0; i < currGame.getPlayers().size(); i++) {
@@ -218,39 +222,39 @@ public class Ratscrew extends BasicGameState {
 			}
 			if (winner.equals(model.getPlayer().userName) && !incrementedVictory) {
 				incrementedVictory = true;
-				model.incrementNumberOfWins(CardGameType.War);
+				model.incrementNumberOfWins(CardGameType.ERS);
 			}
 		}
 
-		if (currGame.isMultiplayer
-				&& (currGame.getClickCounter() == 0 || currGame
-						.getCardsFlippedCount() != countWhenClicked)
-				&& hasClicked) {
-			hasClicked = false;
-		}
+//		if (currGame.isMultiplayer
+//				&& (currGame.getClickCounter() == 0 || currGame
+//						.getCardsFlippedCount() != countWhenClicked)
+//				&& hasClicked) {
+//			hasClicked = false;
+//		}
 
 		// deck clicked
-		if ((xpos > 650 && xpos < 725) && (ypos > 70 && ypos < 165)) {
-			if (currGame.isMultiplayer && !hasClicked) {
-				if (Mouse.isButtonDown(0) && Master.isMouseReleased
-						&& !gameOver) {
-					Master.isMouseReleased = false;
-					hasClicked = true;
-					model.updateWarCounter();
-					countWhenClicked = currGame.getCardsFlippedCount();
-				}
-			} else {
-				if (Mouse.isButtonDown(0) && Master.isMouseReleased
-						&& !gameOver) {
-					Master.isMouseReleased = false;
-					model.updateGame();
-				}
-			}
-
-			if (!Mouse.isButtonDown(0)) {
-				Master.isMouseReleased = true;
-			}
-		}
+//		if ((xpos > 650 && xpos < 725) && (ypos > 70 && ypos < 165)) {
+//			if (currGame.isMultiplayer && !hasClicked) {
+//				if (Mouse.isButtonDown(0) && Master.isMouseReleased
+//						&& !gameOver) {
+//					Master.isMouseReleased = false;
+//					hasClicked = true;
+//					model.updateWarCounter();
+//					countWhenClicked = currGame.getCardsFlippedCount();
+//				}
+//			} else {
+//				if (Mouse.isButtonDown(0) && Master.isMouseReleased
+//						&& !gameOver) {
+//					Master.isMouseReleased = false;
+//					model.updateGame();
+//				}
+//			}
+//
+//			if (!Mouse.isButtonDown(0)) {
+//				Master.isMouseReleased = true;
+//			}
+		//}
 
 		// back button clicked
 		if ((xpos > 1130 && xpos < 1280) && (ypos > 0 && ypos < 150) && (gameOver)) {
@@ -285,7 +289,7 @@ public class Ratscrew extends BasicGameState {
 		}
 		
 		//chat stuff
-		War game = (War) model.getCurrentGame();
+		//War game = (War) model.getCurrentGame();
 		if (chatSelected) {
 			   chatField.setFocus(true);
 		}
