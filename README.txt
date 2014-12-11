@@ -1,17 +1,2 @@
-HI..this is a Readme..
-GIT HOW TO DO
-git pull
-git add -A
-git commit -m "comment on what you did"
-git push
-
-change native thing!!
-
-delete GUI project
-re add it
-update SharedClasses buildpaths
-export SharedClasses
-update all other buildpaths
-export server to server/build
-edit ServerAccess file to machine and portnumber server is on
-java -jar server.jar <portnum>
+Cardglomerate is group 15's project for CS307 at Purdue. 
+Its purpose is to enable friends to play a variety of card games with each other
