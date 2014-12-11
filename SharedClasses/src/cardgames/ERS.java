@@ -38,15 +38,7 @@ public class ERS extends CardGame implements Serializable{
 		setup();
 		
 		handOver = false;
-		for(int i=0;i<players.size();i++){
-			players.get(i).bet(50);
-			winnings += players.get(i).getCurrentBet();
-			players.get(i).bet(0);
-		}
-		for(int i=0;i<players.size();i++){
-			players.get(i).addCardToHand(this.getTopOfDeck());
-			players.get(i).addCardToHand(this.getTopOfDeck());
-		}
+
 		readyToUpdate = true;
 		turn++;
 		
@@ -110,6 +102,9 @@ public class ERS extends CardGame implements Serializable{
 	}
 	
 	public boolean updateReady(){
+
+		System.out.println("updateReady");
+
 		if(turn == 0 || turn == 2 || turn == 4 || turn == 6){
 			return true;
 		}
@@ -167,7 +162,9 @@ public class ERS extends CardGame implements Serializable{
 		
 		for(int i=0;i<players.size();i++){
 			if(whoseTurn.userName.equals(players.get(i).userName)){
-				lplayer = players.get(i);
+				if(i != 0){
+					lplayer = players.get(i-1);
+				}
 			}
 		}
 		
@@ -221,8 +218,11 @@ public class ERS extends CardGame implements Serializable{
 					roundWin(lastTurn());
 				}
 			}
+			nextTurn(whoseTurn);
 		}
-		
+		if(gameOver == true){
+			System.out.println("The game is over! " + whoseTurn.username() + " has been defeated");
+		}	
 	}
 	
 	private void roundWin(Player winner) {
