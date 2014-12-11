@@ -98,12 +98,16 @@ public class ERS extends CardGame implements Serializable{
 			cardsToPlay=3;
 			break;
 		}
+
+		System.out.println("Cards to play is now" + cardsToPlay);
+
 		return;
 	}
 	
 	public boolean updateReady(){
 
 		System.out.println("updateReady");
+		System.out.println("this should not be run");
 
 		if(turn == 0 || turn == 2 || turn == 4 || turn == 6){
 			return true;
@@ -188,7 +192,7 @@ public class ERS extends CardGame implements Serializable{
 	
 	public void update(){
 		//if(updateReady()){
-		System.out.println(turn);
+		System.out.println("Update function");
 		readyToUpdate = false;
 		
 		if(clickCounter > 0){
@@ -196,11 +200,16 @@ public class ERS extends CardGame implements Serializable{
 			clickCounter = 0;
 			
 			Card playedcard;
+
+			System.out.println("Cardstoplay=" + cardsToPlay);
 			
 			if(cardsToPlay == -1){
 				if(whoseTurn.playTopCard() == null){
+
 					gameOver = true;
 				}
+				System.out.println("card should have been played now");
+				System.out.println("cardstoplay=-1 confirmed");
 			}
 			
 			
@@ -214,6 +223,7 @@ public class ERS extends CardGame implements Serializable{
 					}
 					cardsToPlay--;
 				}
+	System.out.println("card should have been played now2");
 				if(cardsToPlay == 0){
 					roundWin(lastTurn());
 				}
@@ -226,6 +236,7 @@ public class ERS extends CardGame implements Serializable{
 	}
 	
 	private void roundWin(Player winner) {
+		System.out.println(winner.username() + " has won the round!");
 		while (!cardsOnTable.isEmpty()) {
 			winner.addCardToDiscard((Card) cardsOnTable.remove(0));
 		}
@@ -239,6 +250,7 @@ public class ERS extends CardGame implements Serializable{
 					players.get(1).addCardToHand(getTopOfDeck());
 				}
 		}
+		System.out.println("Hands filled");
 	}
 
 	@Override
