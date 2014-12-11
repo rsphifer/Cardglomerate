@@ -221,7 +221,7 @@ public class ERS extends CardGame implements Serializable{
 			nextTurn(whoseTurn);
 		}
 		if(gameOver == true){
-			System.out.println("The game is over! " + whoseTurn.userName + " has been defeated");
+			System.out.println("The game is over! " + whoseTurn.username() + " has been defeated");
 		}	
 	}
 	
