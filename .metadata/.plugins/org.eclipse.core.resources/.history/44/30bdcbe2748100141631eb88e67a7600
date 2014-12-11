@@ -123,9 +123,8 @@ public class Ratscrew extends BasicGameState {
 		// gameover print
 		if (gameOver) {
 			g.drawString(winner + " Won the Game!", 700, 300);
+			arrow.draw(1130, 570);
 		}
-		
-		arrow.draw(1130, 570);
 		
 		//chat stuff
 		ERS game = (ERS) model.getCurrentGame();
@@ -217,7 +216,6 @@ public class Ratscrew extends BasicGameState {
 				opponentSize = 26;
 				model.isInGame = false;
 				model.updateAchievements();
-				
 				sbg.enterState(1); // display game menu screen
 			}
 

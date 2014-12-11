@@ -217,7 +217,6 @@ public class Ratscrew extends BasicGameState {
 				opponentSize = 26;
 				model.isInGame = false;
 				model.updateAchievements();
-				
 				sbg.enterState(1); // display game menu screen
 			}
 

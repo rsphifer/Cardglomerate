@@ -199,17 +199,16 @@ public class ERS extends CardGame implements Serializable{
 			
 			clickCounter = 0;
 			
-			Card playedcard = null;
+			Card playedcard;
 
 			System.out.println("Cardstoplay=" + cardsToPlay);
 			
 			if(cardsToPlay == -1){
-				if((playedcard = whoseTurn.playTopCard()) == null){
+				if(whoseTurn.playTopCard() == null){
 
 					gameOver = true;
 				}
 				System.out.println("card should have been played now");
-				cardsOnTable.push(playedcard);
 				System.out.println("cardstoplay=-1 confirmed");
 			}
 			
