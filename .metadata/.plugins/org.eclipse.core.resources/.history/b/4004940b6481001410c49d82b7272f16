@@ -128,8 +128,6 @@ public class BlackJack extends CardGame implements Serializable {
 								resetGame();
 							}
 						}	
-					} else if (gameStatus == BET && currentTurn == 0) {
-						gameStatus = PLAYER_TURN;
 					}
 					
 				}
@@ -138,6 +136,7 @@ public class BlackJack extends CardGame implements Serializable {
 		}
 		
 	}
+	//TODO(Richard): Lots..
 	
 	public void resetGame() {
 		dealerHand = new ArrayList<Card>();
@@ -226,6 +225,7 @@ public class BlackJack extends CardGame implements Serializable {
 		}
 		if (lastPlayer) {
 			/* Go to playing round and set current turn to first person in players array */
+			System.out.printf("last player went\n");
 			gameStatus = PLAYER_TURN;
 			currentTurn = 0;
 			for (int i=0; i<MAX_PLAYERS; i++) {

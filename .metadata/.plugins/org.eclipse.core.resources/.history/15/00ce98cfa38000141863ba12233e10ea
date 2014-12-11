@@ -29,7 +29,7 @@ import cardgames.CardGame;
  */
 public class ServerAccess {
 
-	private static final String HOST_NAME = "sac01.cs.purdue.edu";
+	private static final String HOST_NAME = "sac07.cs.purdue.edu";
 	private static final int PORT_NUMBER = 4000;
 
 	private static Object sendRequestWithResponse(Request request) {
@@ -65,20 +65,6 @@ public class ServerAccess {
 
 	public static Object incrementWarCounter(UpdateGameRequest ugr) {
 		Request request = new Request("incrementWarCounter", ugr);
-		Object obj = sendRequestWithResponse(request);
-		if (obj != null) {
-			return (boolean) obj;
-		} else {
-			return null;
-		}
-	}
-
-	/*********************************************************
-	 * Egyptian Ratscrew specific server calls.
-	 *********************************************************/
-
-	public static Object incrementERSCounter(UpdateGameRequest ugr) {
-		Request request = new Request("incrementERSCounter", ugr);
 		Object obj = sendRequestWithResponse(request);
 		if (obj != null) {
 			return (boolean) obj;

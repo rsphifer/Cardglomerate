@@ -128,7 +128,7 @@ public class BlackJack extends CardGame implements Serializable {
 								resetGame();
 							}
 						}	
-					} else if (gameStatus == BET && currentTurn == 0) {
+					} else if (gameStatus == BET) {
 						gameStatus = PLAYER_TURN;
 					}
 					
